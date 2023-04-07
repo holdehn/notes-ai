@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { OpenAIEmbeddings } from 'langchain/embeddings';
 import { SupabaseVectorStore } from 'langchain/vectorstores';
 import { openai } from '@/utils/openai-client';
-import { supabaseClient } from '@/utils/supabase-client';
+import { supabaseClient } from '@/supabase-client';
 import { makeChain } from '@/utils/makechain';
 
 export default async function handler(

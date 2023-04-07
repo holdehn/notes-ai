@@ -1,4 +1,4 @@
-import { supabaseClient } from '@/utils/supabase-client';
+import { supabaseClient } from '@/supabase-client';
 import { SupabaseVectorStore } from 'langchain/vectorstores';
 import { OpenAIEmbeddings } from 'langchain/embeddings';
 import { VectorDBQAChain } from 'langchain/chains';

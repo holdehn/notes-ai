@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { GetServerSideProps } from 'next';
 import { useFormik } from 'formik';
-import { supabaseClient } from '@/utils/supabase-client';
+import { supabaseClient } from '@/supabase-client';
 import NavLink from '../NavLink';
 
 interface Props {
