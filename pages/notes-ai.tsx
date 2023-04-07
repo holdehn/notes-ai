@@ -8,7 +8,6 @@ import ReactMarkdown from 'react-markdown';
 import LoadingDots from '@/components/ui/LoadingDots';
 import DashboardLayout from '@/components/DashboardLayout';
 import Head from 'next/head';
-import { convert } from 'audio-converter';
 
 export default function () {
   async function handleFileUpload(e: ChangeEvent<HTMLInputElement>) {
@@ -18,11 +17,9 @@ export default function () {
       if (file) {
         try {
           // Convert the file to WAV format
-          const wavBlob = await convert(file, 'wav');
 
           // Create FormData
           const formData = new FormData();
-          formData.append('file', wavBlob, 'audio.wav');
 
           const response = await fetch('/api/upload-transcribe', {
             method: 'POST',
