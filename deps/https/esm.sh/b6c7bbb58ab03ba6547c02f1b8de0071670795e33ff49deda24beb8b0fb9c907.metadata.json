@@ -1,0 +1,20 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=600",
+    "location": "https://esm.sh/@supabase/supabase-js@2.14.0",
+    "vary": "Origin, Accept-Encoding",
+    "content-length": "0",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "date": "Fri, 07 Apr 2023 03:27:50 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=z6afo7KJ7pnh56y2gF5MlkrHoQQF8jET4FkWNDXX8%2BPm2sOZ1ZhiIoUGkJemovY%2FLF1%2B%2F3PQNnzC4mhklUuJvYh%2B45Oj18ux8NHfo7DxhzxIGXrC9enXcpctTBy9%2Bz37cIRZIpE%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7b3f2d522d7b1020-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/@supabase/supabase-js@^2.1.0",
+  "now": {
+    "secs_since_epoch": 1680838070,
+    "nanos_since_epoch": 756926000
+  }
+}

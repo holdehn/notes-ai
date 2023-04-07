@@ -35,7 +35,6 @@ export default async function handler(
 
   sendData(JSON.stringify({ data: '' }));
 
-  const model = openai;
   // create the chain
   const chain = makeChain(vectorStore, (token: string) => {
     sendData(JSON.stringify({ data: token }));

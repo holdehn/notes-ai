@@ -1,0 +1,23 @@
+{
+  "headers": {
+    "date": "Fri, 07 Apr 2023 03:27:51 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7b3f2d598db71020-LAX",
+    "server": "cloudflare",
+    "x-content-source": "workers-kv",
+    "content-type": "text/javascript; charset=utf-8",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "age": "1994",
+    "access-control-allow-origin": "*",
+    "cf-cache-status": "HIT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=uCO0ZAgQl9Uw5mmqrEMx4E4Wjtras%2F7jhK8cb6%2B9X%2FA8GT3IlnI%2BdL80l9uR030lG2o0UGbNycPd1bUYJt3V5qHYQSmTT96q6qdTAKlQEnhILyqzat7q3BxYGPKjV2r45Fhvn00%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "last-modified": "Fri, 07 Apr 2023 02:54:37 GMT"
+  },
+  "url": "https://esm.sh/v114/cross-fetch@3.1.5/deno/cross-fetch.mjs",
+  "now": {
+    "secs_since_epoch": 1680838071,
+    "nanos_since_epoch": 223362000
+  }
+}
