@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 interface SuccessAlertProps {
   setShowSuccessAlert: (show: boolean) => void;
@@ -43,7 +43,7 @@ export default function SuccessAlert(props: SuccessAlertProps) {
           </div>
           <div className="self-center ml-3">
             <span className="text-green-600 font-semibold">
-              Email Submitted.
+              Account Created.
             </span>
           </div>
         </div>

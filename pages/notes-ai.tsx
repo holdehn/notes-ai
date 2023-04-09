@@ -16,13 +16,14 @@ export default function () {
 
       if (file) {
         try {
-          // Convert the file to WAV format
-
           // Create FormData
           const formData = new FormData();
-
-          const response = await fetch('/api/upload-transcribe', {
+          formData.append('file', file);
+          const response = await fetch('/api/transcribe', {
             method: 'POST',
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
             body: formData,
           });
 
@@ -40,6 +41,7 @@ export default function () {
           // Do something with the transcript
           console.log(transcript);
         } catch (error: any) {
+          console.log('Error uploading file:', error.message);
           console.error('Error uploading file:', error.message);
         }
       } else {

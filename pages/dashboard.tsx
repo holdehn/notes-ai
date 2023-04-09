@@ -8,6 +8,8 @@ import ReactMarkdown from 'react-markdown';
 import LoadingDots from '@/components/ui/LoadingDots';
 import DashboardLayout from '@/components/DashboardLayout';
 import Head from 'next/head';
+import { supabaseClient } from '@/supabase-client';
+import { useRouter } from 'next/router';
 
 export default function () {
   const [query, setQuery] = useState<string>('');
@@ -26,6 +28,7 @@ export default function () {
     ],
     history: [],
   });
+  const router = useRouter();
 
   const { messages, pending, history } = messageState;
 
@@ -139,6 +142,7 @@ export default function () {
           >
             RoboWriter
           </h1>
+
           <main className={styles.main}>
             <div className={styles.cloud}>
               <div ref={messageListRef} className={styles.messagelist}>
