@@ -14,8 +14,8 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 };
 const navigation = [
-  { name: 'Learn', href: '/learn', current: true },
-  { name: 'Notes', href: '/notes', current: false },
+  { name: 'Learn', href: '/learn', current: false },
+  { name: 'Notes', href: '/notes', current: true },
   { name: 'Saved', href: '/saved', current: false },
 ];
 const userNavigation = [
@@ -184,14 +184,13 @@ export default (props: Props) => {
           </>
         )}
       </Disclosure>
-
+      <header className="bg-gray-950 flex items-center justify-center">
+        <h1 className="text-3xl font-bold tracking-tight text-white">
+          Generate Study Material
+        </h1>
+      </header>
       <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none bg-gray-950">
-        <header className="bg-gray-950 shadow">
-          <div className="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold text-white">Learn Anything</h1>
-          </div>
-        </header>
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bg-gray-050">
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bg-gray-950">
           {children}
         </div>
       </main>

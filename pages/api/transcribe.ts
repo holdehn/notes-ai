@@ -3,12 +3,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import busboy from 'busboy';
 import FormData from 'form-data';
+import mime from 'mime';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 async function transcribe(file: Buffer, contentType: string) {
   const form = new FormData();
-  form.append('file', file, { contentType, filename: 'audio.mp3' });
+  form.append('file', file, {
+    contentType,
+    filename: `audio.${mime.getExtension(contentType) ?? 'mp3'}`,
+  });
   form.append('model', 'whisper-1');
   const data = form.getBuffer();
 

@@ -1,6 +1,10 @@
 import { useState, ChangeEvent, useEffect } from 'react';
-import DashboardComponent from '@/components/ui/DashboardComponent';
 import Head from 'next/head';
+import DashboardLayout from '@/components/DashboardLayout';
+import TextInput from '@/components/ui/TextInput/TextInput';
+import Option from '@/components/ui/Option/Option';
+import NotesLayout from '@/components/ui/NotesLayout';
+import NotesForm from '@/components/ui/NotesForm/NotesForm';
 
 const OPENAI_API_KEY = JSON.stringify(process.env.OPENAI_API_KEY);
 const TextWriter = ({ text = '', delay }: any) => {
@@ -78,34 +82,23 @@ export default function () {
       alert(`Error: ${error.message}`);
     }
   };
-
   return (
-    <main>
+    <>
       <Head>
-        <title>UniTutor - Generate Notes</title>
+        <title>EduLink - Learn Anything</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
-      <DashboardComponent />
-
-      <section className="py-20 relative sm:py-24 min-h-screen bg-gray-900">
-        <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
-          <div className="max-w-lg mx-auto space-y-3 sm:text-center">
-            <input
-              type="file"
-              accept="audio/*"
-              aria-label="Upload Audio"
-              onChange={handleFile}
-              className="bg-gray-800 text-gray-600 rounded-md px-4 py-2"
-            />
-            <button onClick={sendAudio} disabled={loading}>
-              Send Audio
-            </button>
-            <div className="mt-5">
-              <TextWriter text={convertedText} delay={10} />
+      <NotesLayout>
+        <section className="bg-gray-950 min-h-screen">
+          <main>
+            <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
+              <div className="max-w-2xl mx-auto space-y-3 sm:text-center">
+                <NotesForm />
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-    </main>
+          </main>
+        </section>
+      </NotesLayout>
+    </>
   );
 }
