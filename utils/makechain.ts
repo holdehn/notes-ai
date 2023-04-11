@@ -60,15 +60,13 @@ export const makeChain = (
     llm: new OpenAI({ temperature: 0, modelName: 'gpt-3.5-turbo' }),
     prompt: CONDENSE_PROMPT,
   });
+
   const docChain = loadQAChain(
     new OpenAI({
       temperature: 0,
       modelName: 'gpt-3.5-turbo',
       maxTokens: 600,
       streaming: Boolean(onTokenStream),
-      callbackManager: {
-        handleNewToken: onTokenStream,
-      },
     }),
     { prompt: QA_PROMPT },
   );

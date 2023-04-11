@@ -1,14 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Tool, ZeroShotAgent } from 'langchain/agents';
-import { OpenAI } from 'langchain/llms';
+import { OpenAI } from 'langchain/llms/openai';
 import { initializeAgentExecutor } from 'langchain/agents';
 import { DynamicTool, SerpAPI } from 'langchain/tools';
+import { Calculator } from 'langchain/tools/calculator';
+import { PromptTemplate } from 'langchain/prompts';
+
+// Get the environment variables
+const wolframAlphaAppId = process.env.WOLFRAM_ALPHA_APP_ID;
+const serpApiKey = process.env.SERP_API_KEY;
+const openAIApiKey = process.env.OPENAI_API_KEY;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { question, history, subject } = req.body;
+  // Get the question and history from the request body
+  const { question, subject } = req.body;
 
   if (!question || question.length === 0 || !subject || subject.length === 0) {
     return res.status(400).json({ message: 'No question in the request' });
@@ -17,28 +25,21 @@ export default async function handler(
   // OpenAI recommends replacing newlines with spaces for best results
   const sanitizedQuestion = question.trim().replaceAll('\n', ' ');
 
-  // Get the Wolfram Alpha App ID from the environment
-  const wolframAlphaAppId = process.env.WOLFRAM_ALPHA_APP_ID;
-  const serpApiKey = process.env.SERP_API_KEY;
-  const prompt = ZeroShotAgent.createPrompt([], {
-    prefix: `The user is asking a question about ${subject}. Answer the following questions as best you can, using the following tools: `,
-  });
-
+  // Set the response headers
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache, no-transform',
     Connection: 'keep-alive',
   });
 
+  // Send the data to the client
   const sendData = (data: string) => {
     res.write(`data: ${data}\n\n`);
   };
 
   sendData(JSON.stringify({ data: '' }));
 
-  const llm = new OpenAI({ openAIApiKey: process.env.OPENAI_API_KEY });
-
-  //load wolfram alpha tool
+  //load wolfram tool, wolfram tool from langchain n/a on typescript so i make api call
   const tools: Tool[] = [];
   if (wolframAlphaAppId) {
     tools.push(
@@ -57,10 +58,16 @@ export default async function handler(
       }),
     );
   }
+  //load serp tool
   if (serpApiKey) {
     tools.push(new SerpAPI(serpApiKey));
   }
 
+  //load calculator tool
+  tools.push(new Calculator());
+
+  //agent, and llm
+  const llm = new OpenAI({ openAIApiKey: openAIApiKey });
   const agentExecutor = await initializeAgentExecutor(
     tools,
     llm,
@@ -68,12 +75,42 @@ export default async function handler(
     true,
   );
 
-  try {
-    // Ask a question
-    const response = await agentExecutor.run(sanitizedQuestion);
+  const PREFIX = `You are a personal tutor for students. Answer the following question as best you can. The final answer should be a step by step explanation of how to answer the question. You have access to the following tools: wolfram-alpha, search, calculator. You can use these tools to answer the question. You can also use the tools to help you think about how to answer the question. You can use the tools as many times as you want. You can also use the tools in any order you want. You can also use the tools in any way you want.`;
+  const formatInstructions = `Use the following format:
+  Subject: the topic you are answering about, e.g. "math"
+  Question: the input question you must answer
+  Thought: you should always think about what to do and how to do it
+  Plan: you should make a plan on how to answer the question or solve the problem
+  Action: the action to take, should be one of [wolfram-alpha, search, calculator]
+  Action Input: the input to the action
+  Observation: the result of the action
+  ... (this Thought/Action/Action Input/Observation can repeat N times)
+  Thought: I now know the final answer
+  Final Answer: a step by step solution used to teach the user how to get the final answer to the original input question`;
+  const SUFFIX = `Begin!
+  Subject: {subject}
+  Question: {input}
+  Thought:{agent_scratchpad}`;
 
-    console.log('response', response);
-  } catch (error) {
-    console.log('error', error);
-  }
+  const promptTemplate = PromptTemplate.fromTemplate(
+    `${PREFIX}. ${formatInstructions}.  ${SUFFIX}`,
+  );
+
+  const result = await agentExecutor.call({
+    promptTemplate,
+    input: [question, subject],
+    maxTokens: 100,
+    temperature: 0.7,
+    topP: 1,
+    frequencyPenalty: 0,
+    presencePenalty: 0,
+    bestOf: 1,
+    n: 1,
+    stream: true,
+    logprobs: 0,
+    stop: ['\u2029'],
+    echo: false,
+  });
+  sendData(JSON.stringify({ data: result }));
+  res.end();
 }

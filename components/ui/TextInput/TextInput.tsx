@@ -3,10 +3,11 @@ import MathInput from '../MathInput';
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import useSWR, { mutate } from 'swr';
+import { fetchEventSource } from '@microsoft/fetch-event-source';
+import { Message } from '@/types/chat';
 
 function useForm(initialValues: { comment: string; subject: string }) {
   const [values, setValues] = useState(initialValues);
-
   const handleChange = (e: { target: { name: any; value: any } }) => {
     setValues({
       ...values,
@@ -20,59 +21,30 @@ function useForm(initialValues: { comment: string; subject: string }) {
 
   return { values, handleChange, resetForm, setValues };
 }
-
-const fetcher = async (
-  url: string,
-  question: string,
-  history: any[],
-  subject: string,
-) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      question,
-      history,
-      subject,
-    }),
-  });
-
-  return response.json();
-};
-
 export default function TextInput() {
   const [responseText, setResponseText] = useState('');
-
   const { values, handleChange, resetForm, setValues } = useForm({
     comment: '',
     subject: '',
   });
 
-  const router = useRouter();
-  const { data: chatHistory } = useSWR('/api/chat', fetcher);
-
-  const submitQuestion = useCallback(
-    async (question: string, history: any[], subject: string) => {
-      const result = await fetcher('/api/chat', question, history, subject);
-      mutate('/api/chat', [...chatHistory, result]);
-      return result;
-    },
-    [],
-  );
-
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     console.log('Submitted:', values);
-
-    const response = await submitQuestion(
-      values.comment,
-      chatHistory || [],
-      values.subject,
-    );
-    setResponseText(response);
-
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        question: values.comment,
+        subject: values.subject,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setResponseText(JSON.stringify(data));
+      });
     resetForm();
   };
 
@@ -136,7 +108,7 @@ export default function TextInput() {
             required
             value={values.comment}
             onChange={handleChange}
-          ></textarea>
+          />
         </div>
         <div className="flex items-center justify-center px-3 py-2 border-t dark:border-gray-600">
           <button
