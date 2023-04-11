@@ -11,9 +11,4 @@ export const openai = new OpenAI({
 export const openaiStream = new OpenAI({
   temperature: 0,
   streaming: true,
-  callbackManager: {
-    handleNewToken(token) {
-      console.log(token);
-    },
-  },
 });

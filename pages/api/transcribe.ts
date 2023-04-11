@@ -4,10 +4,15 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import busboy from 'busboy';
 import FormData from 'form-data';
 import mime from 'mime';
+import { Transform } from 'stream';
+import stream from 'stream';
+import ffmpeg from 'fluent-ffmpeg';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 async function transcribe(file: Buffer, contentType: string) {
+  console.log(`Transcribing file with contentType: ${contentType}`);
+
   const form = new FormData();
   form.append('file', file, {
     contentType,
@@ -27,7 +32,44 @@ async function transcribe(file: Buffer, contentType: string) {
       body: data,
     },
   );
+
+  console.log(`Transcription API response status: ${response.status}`);
   return response;
+}
+
+//convert to mp3 from any other format
+//mp3 instead of wav to keep file size to openai api limit
+async function convertToMp3(buffer: Buffer, fileType: string): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const input = new stream.PassThrough();
+    input.end(buffer);
+    console.log('input');
+
+    const chunks: Buffer[] = [];
+    const output = new Transform({
+      transform(chunk, encoding, callback) {
+        chunks.push(chunk);
+        callback();
+      },
+    });
+
+    console.log('output');
+    const command = ffmpeg(input)
+      .inputFormat(fileType.split('/')[1])
+      .outputFormat('mp3')
+      .output(output)
+      .on('error', (error) => {
+        reject(error);
+      });
+
+    console.log('command');
+    command.run();
+
+    command.on('end', () => {
+      console.log('ffmpeg process finished');
+      resolve(Buffer.concat(chunks));
+    });
+  });
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -38,6 +80,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       req.pipe(busboyInstance);
       busboyInstance.on('file', async (name, file, info) => {
         // stream file to openai
+        const fileType = info.mimeType;
+        console.log(fileType);
 
         let responseData = Buffer.from([]);
         file.on('data', (data) => {
@@ -46,10 +90,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         file.on('end', async () => {
           let response;
           try {
-            response = await transcribe(responseData, info.mimeType);
+            const mp3 = await convertToMp3(responseData, fileType);
+            console.log('mp3', mp3);
+            response = await transcribe(mp3, 'audio/mp3');
           } catch (error: any) {
-            return res.status(500).json({ error: error.response.data });
+            return res.status(500).json({ error: error.response });
           }
+
           res.status(200).json({ transcript: await response.json() });
         });
       });
