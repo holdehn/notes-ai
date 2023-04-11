@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import MathInput from '../MathInput';
-import Option from '../Option';
+import { useCallback } from 'react';
+import { useRouter } from 'next/router';
+import useSWR, { mutate } from 'swr';
 
 function useForm(initialValues: { comment: string; subject: string }) {
   const [values, setValues] = useState(initialValues);
@@ -18,19 +20,62 @@ function useForm(initialValues: { comment: string; subject: string }) {
 
   return { values, handleChange, resetForm, setValues };
 }
+
+const fetcher = async (
+  url: string,
+  question: string,
+  history: any[],
+  subject: string,
+) => {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      question,
+      history,
+      subject,
+    }),
+  });
+
+  return response.json();
+};
+
 export default function TextInput() {
-  const [showMathInput, setShowMathInput] = useState(false);
+  const [responseText, setResponseText] = useState('');
 
   const { values, handleChange, resetForm, setValues } = useForm({
     comment: '',
     subject: '',
   });
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const router = useRouter();
+  const { data: chatHistory } = useSWR('/api/chat', fetcher);
+
+  const submitQuestion = useCallback(
+    async (question: string, history: any[], subject: string) => {
+      const result = await fetcher('/api/chat', question, history, subject);
+      mutate('/api/chat', [...chatHistory, result]);
+      return result;
+    },
+    [],
+  );
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     console.log('Submitted:', values);
+
+    const response = await submitQuestion(
+      values.comment,
+      chatHistory || [],
+      values.subject,
+    );
+    setResponseText(response);
+
     resetForm();
   };
+
   const handleSymbolInsert = (symbol: string) => {
     const commentInput = document.getElementById(
       'comment',
@@ -48,10 +93,6 @@ export default function TextInput() {
 
     commentInput.focus();
     commentInput.selectionEnd = start + symbol.length;
-  };
-
-  const toggleMathInput = () => {
-    setShowMathInput((prevValue) => !prevValue);
   };
 
   return (
@@ -106,6 +147,11 @@ export default function TextInput() {
           </button>
         </div>
       </form>
+      <div className="mt-4 text-gray-900 dark:text-white">
+        <h2 className="text-xl font-bold">Response:</h2>
+        <p>{responseText}</p>
+      </div>
+
       <p className="ml-auto text-xs text-gray-500 dark:text-gray-400">
         Powered by OpenAI and Langchain. Made by{' '}
         <a

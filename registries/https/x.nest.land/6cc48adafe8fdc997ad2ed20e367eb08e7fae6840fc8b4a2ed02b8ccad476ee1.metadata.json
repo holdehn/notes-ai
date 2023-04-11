@@ -1,18 +1,18 @@
 {
   "headers": {
-    "server": "nginx/1.14.0 (Ubuntu)",
-    "access-control-allow-headers": "*",
-    "access-control-allow-origin": "*",
-    "content-length": "0",
-    "location": "https://intellisense.nest.land/deno-import-intellisense.json",
     "access-control-allow-methods": "GET,POST",
+    "date": "Mon, 10 Apr 2023 22:48:16 GMT",
+    "location": "https://intellisense.nest.land/deno-import-intellisense.json",
+    "content-length": "0",
+    "access-control-allow-headers": "*",
+    "server": "nginx/1.14.0 (Ubuntu)",
     "vary": "Accept",
-    "date": "Sun, 09 Apr 2023 23:11:10 GMT",
+    "access-control-allow-origin": "*",
     "connection": "keep-alive"
   },
   "url": "https://x.nest.land/.well-known/deno-import-intellisense.json",
   "now": {
-    "secs_since_epoch": 1681081869,
-    "nanos_since_epoch": 383661000
+    "secs_since_epoch": 1681166894,
+    "nanos_since_epoch": 876054000
   }
 }
