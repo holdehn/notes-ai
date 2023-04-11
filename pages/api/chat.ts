@@ -75,20 +75,18 @@ export default async function handler(
     true,
   );
 
-  const PREFIX = `You are a personal tutor for students. Answer the following question as best you can. The final answer should be a step by step explanation of how to answer the question. You have access to the following tools: wolfram-alpha, search, calculator. You can use these tools to answer the question. You can also use the tools to help you think about how to answer the question. You can use the tools as many times as you want. You can also use the tools in any order you want. You can also use the tools in any way you want.`;
+  const PREFIX = `Figure out what the following question is trying to ask: {input}. Then answer it. You have access to the following tools: wolfram-alpha, search, calculator. You may have to reformat the input to the tools.`;
   const formatInstructions = `Use the following format:
-  Subject: the topic you are answering about, e.g. "math"
-  Question: the input question you must answer
-  Thought: you should always think about what to do and how to do it
-  Plan: you should make a plan on how to answer the question or solve the problem
-  Action: the action to take, should be one of [wolfram-alpha, search, calculator]
-  Action Input: the input to the action
+  Question: the input question you must answer.
+  Thought: you should always think about how to solve the problem.
+  Action: the action to take, should be one of [wolfram-alpha, SerpAPI, calculator]. 
+  Action Input: the input to the action.
   Observation: the result of the action
   ... (this Thought/Action/Action Input/Observation can repeat N times)
-  Thought: I now know the final answer
-  Final Answer: a step by step solution used to teach the user how to get the final answer to the original input question`;
+  Thought: I now know the final answer. Now I will double check it.
+  Final Answer: a precise answer to the input question in Markdown.`;
   const SUFFIX = `Begin!
-  Subject: {subject}
+  Subject: {input}
   Question: {input}
   Thought:{agent_scratchpad}`;
 
@@ -100,7 +98,7 @@ export default async function handler(
     promptTemplate,
     input: [question, subject],
     maxTokens: 100,
-    temperature: 0.7,
+    temperature: 0.9,
     topP: 1,
     frequencyPenalty: 0,
     presencePenalty: 0,

@@ -1,15 +1,10 @@
 import type { CheerioAPI, load as LoadT } from 'cheerio';
 import { Document } from 'langchain/document';
-import { BaseDocumentLoader } from 'langchain/document_loaders';
-import type { DocumentLoader } from 'langchain/document_loaders';
-import { CheerioWebBaseLoader } from 'langchain/document_loaders';
+import { CheerioWebBaseLoader } from 'langchain/document_loaders/web/cheerio';
 
-export class CustomWebLoader
-  extends BaseDocumentLoader
-  implements DocumentLoader
-{
+export class CustomWebLoader extends CheerioWebBaseLoader {
   constructor(public webPath: string) {
-    super();
+    super('/Users/holden/Projects/edulink/config/notionurls.ts');
   }
 
   static async _scrape(url: string): Promise<CheerioAPI> {
