@@ -14,7 +14,7 @@ export default function Home() {
           content="Organize and manage different subjects while getting personalized AI tutoring."
         />
       </Head>
-      <Navbar />
+      {/* <Navbar /> */}
       <Hero />
       <Features />
       <Footer />
