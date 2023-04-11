@@ -45,6 +45,7 @@ export default function NotesForm() {
   const [convertedText, setConvertedText] = useState('');
   const [loading, setLoading] = useState(false);
   const [showInputs, setShowInputs] = useState(true); // Add this line
+  const [notesText, setNotesText] = useState(''); // Add this line
   const { values, handleChange, resetForm, setValues } = useForm({
     comment: '',
     subject: '',
@@ -108,6 +109,26 @@ export default function NotesForm() {
 
     sendAudio();
   };
+
+  const handleGenerate = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    console.log('Submitted:', values);
+    fetch('/api/create-notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        transcription: convertedText,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setNotesText(JSON.stringify(data));
+      });
+    resetForm();
+  };
+
   return (
     <>
       <form
@@ -153,11 +174,27 @@ export default function NotesForm() {
               type="submit"
               className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
             >
-              Generate
+              Transcribe
             </button>
           </div>
+          {convertedText && (
+            <div className="flex items-center justify-center px-3 py-2 border-t dark:border-gray-600">
+              <button
+                onClick={handleGenerate}
+                className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+              >
+                Generate Notes
+              </button>
+            </div>
+          )}
         </div>
         {convertedText && <TranscriptionResult transcription={convertedText} />}
+        {notesText && (
+          <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+            <h3 className="text-lg font-semibold mb-2">Notes:</h3>
+            <p className="text-gray-600 whitespace-pre-wrap">{notesText}</p>
+          </div>
+        )}
       </form>
       <p className="ml-auto text-xs text-gray-500 dark:text-gray-400">
         Powered by OpenAI and Langchain. Made by{' '}

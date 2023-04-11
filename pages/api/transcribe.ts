@@ -38,20 +38,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       req.pipe(busboyInstance);
       busboyInstance.on('file', async (name, file, info) => {
         // stream file to openai
-        console.log(name, info);
 
         let responseData = Buffer.from([]);
         file.on('data', (data) => {
           responseData = Buffer.concat([responseData, data]);
         });
         file.on('end', async () => {
-          console.log(responseData);
-
           let response;
           try {
             response = await transcribe(responseData, info.mimeType);
           } catch (error: any) {
-            console.log(error.response.data);
             return res.status(500).json({ error: error.response.data });
           }
           res.status(200).json({ transcript: await response.json() });
