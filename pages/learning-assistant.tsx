@@ -1,19 +1,18 @@
 import { useRef, useState, useEffect, useMemo } from 'react';
-import Layout from '@/components/layout';
 import styles from '@/styles/Home.module.css';
 import { Message } from '@/types/chat';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import LoadingDots from '@/components/ui/LoadingDots';
-import DashboardLayout from '@/components/DashboardLayout';
 import Head from 'next/head';
-import { supabaseClient } from '@/supabase-client';
-import { useRouter } from 'next/router';
+import LearningAssistantLayout from '@/components/LearningAssistantLayout';
+import LiveTutor from '@/components/ui/LiveTutor/LiveTutor';
 
 export default function () {
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [isRecording, setIsRecording] = useState<boolean>(false);
   const [messageState, setMessageState] = useState<{
     messages: Message[];
     pending?: string;
@@ -22,13 +21,12 @@ export default function () {
     messages: [
       {
         message:
-          'Hi there I am your AI writing assistant for essays! Paste an essay to get started.',
+          'Hi there! I am your AI Tutor. I am here to help you during your class and with your homework. Ask me anything!',
         type: 'apiMessage',
       },
     ],
     history: [],
   });
-  const router = useRouter();
 
   const { messages, pending, history } = messageState;
 
@@ -69,7 +67,7 @@ export default function () {
     const ctrl = new AbortController();
 
     try {
-      fetchEventSource('/api/chat', {
+      fetchEventSource('/api/chat-message', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -134,14 +132,18 @@ export default function () {
           content="Personalized educational dashboard for students"
         />
       </Head>
-      <DashboardLayout>
+      <LearningAssistantLayout>
+        <header className="bg-gray-950 shadow">
+          <div className="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8 text-center">
+            <h1 className="text-3xl font-bold text-white">
+              Learning Assistant Live
+            </h1>
+          </div>
+        </header>
         <div className="mx-auto flex flex-col ">
-          <h1
-            className="text-2xl font-bold leading-[1.1] tracking-tighter text-center"
-            style={{ color: 'white' }}
-          >
-            RoboWriter
-          </h1>
+          <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+            <LiveTutor setIsRecording={setIsRecording} />
+          </div>
 
           <main className={styles.main}>
             <div className={styles.cloud}>
@@ -191,6 +193,7 @@ export default function () {
                 })}
               </div>
             </div>
+
             <div className={styles.center}>
               <div className={styles.cloudform}>
                 <form onSubmit={handleSubmit}>
@@ -243,7 +246,7 @@ export default function () {
             Holden (Twitter: @holdehnj)
           </a>
         </footer>
-      </DashboardLayout>
+      </LearningAssistantLayout>
     </main>
   );
 }

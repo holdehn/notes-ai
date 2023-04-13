@@ -43,7 +43,7 @@ export default () => {
 
             <li className="border-b border-gray-800">
               <NavLink
-                href="/dashboard"
+                href="/home"
                 className="block rounded-md hover:bg-gray-700"
                 active="bg-gray-700 text-white font-medium"
               >

@@ -17,7 +17,8 @@ export default function Hero() {
   const router = useRouter(); // Initialize useRouter
   useEffect(() => {
     if (user && session) {
-      router.push('/learn'); // Navigate to the dashboard
+      sessionStorage.setItem('userID', JSON.stringify(user.id));
+      router.push('/home'); // Navigate to the dashboard
     }
   }, [session, router, user]); // Add router as a dependency
 

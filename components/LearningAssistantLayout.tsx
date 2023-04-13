@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import LiveTutor from './ui/LiveTutor';
 
 type Props = {
   children: ReactNode;
@@ -10,13 +11,12 @@ type Props = {
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  imageUrl: 'piano.jpeg',
 };
 const navigation = [
   { name: 'Learn', href: '/learn', current: false },
-  { name: 'Notes', href: '/notes', current: true },
-  { name: 'Live Tutor', href: '/learning-assistant', current: false },
+  { name: 'Notes', href: '/notes', current: false },
+  { name: 'Live Tutor', href: '/learning-assistant', current: true },
   { name: 'Saved', href: '/saved', current: false },
 ];
 const userNavigation = [
@@ -32,7 +32,7 @@ function classNames(...classes: string[]) {
 export default (props: Props) => {
   const { children } = props;
   return (
-    <div className="min-h-full">
+    <div className="min-h-full bg-black">
       <Disclosure as="nav" className="bg-blue-950">
         {({ open }) => (
           <>
@@ -187,7 +187,7 @@ export default (props: Props) => {
       </Disclosure>
 
       <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none bg-gray-950">
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bg-gray-950">
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bg-gray-050">
           {children}
         </div>
       </main>

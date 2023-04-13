@@ -131,9 +131,14 @@ export default function NotesForm() {
 
   return (
     <>
+      <header className="bg-gray-950 flex items-center justify-center">
+        <h1 className="text-3xl font-bold tracking-tight text-white">
+          Generate Notes
+        </h1>
+      </header>
       <form
         onSubmit={handleSubmit}
-        className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 p-8 "
+        className="w-full mb-4 mt-3 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 p-8 "
       >
         <div className="grid gap-6 mb-6 mx-4 justify-center">
           <div className="mt-4">

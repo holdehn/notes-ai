@@ -10,12 +10,12 @@ type Props = {
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  imageUrl: 'piano.jpeg',
 };
 const navigation = [
   { name: 'Learn', href: '/learn', current: true },
   { name: 'Notes', href: '/notes', current: false },
+  { name: 'Live Tutor', href: '/learning-assistant', current: false },
   { name: 'Saved', href: '/saved', current: false },
 ];
 const userNavigation = [
@@ -32,7 +32,7 @@ export default (props: Props) => {
   const { children } = props;
   return (
     <div className="min-h-full">
-      <Disclosure as="nav" className="bg-gray-950">
+      <Disclosure as="nav" className="bg-blue-950">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

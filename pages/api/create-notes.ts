@@ -81,7 +81,7 @@ export default async function handler(
     echo: false,
   });
   console.log('result' + result);
-  sendData(JSON.stringify({ data: result.data }));
+  sendData(JSON.stringify({ data: result.data.text }));
 
   res.end();
 }

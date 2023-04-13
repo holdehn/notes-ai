@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
 import MathInput from '../MathInput';
-import { useCallback } from 'react';
-import { useRouter } from 'next/router';
-import useSWR, { mutate } from 'swr';
-import { fetchEventSource } from '@microsoft/fetch-event-source';
-import { Message } from '@/types/chat';
 
 function useForm(initialValues: { comment: string; subject: string }) {
   const [values, setValues] = useState(initialValues);
@@ -41,11 +36,11 @@ export default function TextInput() {
         subject: values.subject,
       }),
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        setResponseText(JSON.stringify(data));
+        setResponseText(data.answer);
+        resetForm();
       });
-    resetForm();
   };
 
   const handleSymbolInsert = (symbol: string) => {
@@ -118,11 +113,13 @@ export default function TextInput() {
             Submit
           </button>
         </div>
+        {responseText && (
+          <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+            <h3 className="text-lg font-semibold mb-2">Response:</h3>
+            <p className="text-gray-600 whitespace-pre-wrap">{responseText}</p>
+          </div>
+        )}
       </form>
-      <div className="mt-4 text-gray-900 dark:text-white">
-        <h2 className="text-xl font-bold">Response:</h2>
-        <p>{responseText}</p>
-      </div>
 
       <p className="ml-auto text-xs text-gray-500 dark:text-gray-400">
         Powered by OpenAI and Langchain. Made by{' '}

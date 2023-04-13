@@ -5,6 +5,7 @@ import { initializeAgentExecutor } from 'langchain/agents';
 import { DynamicTool, SerpAPI } from 'langchain/tools';
 import { Calculator } from 'langchain/tools/calculator';
 import { PromptTemplate } from 'langchain/prompts';
+import { getFormatInstructions, parse } from '@/utils/customOutputParser';
 
 // Get the environment variables
 const wolframAlphaAppId = process.env.WOLFRAM_ALPHA_APP_ID;
@@ -74,21 +75,13 @@ export default async function handler(
     'zero-shot-react-description',
     true,
   );
-
   const PREFIX = `Figure out what the following question is trying to ask: {input}. Then answer it. You have access to the following tools: wolfram-alpha, search, calculator. You may have to reformat the input to the tools.`;
-  const formatInstructions = `Use the following format:
-  Question: the input question you must answer.
-  Thought: you should always think about how to solve the problem.
-  Action: the action to take, should be one of [wolfram-alpha, SerpAPI, calculator]. 
-  Action Input: the input to the action.
-  Observation: the result of the action
-  ... (this Thought/Action/Action Input/Observation can repeat N times)
-  Thought: I now know the final answer. Now I will double check it.
-  Final Answer: a precise answer to the input question in Markdown.`;
   const SUFFIX = `Begin!
   Subject: {input}
   Question: {input}
   Thought:{agent_scratchpad}`;
+
+  const formatInstructions = getFormatInstructions();
 
   const promptTemplate = PromptTemplate.fromTemplate(
     `${PREFIX}. ${formatInstructions}.  ${SUFFIX}`,
@@ -96,9 +89,9 @@ export default async function handler(
 
   const result = await agentExecutor.call({
     promptTemplate,
-    input: [question, subject],
-    maxTokens: 100,
-    temperature: 0.9,
+    input: `${question}, ${subject}`,
+    maxTokens: 600,
+    temperature: 1.0,
     topP: 1,
     frequencyPenalty: 0,
     presencePenalty: 0,
@@ -108,7 +101,8 @@ export default async function handler(
     logprobs: 0,
     stop: ['\u2029'],
     echo: false,
+    output: true,
   });
-  sendData(JSON.stringify({ data: result }));
+  sendData(JSON.stringify({ data: result.output }));
   res.end();
 }
