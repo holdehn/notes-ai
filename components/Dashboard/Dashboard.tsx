@@ -706,9 +706,9 @@ export default function () {
               </div>
             </div>
           </div>
-          <main className="flex-1">
+          <main className="flex-1 bg-gray-100">
             {/* Page title & actions */}
-            <div className="border-b  bg-gray-100 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <div className="border-b  bg-white px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="min-w-0 flex-1">
                 <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
                   Home
