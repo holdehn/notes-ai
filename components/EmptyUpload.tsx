@@ -15,6 +15,7 @@ export default function EmptyUpload({ onFileChange }: Props) {
         hidden
         onChange={onFileChange}
         multiple
+        accept="audio/*"
       />
       <div className="text-center">
         <svg

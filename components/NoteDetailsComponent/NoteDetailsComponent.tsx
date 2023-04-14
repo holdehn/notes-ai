@@ -7,8 +7,11 @@ import {
   HomeIcon,
   XMarkIcon,
   NewspaperIcon,
+  ComputerDesktopIcon,
+  ArrowRightIcon,
 } from '@heroicons/react/24/outline';
 import {
+  ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpDownIcon,
   EllipsisVerticalIcon,
@@ -17,13 +20,23 @@ import {
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
 import { supabaseClient } from 'supabase-client';
-import { Session, useSession } from '@supabase/auth-helpers-react';
+import { useUser } from '@supabase/auth-helpers-react';
 import AgentModal from '../Modals/AgentModal';
 import CreateAgentModal from '../Modals/CreateAgentModal/CreateAgentModal';
 
+import { Popover } from '@headlessui/react';
+import {
+  ArrowLongLeftIcon,
+  CheckIcon,
+  HandThumbUpIcon,
+  QuestionMarkCircleIcon,
+  UserIcon,
+} from '@heroicons/react/20/solid';
+import { Bars3Icon, BellIcon } from '@heroicons/react/24/outline';
+
 const navigation = [
-  { name: 'Home', href: '/home', icon: HomeIcon, current: true },
-  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: false },
+  { name: 'Home', href: '/home', icon: HomeIcon, current: false },
+  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
   {
     name: 'Live Assistant',
     href: '/live-assistant',
@@ -45,15 +58,14 @@ const navigation = [
   },
 ];
 const teams = [
-  { name: 'Personal Tutor', href: '#', bgColorClass: 'bg-blue-600' },
-  { name: 'Engineer', href: '#', bgColorClass: 'bg-indigo-500' },
+  { name: 'Engineering', href: '#', bgColorClass: 'bg-indigo-500' },
   { name: 'Human Resources', href: '#', bgColorClass: 'bg-green-500' },
   { name: 'Customer Success', href: '#', bgColorClass: 'bg-yellow-500' },
 ];
 const projects = [
   {
     id: 1,
-    title: 'Personal Tutor',
+    title: 'Sales Call with John 4/19/2021',
     initials: 'LR',
     team: 'Research',
     members: [
@@ -82,140 +94,14 @@ const projects = [
           'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
       },
     ],
-    totalDocuments: 12,
+    totalDocuments: 8,
     lastUpdated: 'March 17, 2020',
     pinned: true,
     bgColorClass: 'bg-pink-600',
   },
-
-  {
-    id: 2,
-    title: 'Engineer',
-    initials: 'E',
-    team: 'Education',
-    members: [
-      {
-        name: 'Floyd Miles',
-        handle: 'floydmiles',
-        imageUrl:
-          'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Emily Selman',
-        handle: 'emilyselman',
-        imageUrl:
-          'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalDocuments: 37,
-    lastUpdated: 'March 10, 2020',
-    pinned: true,
-    bgColorClass: 'bg-green-600',
-  },
-  {
-    id: 3,
-    title: 'Human Resources',
-    initials: 'HR',
-    team: 'Human Resources',
-    members: [
-      {
-        name: 'Kristin Watson',
-        handle: 'kristinwatson',
-        imageUrl:
-          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Emma Dorsey',
-        handle: 'emmadorsey',
-        imageUrl:
-          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalDocuments: 55,
-    lastUpdated: 'February 12, 2020',
-    pinned: false,
-    bgColorClass: 'bg-blue-600',
-  },
-  {
-    id: 4,
-    title: 'Customer Success',
-    initials: 'CS',
-
-    team: 'Customer Success',
-    members: [
-      {
-        name: 'Kristin Watson',
-        handle: 'kristinwatson',
-        imageUrl:
-          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Emma Dorsey',
-        handle: 'emmadorsey',
-        imageUrl:
-          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalDocuments: 6,
-    lastUpdated: 'February 12, 2020',
-    pinned: false,
-    bgColorClass: 'bg-blue-600',
-  },
-
   // More projects...
 ];
-const tools = [
-  {
-    id: 1,
-    title: 'Assistant',
-    bgColorClass: 'bg-blue-600',
-
-    initials: 'A',
-    description: 'Live Assistant.',
-    href: '#',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-01.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 2,
-    title: 'Solve',
-    bgColorClass: 'bg-green-600',
-
-    initials: 'S',
-    description: 'Math & Science.',
-    href: '#',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-02.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 3,
-    title: 'Context',
-    bgColorClass: 'bg-pink-600',
-    initials: 'C',
-    description: 'Ask your data.',
-    href: '#',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 3,
-    title: 'Research',
-    bgColorClass: 'bg-yellow-600',
-    initials: 'R',
-    description: 'Auto Research.',
-    href: '#',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-];
+const pinnedProjects = projects.filter((project) => project.pinned);
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -227,21 +113,11 @@ export default function () {
   const [openAgentModal, setOpenAgentModal] = useState(false);
   const [openAddContextModal, setOpenAddContextModal] = useState(false);
   const [success, setSuccess] = useState(false);
-  const session: Session | null = useSession();
-  const userID = session?.user?.id;
-
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-  const { data, error } = useSWR(
-    userID ? `/api/notes-page-data?userID=${userID}` : null,
-    fetcher,
-  );
-
-  console.log(data);
+  const noteId = 'Lecture Notes Statistics';
 
   return (
     <>
-      <div className="min-h-full">
+      <div className="min-h-screen">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -371,7 +247,7 @@ export default function () {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r  lg:bg-blue-50 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-blue-50 lg:pb-4 lg:pt-5">
           <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -606,7 +482,7 @@ export default function () {
         {/* Main column */}
         <div className="flex flex-col lg:pl-64">
           {/* Search header */}
-          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-800 bg-white lg:hidden">
+          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:hidden">
             <button
               type="button"
               className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500 lg:hidden"
@@ -717,14 +593,15 @@ export default function () {
               </div>
             </div>
           </div>
-          <main className="flex-1 bg-gray-100">
+          <main className="bg-gray-100">
             {/* Page title & actions */}
-            <div className="border-b  bg-white px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <div className="border-b bg-white border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="min-w-0 flex-1">
                 <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-                  Home
+                  NotesAI
                 </h1>
               </div>
+
               <div className="mt-4 flex sm:ml-4 sm:mt-0">
                 <button
                   onClick={() => setOpenAgentModal(true)}
@@ -746,265 +623,326 @@ export default function () {
                 />
               </div>
             </div>
-            {/* Pinned projects */}
-            <div className="mt-6 px-4 sm:px-6 lg:px-8 bg-gray-100">
-              <h2 className="text-sm font-medium text-gray-900">Agents</h2>
-              <ul
-                role="list"
-                className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4"
-              >
-                {tools.map((tool) => (
-                  <li
-                    key={tool.id}
-                    className="relative col-span-1 flex rounded-md shadow-sm"
+            {/* Page header */}
+            <div className="px-6 py-2">
+              <div className="mt-2 md:flex md:items-center md:justify-between">
+                <nav className="sm:hidden" aria-label="Back">
+                  <a
+                    href="/my-notes"
+                    className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
                   >
-                    <a href="#" className="w-full flex">
-                      <div
-                        className={classNames(
-                          tool.bgColorClass,
-                          'flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
-                        )}
-                      >
-                        {tool.initials}
+                    <ChevronLeftIcon
+                      className="-ml-1 mr-1 h-5 w-5 flex-shrink-0 text-gray-400"
+                      aria-hidden="true"
+                    />
+                    Back
+                  </a>
+                </nav>
+                <nav
+                  className="leading-7 hidden sm:flex"
+                  aria-label="Breadcrumb"
+                >
+                  <ol role="list" className="flex items-center space-x-4">
+                    <li>
+                      <div className="flex">
+                        <a
+                          href="/my-notes"
+                          className="text-sm font-medium text-gray-500 hover:text-gray-700"
+                        >
+                          My Notes
+                        </a>
                       </div>
-                      <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-600 bg-white hover:shadow-lg cursor-pointer">
-                        <div className="flex-1 truncate px-4 py-2 text-sm h-full">
-                          <p className="font-medium text-gray-900 hover:text-gray-600 mb-2">
-                            {tool.title}
-                          </p>
-                          <p className="text-gray-500 h-full overflow-y-auto">
-                            {tool.description}
-                          </p>
-                        </div>
-                        <Menu as="div" className="flex-shrink-0 pr-2">
-                          <Menu.Button className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-                            <span className="sr-only">Open options</span>
-                            <EllipsisVerticalIcon
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                          </Menu.Button>
-                          <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
-                          >
-                            <Menu.Items className="absolute right-10 top-3 z-10 mx-3 mt-1 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                              <div className="py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                      )}
-                                    >
-                                      View
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                              <div className="py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                      )}
-                                    >
-                                      Removed from pinned
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                      )}
-                                    >
-                                      Share
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                            </Menu.Items>
-                          </Transition>
-                        </Menu>
-                      </div>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Projects list (only on smallest breakpoint) */}
-            <div className="mt-10 sm:hidden">
-              <div className="px-4 sm:px-6">
-                <h2 className="text-sm font-medium text-gray-900">Projects</h2>
-              </div>
-              <ul
-                role="list"
-                className="mt-3 divide-y divide-gray-100 border-t border-gray-200"
-              >
-                {projects.map((project) => (
-                  <li key={project.id}>
-                    <a
-                      href="#"
-                      className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
-                    >
-                      <span className="flex items-center space-x-3 truncate">
-                        <span
-                          className={classNames(
-                            project.bgColorClass,
-                            'h-2.5 w-2.5 flex-shrink-0 rounded-full',
-                          )}
+                    </li>
+                    <li>
+                      <div className="flex leading-7 items-center">
+                        <ChevronRightIcon
+                          className="h-5 w-5 flex-shrink-0 text-gray-400"
                           aria-hidden="true"
                         />
-                        <span className="truncate text-sm font-medium leading-6">
-                          {project.title}{' '}
-                          <span className="truncate font-normal text-gray-500">
-                            in {project.team}
-                          </span>
-                        </span>
-                      </span>
-                      <ChevronRightIcon
-                        className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="px-4 py-5 mt-6 sm:px-6 border-gray-300 border-t bg-white">
-              <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-                <div className="ml-4 mt-4">
-                  <h3 className="text-base font-bold leading-6 text-gray-900">
-                    Autonomous AI Tasks
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Create a task and your AI agents will work together to
-                    complete it.
-                  </p>
+                        <a
+                          href="/my-notes/1"
+                          aria-current="page"
+                          className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                        >
+                          Lecture 2 Statistics
+                        </a>
+                      </div>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+
+              <div className="mt-2 md:flex md:items-center md:justify-between">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                    Lecture 2 Statistics
+                  </h2>
                 </div>
-                <div className="ml-4 mt-4 flex-shrink-0">
+                <div className="mt-4 flex flex-shrink-0 md:ml-4 md:mt-0">
                   <button
                     type="button"
-                    className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                   >
-                    New Task
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Share
                   </button>
                 </div>
               </div>
             </div>
-            {/* Projects table (small breakpoint and up) */}
-            <div className=" hidden sm:block">
-              <div className="inline-block min-w-full border-b border-gray-200 align-middle">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="border-t border-gray-200">
-                      <th
-                        className="border-b border-gray-200 bg-gray-100  px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                        scope="col"
+
+            <div className="mx-auto mt-4 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+              <div className="space-y-6 lg:col-span-2 lg:col-start-1">
+                {/* Description list*/}
+                <section aria-labelledby="applicant-information-title">
+                  <div className="bg-white shadow sm:rounded-lg">
+                    <div className="px-4 py-5 sm:px-6 bg-purple-100">
+                      <h2
+                        id="applicant-information-title"
+                        className="text-lg font-medium leading-6 text-gray-900"
                       >
-                        <span className="lg:pl-2">Tasks</span>
-                      </th>
-                      <th
-                        className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                        scope="col"
-                      >
-                        Documents
-                      </th>
-                      <th
-                        className="hidden border-b border-gray-200 bg-gray-100 px-6 py-3 text-right text-sm font-semibold text-gray-900 md:table-cell"
-                        scope="col"
-                      >
-                        Last updated
-                      </th>
-                      <th
-                        className="border-b border-gray-200 bg-gray-100 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                        scope="col"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100 bg-white">
-                    {projects.map((project) => (
-                      <tr key={project.id}>
-                        <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
-                          <div className="flex items-center space-x-3 lg:pl-2">
-                            <div
-                              className={classNames(
-                                project.bgColorClass,
-                                'h-2.5 w-2.5 flex-shrink-0 rounded-full',
-                              )}
-                              aria-hidden="true"
-                            />
-                            <a
-                              href="#"
-                              className="truncate hover:text-gray-600"
+                        [AI Generated Title]
+                      </h2>
+                      <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                        [This section is a description of notes document
+                        generated by the AI and is based on the context of the
+                        conversation and content of the notes.]
+                      </p>
+                    </div>
+                    <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+                      <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                        <div className="sm:col-span-1">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Type of Notes
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            Lecture Notes
+                          </dd>
+                        </div>
+                        <div className="sm:col-span-1">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Date Created:
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            4/13/2023
+                          </dd>
+                        </div>
+                        <div className="sm:col-span-1">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Functionality:
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            Summarize and review important points.
+                          </dd>
+                        </div>
+                        <div className="sm:col-span-1">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Context
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            Recording of a lecture on statistics.
+                          </dd>
+                        </div>
+                        <div className="sm:col-span-2">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Summary
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            Linear regression is a widely-used statistical
+                            method for modeling the relationship between a
+                            dependent variable and one or more independent
+                            variables. In a recent lecture, the key concepts and
+                            applications of linear regression were discussed in
+                            detail, focusing on both simple and multiple linear
+                            regression models.
+                          </dd>
+                        </div>
+                        <div className="sm:col-span-2">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Facts
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            <ol className="list-decimal list-inside space-y-2">
+                              <li>
+                                Linear regression is used to model the
+                                relationship between a dependent variable and
+                                one or more independent variables.
+                              </li>
+                              <li>
+                                Simple linear regression involves only one
+                                independent variable, while multiple linear
+                                regression involves two or more independent
+                                variables.
+                              </li>
+                              <li>
+                                The goal of linear regression is to minimize the
+                                sum of squared errors between the predicted and
+                                actual values of the dependent variable.
+                              </li>
+                              <li>
+                                Linear regression assumes a linear relationship
+                                between the dependent and independent variables.
+                              </li>
+                              <li>
+                                The coefficients of the independent variables in
+                                the linear regression model represent the
+                                average change in the dependent variable for
+                                each unit change in the corresponding
+                                independent variable, holding other variables
+                                constant.
+                              </li>
+                              <li>
+                                Linear regression can be used for both
+                                prediction and explanation of relationships
+                                between variables.
+                              </li>
+                              <li>
+                                Assumptions of linear regression include
+                                linearity, independence, homoscedasticity, and
+                                normality of errors.
+                              </li>
+                              <li>
+                                Collinearity can cause problems in multiple
+                                linear regression, as it leads to unstable
+                                estimates of the coefficients.
+                              </li>
+                              <li>
+                                Regularization techniques, such as Lasso and
+                                Ridge regression, can help to address the issue
+                                of multicollinearity in multiple linear
+                                regression models.
+                              </li>
+                              <li>
+                                Model evaluation metrics for linear regression
+                                include mean squared error (MSE), root mean
+                                squared error (RMSE), mean absolute error (MAE),
+                                and R-squared.
+                              </li>
+                            </ol>
+                          </dd>
+                        </div>
+
+                        <div className="sm:col-span-2">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Sources
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            <ul
+                              role="list"
+                              className="divide-y divide-gray-200 rounded-md border border-gray-200"
                             >
-                              <span>
-                                {project.title}{' '}
-                                <span className="font-normal text-gray-500">
-                                  with {project.team}
-                                </span>
-                              </span>
-                            </a>
-                          </div>
-                        </td>
-                        <td className="px-6 py-3 text-sm font-medium text-gray-500">
-                          <div className="flex items-center space-x-2">
-                            <div className="flex flex-shrink-0 -space-x-1">
-                              {project.members.map((member) => (
-                                <img
-                                  key={member.handle}
-                                  className="h-6 w-6 max-w-none rounded-full ring-2 ring-white"
-                                  src={member.imageUrl}
-                                  alt={member.name}
-                                />
+                              {attachments.map((attachment) => (
+                                <li
+                                  key={attachment.name}
+                                  className="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
+                                >
+                                  <div className="flex w-0 flex-1 items-center">
+                                    <ComputerDesktopIcon
+                                      className="h-5 w-5 flex-shrink-0 text-gray-400"
+                                      aria-hidden="true"
+                                    />
+                                    <span className="ml-2 w-0 flex-1 truncate">
+                                      {attachment.name}
+                                    </span>
+                                  </div>
+                                  <div className="ml-4 flex-shrink-0">
+                                    <a
+                                      href={attachment.href}
+                                      className="font-medium text-blue-600 hover:text-blue-500"
+                                    >
+                                      Visit
+                                    </a>
+                                  </div>
+                                </li>
                               ))}
-                            </div>
-                            {project.totalDocuments > project.members.length ? (
-                              <span className="flex-shrink-0 text-xs font-medium leading-5">
-                                +
-                                {project.totalDocuments -
-                                  project.members.length}
-                              </span>
-                            ) : null}
-                          </div>
-                        </td>
-                        <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
-                          {project.lastUpdated}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
-                          <a
-                            href="#"
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            View
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                            </ul>
+                          </dd>
+                        </div>
+                      </dl>
+                    </div>
+                    <div>
+                      <a
+                        href="#"
+                        className="block bg-gray-50 px-4 py-4 text-center text-sm font-medium text-gray-500 hover:text-gray-700 sm:rounded-b-lg"
+                      >
+                        Generate More
+                      </a>
+                    </div>
+                  </div>
+                </section>
               </div>
+
+              <section
+                aria-labelledby="timeline-title"
+                className="lg:col-span-1 lg:col-start-3"
+              >
+                <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
+                  <h2
+                    id="timeline-title"
+                    className="text-lg font-medium text-gray-900"
+                  >
+                    Document Details
+                  </h2>
+
+                  {/* Activity Feed */}
+                  <div className="mt-6 flow-root">
+                    <ul role="list" className="-mb-8">
+                      {timeline.map((item, itemIdx) => (
+                        <li key={item.id}>
+                          <div className="relative pb-8">
+                            {itemIdx !== timeline.length - 1 ? (
+                              <span
+                                className="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                            <div className="relative flex space-x-3">
+                              <div>
+                                <span
+                                  className={classNames(
+                                    item.type.bgColorClass,
+                                    'h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white',
+                                  )}
+                                >
+                                  <item.type.icon
+                                    className="h-5 w-5 text-white"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              </div>
+                              <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                <div>
+                                  <p className="text-sm text-gray-500">
+                                    {item.content}{' '}
+                                    <a
+                                      href="#"
+                                      className="font-medium text-gray-900"
+                                    >
+                                      {item.target}
+                                    </a>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-6 flex flex-col justify-stretch">
+                    <button
+                      type="button"
+                      className="inline-flex items-center justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    >
+                      Completed
+                    </button>
+                  </div>
+                </div>
+              </section>
             </div>
           </main>
         </div>
@@ -1012,3 +950,78 @@ export default function () {
     </>
   );
 }
+const user = {
+  name: 'Whitney Francis',
+  email: 'whitney@example.com',
+  imageUrl:
+    'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
+};
+
+const breadcrumbs = [
+  { name: 'Jobs', href: '#', current: false },
+  { name: 'Research Agent', href: '#', current: false },
+  { name: 'Applicants', href: '#', current: true },
+];
+const userNavigation = [
+  { name: 'Your Profile', href: '#' },
+  { name: 'Settings', href: '#' },
+  { name: 'Sign out', href: '#' },
+];
+const attachments = [
+  { name: 'www.google.com', href: '#' },
+  { name: 'www.wikepedia.com', href: '#' },
+];
+const eventTypes = {
+  applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
+  advanced: { icon: HandThumbUpIcon, bgColorClass: 'bg-blue-500' },
+  completed: { icon: CheckIcon, bgColorClass: 'bg-green-500' },
+};
+const timeline = [
+  {
+    id: 1,
+    type: eventTypes.applied,
+    content: 'Agent:',
+    target: 'Researcher',
+  },
+  {
+    id: 2,
+    type: eventTypes.completed,
+    content: 'Task: ',
+    target: 'Transcription Completed',
+  },
+  {
+    id: 4,
+    type: eventTypes.completed,
+    content: 'Task:',
+    target: 'Research Completed',
+  },
+  {
+    id: 5,
+    type: eventTypes.completed,
+    content: 'Task:',
+    target: 'Notes Completed',
+  },
+];
+const comments = [
+  {
+    id: 1,
+    name: 'Leslie Alexander',
+    date: '4d ago',
+    imageId: '1494790108377-be9c29b29330',
+    body: 'Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.',
+  },
+  {
+    id: 2,
+    name: 'Michael Foster',
+    date: '4d ago',
+    imageId: '1519244703995-f4e0f30006d5',
+    body: 'Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.',
+  },
+  {
+    id: 3,
+    name: 'Dries Vincent',
+    date: '4d ago',
+    imageId: '1506794778202-cad84cf45f1d',
+    body: 'Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.',
+  },
+];

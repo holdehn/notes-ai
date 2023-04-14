@@ -1,7 +1,7 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
-import EmptyUpload from './EmptyUpload';
+import EmptyUpload from '../../EmptyUpload';
 import { useSession } from '@supabase/auth-helpers-react';
 import { useSWRConfig } from 'swr';
 
@@ -229,7 +229,7 @@ export default function CreateAgentModal(props: Props) {
                 <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                   <button
                     type="submit"
-                    className="inline-flex w-full justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
+                    className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
                     onClick={uploadFiles}
                   >
                     Create Agent

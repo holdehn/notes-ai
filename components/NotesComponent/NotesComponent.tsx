@@ -1,4 +1,14 @@
-import { Fragment, use, useEffect, useState } from 'react';
+import {
+  Fragment,
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  use,
+  useEffect,
+  useState,
+} from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
@@ -16,10 +26,18 @@ import {
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
-import { supabaseClient } from 'supabase-client';
-import { useUser } from '@supabase/auth-helpers-react';
+import { createSupabaseClient } from 'supabase-client';
+import { Session, useUser } from '@supabase/auth-helpers-react';
 import AgentModal from '../Modals/AgentModal';
 import CreateAgentModal from '../Modals/CreateAgentModal/CreateAgentModal';
+import GenerateNotesModal from '../Modals/GenerateNotesModal/GenerateNotesModal';
+import { useSession } from '@supabase/auth-helpers-react';
+import { format } from 'date-fns';
+
+function formatDateTime(dateString: string | number | Date) {
+  const date = new Date(dateString);
+  return format(date, 'PPP p');
+}
 
 const navigation = [
   { name: 'Home', href: '/home', icon: HomeIcon, current: false },
@@ -88,6 +106,59 @@ const projects = [
   },
   // More projects...
 ];
+
+const agents = [
+  {
+    id: 1,
+    title: 'Summary',
+    bgColorClass: 'bg-blue-600',
+
+    initials: 'S',
+    description: 'Summarize Context.',
+    href: '#',
+    imageUrl:
+      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-01.jpg',
+    imageAlt:
+      'Person using a pen to cross a task off a productivity paper card.',
+  },
+  {
+    id: 2,
+    title: 'Observation',
+    bgColorClass: 'bg-red-600',
+
+    initials: 'O',
+    description: 'Make Observations.',
+    href: '#',
+    imageUrl:
+      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-02.jpg',
+    imageAlt:
+      'Person using a pen to cross a task off a productivity paper card.',
+  },
+  {
+    id: 3,
+    title: 'Topic',
+    bgColorClass: 'bg-purple-600',
+    initials: 'T',
+    description: 'Relate to a topic.',
+    href: '#',
+    imageUrl:
+      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
+    imageAlt:
+      'Person using a pen to cross a task off a productivity paper card.',
+  },
+  {
+    id: 3,
+    title: 'Research',
+    bgColorClass: 'bg-blue-800',
+    initials: 'R',
+    description: 'Research Notes.',
+    href: '#',
+    imageUrl:
+      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
+    imageAlt:
+      'Person using a pen to cross a task off a productivity paper card.',
+  },
+];
 const pinnedProjects = projects.filter((project) => project.pinned);
 
 function classNames(...classes: string[]) {
@@ -96,10 +167,43 @@ function classNames(...classes: string[]) {
 
 export default function () {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [openNotesModal, setOpenNotesModal] = useState(false);
   const [openAgentModal, setOpenAgentModal] = useState(false);
   const [openAddContextModal, setOpenAddContextModal] = useState(false);
   const [success, setSuccess] = useState(false);
+  const session: Session | null = useSession();
+  const userID = session?.user?.id;
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+  const { data, error } = useSWR(
+    userID ? `/api/notes-page-data?userID=${userID}` : null,
+    fetcher,
+  );
+  const notes = data?.notes?.map(
+    (
+      note: {
+        color_theme: any;
+        created_at: any;
+        functionality: any;
+        context: any;
+        id: any;
+        title: any[];
+        description: any;
+        agent_name: any;
+      },
+      i: number,
+    ) => ({
+      index: i + 1,
+      note_id: note.id,
+      title: note.title,
+      context: note.context,
+      functionality: note.functionality,
+      agent_name: note.agent_name,
+      created_at: formatDateTime(note.created_at), // Use the formatDateTime function here
+      bgColorClass: note.color_theme,
+    }),
+  );
 
   return (
     <>
@@ -233,7 +337,7 @@ export default function () {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-gray-100 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-blue-50 lg:pb-4 lg:pt-5">
           <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -579,9 +683,9 @@ export default function () {
               </div>
             </div>
           </div>
-          <main className="flex-1 bg-white">
+          <main className="flex-1 bg-gray-100">
             {/* Page title & actions */}
-            <div className="border-b bg-gray-100 border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <div className="border-b bg-white border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="min-w-0 flex-1">
                 <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
                   NotesAI
@@ -609,110 +713,107 @@ export default function () {
               </div>
             </div>
             {/* Pinned projects */}
-            <div className="mt-6 px-4 sm:px-6 lg:px-8 bg-white">
-              <h2 className="text-sm font-medium text-gray-900">
-                Upload Context
-              </h2>
+            <div className="mt-6 px-4 sm:px-6 lg:px-8 bg-gray-100">
+              <h2 className="text-sm font-medium text-gray-900">Agents</h2>
               <ul
                 role="list"
                 className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4"
               >
-                {pinnedProjects.map((project) => (
+                {agents.map((tool) => (
                   <li
-                    key={project.id}
+                    key={tool.id}
                     className="relative col-span-1 flex rounded-md shadow-sm"
                   >
-                    <div
-                      className={classNames(
-                        project.bgColorClass,
-                        'flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
-                      )}
-                    >
-                      {project.initials}
-                    </div>
-                    <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-gray-50">
-                      <div className="flex-1 truncate px-4 py-2 text-sm">
-                        <a
-                          href="#"
-                          className="font-medium text-gray-900 hover:text-gray-600"
-                        >
-                          {project.title}
-                        </a>
-                        <p className="text-gray-500">
-                          {project.totalDocuments} Documents
-                        </p>
+                    <a href="#" className="w-full flex">
+                      <div
+                        className={classNames(
+                          tool.bgColorClass,
+                          'flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
+                        )}
+                      >
+                        {tool.initials}
                       </div>
-                      <Menu as="div" className="flex-shrink-0 pr-2">
-                        <Menu.Button className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-                          <span className="sr-only">Open options</span>
-                          <EllipsisVerticalIcon
-                            className="h-5 w-5"
-                            aria-hidden="true"
-                          />
-                        </Menu.Button>
-                        <Transition
-                          as={Fragment}
-                          enter="transition ease-out duration-100"
-                          enterFrom="transform opacity-0 scale-95"
-                          enterTo="transform opacity-100 scale-100"
-                          leave="transition ease-in duration-75"
-                          leaveFrom="transform opacity-100 scale-100"
-                          leaveTo="transform opacity-0 scale-95"
-                        >
-                          <Menu.Items className="absolute right-10 top-3 z-10 mx-3 mt-1 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            <div className="py-1">
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="#"
-                                    className={classNames(
-                                      active
-                                        ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-700',
-                                      'block px-4 py-2 text-sm',
-                                    )}
-                                  >
-                                    View
-                                  </a>
-                                )}
-                              </Menu.Item>
-                            </div>
-                            <div className="py-1">
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="#"
-                                    className={classNames(
-                                      active
-                                        ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-700',
-                                      'block px-4 py-2 text-sm',
-                                    )}
-                                  >
-                                    Removed from pinned
-                                  </a>
-                                )}
-                              </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="#"
-                                    className={classNames(
-                                      active
-                                        ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-700',
-                                      'block px-4 py-2 text-sm',
-                                    )}
-                                  >
-                                    Share
-                                  </a>
-                                )}
-                              </Menu.Item>
-                            </div>
-                          </Menu.Items>
-                        </Transition>
-                      </Menu>
-                    </div>
+                      <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-600 bg-white hover:shadow-lg cursor-pointer">
+                        <div className="flex-1 truncate px-4 py-2 text-sm h-full">
+                          <p className="font-medium text-gray-900 hover:text-gray-600 mb-2">
+                            {tool.title}
+                          </p>
+                          <p className="text-gray-500 h-full overflow-y-auto">
+                            {tool.description}
+                          </p>
+                        </div>
+                        <Menu as="div" className="flex-shrink-0 pr-2">
+                          <Menu.Button className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                            <span className="sr-only">Open options</span>
+                            <EllipsisVerticalIcon
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          </Menu.Button>
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                          >
+                            <Menu.Items className="absolute right-10 top-3 z-10 mx-3 mt-1 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <div className="py-1">
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      href="#"
+                                      className={classNames(
+                                        active
+                                          ? 'bg-gray-100 text-gray-900'
+                                          : 'text-gray-700',
+                                        'block px-4 py-2 text-sm',
+                                      )}
+                                    >
+                                      View
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                              </div>
+                              <div className="py-1">
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      href="#"
+                                      className={classNames(
+                                        active
+                                          ? 'bg-gray-100 text-gray-900'
+                                          : 'text-gray-700',
+                                        'block px-4 py-2 text-sm',
+                                      )}
+                                    >
+                                      Removed from pinned
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      href="#"
+                                      className={classNames(
+                                        active
+                                          ? 'bg-gray-100 text-gray-900'
+                                          : 'text-gray-700',
+                                        'block px-4 py-2 text-sm',
+                                      )}
+                                    >
+                                      Share
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                              </div>
+                            </Menu.Items>
+                          </Transition>
+                        </Menu>
+                      </div>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -721,30 +822,30 @@ export default function () {
             {/* Projects list (only on smallest breakpoint) */}
             <div className="mt-10 sm:hidden">
               <div className="px-4 sm:px-6">
-                <h2 className="text-sm font-medium text-gray-900">Projects</h2>
+                <h2 className="text-sm font-medium text-gray-900">Notes</h2>
               </div>
               <ul
                 role="list"
                 className="mt-3 divide-y divide-gray-100 border-t border-gray-200"
               >
-                {projects.map((project) => (
-                  <li key={project.id}>
+                {notes?.map((note: any) => (
+                  <li key={note.index}>
                     <a
-                      href="#"
+                      href={`/my-notes/${note.note_id}`}
                       className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
                     >
                       <span className="flex items-center space-x-3 truncate">
                         <span
                           className={classNames(
-                            project.bgColorClass,
+                            note.bgColorClass,
                             'h-2.5 w-2.5 flex-shrink-0 rounded-full',
                           )}
                           aria-hidden="true"
                         />
                         <span className="truncate text-sm font-medium leading-6">
-                          {project.title}{' '}
+                          {note.title}{' '}
                           <span className="truncate font-normal text-gray-500">
-                            in {project.team}
+                            with {note.context}
                           </span>
                         </span>
                       </span>
@@ -770,10 +871,15 @@ export default function () {
                 <div className="ml-4 mt-4 flex-shrink-0">
                   <button
                     type="button"
+                    onClick={() => setOpenNotesModal(true)}
                     className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Generate Notes
                   </button>
+                  <GenerateNotesModal
+                    open={openNotesModal}
+                    setOpen={setOpenNotesModal}
+                  />
                 </div>
               </div>
             </div>
@@ -787,7 +893,7 @@ export default function () {
                         className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                         scope="col"
                       >
-                        <span className="lg:pl-2">Agents</span>
+                        <span className="lg:pl-2">Notes</span>
                       </th>
                       <th
                         className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-900"
@@ -808,25 +914,25 @@ export default function () {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100 bg-white">
-                    {projects.map((project) => (
-                      <tr key={project.id}>
+                    {notes?.map((note: any) => (
+                      <tr key={note.index}>
                         <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                           <div className="flex items-center space-x-3 lg:pl-2">
                             <div
                               className={classNames(
-                                project.bgColorClass,
+                                note.bgColorClass,
                                 'h-2.5 w-2.5 flex-shrink-0 rounded-full',
                               )}
                               aria-hidden="true"
                             />
                             <a
-                              href="#"
+                              href={`/my-notes/${note.note_id}`}
                               className="truncate hover:text-gray-600"
                             >
                               <span>
-                                {project.title}{' '}
+                                {note.title}{' '}
                                 <span className="font-normal text-gray-500">
-                                  in {project.team}
+                                  in {note.team}
                                 </span>
                               </span>
                             </a>
@@ -835,30 +941,16 @@ export default function () {
                         <td className="px-6 py-3 text-sm font-medium text-gray-500">
                           <div className="flex items-center space-x-2">
                             <div className="flex flex-shrink-0 -space-x-1">
-                              {project.members.map((member) => (
-                                <img
-                                  key={member.handle}
-                                  className="h-6 w-6 max-w-none rounded-full ring-2 ring-white"
-                                  src={member.imageUrl}
-                                  alt={member.name}
-                                />
-                              ))}
+                              {note.agent_name}
                             </div>
-                            {project.totalDocuments > project.members.length ? (
-                              <span className="flex-shrink-0 text-xs font-medium leading-5">
-                                +
-                                {project.totalDocuments -
-                                  project.members.length}
-                              </span>
-                            ) : null}
                           </div>
                         </td>
                         <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
-                          {project.lastUpdated}
+                          {note.created_at}
                         </td>
                         <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                           <a
-                            href="#"
+                            href={`/my-notes/${note.note_id}`}
                             className="text-indigo-600 hover:text-indigo-900"
                           >
                             View

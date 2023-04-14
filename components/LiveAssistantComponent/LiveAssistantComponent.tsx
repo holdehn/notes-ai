@@ -7,6 +7,9 @@ import {
   HomeIcon,
   XMarkIcon,
   NewspaperIcon,
+  ChatBubbleLeftEllipsisIcon,
+  TagIcon,
+  UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import {
   ChevronRightIcon,
@@ -15,11 +18,16 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
-import useSWR from 'swr';
-import { supabaseClient } from 'supabase-client';
-import { useUser } from '@supabase/auth-helpers-react';
-import AgentModal from '../Modals/AgentModal';
-import CreateAgentModal from '../Modals/CreateAgentModal/CreateAgentModal';
+
+import {
+  ArrowLongLeftIcon,
+  CheckIcon,
+  HandThumbUpIcon,
+  PaperClipIcon,
+  QuestionMarkCircleIcon,
+  UserIcon,
+} from '@heroicons/react/20/solid';
+import { Bars3Icon, BellIcon } from '@heroicons/react/24/outline';
 
 const navigation = [
   { name: 'Home', href: '/home', icon: HomeIcon, current: false },
@@ -233,7 +241,7 @@ export default function () {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-gray-100 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-blue-50 lg:pb-4 lg:pt-5">
           <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -579,149 +587,275 @@ export default function () {
               </div>
             </div>
           </div>
-          <main className="flex-1">
-            {/* Page title & actions */}
-            <div className="border-b bg-gray-100 border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
-              <div className="min-w-0 flex-1">
-                <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-                  Live AI Assistant
-                </h1>
+          <main className="py-10 bg-gray-100">
+            {/* Page header */}
+            <div className="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
+              <div className="flex items-center space-x-5">
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    <img
+                      className="h-16 w-16 rounded-full"
+                      src="https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg"
+                      alt=""
+                    />
+                    <span
+                      className="absolute inset-0 rounded-full shadow-inner"
+                      aria-hidden="true"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">
+                    Personal Assistant
+                  </h1>
+                  <p className="text-sm font-medium text-gray-500">
+                    Current Agent:{' '}
+                    <a href="#" className="text-gray-900">
+                      Live
+                    </a>{' '}
+                  </p>
+                </div>
               </div>
-              <div className="mt-4 flex sm:ml-4 sm:mt-0">
+              <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
                 <button
-                  onClick={() => setOpenAgentModal(true)}
-                  className="sm:order-0 order-1 ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-0"
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                 >
                   Select Agent
                 </button>
-                <AgentModal open={openAgentModal} setOpen={setOpenAgentModal} />
                 <button
-                  onClick={() => setOpenAddContextModal(true)}
-                  className="order-0 inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 sm:order-1 sm:ml-3"
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                 >
-                  Create Agent
+                  Start Session
                 </button>
-                <CreateAgentModal
-                  open={openAddContextModal}
-                  setOpen={setOpenAddContextModal}
-                  setSuccess={setSuccess}
-                />
               </div>
             </div>
-            {/* Pinned projects */}
-
-            <div className="  px-4 py-5  sm:px-6 border-gray-200 border-t bg-white">
-              <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-                <div className="ml-4 mt-4">
-                  <h3 className="text-base font-semibold leading-6 text-gray-900">
-                    Live Assistant AI
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Get real-time assistance based on your own data.
-                  </p>
-                </div>
-                <div className="ml-4 mt-4 flex-shrink-0">
-                  <button
-                    type="button"
-                    className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Begin Session
-                  </button>
-                </div>
-              </div>
-            </div>
-            {/* Projects table (small breakpoint and up) */}
-            <div className="mt-4 hidden sm:block">
-              <div className="inline-block min-w-full border-b border-gray-200 align-middle">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="border-t border-gray-200">
-                      <th
-                        className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                        scope="col"
-                      >
-                        <span className="lg:pl-2">Saved</span>
-                      </th>
-                      <th
-                        className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                        scope="col"
-                      >
-                        Documents
-                      </th>
-                      <th
-                        className="hidden border-b border-gray-200 bg-gray-100 px-6 py-3 text-right text-sm font-semibold text-gray-900 md:table-cell"
-                        scope="col"
-                      >
-                        Date:
-                      </th>
-                      <th
-                        className="border-b border-gray-200 bg-gray-100 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                        scope="col"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100 bg-gray-100">
-                    {projects.map((project) => (
-                      <tr key={project.id}>
-                        <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
-                          <div className="flex items-center space-x-3 lg:pl-2">
-                            <div
-                              className={classNames(
-                                project.bgColorClass,
-                                'h-2.5 w-2.5 flex-shrink-0 rounded-full',
-                              )}
+            <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+              <section
+                aria-labelledby="timeline-title"
+                className="lg:col-span-2 lg:col-start-1"
+              >
+                <div className="flow-root mt-6">
+                  <ul role="list" className="-mb-8">
+                    {activity.map((activityItem, activityItemIdx) => (
+                      <li key={activityItem.id}>
+                        <div className="relative pb-8">
+                          {activityItemIdx !== activity.length - 1 ? (
+                            <span
+                              className="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200"
                               aria-hidden="true"
                             />
-                            <a
-                              href="#"
-                              className="truncate hover:text-gray-600"
-                            >
-                              <span>
-                                {project.title}{' '}
-                                <span className="font-normal text-gray-500">
-                                  in {project.team}
-                                </span>
-                              </span>
-                            </a>
-                          </div>
-                        </td>
-                        <td className="px-6 py-3 text-sm font-medium text-gray-500">
-                          <div className="flex items-center space-x-2">
-                            <div className="flex flex-shrink-0 -space-x-1">
-                              {project.members.map((member) => (
-                                <img
-                                  key={member.handle}
-                                  className="h-6 w-6 max-w-none rounded-full ring-2 ring-white"
-                                  src={member.imageUrl}
-                                  alt={member.name}
-                                />
-                              ))}
-                            </div>
-                            {project.totalDocuments > project.members.length ? (
-                              <span className="flex-shrink-0 text-xs font-medium leading-5">
-                                +
-                                {project.totalDocuments -
-                                  project.members.length}
-                              </span>
+                          ) : null}
+                          <div className="relative flex items-start space-x-3">
+                            {activityItem.type === 'comment' ? (
+                              <>
+                                <div className="relative">
+                                  {activityItem.imageUrl ? (
+                                    <img
+                                      className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white"
+                                      src={activityItem.imageUrl}
+                                      alt=""
+                                    />
+                                  ) : (
+                                    <div className="relative">
+                                      <div>
+                                        <div className="relative px-1">
+                                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
+                                            <UserCircleIcon
+                                              className="h-5 w-5 text-gray-500"
+                                              aria-hidden="true"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  <span className="absolute -bottom-0.5 -right-1 rounded-tl bg-white px-0.5 py-px">
+                                    <ChatBubbleLeftEllipsisIcon
+                                      className="h-5 w-5 text-gray-400"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                  <div>
+                                    <div className="text-sm">
+                                      <a
+                                        href={activityItem.person.href}
+                                        className="font-medium text-gray-900"
+                                      >
+                                        {activityItem.person.name}
+                                      </a>
+                                    </div>
+                                    <p className="mt-0.5 text-sm text-gray-500">
+                                      Heard in conversation
+                                    </p>
+                                  </div>
+                                  <div className="mt-2 text-sm text-gray-700">
+                                    <p>{activityItem.comment}</p>
+                                  </div>
+                                </div>
+                              </>
+                            ) : activityItem.type === 'assignment' ? (
+                              <>
+                                <div>
+                                  <div className="relative px-1">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
+                                      <UserCircleIcon
+                                        className="h-5 w-5 text-gray-500"
+                                        aria-hidden="true"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="min-w-0 flex-1 py-1.5">
+                                  <div className="text-sm text-gray-500">
+                                    <a
+                                      href={activityItem.person.href}
+                                      className="font-medium text-gray-900"
+                                    >
+                                      {activityItem.person.name}
+                                    </a>{' '}
+                                    Context Search{' '}
+                                    <span className="whitespace-nowrap">
+                                      {activityItem.date}
+                                    </span>
+                                  </div>
+                                </div>
+                              </>
+                            ) : activityItem.type === 'tags' ? (
+                              <>
+                                <div>
+                                  <div className="relative px-1">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
+                                      <UserCircleIcon
+                                        className="h-5 w-5 text-gray-500"
+                                        aria-hidden="true"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="min-w-0 flex-1 py-0">
+                                  <div className="text-sm leading-8 text-gray-500">
+                                    <span className="mr-0.5">
+                                      <a
+                                        href={activityItem.person.href}
+                                        className="font-medium text-gray-900"
+                                      >
+                                        {activityItem.person.name}
+                                      </a>{' '}
+                                      added topics
+                                    </span>{' '}
+                                    <span className="mr-0.5">
+                                      {activityItem?.tags?.map((tag): any => (
+                                        <Fragment key={tag.name}>
+                                          <a
+                                            href={tag.href}
+                                            className="relative inline-flex items-center rounded-full px-2.5 py-1 text-xs ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                          >
+                                            <span className="absolute flex flex-shrink-0 items-center justify-center">
+                                              <span
+                                                className={classNames(
+                                                  tag.color,
+                                                  'h-1.5 w-1.5 rounded-full',
+                                                )}
+                                                aria-hidden="true"
+                                              />
+                                            </span>
+                                            <span className="ml-3 font-semibold text-gray-900">
+                                              {tag.name}
+                                            </span>
+                                          </a>{' '}
+                                        </Fragment>
+                                      ))}
+                                    </span>
+                                    <span className="whitespace-nowrap">
+                                      {activityItem.date}
+                                    </span>
+                                  </div>
+                                </div>
+                              </>
                             ) : null}
                           </div>
-                        </td>
-                        <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
-                          {project.lastUpdated}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
-                          <a
-                            href="#"
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            View
-                          </a>
-                        </td>
-                      </tr>
+                        </div>
+                      </li>
                     ))}
-                  </tbody>
-                </table>
-              </div>
+                  </ul>
+                </div>
+              </section>
+              <section
+                aria-labelledby="timeline-title"
+                className="lg:col-span-1 lg:col-start-3"
+              >
+                <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
+                  <h2
+                    id="timeline-title"
+                    className="text-lg font-medium text-gray-900"
+                  >
+                    Transcription
+                  </h2>
+
+                  <div className="mt-6 flow-root">
+                    <ul role="list" className="-mb-8">
+                      {timeline.map((item, itemIdx) => (
+                        <li key={item.id}>
+                          <div className="relative pb-8">
+                            {itemIdx !== timeline.length - 1 ? (
+                              <span
+                                className="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                            <div className="relative flex space-x-3">
+                              <div>
+                                <span
+                                  className={classNames(
+                                    item.type.bgColorClass,
+                                    'h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white',
+                                  )}
+                                >
+                                  <item.type.icon
+                                    className="h-5 w-5 text-white"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              </div>
+                              <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                <div>
+                                  <p className="text-sm text-gray-500">
+                                    {item.content}{' '}
+                                    <a
+                                      href="#"
+                                      className="font-medium text-gray-900"
+                                    >
+                                      {item.target}
+                                    </a>
+                                  </p>
+                                </div>
+                                <div className="whitespace-nowrap text-right text-sm text-gray-500">
+                                  <time dateTime={item.datetime}>
+                                    {item.date}
+                                  </time>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-6 flex flex-col justify-stretch">
+                    <button
+                      type="button"
+                      className="inline-flex items-center justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    >
+                      Archive Session
+                    </button>
+                  </div>
+                </div>
+              </section>
             </div>
           </main>
         </div>
@@ -729,3 +863,129 @@ export default function () {
     </>
   );
 }
+const user = {
+  name: 'Whitney Francis',
+  email: 'whitney@example.com',
+  imageUrl:
+    'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
+};
+
+const breadcrumbs = [
+  { name: 'Jobs', href: '#', current: false },
+  { name: 'Front End Developer', href: '#', current: false },
+  { name: 'Applicants', href: '#', current: true },
+];
+const userNavigation = [
+  { name: 'Your Profile', href: '#' },
+  { name: 'Settings', href: '#' },
+  { name: 'Sign out', href: '#' },
+];
+const attachments = [
+  { name: 'resume_front_end_developer.pdf', href: '#' },
+  { name: 'coverletter_front_end_developer.pdf', href: '#' },
+];
+const eventTypes = {
+  applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
+  advanced: { icon: HandThumbUpIcon, bgColorClass: 'bg-blue-500' },
+  completed: { icon: CheckIcon, bgColorClass: 'bg-green-500' },
+};
+const timeline = [
+  {
+    id: 1,
+    type: eventTypes.applied,
+    content: 'Applied to',
+    target: 'Front End Developer',
+    date: 'Sep 20',
+    datetime: '2020-09-20',
+  },
+  {
+    id: 2,
+    type: eventTypes.advanced,
+    content: 'Advanced to phone screening by',
+    target: 'Bethany Blake',
+    date: 'Sep 22',
+    datetime: '2020-09-22',
+  },
+  {
+    id: 3,
+    type: eventTypes.completed,
+    content: 'Completed phone screening with',
+    target: 'Martha Gardner',
+    date: 'Sep 28',
+    datetime: '2020-09-28',
+  },
+  {
+    id: 4,
+    type: eventTypes.advanced,
+    content: 'Advanced to interview by',
+    target: 'Bethany Blake',
+    date: 'Sep 30',
+    datetime: '2020-09-30',
+  },
+  {
+    id: 5,
+    type: eventTypes.completed,
+    content: 'Completed interview with',
+    target: 'Katherine Snyder',
+    date: 'Oct 4',
+    datetime: '2020-10-04',
+  },
+];
+const comments = [
+  {
+    id: 1,
+    name: 'Leslie Alexander',
+    date: '4d ago',
+    imageId: '1494790108377-be9c29b29330',
+    body: 'Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.',
+  },
+  {
+    id: 2,
+    name: 'Michael Foster',
+    date: '4d ago',
+    imageId: '1519244703995-f4e0f30006d5',
+    body: 'Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.',
+  },
+  {
+    id: 3,
+    name: 'Dries Vincent',
+    date: '4d ago',
+    imageId: '1506794778202-cad84cf45f1d',
+    body: 'Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.',
+  },
+];
+
+const activity = [
+  {
+    id: 1,
+    type: 'comment',
+    person: { name: 'Erlich Bachman', href: '#' },
+    imageUrl:
+      'https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg',
+    comment:
+      "You know, when I'm out there selling Pied Piper, I tell people it's like a magical unicorn that farts rainbows and shoots out pure innovation from its eyes. It's so advanced that it can singlehandedly cure global warming, end world hunger, and bring peace to the Middle East. Honestly, if Pied Piper were a person, it'd be like Einstein, Gandhi, and Beyoncé all rolled into one superhuman.",
+    date: '6d ago',
+  },
+  {
+    id: 2,
+    type: 'assignment',
+    person: { name: 'Live Agent', href: '#' },
+    assigned: { name: 'Kristin Watson', href: '#' },
+  },
+  {
+    id: 3,
+    type: 'tags',
+    person: { name: 'Live Agent', href: '#' },
+    tags: [
+      { name: 'Sales Call', href: '#', color: 'bg-rose-500' },
+      { name: 'Pied Piper', href: '#', color: 'bg-indigo-500' },
+    ],
+  },
+  {
+    id: 4,
+    type: 'comment',
+    person: { name: 'Live Agent', href: '#' },
+    comment:
+      "Erlich, remember to focus on the key selling points of Pied Piper, such as its innovative compression algorithm, data efficiency, and scalability. Speak confidently and calmly, and listen to the client's needs, concerns, and questions. Address their concerns with specific examples of how Pied Piper can benefit their business, and highlight any case studies or success stories. Show them the value they'll receive from the investment and remember to be genuine and authentic in your approach. Good luck!",
+  },
+];

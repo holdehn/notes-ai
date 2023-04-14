@@ -16,7 +16,7 @@ async function transcribe(file: Buffer, contentType: string) {
   const form = new FormData();
   form.append('file', file, {
     contentType,
-    filename: `audio.${mime.getExtension(contentType) ?? 'mp3'}`,
+    filename: `file.${mime.getExtension(contentType)}`,
   });
   form.append('model', 'whisper-1');
   const data = form.getBuffer();
@@ -32,7 +32,9 @@ async function transcribe(file: Buffer, contentType: string) {
       body: data,
     },
   );
-
+  if (!response.ok) {
+    console.log(response);
+  }
   console.log(`Transcription API response status: ${response.status}`);
   return response;
 }
@@ -64,14 +66,12 @@ async function convertToMp3(buffer: Buffer, fileType: string): Promise<Buffer> {
 
     console.log('command');
     command.run();
-
-    command.on('end', () => {
-      console.log('ffmpeg process finished');
+    console.log('run');
+    output.on('finish', () => {
       resolve(Buffer.concat(chunks));
     });
   });
 }
-
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     try {
