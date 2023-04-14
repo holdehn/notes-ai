@@ -23,7 +23,7 @@ import { supabaseClient } from 'supabase-client';
 import { useUser } from '@supabase/auth-helpers-react';
 import AgentModal from '../Modals/AgentModal';
 import CreateAgentModal from '../Modals/CreateAgentModal/CreateAgentModal';
-
+import Link from 'next/link';
 import { Popover } from '@headlessui/react';
 import {
   ArrowLongLeftIcon,
@@ -627,16 +627,15 @@ export default function () {
             <div className="px-6 py-2">
               <div className="mt-2 md:flex md:items-center md:justify-between">
                 <nav className="sm:hidden" aria-label="Back">
-                  <a
-                    href="/my-notes"
-                    className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
-                  >
-                    <ChevronLeftIcon
-                      className="-ml-1 mr-1 h-5 w-5 flex-shrink-0 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    Back
-                  </a>
+                  <Link href="/my-notes">
+                    <a className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700">
+                      <ChevronLeftIcon
+                        className="-ml-1 mr-1 h-5 w-5 flex-shrink-0 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      Back
+                    </a>
+                  </Link>
                 </nav>
                 <nav
                   className="leading-7 hidden sm:flex"
@@ -645,12 +644,11 @@ export default function () {
                   <ol role="list" className="flex items-center space-x-4">
                     <li>
                       <div className="flex">
-                        <a
-                          href="/my-notes"
-                          className="text-sm font-medium text-gray-500 hover:text-gray-700"
-                        >
-                          My Notes
-                        </a>
+                        <Link href="/my-notes">
+                          <a className="text-sm font-medium text-gray-500 hover:text-gray-700">
+                            My Notes
+                          </a>
+                        </Link>
                       </div>
                     </li>
                     <li>
@@ -659,42 +657,20 @@ export default function () {
                           className="h-5 w-5 flex-shrink-0 text-gray-400"
                           aria-hidden="true"
                         />
-                        <a
-                          href="/my-notes/1"
-                          aria-current="page"
-                          className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
-                        >
-                          Lecture 2 Statistics
-                        </a>
+                        <Link href="/my-notes/1">
+                          <a
+                            aria-current="page"
+                            className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                          >
+                            Lecture 2 Statistics
+                          </a>
+                        </Link>
                       </div>
                     </li>
                   </ol>
                 </nav>
               </div>
-
-              <div className="mt-2 md:flex md:items-center md:justify-between">
-                <div className="min-w-0 flex-1">
-                  <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                    Lecture 2 Statistics
-                  </h2>
-                </div>
-                <div className="mt-4 flex flex-shrink-0 md:ml-4 md:mt-0">
-                  <button
-                    type="button"
-                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Share
-                  </button>
-                </div>
-              </div>
-            </div>
-
+            </div>{' '}
             <div className="mx-auto mt-4 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
               <div className="space-y-6 lg:col-span-2 lg:col-start-1">
                 {/* Description list*/}
