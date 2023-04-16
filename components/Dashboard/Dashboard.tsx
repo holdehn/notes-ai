@@ -20,6 +20,7 @@ import { supabaseClient } from 'supabase-client';
 import { Session, useSession } from '@supabase/auth-helpers-react';
 import AgentModal from '../Modals/AgentModal';
 import CreateAgentModal from '../Modals/CreateAgentModal/CreateAgentModal';
+import TaskModal from '../Modals/TaskModal/TaskModal';
 
 const navigation = [
   { name: 'Home', href: '/home', icon: HomeIcon, current: true },
@@ -172,7 +173,7 @@ const tools = [
 
     initials: 'A',
     description: 'Live Assistant.',
-    href: '#',
+    href: '/live-assistant',
     imageUrl:
       'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-01.jpg',
     imageAlt:
@@ -223,7 +224,7 @@ function classNames(...classes: string[]) {
 
 export default function () {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [taskModalOpen, setTaskModalOpen] = useState(false);
   const [openAgentModal, setOpenAgentModal] = useState(false);
   const [openAddContextModal, setOpenAddContextModal] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -239,6 +240,9 @@ export default function () {
 
   console.log(data);
 
+  const closeTaskModal = () => {
+    setTaskModalOpen(false);
+  };
   return (
     <>
       <div className="min-h-full">
@@ -906,10 +910,12 @@ export default function () {
                 <div className="ml-4 mt-4 flex-shrink-0">
                   <button
                     type="button"
+                    onClick={() => setTaskModalOpen(true)}
                     className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     New Task
                   </button>
+                  <TaskModal open={taskModalOpen} setOpen={setTaskModalOpen} />
                 </div>
               </div>
             </div>
@@ -923,7 +929,7 @@ export default function () {
                         className="border-b border-gray-200 bg-gray-100  px-6 py-3 text-left text-sm font-semibold text-gray-900"
                         scope="col"
                       >
-                        <span className="lg:pl-2">Tasks</span>
+                        <span className="lg:pl-2">Saved</span>
                       </th>
                       <th
                         className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-900"

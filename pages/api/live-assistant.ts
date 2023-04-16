@@ -16,27 +16,27 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   // Get the transcription from the request body
-  const { transcription } = req.body;
+  const { transcript } = req.body;
 
-  if (!transcription || transcription.length === 0) {
+  if (!transcript || transcript.length === 0) {
     return res.status(400).json({ message: 'No transcription in the request' });
   }
 
   // Set the response headers
 
   // Set the response headers
-  // res.writeHead(200, {
-  //   'Content-Type': 'text/event-stream',
-  //   'Cache-Control': 'no-cache, no-transform',
-  //   Connection: 'keep-alive',
-  // });
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache, no-transform',
+    Connection: 'keep-alive',
+  });
 
-  // // Send the data to the client
-  // const sendData = (data: string) => {
-  //   res.write(`data: ${data}\n\n`);
-  // };
+  // Send the data to the client
+  const sendData = (data: string) => {
+    res.write(`data: ${data}\n\n`);
+  };
 
-  // sendData(JSON.stringify({ data: '' }));
+  sendData(JSON.stringify({ data: '' }));
 
   //load wolfram tool, wolfram tool from langchain n/a on typescript so i make api call
   const tools: Tool[] = [];
@@ -59,19 +59,16 @@ export default async function handler(
   );
 
   const promptTemplate = PromptTemplate.fromTemplate(
-    `Given a lecture transcription, summarize it and identify important topics. Research these topics and take notes based on the transcription and based research:
-     Title: {title}
-     Description: {description}
-     Summary: {summary}
-      Topics: {topics}
-      Subtopics: {subtopics}
-      Notes: {notes}
-      Sources: {sources}
-     {end}`,
+    `Given the current transcription of a conversation, identify important topics and generate an important fact or responses relevant to the conversation.
+     Transcription: {transcription}.
+     Topics: {topics}.
+     Fact: {fact}.
+     Response: {response}
+     \u2029`,
   );
   const result = await agentExecutor.call({
     promptTemplate,
-    input: [transcription],
+    input: [transcript],
     maxTokens: 100,
     temperature: 0.9,
     topP: 1,
@@ -83,12 +80,7 @@ export default async function handler(
     logprobs: 0,
     stop: ['\u2029'],
     echo: false,
-    output: true,
   });
-  console.log('result' + result.output);
-  //string and parse result so i can view
-
-  console.log(JSON.stringify(result));
-
-  return res.status(200).json(result.output);
+  sendData(JSON.stringify({ data: result.output }));
+  res.end();
 }

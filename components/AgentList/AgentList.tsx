@@ -26,14 +26,14 @@ const agents = [
     description: 'Your personal tutor',
   },
   {
-    id: 'Sales',
-    name: 'Sales',
+    id: 'Research',
+    name: 'Research',
     description: 'Your personal sales agent',
   },
 
   {
-    id: 'Recruitment',
-    name: 'Customer Service',
+    id: 'Work',
+    name: 'Work',
     description: 'Customer Service Agent',
   },
 ];

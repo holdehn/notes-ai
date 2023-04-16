@@ -1,4 +1,4 @@
-import { Fragment, use, useEffect, useState } from 'react';
+import { Fragment, use, useCallback, useEffect, useRef, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
@@ -28,6 +28,7 @@ import {
   UserIcon,
 } from '@heroicons/react/20/solid';
 import { Bars3Icon, BellIcon } from '@heroicons/react/24/outline';
+import LiveTranscription from '../LiveTranscription';
 
 const navigation = [
   { name: 'Home', href: '/home', icon: HomeIcon, current: false },
@@ -102,12 +103,171 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
+function useInterval(callback: () => void, delay: number | null) {
+  const savedCallback = useRef<() => void>(() => {});
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+
+    if (delay !== null) {
+      const id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
 export default function () {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isSessionActive, setIsSessionActive] = useState(false);
+  const [sessionTime, setSessionTime] = useState(0);
+  const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [transcript, setTranscript] = useState<string>('');
+  const [responseAI, setResponseAI] = useState<string>('');
 
-  const [openAgentModal, setOpenAgentModal] = useState(false);
-  const [openAddContextModal, setOpenAddContextModal] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const sendAudio = async (file: File) => {
+    try {
+      if (!file) {
+        alert('Please upload an audio file');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/transcribe', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.log('errpr' + JSON.stringify(errorData));
+        throw new Error(errorData.message);
+      }
+
+      const data = await res.json();
+      console.log('data' + JSON.stringify(data));
+      setTranscript(JSON.stringify(data));
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+
+      alert(`Error: ${error.message}`);
+    }
+  };
+
+  const handleEndSession = () => {
+    setIsSessionActive(false);
+    setSessionTime(0);
+  };
+
+  const handleStartSession = () => {
+    setIsSessionActive(true);
+    setSessionTime(0);
+  };
+  useInterval(
+    () => {
+      if (isSessionActive) {
+        recordAndSend();
+      }
+    },
+    isSessionActive ? 15000 : null,
+  );
+
+  const sendTranscriptToLiveAssistant = async (transcriptData: string) => {
+    try {
+      console.log('sending transcript to liveassistant' + transcriptData);
+      const response = await fetch('/api/live-assistant', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ transcript: transcriptData }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send transcript to liveassistant');
+      }
+      const data = await response.json();
+      console.log('response from liveassistant' + JSON.stringify(data));
+      setResponseAI(data.response.output);
+    } catch (error: any) {
+      console.error('Error sending transcript to liveassistant:', error);
+      throw error;
+    }
+  };
+
+  const startRecording = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
+      const mediaRecorder = new MediaRecorder(mediaStream);
+      const chunks: Blob[] = [];
+
+      mediaRecorder.addEventListener('dataavailable', (event) => {
+        chunks.push(event.data);
+      });
+
+      mediaRecorder.addEventListener('stop', () => {
+        const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+        const audio = new File([audioBlob], 'audio.webm', {
+          type: 'audio/webm',
+        });
+        setAudioFile(audio);
+      });
+
+      mediaRecorder.start();
+
+      return mediaRecorder;
+    } catch (error) {
+      console.error('Error starting audio recording:', error);
+      return null;
+    }
+  };
+
+  const stopRecording = (mediaRecorder: MediaRecorder | null) => {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+    }
+  };
+
+  const recordAndSend = async () => {
+    //dont record if session is
+    const mediaRecorder = await startRecording();
+    if (mediaRecorder) {
+      setTimeout(() => {
+        stopRecording(mediaRecorder);
+      }, 15000);
+    }
+  };
+
+  useEffect(() => {
+    if (isSessionActive) {
+      recordAndSend();
+    }
+  }, [isSessionActive]);
+
+  useEffect(() => {
+    if (isSessionActive && audioFile) {
+      console.log('sending audio' + audioFile.name);
+      sendAudio(audioFile);
+
+      setAudioFile(null); // Remove the audio file from memory
+    }
+  }, [audioFile, isSessionActive]);
+
+  useEffect(() => {
+    if (isSessionActive && transcript) {
+      console.log('sending transcript' + transcript);
+      sendTranscriptToLiveAssistant(transcript);
+      console.log('response from liveassistant' + responseAI);
+    }
+  }, [transcript, isSessionActive]);
 
   return (
     <>
@@ -589,8 +749,8 @@ export default function () {
           </div>
           <main className="py-10 bg-gray-100">
             {/* Page header */}
-            <div className="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
-              <div className="flex items-center space-x-5">
+            <div className="mx-auto bg-white max-w-3xl px-4 border-b p-4 border-t sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
+              <div className="flex items-center space-x-5 mb-2">
                 <div className="flex-shrink-0">
                   <div className="relative">
                     <img
@@ -617,18 +777,13 @@ export default function () {
                 </div>
               </div>
               <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  Select Agent
-                </button>
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                >
-                  Start Session
-                </button>
+                <LiveTranscription
+                  onStartSession={handleStartSession}
+                  onStopSession={handleEndSession}
+                  isSessionActive={isSessionActive}
+                  sessionTime={sessionTime}
+                  setSessionTime={setSessionTime}
+                />
               </div>
             </div>
             <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
@@ -694,7 +849,7 @@ export default function () {
                                     </p>
                                   </div>
                                   <div className="mt-2 text-sm text-gray-700">
-                                    <p>{activityItem.comment}</p>
+                                    {/* <p>{userQuote}</p> */}
                                   </div>
                                 </div>
                               </>
@@ -849,7 +1004,7 @@ export default function () {
                   <div className="mt-6 flex flex-col justify-stretch">
                     <button
                       type="button"
-                      className="inline-flex items-center justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                      className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                     >
                       Archive Session
                     </button>
@@ -962,9 +1117,7 @@ const activity = [
     person: { name: 'Erlich Bachman', href: '#' },
     imageUrl:
       'https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg',
-    comment:
-      "You know, when I'm out there selling Pied Piper, I tell people it's like a magical unicorn that farts rainbows and shoots out pure innovation from its eyes. It's so advanced that it can singlehandedly cure global warming, end world hunger, and bring peace to the Middle East. Honestly, if Pied Piper were a person, it'd be like Einstein, Gandhi, and Beyoncé all rolled into one superhuman.",
-    date: '6d ago',
+    date: 'now',
   },
   {
     id: 2,

@@ -9,6 +9,8 @@ import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { val } from 'cheerio/lib/api/attributes';
 import SelectAgentMenu from '@/components/SelectAgentMenu';
+import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/router';
 
 interface Props {
   open: boolean;
@@ -55,6 +57,8 @@ export default function GenerateNotesModal(props: Props) {
   const [functionality, setFunctionality] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [agentName, setAgentName] = useState<string>('Summary');
+  const [noteId, setNoteId] = useState<string>('');
+  const router = useRouter();
 
   const handleFile = (e: any) => {
     if (e.target.files && e.target.files[0]) {
@@ -88,40 +92,44 @@ export default function GenerateNotesModal(props: Props) {
     formik.resetForm();
   };
 
-  const uploadFiles = async () => {
+  // Add a new function to save the note to Supabase
+  const insertAndNavigate = async (transcription: any, notes: any) => {
+    const user_id = session?.user?.id;
+    if (!user_id) return;
+
+    const upload_ids: string[] = [];
+    fileObjects.forEach((file) => {
+      upload_ids.push(file.name);
+    });
+
+    const noteId = uuidv4();
     setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('agent_name', name);
 
-      fileObjects.forEach((file) => {
-        formData.append('files', file, file.name);
-      });
+    const { data, error } = await supabaseClient.from('notes').insert([
+      {
+        id: noteId,
+        title: formik.values.title,
+        context: formik.values.context,
+        functionality: formik.values.functionality,
+        upload_ids: upload_ids,
+        user_id: user_id,
+        agent_name: agentName,
+        color_theme: getRandomColor(),
+        transcription: transcription,
+        notes: notes,
+      },
+    ]);
 
-      const response = await fetch('/api/upload-context', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${session?.access_token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to upload files');
-      }
-
-      // Handle successful upload (e.g., show success message, clear file list)
-      setFiles([]);
-      setOpen(false);
-      setFileObjects([]);
-      mutate('/api/agents');
-      setName('');
-    } catch (error: any) {
-      // Handle error (e.g., show error message)
-      console.error(error.message);
+    if (error) {
+      console.log('error :>> ', error);
     }
+    router.push(`/my-notes/${noteId}`);
+
+    setLoading(false);
+    setOpen(false);
   };
 
+  // Update the sendAudio function
   const sendAudio = async (file: File) => {
     setLoading(true);
     try {
@@ -134,7 +142,6 @@ export default function GenerateNotesModal(props: Props) {
 
       const res = await fetch('/api/transcribe', {
         method: 'POST',
-
         body: formData,
       });
 
@@ -145,31 +152,47 @@ export default function GenerateNotesModal(props: Props) {
       }
 
       const data = await res.json();
-
+      console.log('data :>> ', data);
       setLoading(false);
-      setConvertedText(JSON.stringify(data.transcript.text));
-      console.log('data :>> ', convertedText);
+      const transcription = data.transcript.text;
+      return transcription;
     } catch (error: any) {
       console.log(JSON.stringify(error));
       setLoading(false);
       alert(`Error: ${error.message}`);
     }
   };
-
   const createNotes = async (content: string) => {
-    fetch('/api/create-notes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        transcription: content,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setNotesText(JSON.stringify(data));
+    if (!content) {
+      alert('Please upload an audio file');
+      return;
+    }
+    try {
+      const response = await fetch('/api/create-notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          transcription: content,
+        }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log('createNotes error' + JSON.stringify(errorData));
+        throw new Error(errorData.message);
+      }
+
+      const data = await response.json();
+      console.log('notes :>> ', JSON.stringify(data));
+      const noteData = JSON.stringify(data);
+      console.log('noteData :>> ', noteData);
+      return noteData;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      alert(`Error: ${error.message}`);
+    }
   };
 
   //formik validation
@@ -184,46 +207,17 @@ export default function GenerateNotesModal(props: Props) {
     context: '',
     functionality: '',
   };
+  // Update the onSubmit function as follows
   const onSubmit = async (values: any, { resetForm }: any) => {
-    const user_id = session?.user?.id;
-    if (!user_id) return;
-
-    //add each file name to the fomrik array
-    const upload_ids: string[] = [];
-    fileObjects.forEach((file) => {
-      upload_ids.push(file.name);
-    });
-    sendAudio(fileObjects[0]);
-    if (convertedText) {
-      const { data, error } = await supabaseClient.from('notes').insert([
-        {
-          title: values.title,
-          context: values.context,
-          functionality: values.functionality,
-          upload_ids: upload_ids,
-          user_id: user_id,
-          agent_name: agentName,
-          color_theme: getRandomColor(),
-        },
-      ]);
-      if (error) {
-        console.log('error :>> ', error);
-      }
-      if (data) {
-        console.log('data :>> ', data);
-      }
-    } else {
-      setFileObjects([]);
-      setFiles([]);
-      alert('Please upload an audio file with a clear voice');
+    if (!fileObjects[0]) {
+      alert('Please upload an audio file');
       return;
     }
-
+    const transcription = await sendAudio(fileObjects[0]);
+    const notes = await createNotes(transcription);
+    console.log('notes2upload :>> ', notes);
+    insertAndNavigate(transcription, notes);
     resetForm();
-    setFileObjects([]);
-    setFiles([]);
-    mutate('/api/notes');
-    setOpen(false);
   };
 
   const formik = useFormik({
@@ -310,7 +304,7 @@ export default function GenerateNotesModal(props: Props) {
                           htmlFor="input-name"
                           className="block text-sm font-medium leading-6 text-gray-800 text-left  items-center"
                         >
-                          Context Description:
+                          Context Link:
                           <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
                             <i
                               className="fas fa-question-circle"

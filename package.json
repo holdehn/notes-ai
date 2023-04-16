@@ -62,6 +62,7 @@
     "whisper-node": "^0.1.5",
     "wolfram-alpha-api": "^0.2.1",
     "ws": "^8.13.0",
+    "youtube-transcript": "^1.0.5",
     "yup": "^1.1.0"
   },
   "devDependencies": {
@@ -74,6 +75,7 @@
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/parser": "^5.54.0",
     "autoprefixer": "^10.4.13",
     "eslint": "8.35.0",
