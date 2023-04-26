@@ -82,8 +82,8 @@ async function convertToMp3(buffer: Buffer, fileType: string): Promise<Buffer> {
     command.run();
     console.log('run');
     output.on('finish', () => {
-      console.log('finish');
       resolve(Buffer.concat(chunks));
+      console.log('finish');
     });
   });
 }

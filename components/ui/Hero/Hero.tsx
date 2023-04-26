@@ -49,8 +49,8 @@ export default function Hero() {
                   variables: {
                     default: {
                       colors: {
-                        brand: '#127FBF',
-                        brandAccent: '#127FBF',
+                        brand: '#ffff',
+                        brandAccent: '#ffff',
                       },
                       fonts: {
                         bodyFontFamily: 'Montserrat',
