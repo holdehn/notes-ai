@@ -60,6 +60,20 @@ async function convertToMp3(buffer: Buffer, fileType: string): Promise<Buffer> {
       .inputFormat(fileType.split('/')[1])
       .outputFormat('mp3')
       .output(output)
+      .on('start', (commandLine) => {
+        console.log('Spawned Ffmpeg with command: ' + commandLine);
+      })
+      .on('codecData', (data) => {
+        console.log(
+          'Input is ' + data.audio + ' audio with ' + data.video + ' video',
+        );
+      })
+      .on('progress', (progress) => {
+        console.log('Processing: ' + progress.percent + '% done');
+      })
+      .on('end', () => {
+        console.log('File has been converted successfully');
+      })
       .on('error', (error) => {
         reject(error);
       });
@@ -68,11 +82,12 @@ async function convertToMp3(buffer: Buffer, fileType: string): Promise<Buffer> {
     command.run();
     console.log('run');
     output.on('finish', () => {
+      console.log('finish');
       resolve(Buffer.concat(chunks));
     });
-    console.log('finish');
   });
 }
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     try {
@@ -92,6 +107,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           let response;
           try {
             const mp3 = await convertToMp3(responseData, fileType);
+            console.log('converted to mp3');
+
             response = await transcribe(mp3, 'audio/mp3');
           } catch (error: any) {
             return res.status(500).json({ error: error.response });
