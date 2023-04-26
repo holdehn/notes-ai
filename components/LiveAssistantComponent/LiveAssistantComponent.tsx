@@ -180,7 +180,6 @@ export default function () {
 
   //map sessions from data
   const sessions = data?.sessions;
-
   const updateTimelineArray = (intermediateSteps: any[]) => {
     const newTimeline = [...timeline];
 
@@ -188,7 +187,7 @@ export default function () {
       newTimeline.push({
         id: timeline.length + index + 1,
         type: eventTypes.action,
-        content: 'Intermediate Step:',
+        content: `Intermediate Step ${index + 1}: ${step.action.log}`,
         target: step.observation,
         date: new Date().toLocaleDateString(),
         datetime: new Date().toISOString(),
@@ -197,6 +196,7 @@ export default function () {
 
     setTimeline(newTimeline);
   };
+
   const updateActivityArray = (responseAI: string) => {
     const newActivity = {
       id: activity.length + 1,
@@ -288,7 +288,7 @@ export default function () {
         recordAndSend();
       }
     },
-    isSessionActive ? 20000 : null,
+    isSessionActive ? 30000 : null,
   );
 
   const sendTranscriptToLiveAssistant = async (transcriptData: string) => {
@@ -309,7 +309,7 @@ export default function () {
       console.log('response from liveassistant' + JSON.stringify(data));
 
       updateActivityArray(JSON.stringify(data.output));
-      updateTimelineArray(data.intermediateSteps); // Add this line to update the timeline
+      updateTimelineArray(data.intermediateSteps);
     } catch (error: any) {
       console.log(JSON.stringify(error));
     }
@@ -356,7 +356,7 @@ export default function () {
     if (mediaRecorder) {
       setTimeout(() => {
         stopRecording(mediaRecorder);
-      }, 20000);
+      }, 30000);
     }
   };
 

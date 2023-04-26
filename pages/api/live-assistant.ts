@@ -82,7 +82,7 @@ export default async function handler(
     echo: false,
     output: true,
   });
-  console.log(result.output);
+  console.log('result', JSON.stringify(result));
 
-  res.json({ output: result.output });
+  res.json(result);
 }
