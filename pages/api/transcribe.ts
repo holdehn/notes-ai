@@ -104,15 +104,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           responseData = Buffer.concat([responseData, data]);
         });
         file.on('end', async () => {
-          let response;
-          try {
-            const mp3 = await convertToMp3(responseData, fileType);
-            console.log('converted to mp3');
+          const mp3Buffer = await convertToMp3(responseData, fileType);
 
-            response = await transcribe(mp3, 'audio/mp3');
-          } catch (error: any) {
-            return res.status(500).json({ error: error.response });
-          }
+          const response = await transcribe(mp3Buffer, 'audio/mp3');
 
           res.status(200).json({ transcript: await response.json() });
         });
