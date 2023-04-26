@@ -288,7 +288,7 @@ export default function () {
         recordAndSend();
       }
     },
-    isSessionActive ? 15000 : null,
+    isSessionActive ? 20000 : null,
   );
 
   const sendTranscriptToLiveAssistant = async (transcriptData: string) => {
@@ -356,7 +356,7 @@ export default function () {
     if (mediaRecorder) {
       setTimeout(() => {
         stopRecording(mediaRecorder);
-      }, 15000);
+      }, 20000);
     }
   };
 
@@ -897,7 +897,7 @@ export default function () {
                   </p>
                 </div>
                 <div className="flex flex-col justify-center items-center">
-                  Please make sure to talk for at least 15 seconds to get a
+                  Please make sure to talk for at least 20 seconds to get a
                   response
                 </div>
               </div>
