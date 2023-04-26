@@ -7,6 +7,7 @@ import mime from 'mime';
 import { Transform } from 'stream';
 import stream from 'stream';
 import ffmpeg from 'fluent-ffmpeg';
+import ffmpegPath from '@ffmpeg-installer/ffmpeg';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
@@ -57,23 +58,10 @@ async function convertToMp3(buffer: Buffer, fileType: string): Promise<Buffer> {
 
     console.log('output');
     const command = ffmpeg(input)
+      .setFfmpegPath(ffmpegPath.path) // Add this line
       .inputFormat(fileType.split('/')[1])
       .outputFormat('mp3')
       .output(output)
-      .on('start', (commandLine) => {
-        console.log('Spawned Ffmpeg with command: ' + commandLine);
-      })
-      .on('codecData', (data) => {
-        console.log(
-          'Input is ' + data.audio + ' audio with ' + data.video + ' video',
-        );
-      })
-      .on('progress', (progress) => {
-        console.log('Processing: ' + progress.percent + '% done');
-      })
-      .on('end', () => {
-        console.log('File has been converted successfully');
-      })
       .on('error', (error) => {
         reject(error);
       });
