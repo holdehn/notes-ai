@@ -50,29 +50,26 @@ export default async function handler(
   tools.push(new Calculator());
 
   //agent, and llm
-  const llm = new OpenAI({ openAIApiKey: openAIApiKey });
+  const llm = new OpenAI({
+    openAIApiKey: openAIApiKey,
+    maxTokens: 400,
+    modelName: 'gpt-3.5-turbo',
+  });
   const agentExecutor = await initializeAgentExecutor(
     tools,
     llm,
-    'zero-shot-react-description',
+    'chat-zero-shot-react-description',
     true,
   );
 
   const promptTemplate = PromptTemplate.fromTemplate(
-    `Given a lecture transcription, summarize it and identify important topics. Research these topics and take notes based on the transcription and based research:
-     Title: {title}
-     Description: {description}
-     Summary: {summary}
-      Topics: {topics}
-      Subtopics: {subtopics}
-      Notes: {notes}
-      Sources: {sources}
+    `Given a transcription, take notes and summarize important topics. Your goal is to help the user understand the transcription and remember the important topics. Respond with everything important that the user should remember. You can use the following tools to help you: Google search
      {end}`,
   );
   const result = await agentExecutor.call({
     promptTemplate,
     input: [transcription],
-    maxTokens: 100,
+    maxTokens: 400,
     temperature: 0.9,
     topP: 1,
     frequencyPenalty: 0,
@@ -88,6 +85,7 @@ export default async function handler(
   console.log('result' + result.output);
   //string and parse result so i can view
 
+  console.log('result' + result.summary);
   console.log(JSON.stringify(result));
 
   return res.status(200).json(result.output);

@@ -11,9 +11,9 @@ export default function () {
   return (
     <>
       <Head>
-        <title>EduLink - My Notes</title>
-        <meta name="description" content="Generate notes from your lectures" />
+        <title>EduNotes - Session Details</title>
       </Head>
+
       <LiveAssistantComponent />
     </>
   );

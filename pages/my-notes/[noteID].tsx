@@ -11,7 +11,7 @@ export default function () {
   return (
     <>
       <Head>
-        <title>EduLink - Generated Notes</title>
+        <title>EduNotes - Generated Notes</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <NoteDetailsComponent />

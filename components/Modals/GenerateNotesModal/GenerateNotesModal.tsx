@@ -11,6 +11,7 @@ import { val } from 'cheerio/lib/api/attributes';
 import SelectAgentMenu from '@/components/SelectAgentMenu';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
+import { TranscriptResponse, YoutubeTranscript } from 'youtube-transcript';
 
 interface Props {
   open: boolean;
@@ -152,9 +153,9 @@ export default function GenerateNotesModal(props: Props) {
       }
 
       const data = await res.json();
-      console.log('data :>> ', data);
+      console.log('data' + JSON.stringify(data));
       setLoading(false);
-      const transcription = data.transcript.text;
+      const transcription = data.transcription;
       return transcription;
     } catch (error: any) {
       console.log(JSON.stringify(error));
@@ -164,7 +165,7 @@ export default function GenerateNotesModal(props: Props) {
   };
   const createNotes = async (content: string) => {
     if (!content) {
-      alert('Please upload an audio file');
+      alert('Please upload a string file');
       return;
     }
     try {
@@ -198,8 +199,8 @@ export default function GenerateNotesModal(props: Props) {
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
-    context: Yup.string().required('Required'),
-    functionality: Yup.string().required('Required'),
+    context: Yup.string(),
+    functionality: Yup.string(),
   });
 
   const intialValues = {
@@ -209,11 +210,14 @@ export default function GenerateNotesModal(props: Props) {
   };
   // Update the onSubmit function as follows
   const onSubmit = async (values: any, { resetForm }: any) => {
-    if (!fileObjects[0]) {
-      alert('Please upload an audio file');
+    //if no file and no youtube return
+    console.log('fileObjects :>> ', fileObjects);
+    if (fileObjects.length === 0) {
       return;
     }
+
     const transcription = await sendAudio(fileObjects[0]);
+    console.log('transcription :>> ', transcription);
     const notes = await createNotes(transcription);
     console.log('notes2upload :>> ', notes);
     insertAndNavigate(transcription, notes);
@@ -304,7 +308,7 @@ export default function GenerateNotesModal(props: Props) {
                           htmlFor="input-name"
                           className="block text-sm font-medium leading-6 text-gray-800 text-left  items-center"
                         >
-                          Context Link:
+                          Youtube Link:
                           <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
                             <i
                               className="fas fa-question-circle"
@@ -321,10 +325,6 @@ export default function GenerateNotesModal(props: Props) {
                             onChange={formik.handleChange}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder="e.g. Lecture recording for Linear Regression"
-                            // @ts-ignore
-                            helperText={
-                              formik.touched.context && formik.errors.context
-                            }
                           />
                         </div>
                       </div>

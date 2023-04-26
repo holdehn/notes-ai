@@ -1,13 +1,14 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
-import EmptyUpload from '../../EmptyUpload';
+import EmptyUpload from '../EmptyUpload';
 import { useSession } from '@supabase/auth-helpers-react';
 import { useSWRConfig } from 'swr';
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
+  onSessionStart: () => void;
 }
 
 interface FileDisplay {
@@ -15,8 +16,8 @@ interface FileDisplay {
   id: number;
 }
 
-export default function CreateAgentModal(props: Props) {
-  const { open, setOpen } = props;
+export default function LiveAgentOptions(props: Props) {
+  const { open, setOpen, onSessionStart } = props;
   const session = useSession();
   const { mutate } = useSWRConfig();
   const cancelButtonRef = useRef(null);
@@ -92,6 +93,10 @@ export default function CreateAgentModal(props: Props) {
       console.error(error.message);
     }
   };
+  const initialValues = {
+    name: '',
+    functionality: '',
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -137,7 +142,7 @@ export default function CreateAgentModal(props: Props) {
                       as="h2"
                       className="text-base font-semibold leading-6 text-gray-900"
                     >
-                      Create New Agent
+                      Live Agent Options
                     </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">

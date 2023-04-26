@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main>
       <Head>
-        <title>EduLink - AI powered education</title>
+        <title>EduNotes- AI powered assistant</title>
         <meta
           name="description"
           content="Organize and manage different subjects while getting personalized AI tutoring."

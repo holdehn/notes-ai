@@ -6,9 +6,12 @@ import {
   ReactFragment,
   ReactPortal,
   use,
+  useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react';
+import { useSession } from '@supabase/auth-helpers-react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
@@ -17,7 +20,12 @@ import {
   HomeIcon,
   XMarkIcon,
   NewspaperIcon,
+  ChatBubbleLeftEllipsisIcon,
+  TagIcon,
+  UserCircleIcon,
 } from '@heroicons/react/24/outline';
+import useSWR from 'swr';
+
 import {
   ChevronRightIcon,
   ChevronUpDownIcon,
@@ -25,21 +33,28 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
-import useSWR from 'swr';
-import { supabaseClient } from 'supabase-client';
-import { Session, useSession } from '@supabase/auth-helpers-react';
-import AgentModal from '../Modals/AgentModal';
-import CreateAgentModal from '../Modals/CreateAgentModal/CreateAgentModal';
-import TaskModal from '../Modals/TaskModal/TaskModal';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  ArrowLongLeftIcon,
+  CheckIcon,
+  HandThumbUpIcon,
+  PaperClipIcon,
+  QuestionMarkCircleIcon,
+  UserIcon,
+} from '@heroicons/react/20/solid';
+import { Bars3Icon, BellIcon } from '@heroicons/react/24/outline';
+import LiveTranscription from '../LiveTranscription';
+import { supabaseClient } from '@/supabase-client';
+import SessionSuccess from '../Modals/SessionSuccess/SessionSuccess';
 
 const navigation = [
-  { name: 'Home', href: '/home', icon: HomeIcon, current: true },
+  { name: 'Home', href: '/home', icon: HomeIcon, current: false },
   { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: false },
   {
     name: 'Live Assistant',
     href: '/live-assistant',
     icon: SmartToyIcon,
-    current: false,
+    current: true,
   },
   {
     name: 'Research',
@@ -56,15 +71,14 @@ const navigation = [
   },
 ];
 const teams = [
-  { name: 'Personal Tutor', href: '#', bgColorClass: 'bg-blue-600' },
-  { name: 'Engineer', href: '#', bgColorClass: 'bg-indigo-500' },
+  { name: 'Engineering', href: '#', bgColorClass: 'bg-indigo-500' },
   { name: 'Human Resources', href: '#', bgColorClass: 'bg-green-500' },
   { name: 'Customer Success', href: '#', bgColorClass: 'bg-yellow-500' },
 ];
 const projects = [
   {
     id: 1,
-    title: 'Personal Tutor',
+    title: 'Sales Call with John 4/19/2021',
     initials: 'LR',
     team: 'Research',
     members: [
@@ -93,155 +107,72 @@ const projects = [
           'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
       },
     ],
-    totalDocuments: 12,
+    totalDocuments: 8,
     lastUpdated: 'March 17, 2020',
     pinned: true,
     bgColorClass: 'bg-pink-600',
   },
-
-  {
-    id: 2,
-    title: 'Engineer',
-    initials: 'E',
-    team: 'Education',
-    members: [
-      {
-        name: 'Floyd Miles',
-        handle: 'floydmiles',
-        imageUrl:
-          'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Emily Selman',
-        handle: 'emilyselman',
-        imageUrl:
-          'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalDocuments: 37,
-    lastUpdated: 'March 10, 2020',
-    pinned: true,
-    bgColorClass: 'bg-green-600',
-  },
-  {
-    id: 3,
-    title: 'Human Resources',
-    initials: 'HR',
-    team: 'Human Resources',
-    members: [
-      {
-        name: 'Kristin Watson',
-        handle: 'kristinwatson',
-        imageUrl:
-          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Emma Dorsey',
-        handle: 'emmadorsey',
-        imageUrl:
-          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalDocuments: 55,
-    lastUpdated: 'February 12, 2020',
-    pinned: false,
-    bgColorClass: 'bg-blue-600',
-  },
-  {
-    id: 4,
-    title: 'Customer Success',
-    initials: 'CS',
-
-    team: 'Customer Success',
-    members: [
-      {
-        name: 'Kristin Watson',
-        handle: 'kristinwatson',
-        imageUrl:
-          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Emma Dorsey',
-        handle: 'emmadorsey',
-        imageUrl:
-          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalDocuments: 6,
-    lastUpdated: 'February 12, 2020',
-    pinned: false,
-    bgColorClass: 'bg-blue-600',
-  },
-
   // More projects...
 ];
-const tools = [
-  {
-    id: 1,
-    title: 'Assistant',
-    bgColorClass: 'bg-blue-600',
-
-    initials: 'A',
-    description: 'Live Assistant.',
-    href: '/live-assistant',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-01.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 2,
-    title: 'Solve',
-    bgColorClass: 'bg-green-600',
-    initials: 'S',
-    description: 'For Students.',
-    href: '/live-assistant',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-02.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 3,
-    title: 'Context',
-    bgColorClass: 'bg-pink-600',
-    initials: 'C',
-    description: 'Ask your data.',
-    href: '#',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 3,
-    title: 'Research',
-    bgColorClass: 'bg-yellow-600',
-    initials: 'R',
-    description: 'Auto Research.',
-    href: '#',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-];
+const pinnedProjects = projects.filter((project) => project.pinned);
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function () {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [taskModalOpen, setTaskModalOpen] = useState(false);
-  const [openAgentModal, setOpenAgentModal] = useState(false);
-  const [openAddContextModal, setOpenAddContextModal] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const session: Session | null = useSession();
-  const userID = session?.user?.id;
+function useInterval(callback: () => void, delay: number | null) {
+  const savedCallback = useRef<() => void>(() => {});
 
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+
+    if (delay !== null) {
+      const id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+export default function () {
+  const session = useSession();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isSessionActive, setIsSessionActive] = useState(false);
+  const [sessionTime, setSessionTime] = useState(0);
+  const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [transcript, setTranscript] = useState<string>('');
+  const [responseAI, setResponseAI] = useState<string>('');
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [sessionID, setSessionID] = useState<string>('');
+  const [activity, setActivity] = useState([
+    {
+      id: 1,
+      type: 'comment',
+      person: { name: 'Erlich Bachman', href: '#' },
+      imageUrl:
+        'https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg',
+      date: 'now',
+      message: '',
+    },
+  ]);
+  const [timeline, setTimeline] = useState([
+    {
+      id: 1,
+      type: eventTypes.action,
+      content: 'Action',
+      target: 'None',
+      date: 'Now',
+      datetime: '2020-09-20',
+    },
+  ]);
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
+  const userID = session?.user?.id;
   const { data, error } = useSWR(
     userID ? `/api/notes-page-data?userID=${userID}` : null,
     fetcher,
@@ -250,9 +181,207 @@ export default function () {
   //map sessions from data
   const sessions = data?.sessions;
 
-  const closeTaskModal = () => {
-    setTaskModalOpen(false);
+  const updateTimelineArray = (intermediateSteps: any[]) => {
+    const newTimeline = [...timeline];
+
+    intermediateSteps.forEach((step, index) => {
+      newTimeline.push({
+        id: timeline.length + index + 1,
+        type: eventTypes.action,
+        content: 'Intermediate Step:',
+        target: step.observation,
+        date: new Date().toLocaleDateString(),
+        datetime: new Date().toISOString(),
+      });
+    });
+
+    setTimeline(newTimeline);
   };
+  const updateActivityArray = (responseAI: string) => {
+    const newActivity = {
+      id: activity.length + 1,
+      type: 'comment',
+      person: { name: 'Erlich', href: '#' },
+      imageUrl:
+        'https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg',
+
+      date: 'now',
+      message: responseAI,
+    };
+    setActivity([...activity, newActivity]);
+  };
+
+  const handleArchive = async () => {
+    const session_id = uuidv4();
+    const user_id = session?.user?.id;
+    console.log('user_id', user_id);
+    const messages = activity.map((message) => message.message);
+    const steps = timeline.map((step) => step.target);
+    try {
+      const { error } = await supabaseClient.from('live_sessions').insert([
+        {
+          id: session_id,
+          activity: messages,
+          timeline: steps,
+          user_id: user_id,
+          transcript: transcript,
+        },
+      ]);
+
+      if (error) {
+        throw error;
+      }
+
+      // If the session data is successfully stored, open the success modal
+      setOpenSuccess(true);
+      setSessionID(session_id);
+    } catch (error: any) {
+      console.error('Error archiving session:', error);
+      alert('Error archiving session: ' + error.message);
+    }
+  };
+
+  const sendAudio = async (file: File) => {
+    try {
+      if (!file) {
+        alert('Please upload an audio file');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/transcribe', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.log('error' + JSON.stringify(errorData));
+        throw new Error(errorData.message);
+      }
+
+      const data = await res.json();
+      console.log('data' + JSON.stringify(data));
+      setTranscript(
+        (prevTranscript) => prevTranscript + '\n' + JSON.stringify(data),
+      );
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+
+      alert(`Error: ${error.message}`);
+    }
+  };
+
+  const handleEndSession = () => {
+    setIsSessionActive(false);
+    setSessionTime(0);
+  };
+
+  const handleStartSession = () => {
+    setIsSessionActive(true);
+    setSessionTime(0);
+  };
+  useInterval(
+    () => {
+      if (isSessionActive) {
+        recordAndSend();
+      }
+    },
+    isSessionActive ? 30000 : null,
+  );
+
+  const sendTranscriptToLiveAssistant = async (transcriptData: string) => {
+    try {
+      console.log('sending transcript to liveassistant' + transcriptData);
+      const response = await fetch('/api/live-assistant', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ transcript: transcriptData }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send transcript to liveassistant');
+      }
+      const data = await response.json();
+      console.log('response from liveassistant' + JSON.stringify(data));
+
+      updateActivityArray(JSON.stringify(data.output));
+      updateTimelineArray(data.intermediateSteps); // Add this line to update the timeline
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+    }
+  };
+
+  const startRecording = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
+      const mediaRecorder = new MediaRecorder(mediaStream);
+      const chunks: Blob[] = [];
+
+      mediaRecorder.addEventListener('dataavailable', (event) => {
+        chunks.push(event.data);
+      });
+
+      mediaRecorder.addEventListener('stop', () => {
+        const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+        const audio = new File([audioBlob], 'audio.webm', {
+          type: 'audio/webm',
+        });
+        setAudioFile(audio);
+      });
+
+      mediaRecorder.start();
+
+      return mediaRecorder;
+    } catch (error) {
+      console.error('Error starting audio recording:', error);
+      return null;
+    }
+  };
+
+  const stopRecording = (mediaRecorder: MediaRecorder | null) => {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+    }
+  };
+
+  const recordAndSend = async () => {
+    //dont record if session is
+    const mediaRecorder = await startRecording();
+    if (mediaRecorder) {
+      setTimeout(() => {
+        stopRecording(mediaRecorder);
+      }, 30000);
+    }
+  };
+
+  useEffect(() => {
+    if (isSessionActive) {
+      recordAndSend();
+    }
+  }, [isSessionActive]);
+
+  useEffect(() => {
+    if (isSessionActive && audioFile) {
+      console.log('sending audio' + audioFile.name);
+      sendAudio(audioFile);
+
+      setAudioFile(null); // Remove the audio file from memory
+    }
+  }, [audioFile, isSessionActive]);
+
+  useEffect(() => {
+    if (isSessionActive && transcript) {
+      console.log('sending transcript' + transcript);
+      sendTranscriptToLiveAssistant(transcript);
+      console.log('response from liveassistant' + responseAI);
+    }
+  }, [transcript, isSessionActive]);
 
   return (
     <>
@@ -386,7 +515,7 @@ export default function () {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r  lg:bg-blue-50 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-blue-50 lg:pb-4 lg:pt-5">
           <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -566,7 +695,7 @@ export default function () {
                     className={classNames(
                       item.current
                         ? 'bg-gray-200 text-gray-900'
-                        : 'text-gray-700 hover:bg-blue-200  00 hover:text-gray-900',
+                        : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900',
                       'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
                     )}
                     aria-current={item.current ? 'page' : undefined}
@@ -628,7 +757,7 @@ export default function () {
         {/* Main column */}
         <div className="flex flex-col lg:pl-64">
           {/* Search header */}
-          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-800 bg-white lg:hidden">
+          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:hidden">
             <button
               type="button"
               className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500 lg:hidden"
@@ -739,295 +868,263 @@ export default function () {
               </div>
             </div>
           </div>
-          <main className="flex-1 bg-gray-100">
-            {/* Page title & actions */}
-            <div className="border-b  bg-white px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
-              <div className="min-w-0 flex-1">
-                <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-                  Home
-                </h1>
+          <main className="py-10 bg-gray-100">
+            {/* Page header */}
+            <div className="mx-auto bg-white max-w-3xl px-4 border-b p-4 border-t sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
+              <div className="flex items-center space-x-5 mb-2">
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    <img
+                      className="h-16 w-16 rounded-full"
+                      src="https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg"
+                      alt=""
+                    />
+                    <span
+                      className="absolute inset-0 rounded-full shadow-inner"
+                      aria-hidden="true"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">
+                    Personal Assistant
+                  </h1>
+                  <p className="text-sm font-medium text-gray-500">
+                    Current Agent:{' '}
+                    <a href="#" className="text-gray-900">
+                      Live
+                    </a>{' '}
+                  </p>
+                </div>
               </div>
-              <div className="mt-4 flex sm:ml-4 sm:mt-0">
-                <button
-                  onClick={() => setOpenAgentModal(true)}
-                  className="sm:order-0 order-1 ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-0"
-                >
-                  Select Agent
-                </button>
-                <AgentModal open={openAgentModal} setOpen={setOpenAgentModal} />
-                <button
-                  onClick={() => setOpenAddContextModal(true)}
-                  className="order-0 inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 sm:order-1 sm:ml-3"
-                >
-                  Create Agent
-                </button>
-                <CreateAgentModal
-                  open={openAddContextModal}
-                  setOpen={setOpenAddContextModal}
+              <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
+                <LiveTranscription
+                  onStartSession={handleStartSession}
+                  onStopSession={handleEndSession}
+                  isSessionActive={isSessionActive}
+                  sessionTime={sessionTime}
+                  setSessionTime={setSessionTime}
                 />
               </div>
             </div>
-            {/* Pinned projects */}
-            <div className="mt-6 px-4 sm:px-6 lg:px-8 bg-gray-100">
-              <h2 className="text-sm font-medium text-gray-900">Agents</h2>
-              <ul
-                role="list"
-                className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4"
+            <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+              <section
+                aria-labelledby="timeline-title"
+                className="lg:col-span-2 lg:col-start-1"
               >
-                {tools.map((tool) => (
-                  <li
-                    key={tool.id}
-                    className="relative col-span-1 flex rounded-md shadow-sm"
-                  >
-                    <a href={tool.href} className="flex-1 flex">
-                      <div
-                        className={classNames(
-                          tool.bgColorClass,
-                          'flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
-                        )}
-                      >
-                        {tool.initials}
-                      </div>
-                      <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-600 bg-white hover:shadow-lg cursor-pointer">
-                        <div className="flex-1 truncate px-4 py-2 text-sm h-full">
-                          <p className="font-medium text-gray-900 hover:text-gray-600 mb-2">
-                            {tool.title}
-                          </p>
-                          <p className="text-gray-500 h-full overflow-y-auto">
-                            {tool.description}
-                          </p>
-                        </div>
-                        <Menu as="div" className="flex-shrink-0 pr-2">
-                          <Menu.Button className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-                            <span className="sr-only">Open options</span>
-                            <EllipsisVerticalIcon
-                              className="h-5 w-5"
+                <div className="flow-root mt-6">
+                  <ul role="list" className="-mb-8">
+                    {activity.map((activityItem, activityItemIdx) => (
+                      <li key={activityItem.id}>
+                        <div className="relative pb-8">
+                          {activityItemIdx !== activity.length - 1 ? (
+                            <span
+                              className="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200"
                               aria-hidden="true"
                             />
-                          </Menu.Button>
-                          <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
-                          >
-                            <Menu.Items className="absolute right-10 top-3 z-10 mx-3 mt-1 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                              <div className="py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                      )}
-                                    >
-                                      View
-                                    </a>
+                          ) : null}
+                          <div className="relative flex items-start space-x-3">
+                            {activityItem.type === 'comment' ? (
+                              <>
+                                <div className="relative">
+                                  {activityItem.imageUrl ? (
+                                    <img
+                                      className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white"
+                                      src={activityItem.imageUrl}
+                                      alt=""
+                                    />
+                                  ) : (
+                                    <div className="relative">
+                                      <div>
+                                        <div className="relative px-1">
+                                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
+                                            <UserCircleIcon
+                                              className="h-5 w-5 text-gray-500"
+                                              aria-hidden="true"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                   )}
-                                </Menu.Item>
-                              </div>
-                              <div className="py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                      )}
-                                    >
-                                      Removed from pinned
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                      )}
-                                    >
-                                      Share
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                            </Menu.Items>
-                          </Transition>
-                        </Menu>
-                      </div>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
-            {/* Projects list (only on smallest breakpoint) */}
-            <div className="mt-10 sm:hidden">
-              <div className="px-4 sm:px-6">
-                <h2 className="text-sm font-medium text-gray-900">Projects</h2>
-              </div>
-              <ul
-                role="list"
-                className="mt-3 divide-y divide-gray-100 border-t border-gray-200"
-              >
-                {projects.map((project) => (
-                  <li key={project.id}>
-                    <a
-                      href="#"
-                      className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
-                    >
-                      <span className="flex items-center space-x-3 truncate">
-                        <span
-                          className={classNames(
-                            project.bgColorClass,
-                            'h-2.5 w-2.5 flex-shrink-0 rounded-full',
-                          )}
-                          aria-hidden="true"
-                        />
-                        <span className="truncate text-sm font-medium leading-6">
-                          {project.title}{' '}
-                          <span className="truncate font-normal text-gray-500">
-                            in {project.team}
-                          </span>
-                        </span>
-                      </span>
-                      <ChevronRightIcon
-                        className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="px-4 py-5 mt-6 sm:px-6 border-gray-300 border-t bg-white">
-              <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-                <div className="ml-4 mt-4">
-                  <h3 className="text-base font-bold leading-6 text-gray-900">
-                    Autonomous AI
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Create a task and your AI agents will work together to
-                    complete it.
-                  </p>
-                </div>
-                <div className="ml-4 mt-4 flex-shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setTaskModalOpen(true)}
-                    className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    New Task
-                  </button>
-                  <TaskModal open={taskModalOpen} setOpen={setTaskModalOpen} />
-                </div>
-              </div>
-            </div>
-            {/* Projects table (small breakpoint and up) */}
-            <div className=" hidden sm:block">
-              <div className="inline-block min-w-full border-b border-gray-200 align-middle">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="border-t border-gray-200">
-                      <th
-                        className="border-b border-gray-200 bg-gray-100  px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                        scope="col"
-                      >
-                        <span className="lg:pl-2">All Tasks</span>
-                      </th>
-                      <th
-                        className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                        scope="col"
-                      >
-                        Documents
-                      </th>
-                      <th
-                        className="hidden border-b border-gray-200 bg-gray-100 px-6 py-3 text-right text-sm font-semibold text-gray-900 md:table-cell"
-                        scope="col"
-                      >
-                        Last updated
-                      </th>
-                      <th
-                        className="border-b border-gray-200 bg-gray-100 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                        scope="col"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100 bg-white">
-                    {projects.map((project) => (
-                      <tr key={project.id}>
-                        <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
-                          <div className="flex items-center space-x-3 lg:pl-2">
-                            <div
-                              className={classNames(
-                                project.bgColorClass,
-                                'h-2.5 w-2.5 flex-shrink-0 rounded-full',
-                              )}
-                              aria-hidden="true"
-                            />
-                            <a
-                              href="#"
-                              className="truncate hover:text-gray-600"
-                            >
-                              <span>
-                                {project.title}{' '}
-                                <span className="font-normal text-gray-500">
-                                  with {project.team}
-                                </span>
-                              </span>
-                            </a>
-                          </div>
-                        </td>
-                        <td className="px-6 py-3 text-sm font-medium text-gray-500">
-                          <div className="flex items-center space-x-2">
-                            <div className="flex flex-shrink-0 -space-x-1">
-                              {project.members.map((member) => (
-                                <img
-                                  key={member.handle}
-                                  className="h-6 w-6 max-w-none rounded-full ring-2 ring-white"
-                                  src={member.imageUrl}
-                                  alt={member.name}
-                                />
-                              ))}
-                            </div>
-                            {project.totalDocuments > project.members.length ? (
-                              <span className="flex-shrink-0 text-xs font-medium leading-5">
-                                +
-                                {project.totalDocuments -
-                                  project.members.length}
-                              </span>
+                                  <span className="absolute -bottom-0.5 -right-1 rounded-tl bg-white px-0.5 py-px">
+                                    <ChatBubbleLeftEllipsisIcon
+                                      className="h-5 w-5 text-gray-400"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                </div>
+                                <div>
+                                  <div className="text-sm">
+                                    <a
+                                      href={activityItem.person.href}
+                                      className="font-medium text-gray-900"
+                                    >
+                                      {activityItem.person.name}
+                                    </a>
+                                  </div>
+                                </div>
+                                <div className="mt-2 text-sm text-gray-700">
+                                  <p>{activityItem.message}</p>
+                                </div>
+                              </>
+                            ) : activityItem.type === 'assignment' ? (
+                              <>
+                                <div>
+                                  <div className="relative px-1">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
+                                      <UserCircleIcon
+                                        className="h-5 w-5 text-gray-500"
+                                        aria-hidden="true"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="min-w-0 flex-1 py-1.5">
+                                  <div className="text-sm text-gray-500">
+                                    <a
+                                      href={activityItem.person.href}
+                                      className="font-medium text-gray-900"
+                                    >
+                                      {activityItem.person.name}
+                                    </a>{' '}
+                                    Context Search{' '}
+                                    <span className="whitespace-nowrap">
+                                      {activityItem.date}
+                                    </span>
+                                  </div>
+                                </div>
+                              </>
+                            ) : activityItem.type === 'tags' ? (
+                              <>
+                                <div>
+                                  <div className="relative px-1">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
+                                      <UserCircleIcon
+                                        className="h-5 w-5 text-gray-500"
+                                        aria-hidden="true"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="min-w-0 flex-1 py-0">
+                                  <div className="text-sm leading-8 text-gray-500">
+                                    <span className="mr-0.5">
+                                      <a
+                                        href={activityItem.person.href}
+                                        className="font-medium text-gray-900"
+                                      >
+                                        {activityItem.person.name}
+                                      </a>{' '}
+                                      added topics
+                                    </span>{' '}
+                                    <span className="whitespace-nowrap">
+                                      {activityItem.date}
+                                    </span>
+                                  </div>
+                                </div>
+                              </>
                             ) : null}
                           </div>
-                        </td>
-                        <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
-                          {project.lastUpdated}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
-                          <a
-                            href="#"
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            View
-                          </a>
-                        </td>
-                      </tr>
+                        </div>
+                      </li>
                     ))}
-                  </tbody>
-                </table>
-              </div>
+
+                    {!isSessionActive && (
+                      <div className="relative p-8 justify-center">
+                        <button
+                          type="button"
+                          className="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                          <span className="mt-2 block text-sm font-semibold text-gray-900">
+                            Start a Session
+                          </span>
+                        </button>
+                      </div>
+                    )}
+                  </ul>
+                </div>
+              </section>
+              <section
+                aria-labelledby="timeline-title"
+                className="lg:col-span-1 lg:col-start-3"
+              >
+                <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
+                  <h2
+                    id="timeline-title"
+                    className="text-lg font-medium text-gray-900"
+                  >
+                    Agent Actions
+                  </h2>
+
+                  <div className="mt-6 flow-root">
+                    <ul role="list" className="-mb-8">
+                      {timeline.map((item, itemIdx) => (
+                        <li key={item.id}>
+                          <div className="relative pb-8">
+                            {itemIdx !== timeline.length - 1 ? (
+                              <span
+                                className="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                            <div className="relative flex space-x-3">
+                              <div>
+                                <span
+                                  className={classNames(
+                                    item.type.bgColorClass,
+                                    'h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white',
+                                  )}
+                                >
+                                  <item.type.icon
+                                    className="h-5 w-5 text-white"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              </div>
+                              <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                <div>
+                                  <p className="text-sm text-gray-500">
+                                    {item.content}{' '}
+                                    <a
+                                      href="#"
+                                      className="font-medium text-gray-900"
+                                    >
+                                      {item.target}
+                                    </a>
+                                  </p>
+                                </div>
+                                <div className="whitespace-nowrap text-right text-sm text-gray-500">
+                                  <time dateTime={item.datetime}>
+                                    {item.date}
+                                  </time>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-6 flex flex-col justify-stretch">
+                    <button
+                      type="button"
+                      onClick={handleArchive}
+                      className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    >
+                      Archive Session
+                    </button>
+                    {openSuccess && sessionID && (
+                      <SessionSuccess
+                        open={openSuccess}
+                        setOpen={setOpenSuccess}
+                        sessionID={sessionID}
+                      />
+                    )}
+                  </div>
+                </div>
+              </section>
             </div>
           </main>
         </div>
@@ -1035,3 +1132,28 @@ export default function () {
     </>
   );
 }
+const user = {
+  name: 'Whitney Francis',
+  email: 'whitney@example.com',
+  imageUrl:
+    'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
+};
+
+const breadcrumbs = [
+  { name: 'Jobs', href: '#', current: false },
+  { name: 'Front End Developer', href: '#', current: false },
+  { name: 'Applicants', href: '#', current: true },
+];
+const userNavigation = [
+  { name: 'Your Profile', href: '#' },
+  { name: 'Settings', href: '#' },
+  { name: 'Sign out', href: '#' },
+];
+const attachments = [
+  { name: 'resume_front_end_developer.pdf', href: '#' },
+  { name: 'coverletter_front_end_developer.pdf', href: '#' },
+];
+const eventTypes = {
+  action: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
+  completed: { icon: CheckIcon, bgColorClass: 'bg-green-500' },
+};

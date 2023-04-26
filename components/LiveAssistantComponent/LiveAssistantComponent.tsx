@@ -1,4 +1,17 @@
-import { Fragment, use, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Fragment,
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  use,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useSession } from '@supabase/auth-helpers-react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
@@ -11,6 +24,8 @@ import {
   TagIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
+import useSWR from 'swr';
+
 import {
   ChevronRightIcon,
   ChevronUpDownIcon,
@@ -18,7 +33,7 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
-
+import { v4 as uuidv4 } from 'uuid';
 import {
   ArrowLongLeftIcon,
   CheckIcon,
@@ -29,6 +44,8 @@ import {
 } from '@heroicons/react/20/solid';
 import { Bars3Icon, BellIcon } from '@heroicons/react/24/outline';
 import LiveTranscription from '../LiveTranscription';
+import { supabaseClient } from '@/supabase-client';
+import SessionSuccess from '../Modals/SessionSuccess/SessionSuccess';
 
 const navigation = [
   { name: 'Home', href: '/home', icon: HomeIcon, current: false },
@@ -123,12 +140,106 @@ function useInterval(callback: () => void, delay: number | null) {
 }
 
 export default function () {
+  const session = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [sessionTime, setSessionTime] = useState(0);
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [transcript, setTranscript] = useState<string>('');
   const [responseAI, setResponseAI] = useState<string>('');
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [sessionID, setSessionID] = useState<string>('');
+  const [activity, setActivity] = useState([
+    {
+      id: 1,
+      type: 'comment',
+      person: { name: 'Erlich Bachman', href: '#' },
+      imageUrl:
+        'https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg',
+      date: 'now',
+      message: '',
+    },
+  ]);
+  const [timeline, setTimeline] = useState([
+    {
+      id: 1,
+      type: eventTypes.action,
+      content: 'Action',
+      target: 'None',
+      date: 'Now',
+      datetime: '2020-09-20',
+    },
+  ]);
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+  const userID = session?.user?.id;
+  const { data, error } = useSWR(
+    userID ? `/api/notes-page-data?userID=${userID}` : null,
+    fetcher,
+  );
+
+  //map sessions from data
+  const sessions = data?.sessions;
+
+  const updateTimelineArray = (intermediateSteps: any[]) => {
+    const newTimeline = [...timeline];
+
+    intermediateSteps.forEach((step, index) => {
+      newTimeline.push({
+        id: timeline.length + index + 1,
+        type: eventTypes.action,
+        content: 'Intermediate Step:',
+        target: step.observation,
+        date: new Date().toLocaleDateString(),
+        datetime: new Date().toISOString(),
+      });
+    });
+
+    setTimeline(newTimeline);
+  };
+  const updateActivityArray = (responseAI: string) => {
+    const newActivity = {
+      id: activity.length + 1,
+      type: 'comment',
+      person: { name: 'Erlich', href: '#' },
+      imageUrl:
+        'https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg',
+
+      date: 'now',
+      message: responseAI,
+    };
+    setActivity([...activity, newActivity]);
+  };
+
+  const handleArchive = async () => {
+    const session_id = uuidv4();
+    const user_id = session?.user?.id;
+    console.log('user_id', user_id);
+    const messages = activity.map((message) => message.message);
+    const steps = timeline.map((step) => step.target);
+    try {
+      const { error } = await supabaseClient.from('live_sessions').insert([
+        {
+          id: session_id,
+          activity: messages,
+          timeline: steps,
+          user_id: user_id,
+          transcript: transcript,
+        },
+      ]);
+
+      if (error) {
+        throw error;
+      }
+
+      // If the session data is successfully stored, open the success modal
+      setOpenSuccess(true);
+      setSessionID(session_id);
+    } catch (error: any) {
+      console.error('Error archiving session:', error);
+      alert('Error archiving session: ' + error.message);
+    }
+  };
 
   const sendAudio = async (file: File) => {
     try {
@@ -146,13 +257,15 @@ export default function () {
 
       if (!res.ok) {
         const errorData = await res.json();
-        console.log('errpr' + JSON.stringify(errorData));
+        console.log('error' + JSON.stringify(errorData));
         throw new Error(errorData.message);
       }
 
       const data = await res.json();
       console.log('data' + JSON.stringify(data));
-      setTranscript(JSON.stringify(data));
+      setTranscript(
+        (prevTranscript) => prevTranscript + '\n' + JSON.stringify(data),
+      );
     } catch (error: any) {
       console.log(JSON.stringify(error));
 
@@ -175,7 +288,7 @@ export default function () {
         recordAndSend();
       }
     },
-    isSessionActive ? 15000 : null,
+    isSessionActive ? 20000 : null,
   );
 
   const sendTranscriptToLiveAssistant = async (transcriptData: string) => {
@@ -194,10 +307,11 @@ export default function () {
       }
       const data = await response.json();
       console.log('response from liveassistant' + JSON.stringify(data));
-      setResponseAI(data.response.output);
+
+      updateActivityArray(JSON.stringify(data.output));
+      updateTimelineArray(data.intermediateSteps); // Add this line to update the timeline
     } catch (error: any) {
-      console.error('Error sending transcript to liveassistant:', error);
-      throw error;
+      console.log(JSON.stringify(error));
     }
   };
 
@@ -242,7 +356,7 @@ export default function () {
     if (mediaRecorder) {
       setTimeout(() => {
         stopRecording(mediaRecorder);
-      }, 15000);
+      }, 20000);
     }
   };
 
@@ -603,31 +717,38 @@ export default function () {
                 {/* Secondary navigation */}
                 <h3
                   className="px-3 text-sm font-medium text-gray-500"
-                  id="desktop-teams-headline"
+                  id="desktop-sessions-headline"
                 >
-                  Agents
+                  Sessions
                 </h3>
                 <div
                   className="mt-1 space-y-1"
                   role="group"
-                  aria-labelledby="desktop-teams-headline"
+                  aria-labelledby="desktop-sessions-headline"
                 >
-                  {teams.map((team) => (
-                    <a
-                      key={team.name}
-                      href={team.href}
-                      className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                    >
-                      <span
-                        className={classNames(
-                          team.bgColorClass,
-                          'mr-4 h-2.5 w-2.5 rounded-full',
-                        )}
-                        aria-hidden="true"
-                      />
-                      <span className="truncate">{team.name}</span>
-                    </a>
-                  ))}
+                  {sessions?.map(
+                    (session: {
+                      id: Key | null | undefined;
+                      session_name:
+                        | string
+                        | number
+                        | boolean
+                        | ReactElement<any, string | JSXElementConstructor<any>>
+                        | ReactFragment
+                        | ReactPortal
+                        | null
+                        | undefined;
+                    }) => (
+                      <a
+                        key={session.id} // Assuming 'id' is a unique identifier for each session
+                        href={`/live-assistant/${session.id}`} // Assuming you have a route for individual sessions
+                        className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-blue-100 hover:text-gray-900"
+                      >
+                        <span className="truncate">{session.session_name}</span>{' '}
+                        {/* Assuming you have a 'name' property on each session */}
+                      </a>
+                    ),
+                  )}
                 </div>
               </div>
             </nav>
@@ -834,23 +955,18 @@ export default function () {
                                     />
                                   </span>
                                 </div>
-                                <div className="min-w-0 flex-1">
-                                  <div>
-                                    <div className="text-sm">
-                                      <a
-                                        href={activityItem.person.href}
-                                        className="font-medium text-gray-900"
-                                      >
-                                        {activityItem.person.name}
-                                      </a>
-                                    </div>
-                                    <p className="mt-0.5 text-sm text-gray-500">
-                                      Heard in conversation
-                                    </p>
+                                <div>
+                                  <div className="text-sm">
+                                    <a
+                                      href={activityItem.person.href}
+                                      className="font-medium text-gray-900"
+                                    >
+                                      {activityItem.person.name}
+                                    </a>
                                   </div>
-                                  <div className="mt-2 text-sm text-gray-700">
-                                    {/* <p>{userQuote}</p> */}
-                                  </div>
+                                </div>
+                                <div className="mt-2 text-sm text-gray-700">
+                                  <p>{activityItem.message}</p>
                                 </div>
                               </>
                             ) : activityItem.type === 'assignment' ? (
@@ -903,29 +1019,6 @@ export default function () {
                                       </a>{' '}
                                       added topics
                                     </span>{' '}
-                                    <span className="mr-0.5">
-                                      {activityItem?.tags?.map((tag): any => (
-                                        <Fragment key={tag.name}>
-                                          <a
-                                            href={tag.href}
-                                            className="relative inline-flex items-center rounded-full px-2.5 py-1 text-xs ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                          >
-                                            <span className="absolute flex flex-shrink-0 items-center justify-center">
-                                              <span
-                                                className={classNames(
-                                                  tag.color,
-                                                  'h-1.5 w-1.5 rounded-full',
-                                                )}
-                                                aria-hidden="true"
-                                              />
-                                            </span>
-                                            <span className="ml-3 font-semibold text-gray-900">
-                                              {tag.name}
-                                            </span>
-                                          </a>{' '}
-                                        </Fragment>
-                                      ))}
-                                    </span>
                                     <span className="whitespace-nowrap">
                                       {activityItem.date}
                                     </span>
@@ -937,6 +1030,19 @@ export default function () {
                         </div>
                       </li>
                     ))}
+
+                    {!isSessionActive && (
+                      <div className="relative p-8 justify-center">
+                        <button
+                          type="button"
+                          className="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                          <span className="mt-2 block text-sm font-semibold text-gray-900">
+                            Start a Session
+                          </span>
+                        </button>
+                      </div>
+                    )}
                   </ul>
                 </div>
               </section>
@@ -949,7 +1055,7 @@ export default function () {
                     id="timeline-title"
                     className="text-lg font-medium text-gray-900"
                   >
-                    Transcription
+                    Agent Actions
                   </h2>
 
                   <div className="mt-6 flow-root">
@@ -1004,10 +1110,18 @@ export default function () {
                   <div className="mt-6 flex flex-col justify-stretch">
                     <button
                       type="button"
+                      onClick={handleArchive}
                       className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                     >
                       Archive Session
                     </button>
+                    {openSuccess && sessionID && (
+                      <SessionSuccess
+                        open={openSuccess}
+                        setOpen={setOpenSuccess}
+                        sessionID={sessionID}
+                      />
+                    )}
                   </div>
                 </div>
               </section>
@@ -1040,105 +1154,6 @@ const attachments = [
   { name: 'coverletter_front_end_developer.pdf', href: '#' },
 ];
 const eventTypes = {
-  applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
-  advanced: { icon: HandThumbUpIcon, bgColorClass: 'bg-blue-500' },
+  action: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
   completed: { icon: CheckIcon, bgColorClass: 'bg-green-500' },
 };
-const timeline = [
-  {
-    id: 1,
-    type: eventTypes.applied,
-    content: 'Applied to',
-    target: 'Front End Developer',
-    date: 'Sep 20',
-    datetime: '2020-09-20',
-  },
-  {
-    id: 2,
-    type: eventTypes.advanced,
-    content: 'Advanced to phone screening by',
-    target: 'Bethany Blake',
-    date: 'Sep 22',
-    datetime: '2020-09-22',
-  },
-  {
-    id: 3,
-    type: eventTypes.completed,
-    content: 'Completed phone screening with',
-    target: 'Martha Gardner',
-    date: 'Sep 28',
-    datetime: '2020-09-28',
-  },
-  {
-    id: 4,
-    type: eventTypes.advanced,
-    content: 'Advanced to interview by',
-    target: 'Bethany Blake',
-    date: 'Sep 30',
-    datetime: '2020-09-30',
-  },
-  {
-    id: 5,
-    type: eventTypes.completed,
-    content: 'Completed interview with',
-    target: 'Katherine Snyder',
-    date: 'Oct 4',
-    datetime: '2020-10-04',
-  },
-];
-const comments = [
-  {
-    id: 1,
-    name: 'Leslie Alexander',
-    date: '4d ago',
-    imageId: '1494790108377-be9c29b29330',
-    body: 'Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.',
-  },
-  {
-    id: 2,
-    name: 'Michael Foster',
-    date: '4d ago',
-    imageId: '1519244703995-f4e0f30006d5',
-    body: 'Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.',
-  },
-  {
-    id: 3,
-    name: 'Dries Vincent',
-    date: '4d ago',
-    imageId: '1506794778202-cad84cf45f1d',
-    body: 'Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.',
-  },
-];
-
-const activity = [
-  {
-    id: 1,
-    type: 'comment',
-    person: { name: 'Erlich Bachman', href: '#' },
-    imageUrl:
-      'https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg',
-    date: 'now',
-  },
-  {
-    id: 2,
-    type: 'assignment',
-    person: { name: 'Live Agent', href: '#' },
-    assigned: { name: 'Kristin Watson', href: '#' },
-  },
-  {
-    id: 3,
-    type: 'tags',
-    person: { name: 'Live Agent', href: '#' },
-    tags: [
-      { name: 'Sales Call', href: '#', color: 'bg-rose-500' },
-      { name: 'Pied Piper', href: '#', color: 'bg-indigo-500' },
-    ],
-  },
-  {
-    id: 4,
-    type: 'comment',
-    person: { name: 'Live Agent', href: '#' },
-    comment:
-      "Erlich, remember to focus on the key selling points of Pied Piper, such as its innovative compression algorithm, data efficiency, and scalability. Speak confidently and calmly, and listen to the client's needs, concerns, and questions. Address their concerns with specific examples of how Pied Piper can benefit their business, and highlight any case studies or success stories. Show them the value they'll receive from the investment and remember to be genuine and authentic in your approach. Good luck!",
-  },
-];

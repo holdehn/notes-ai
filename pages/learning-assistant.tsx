@@ -126,7 +126,7 @@ export default function () {
   return (
     <main>
       <Head>
-        <title>EduLink - Dashboard</title>
+        <title>EduNotes - Dashboard</title>
         <meta
           name="description"
           content="Personalized educational dashboard for students"

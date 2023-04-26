@@ -28,7 +28,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ error: notesError.message });
   }
 
-  return res.status(200).json({ user: userData, notes: notesData });
+  const { data: sessionData, error: sessionsError } = await supabaseClient
+    .from('live_sessions')
+    .select('*')
+    .eq('user_id', userID);
+
+  if (sessionsError) {
+    return res.status(500).json({ error: sessionsError.message });
+  }
+
+  return res
+    .status(200)
+    .json({ user: userData, notes: notesData, sessions: sessionData });
 };
 
 export default handler;

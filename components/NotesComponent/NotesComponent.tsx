@@ -708,7 +708,6 @@ export default function () {
                 <CreateAgentModal
                   open={openAddContextModal}
                   setOpen={setOpenAddContextModal}
-                  setSuccess={setSuccess}
                 />
               </div>
             </div>

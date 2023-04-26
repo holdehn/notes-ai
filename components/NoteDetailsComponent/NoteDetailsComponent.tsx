@@ -642,7 +642,6 @@ export default function NoteDetailsComponent() {
                 <CreateAgentModal
                   open={openAddContextModal}
                   setOpen={setOpenAddContextModal}
-                  setSuccess={setSuccess}
                 />
               </div>
             </div>

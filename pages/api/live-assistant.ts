@@ -25,18 +25,18 @@ export default async function handler(
   // Set the response headers
 
   // Set the response headers
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache, no-transform',
-    Connection: 'keep-alive',
-  });
+  // res.writeHead(200, {
+  //   'Content-Type': 'text/event-stream',
+  //   'Cache-Control': 'no-cache, no-transform',
+  //   Connection: 'keep-alive',
+  // });
 
-  // Send the data to the client
-  const sendData = (data: string) => {
-    res.write(`data: ${data}\n\n`);
-  };
+  // // Send the data to the client
+  // const sendData = (data: string) => {
+  //   res.write(`data: ${data}\n\n`);
+  // };
 
-  sendData(JSON.stringify({ data: '' }));
+  // sendData(JSON.stringify({ data: '' }));
 
   //load wolfram tool, wolfram tool from langchain n/a on typescript so i make api call
   const tools: Tool[] = [];
@@ -80,7 +80,9 @@ export default async function handler(
     logprobs: 0,
     stop: ['\u2029'],
     echo: false,
+    output: true,
   });
-  sendData(JSON.stringify({ data: result.output }));
-  res.end();
+  console.log(result.output);
+
+  res.json({ output: result.output });
 }
