@@ -897,7 +897,9 @@ export default function () {
                   </p>
                 </div>
                 <div className="flex flex-col justify-center items-center">
-                  Please make sure to talk for at least 15 seconds to get a response
+                  Please make sure to talk for at least 15 seconds to get a
+                  response
+                </div>
               </div>
               <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
                 <LiveTranscription
