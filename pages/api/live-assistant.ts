@@ -69,8 +69,8 @@ export default async function handler(
   const result = await agentExecutor.call({
     promptTemplate,
     input: [transcript],
-    maxTokens: 100,
-    temperature: 0.9,
+    maxTokens: 200,
+    temperature: 0.6,
     topP: 1,
     frequencyPenalty: 0,
     presencePenalty: 0,
