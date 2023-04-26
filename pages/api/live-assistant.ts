@@ -70,7 +70,7 @@ export default async function handler(
     promptTemplate,
     input: [transcript],
     maxTokens: 200,
-    temperature: 0.6,
+    temperature: 0.1,
     topP: 1,
     frequencyPenalty: 0,
     presencePenalty: 0,
