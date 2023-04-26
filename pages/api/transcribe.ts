@@ -83,7 +83,6 @@ async function convertToMp3(buffer: Buffer, fileType: string): Promise<Buffer> {
     console.log('run');
     output.on('finish', () => {
       resolve(Buffer.concat(chunks));
-      console.log('finish');
     });
   });
 }
@@ -104,9 +103,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           responseData = Buffer.concat([responseData, data]);
         });
         file.on('end', async () => {
-          const mp3Buffer = await convertToMp3(responseData, fileType);
+          let response;
+          try {
+            const mp3 = await convertToMp3(responseData, fileType);
+            console.log('converted to mp3');
 
-          const response = await transcribe(mp3Buffer, 'audio/mp3');
+            response = await transcribe(mp3, 'audio/mp3');
+          } catch (error: any) {
+            console.log(error);
+            return res.status(500).json({ error: error });
+          }
 
           res.status(200).json({ transcript: await response.json() });
         });
