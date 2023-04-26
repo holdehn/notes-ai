@@ -288,7 +288,7 @@ export default function () {
         recordAndSend();
       }
     },
-    isSessionActive ? 30000 : null,
+    isSessionActive ? 15000 : null,
   );
 
   const sendTranscriptToLiveAssistant = async (transcriptData: string) => {
@@ -356,7 +356,7 @@ export default function () {
     if (mediaRecorder) {
       setTimeout(() => {
         stopRecording(mediaRecorder);
-      }, 30000);
+      }, 15000);
     }
   };
 
@@ -896,6 +896,8 @@ export default function () {
                     </a>{' '}
                   </p>
                 </div>
+                <div className="flex flex-col justify-center items-center">
+                  Please make sure to talk for at least 15 seconds to get a response
               </div>
               <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
                 <LiveTranscription
