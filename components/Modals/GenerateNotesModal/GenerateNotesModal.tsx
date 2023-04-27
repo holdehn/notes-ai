@@ -7,7 +7,7 @@ import { useSWRConfig } from 'swr';
 import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
-
+import { useCallback } from 'react';
 import SelectAgentMenu from '@/components/SelectAgentMenu';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
@@ -132,15 +132,17 @@ export default function GenerateNotesModal(props: Props) {
     setOpen(false);
   };
 
-  // Update the sendAudio function
-  const sendAudio = async (file: File) => {
+  const sendAudio = async (chunk: Blob, originalFile: File) => {
     try {
-      if (!file) {
+      if (!chunk) {
         alert('Please upload an audio file');
         return;
       }
       const formData = new FormData();
-      formData.append('file', file);
+      const chunkAsFile = new File([chunk], originalFile.name, {
+        type: originalFile.type,
+      });
+      formData.append('file', chunkAsFile);
 
       // Continue with the existing sendAudio logic
 
@@ -253,7 +255,29 @@ export default function GenerateNotesModal(props: Props) {
     context: '',
     functionality: '',
   };
-  // Update the onSubmit function as follows
+  const CHUNK_SIZE = 4 * 1024 * 1024; // 4 MB
+
+  const processChunks = useCallback(
+    async (file: File) => {
+      let fullTranscription = '';
+      let currentChunkStart = 0;
+
+      while (currentChunkStart < file.size) {
+        const chunkEnd = Math.min(currentChunkStart + CHUNK_SIZE, file.size);
+        const chunk = file.slice(currentChunkStart, chunkEnd);
+
+        const transcription = await sendAudio(chunk, file);
+        fullTranscription += transcription;
+
+        currentChunkStart = chunkEnd;
+      }
+
+      return fullTranscription;
+    },
+    [sendAudio],
+  );
+
+  // Update the onSubmit function
   const onSubmit = async (values: any, { resetForm }: any) => {
     //if no file and no youtube return
     console.log('fileObjects :>> ', fileObjects);
@@ -262,7 +286,7 @@ export default function GenerateNotesModal(props: Props) {
     }
     setLoading(true);
 
-    const transcription = await sendAudio(fileObjects[0]);
+    const transcription = await processChunks(fileObjects[0]);
     console.log('transcription :>> ', transcription);
     const summary = await createNotesSummary(transcription);
     const notes = await createNotesFacts(transcription, values.context);
@@ -271,7 +295,6 @@ export default function GenerateNotesModal(props: Props) {
     resetForm();
     setLoading(false);
   };
-
   const formik = useFormik({
     initialValues: intialValues,
     validationSchema: validationSchema,
