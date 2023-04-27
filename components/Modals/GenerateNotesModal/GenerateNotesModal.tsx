@@ -11,7 +11,6 @@ import { val } from 'cheerio/lib/api/attributes';
 import SelectAgentMenu from '@/components/SelectAgentMenu';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
-import { TranscriptResponse, YoutubeTranscript } from 'youtube-transcript';
 
 interface Props {
   open: boolean;
@@ -94,7 +93,11 @@ export default function GenerateNotesModal(props: Props) {
   };
 
   // Add a new function to save the note to Supabase
-  const insertAndNavigate = async (transcription: any, notes: any) => {
+  const insertAndNavigate = async (
+    transcription: string,
+    notes: any,
+    summary: string,
+  ) => {
     const user_id = session?.user?.id;
     if (!user_id) return;
 
@@ -104,7 +107,6 @@ export default function GenerateNotesModal(props: Props) {
     });
 
     const noteId = uuidv4();
-    setLoading(true);
 
     const { data, error } = await supabaseClient.from('notes').insert([
       {
@@ -118,6 +120,7 @@ export default function GenerateNotesModal(props: Props) {
         color_theme: getRandomColor(),
         transcription: transcription,
         notes: notes,
+        summary: summary,
       },
     ]);
 
@@ -126,13 +129,11 @@ export default function GenerateNotesModal(props: Props) {
     }
     router.push(`/my-notes/${noteId}`);
 
-    setLoading(false);
     setOpen(false);
   };
 
   // Update the sendAudio function
   const sendAudio = async (file: File) => {
-    setLoading(true);
     try {
       if (!file) {
         alert('Please upload an audio file');
@@ -153,23 +154,23 @@ export default function GenerateNotesModal(props: Props) {
       }
 
       const data = await res.json();
-      console.log('data' + JSON.stringify(data));
-      setLoading(false);
-      const transcription = data.transcription;
+      console.log('data' + JSON.stringify(data.transcript.text));
+
+      const transcription = data.transcript.text;
       return transcription;
     } catch (error: any) {
       console.log(JSON.stringify(error));
-      setLoading(false);
+
       alert(`Error: ${error.message}`);
     }
   };
-  const createNotes = async (content: string) => {
+  const createNotesSummary = async (content: string) => {
     if (!content) {
       alert('Please upload a string file');
       return;
     }
     try {
-      const response = await fetch('/api/create-notes', {
+      const response = await fetch('/api/create-summary', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -186,10 +187,50 @@ export default function GenerateNotesModal(props: Props) {
       }
 
       const data = await response.json();
-      console.log('notes :>> ', JSON.stringify(data));
-      const noteData = JSON.stringify(data);
+      console.log('notes :>> ', JSON.stringify(data.data.text));
+      const noteData = data.data.text;
       console.log('noteData :>> ', noteData);
       return noteData;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      alert(`Error: ${error.message}`);
+    }
+  };
+  const createNotesFacts = async (content: string, context: string) => {
+    if (!content) {
+      alert('Please upload a string file');
+      return;
+    }
+    try {
+      const response = await fetch('/api/create-notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          transcription: content,
+          name: name,
+          topic: context,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log('createNotes error' + JSON.stringify(errorData));
+        throw new Error(errorData.message);
+      }
+
+      const data = await response.json();
+      console.log('notes :>> ', JSON.stringify(data.data.text));
+      const noteData = JSON.stringify(data.data.text);
+      console.log('noteData :>> ', noteData);
+
+      // Split the output at every newline and return an array of bullet points
+      const bulletPoints = noteData
+        .split('\\n')
+        .filter((line) => line.length > 0);
+      console.log('bulletPoints :>> ', bulletPoints);
+      return bulletPoints;
     } catch (error: any) {
       console.log(JSON.stringify(error));
       alert(`Error: ${error.message}`);
@@ -215,13 +256,16 @@ export default function GenerateNotesModal(props: Props) {
     if (fileObjects.length === 0) {
       return;
     }
+    setLoading(true);
 
     const transcription = await sendAudio(fileObjects[0]);
     console.log('transcription :>> ', transcription);
-    const notes = await createNotes(transcription);
+    const summary = await createNotesSummary(transcription);
+    const notes = await createNotesFacts(transcription, values.context);
     console.log('notes2upload :>> ', notes);
-    insertAndNavigate(transcription, notes);
+    insertAndNavigate(transcription, notes, summary as string);
     resetForm();
+    setLoading(false);
   };
 
   const formik = useFormik({
@@ -308,7 +352,7 @@ export default function GenerateNotesModal(props: Props) {
                           htmlFor="input-name"
                           className="block text-sm font-medium leading-6 text-gray-800 text-left  items-center"
                         >
-                          Youtube Link:
+                          Topic:
                           <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
                             <i
                               className="fas fa-question-circle"
@@ -397,23 +441,28 @@ export default function GenerateNotesModal(props: Props) {
                       </li>
                     ))}
                   </ul>
-
-                  <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                    <button
-                      type="submit"
-                      className="inline-flex w-full justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                    >
-                      Create Notes
-                    </button>
-                    <button
-                      type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 border-red-900 py-2 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                      onClick={handleClose}
-                      ref={cancelButtonRef}
-                    >
-                      Cancel
-                    </button>
-                  </div>
+                  {!loading ? (
+                    <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                      <button
+                        type="submit"
+                        className="inline-flex w-full justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
+                      >
+                        Create Notes
+                      </button>
+                      <button
+                        type="button"
+                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 border-red-900 py-2 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                        onClick={handleClose}
+                        ref={cancelButtonRef}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full text-center mt-3 text-sm font-semibold text-gray-900">
+                      Loading...
+                    </div>
+                  )}
                 </form>
               </Dialog.Panel>
             </Transition.Child>

@@ -1,4 +1,13 @@
-import { Fragment, useEffect, useState } from 'react';
+import {
+  Fragment,
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  useEffect,
+  useState,
+} from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
@@ -110,9 +119,7 @@ function classNames(...classes: string[]) {
 
 export default function NoteDetailsComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [openAgentModal, setOpenAgentModal] = useState(false);
-  const [openAddContextModal, setOpenAddContextModal] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [bulletPoints, setBulletPoints] = useState([]);
 
   const session = useSession();
 
@@ -624,26 +631,6 @@ export default function NoteDetailsComponent() {
                   NotesAI
                 </h1>
               </div>
-
-              <div className="mt-4 flex sm:ml-4 sm:mt-0">
-                <button
-                  onClick={() => setOpenAgentModal(true)}
-                  className="sm:order-0 order-1 ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-0"
-                >
-                  Select Agent
-                </button>
-                <AgentModal open={openAgentModal} setOpen={setOpenAgentModal} />
-                <button
-                  onClick={() => setOpenAddContextModal(true)}
-                  className="order-0 inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 sm:order-1 sm:ml-3"
-                >
-                  Create Agent
-                </button>
-                <CreateAgentModal
-                  open={openAddContextModal}
-                  setOpen={setOpenAddContextModal}
-                />
-              </div>
             </div>
             {/* Page header */}
             <div className="px-6 py-2">
@@ -702,120 +689,32 @@ export default function NoteDetailsComponent() {
                       >
                         {note?.[0].title}
                       </h2>
-                      <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                        {note?.[0].notes}
-                      </p>
                     </div>
                     <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
                       <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                        <div className="sm:col-span-1">
-                          <dt className="text-sm font-medium text-gray-500">
-                            Type of Notes
-                          </dt>
-                          <dd className="mt-1 text-sm text-gray-900">
-                            Lecture Notes
-                          </dd>
-                        </div>
-                        <div className="sm:col-span-1">
-                          <dt className="text-sm font-medium text-gray-500">
-                            Date Created:
-                          </dt>
-                          <dd className="mt-1 text-sm text-gray-900">
-                            4/13/2023
-                          </dd>
-                        </div>
-                        <div className="sm:col-span-1">
-                          <dt className="text-sm font-medium text-gray-500">
-                            Functionality:
-                          </dt>
-                          <dd className="mt-1 text-sm text-gray-900">
-                            Summarize and review important points.
-                          </dd>
-                        </div>
-                        <div className="sm:col-span-1">
-                          <dt className="text-sm font-medium text-gray-500">
-                            Context
-                          </dt>
-                          <dd className="mt-1 text-sm text-gray-900">
-                            Recording of a lecture on statistics.
-                          </dd>
-                        </div>
                         <div className="sm:col-span-2">
                           <dt className="text-sm font-medium text-gray-500">
                             Summary
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900">
-                            Linear regression is a widely-used statistical
-                            method for modeling the relationship between a
-                            dependent variable and one or more independent
-                            variables. In a recent lecture, the key concepts and
-                            applications of linear regression were discussed in
-                            detail, focusing on both simple and multiple linear
-                            regression models.
+                            {note?.[0].summary}
                           </dd>
                         </div>
                         <div className="sm:col-span-2">
                           <dt className="text-sm font-medium text-gray-500">
-                            Facts
+                            Notes
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900">
-                            <ol className="list-decimal list-inside space-y-2">
-                              <li>
-                                Linear regression is used to model the
-                                relationship between a dependent variable and
-                                one or more independent variables.
-                              </li>
-                              <li>
-                                Simple linear regression involves only one
-                                independent variable, while multiple linear
-                                regression involves two or more independent
-                                variables.
-                              </li>
-                              <li>
-                                The goal of linear regression is to minimize the
-                                sum of squared errors between the predicted and
-                                actual values of the dependent variable.
-                              </li>
-                              <li>
-                                Linear regression assumes a linear relationship
-                                between the dependent and independent variables.
-                              </li>
-                              <li>
-                                The coefficients of the independent variables in
-                                the linear regression model represent the
-                                average change in the dependent variable for
-                                each unit change in the corresponding
-                                independent variable, holding other variables
-                                constant.
-                              </li>
-                              <li>
-                                Linear regression can be used for both
-                                prediction and explanation of relationships
-                                between variables.
-                              </li>
-                              <li>
-                                Assumptions of linear regression include
-                                linearity, independence, homoscedasticity, and
-                                normality of errors.
-                              </li>
-                              <li>
-                                Collinearity can cause problems in multiple
-                                linear regression, as it leads to unstable
-                                estimates of the coefficients.
-                              </li>
-                              <li>
-                                Regularization techniques, such as Lasso and
-                                Ridge regression, can help to address the issue
-                                of multicollinearity in multiple linear
-                                regression models.
-                              </li>
-                              <li>
-                                Model evaluation metrics for linear regression
-                                include mean squared error (MSE), root mean
-                                squared error (RMSE), mean absolute error (MAE),
-                                and R-squared.
-                              </li>
-                            </ol>
+                            {JSON.parse(note?.[0]?.notes)?.map(
+                              (
+                                point: string,
+                                index: Key | null | undefined,
+                              ) => (
+                                <p key={index} className="leading-8">
+                                  {point.replace(/["]+/g, '')}
+                                </p>
+                              ),
+                            )}
                           </dd>
                         </div>
 

@@ -23,7 +23,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   // Get the transcription from the request body
-  const { transcription, name, topic } = req.body;
+  const { transcription } = req.body;
 
   if (!transcription || transcription.length === 0) {
     return res.status(400).json({ message: 'No transcription in the request' });
@@ -69,55 +69,30 @@ export default async function handler(
     openAIApiKey: openAIApiKey,
     maxTokens: 400,
     modelName: 'gpt-3.5-turbo',
-    temperature: 0.3,
+    temperature: 0,
   });
 
-  const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
-    `You are a helpful assistant for {name}, a student studying {topic}, summarize information from a transcript with bullet points.
+  const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
+    `You are a helpful assistant that helps {name}, a student studying {topic}, summarize information from a transcript of a lecture.
     Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
     Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
-    Do not repeat {name}'s name in your output.
-`,
-  );
-
-  const humanPromptMap = HumanMessagePromptTemplate.fromTemplate(`{text}`);
-
-  const chatPromptMap = ChatPromptTemplate.fromPromptMessages([
-    systemPromptMap,
-    humanPromptMap,
-  ]);
-
-  const humanCombinedPrompt = HumanMessagePromptTemplate.fromTemplate(`{text}`);
-
-  const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
-    `
-    You are a helpful assistant for {name}, a student studying {topic}, summarize information from a transcript with bullet points.
-    Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
-    Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
-    Do not repeat {name}'s name in your output.
-    
-    Respond with the following format.
-    - Bullet point format 
-    - Separate each bullet point with a new line
-    - Each bullet point should be concise
-
+    Do not repeat {name}'s name in your output
     `,
   );
-  const chatbotCombinedPrompt = ChatPromptTemplate.fromPromptMessages([
-    systemCombinedPrompt,
-    humanCombinedPrompt,
+
+  const humanPromptTemplate = HumanMessagePromptTemplate.fromTemplate(`{text}`);
+
+  const chatPrompt = ChatPromptTemplate.fromPromptMessages([
+    systemPromptTemplate,
+    humanPromptTemplate,
   ]);
 
   const chain = loadSummarizationChain(llm, {
-    combinePrompt: chatbotCombinedPrompt,
-    type: 'map_reduce',
-    combineMapPrompt: chatPromptMap,
+    prompt: chatPrompt,
   });
 
   const output = await chain.call({
     input_documents: docs,
-    name: name,
-    topic: topic,
   });
   console.log(output);
   return res.status(200).json({ data: output });
