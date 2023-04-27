@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Tool, ZeroShotAgent } from 'langchain/agents';
-import { OpenAI } from 'langchain/llms/openai';
+import { OpenAIChat } from 'langchain/llms/openai';
 import { initializeAgentExecutor } from 'langchain/agents';
 import { DynamicTool, SerpAPI } from 'langchain/tools';
 import { Calculator } from 'langchain/tools/calculator';
@@ -50,7 +50,11 @@ export default async function handler(
   tools.push(new Calculator());
 
   //agent, and llm
-  const llm = new OpenAI({ openAIApiKey: openAIApiKey });
+  const llm = new OpenAIChat({
+    openAIApiKey: openAIApiKey,
+    modelName: 'gpt-4',
+    temperature: 0.6,
+  });
   const agentExecutor = await initializeAgentExecutor(
     tools,
     llm,
@@ -61,16 +65,14 @@ export default async function handler(
   const promptTemplate = PromptTemplate.fromTemplate(
     `Given the current transcription of a conversation, identify important topics and generate an important fact or responses relevant to the conversation.
      Transcription: {transcription}.
-     Topics: {topics}.
-     Fact: {fact}.
-     Response: {response}
      \u2029`,
   );
   const result = await agentExecutor.call({
     promptTemplate,
     input: [transcript],
     maxTokens: 200,
-    temperature: 0.1,
+    temperature: 0.6,
+    modelName: 'gpt-4',
     topP: 1,
     frequencyPenalty: 0,
     presencePenalty: 0,

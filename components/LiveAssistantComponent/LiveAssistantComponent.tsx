@@ -288,7 +288,7 @@ export default function () {
         recordAndSend();
       }
     },
-    isSessionActive ? 20000 : null,
+    isSessionActive ? 30000 : null,
   );
 
   const sendTranscriptToLiveAssistant = async (transcriptData: string) => {
@@ -356,7 +356,7 @@ export default function () {
     if (mediaRecorder) {
       setTimeout(() => {
         stopRecording(mediaRecorder);
-      }, 20000);
+      }, 30000);
     }
   };
 
@@ -896,10 +896,11 @@ export default function () {
                     </a>{' '}
                   </p>
                 </div>
-                <div className="flex flex-col justify-center items-center">
-                  Please make sure to talk for at least 20 seconds to get a
-                  response
-                </div>
+
+                <p className="text-sm font-medium text-gray-500">
+                  Audio clips are sent every 20 seconds during a session, this
+                  is going to change soon.
+                </p>
               </div>
               <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
                 <LiveTranscription

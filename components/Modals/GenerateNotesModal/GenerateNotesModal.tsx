@@ -144,6 +144,8 @@ export default function GenerateNotesModal(props: Props) {
       });
       formData.append('file', chunkAsFile);
 
+      console.log(`Sending chunk: ${chunkAsFile.name}`);
+
       // Continue with the existing sendAudio logic
 
       const res = await fetch('/api/transcribe', {
@@ -153,12 +155,21 @@ export default function GenerateNotesModal(props: Props) {
 
       if (!res.ok) {
         const errorData = await res.json();
-        console.log('errpr' + JSON.stringify(errorData));
+        console.log('error' + JSON.stringify(errorData));
         throw new Error(errorData.message);
       }
 
       const data = await res.json();
-      console.log('data' + JSON.stringify(data.transcript.text));
+      console.log('data' + JSON.stringify(data));
+
+      if (!data.transcript || !data.transcript.text) {
+        console.log(
+          `No transcription data received for chunk: ${chunkAsFile.name}`,
+        );
+        throw new Error('Transcription data is missing or invalid');
+      }
+
+      console.log('transcription' + JSON.stringify(data.transcript.text));
 
       const transcription = data.transcript.text;
       return transcription;
@@ -256,7 +267,6 @@ export default function GenerateNotesModal(props: Props) {
     functionality: '',
   };
   const CHUNK_SIZE = 4 * 1024 * 1024; // 4 MB
-
   const processChunks = useCallback(
     async (file: File) => {
       let fullTranscription = '';
@@ -265,6 +275,11 @@ export default function GenerateNotesModal(props: Props) {
       while (currentChunkStart < file.size) {
         const chunkEnd = Math.min(currentChunkStart + CHUNK_SIZE, file.size);
         const chunk = file.slice(currentChunkStart, chunkEnd);
+
+        console.log(
+          `Processing chunk from ${currentChunkStart} to ${chunkEnd}`,
+        );
+        console.log(`Chunk MIME type: ${chunk.type}`);
 
         const transcription = await sendAudio(chunk, file);
         fullTranscription += transcription;
