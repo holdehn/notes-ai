@@ -250,7 +250,7 @@ export default function () {
       const formData = new FormData();
       formData.append('file', file);
 
-      const res = await fetch('/api/transcribe', {
+      const res = await fetch('/api/transcribe-live', {
         method: 'POST',
         body: formData,
       });

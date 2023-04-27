@@ -7,7 +7,7 @@ import { useSWRConfig } from 'swr';
 import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
-import { val } from 'cheerio/lib/api/attributes';
+
 import SelectAgentMenu from '@/components/SelectAgentMenu';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
@@ -142,6 +142,8 @@ export default function GenerateNotesModal(props: Props) {
       const formData = new FormData();
       formData.append('file', file);
 
+      // Continue with the existing sendAudio logic
+
       const res = await fetch('/api/transcribe', {
         method: 'POST',
         body: formData,
@@ -164,6 +166,7 @@ export default function GenerateNotesModal(props: Props) {
       alert(`Error: ${error.message}`);
     }
   };
+
   const createNotesSummary = async (content: string) => {
     if (!content) {
       alert('Please upload a string file');
@@ -196,6 +199,7 @@ export default function GenerateNotesModal(props: Props) {
       alert(`Error: ${error.message}`);
     }
   };
+
   const createNotesFacts = async (content: string, context: string) => {
     if (!content) {
       alert('Please upload a string file');
