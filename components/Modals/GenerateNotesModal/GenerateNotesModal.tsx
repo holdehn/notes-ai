@@ -372,31 +372,6 @@ export default function GenerateNotesModal(props: Props) {
                           />
                         </div>
                       </div>
-                      <div className="col-span-6 sm:col-span-4 mt-4">
-                        <label
-                          htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-800 text-left  items-center"
-                        >
-                          Functionality:
-                          <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
-                            <i
-                              className="fas fa-question-circle"
-                              title="Provide a brief description of the main function of the tool."
-                            ></i>
-                          </span>
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="functionality"
-                            id="functionality"
-                            value={formik.values.functionality}
-                            onChange={formik.handleChange}
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. Summarize and note important points"
-                          />
-                        </div>
-                      </div>
 
                       <div className="col-span-6 sm:col-span-4 mt-4">
                         <label
