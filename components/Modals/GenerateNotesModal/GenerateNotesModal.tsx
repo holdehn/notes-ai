@@ -403,7 +403,14 @@ export default function GenerateNotesModal(props: Props) {
                   <EmptyUpload onFileChange={handleFile} />
 
                   <p className="text-xs mt-2 italic text-gray-500">
-                    * Only Audio and Video files are supported currently.
+                    * Only Audio Files are supported at this time
+                  </p>
+                  <p className="text-xs mt-2 italic text-gray-500">
+                    * File Size is limited to like 4 or 5 MB. (TODO: Increase
+                    file size limit)
+                  </p>
+                  <p className="text-xs mt-2 italic text-gray-800">
+                    Please be patient with loading times
                   </p>
                   <ul className="mt-4">
                     {files.map(({ file, id }) => (
