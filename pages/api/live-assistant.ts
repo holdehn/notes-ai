@@ -63,15 +63,15 @@ export default async function handler(
   );
 
   const promptTemplate = PromptTemplate.fromTemplate(
-    `Given the current transcription of a conversation, identify important topics and generate an important fact or responses relevant to the conversation.
-     Transcription: {transcription}.
-     \u2029`,
+    `Given the transcription of a conversation, identify important topics and generate an important fact or responses relevant to the conversation.
+      Be concise and be polite.
+     Transcription: {transcription}.`,
   );
   const result = await agentExecutor.call({
     promptTemplate,
     input: [transcript],
-    maxTokens: 200,
-    temperature: 0.6,
+    maxTokens: 100,
+    temperature: 0.5,
     modelName: 'gpt-4',
     topP: 1,
     frequencyPenalty: 0,

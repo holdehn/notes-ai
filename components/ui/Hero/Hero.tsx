@@ -23,7 +23,7 @@ export default function Hero() {
   }, [session, router, user]); // Add router as a dependency
 
   return (
-    <section className="py-20 relative sm:py-24 bg-black">
+    <section className="py-20 relative sm:py-24 bg-blue-950">
       <div className="custom-screen relative z-10">
         {!session && (
           <>

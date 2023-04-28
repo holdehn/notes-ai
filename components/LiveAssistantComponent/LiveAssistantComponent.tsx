@@ -288,7 +288,7 @@ export default function () {
         recordAndSend();
       }
     },
-    isSessionActive ? 30000 : null,
+    isSessionActive ? 20000 : null,
   );
 
   const sendTranscriptToLiveAssistant = async (transcriptData: string) => {
@@ -356,7 +356,7 @@ export default function () {
     if (mediaRecorder) {
       setTimeout(() => {
         stopRecording(mediaRecorder);
-      }, 30000);
+      }, 20000);
     }
   };
 
