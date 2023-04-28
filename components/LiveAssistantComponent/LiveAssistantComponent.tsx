@@ -310,6 +310,7 @@ export default function () {
 
       updateActivityArray(JSON.stringify(data.output));
       updateTimelineArray(data.intermediateSteps);
+      setTranscript('');
     } catch (error: any) {
       console.log(JSON.stringify(error));
     }
@@ -896,11 +897,6 @@ export default function () {
                     </a>{' '}
                   </p>
                 </div>
-
-                <p className="text-sm font-medium text-gray-500">
-                  Audio clips are sent every 20 seconds during a session, this
-                  is going to change soon.
-                </p>
               </div>
               <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
                 <LiveTranscription
@@ -912,6 +908,14 @@ export default function () {
                 />
               </div>
             </div>
+            <p className="text-sm font-medium text-gray-500">
+              Audio clips are sent every 20 seconds during a session, this is
+              going to change soon.
+            </p>
+            <p className="text-sm font-medium text-gray-500">
+              Please be patient with GPT-4 loading times, the timeline on the
+              left is the inner thoughts of the AI.
+            </p>
             <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
               <section
                 aria-labelledby="timeline-title"

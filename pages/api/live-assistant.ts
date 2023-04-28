@@ -47,7 +47,7 @@ export default async function handler(
   );
 
   const promptTemplate = PromptTemplate.fromTemplate(
-    `Given the current transcription of a conversation, generate a relevant relevant response to the transcript.
+    `Given the current transcription, generate a relevant relevant response to the transcript.
       Be concise and be polite.
      Transcription: {transcription}.
 `,
