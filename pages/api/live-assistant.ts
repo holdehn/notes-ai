@@ -22,23 +22,6 @@ export default async function handler(
     return res.status(400).json({ message: 'No transcription in the request' });
   }
 
-  // Set the response headers
-
-  // Set the response headers
-  // res.writeHead(200, {
-  //   'Content-Type': 'text/event-stream',
-  //   'Cache-Control': 'no-cache, no-transform',
-  //   Connection: 'keep-alive',
-  // });
-
-  // // Send the data to the client
-  // const sendData = (data: string) => {
-  //   res.write(`data: ${data}\n\n`);
-  // };
-
-  // sendData(JSON.stringify({ data: '' }));
-
-  //load wolfram tool, wolfram tool from langchain n/a on typescript so i make api call
   const tools: Tool[] = [];
 
   //load serp tool
@@ -59,7 +42,7 @@ export default async function handler(
   const agentExecutor = await initializeAgentExecutor(
     tools,
     llm,
-    'zero-shot-react-description',
+    'chat-zero-shot-react-description',
     true,
   );
 
@@ -67,7 +50,7 @@ export default async function handler(
     `Given the current transcription of a conversation, identify important topics and generate an important fact or responses relevant to the conversation.
       Be concise and be polite.
      Transcription: {transcription}.
-     \u2029`,
+`,
   );
   const result = await agentExecutor.call({
     promptTemplate,
