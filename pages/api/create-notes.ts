@@ -51,7 +51,7 @@ export default async function handler(
     openAIApiKey: openAIApiKey,
     maxTokens: 400,
     modelName: 'gpt-3.5-turbo',
-    temperature: 0.3,
+    temperature: 0.9,
   });
 
   const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
