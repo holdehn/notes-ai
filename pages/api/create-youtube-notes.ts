@@ -29,6 +29,24 @@ export default async function handler(
     return res.status(400).json({ message: 'No transcription in the request' });
   }
 
+  // Set the response headers
+
+  // Set the response headers
+  // res.writeHead(200, {
+  //   'Content-Type': 'text/event-stream',
+  //   'Cache-Control': 'no-cache, no-transform',
+  //   Connection: 'keep-alive',
+  // });
+
+  // // Send the data to the client
+  // const sendData = (data: string) => {
+  //   res.write(`data: ${data}\n\n`);
+  // };
+
+  // sendData(JSON.stringify({ data: '' }));
+
+  //load wolfram tool, wolfram tool from langchain n/a on typescript so i make api call
+
   const tools: Tool[] = [];
 
   //load serp tool
@@ -73,7 +91,7 @@ export default async function handler(
 
   const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
     `
-    You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from a transcript of a lecture.
+    You are a helpful assistant for {name}, a student studying {topic}, summarize information from a transcript with bullet points.
     Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
     Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
     Do not repeat {name}'s name in your output.
@@ -81,8 +99,7 @@ export default async function handler(
     Respond with the following format.
     - Bullet point format 
     - Separate each bullet point with a new line
-    - Each bullet point should be concise but informative
-    - Go into detail if needed
+    - Each bullet point should be concise
 
     `,
   );

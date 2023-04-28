@@ -1,5 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { Tool, ZeroShotAgent } from 'langchain/agents';
+import { OpenAI } from 'langchain/llms';
 import { OpenAIChat } from 'langchain/llms/openai';
+
+import { DynamicTool, SerpAPI } from 'langchain/tools';
+import { Calculator } from 'langchain/tools/calculator';
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
@@ -24,6 +29,39 @@ export default async function handler(
     return res.status(400).json({ message: 'No transcription in the request' });
   }
 
+  // Set the response headers
+
+  // Set the response headers
+  // res.writeHead(200, {
+  //   'Content-Type': 'text/event-stream',
+  //   'Cache-Control': 'no-cache, no-transform',
+  //   Connection: 'keep-alive',
+  // });
+
+  // // Send the data to the client
+  // const sendData = (data: string) => {
+  //   res.write(`data: ${data}\n\n`);
+  // };
+
+  // sendData(JSON.stringify({ data: '' }));
+
+  //load wolfram tool, wolfram tool from langchain n/a on typescript so i make api call
+
+  const tools: Tool[] = [];
+
+  //load serp tool
+  if (serpApiKey) {
+    tools.push(new SerpAPI(serpApiKey));
+  }
+
+  //load calculator tool
+  tools.push(new Calculator());
+
+  // const splitter = new RecursiveCharacterTextSplitter({
+  //   separators: ['\n', '\r\n', '\r', '\u2029'],
+  // });
+
+  // const texts = splitter.createDocuments([transcription]);
   const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 1000 });
   const docs = await textSplitter.createDocuments([transcription]);
 
@@ -35,7 +73,7 @@ export default async function handler(
   });
 
   const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
-    `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from a transcript of a lecture.
+    `You are a helpful assistant that helps {name}, a student studying {topic}, summarize information from a transcript of a lecture.
     Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
     Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
     Do not repeat {name}'s name in your output

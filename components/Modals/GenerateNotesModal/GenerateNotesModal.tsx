@@ -415,16 +415,6 @@ export default function GenerateNotesModal(props: Props) {
                         </div>
                       </div>
 
-                      <div className="col-span-6 sm:col-span-4 mt-4">
-                        <label
-                          htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-800 text-left  items-center"
-                        >
-                          Agent:
-                        </label>
-                        <SelectAgentMenu setAgentName={setAgentName} />
-                      </div>
-
                       <div className="mt-2">
                         <p className="text-sm text-gray-900 font-medium text-left mt-8 block items-center">
                           Upload Context:
