@@ -73,15 +73,15 @@ export default async function handler(
 
   const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
     `
-    You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from a transcript of a lecture.
-    Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
+    You are a helpful teacher assistant that helps a student {name}. The topic of the lecture is {topic}. Summarize and expand upon information from a transcript of a lecture.
+    Your goal is to write informative notes from the perspective of {name} that will highlight key points that will be relevant to learning the material.
     Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
     Do not repeat {name}'s name in your output.
     
     Respond with the following format.
     - Bullet point format 
     - Separate each bullet point with a new line
-    - Each bullet point should be informative
+    - Each bullet point should be informative to the user
     - Go into detail if needed
       - Subdetails are allowed
 
