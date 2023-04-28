@@ -30,7 +30,7 @@ export default async function handler(
   const llm = new OpenAIChat({
     openAIApiKey: openAIApiKey,
     maxTokens: 400,
-    modelName: 'gpt-3.5-turbo',
+    modelName: 'gpt-4',
     temperature: 0,
   });
 

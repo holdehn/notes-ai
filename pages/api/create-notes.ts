@@ -81,8 +81,9 @@ export default async function handler(
     Respond with the following format.
     - Bullet point format 
     - Separate each bullet point with a new line
-    - Each bullet point should be concise but informative
+    - Each bullet point should be informative
     - Go into detail if needed
+      - Subdetails are allowed
 
     `,
   );
