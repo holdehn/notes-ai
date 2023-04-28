@@ -53,7 +53,8 @@ export default async function handler(
   const llm = new OpenAIChat({
     openAIApiKey: openAIApiKey,
     modelName: 'gpt-4',
-    temperature: 0.6,
+    temperature: 0.1,
+    maxTokens: 100,
   });
   const agentExecutor = await initializeAgentExecutor(
     tools,
@@ -63,26 +64,15 @@ export default async function handler(
   );
 
   const promptTemplate = PromptTemplate.fromTemplate(
-    `Given the transcription of a conversation, identify important topics and generate an important fact or responses relevant to the conversation.
+    `Given the current transcription of a conversation, identify important topics and generate an important fact or responses relevant to the conversation.
       Be concise and be polite.
-     Transcription: {transcription}.`,
+     Transcription: {transcription}.
+     \u2029`,
   );
   const result = await agentExecutor.call({
     promptTemplate,
     input: [transcript],
     maxTokens: 100,
-    temperature: 0.5,
-    modelName: 'gpt-4',
-    topP: 1,
-    frequencyPenalty: 0,
-    presencePenalty: 0,
-    bestOf: 1,
-    n: 1,
-    stream: true,
-    logprobs: 0,
-    stop: ['\u2029'],
-    echo: false,
-    output: true,
   });
   console.log('result', JSON.stringify(result));
 
