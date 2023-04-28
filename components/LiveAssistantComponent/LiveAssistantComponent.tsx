@@ -264,7 +264,7 @@ export default function () {
       const data = await res.json();
       console.log('data' + JSON.stringify(data));
       setTranscript(
-        (prevTranscript) => prevTranscript + '\n' + JSON.stringify(data),
+        (JSON.stringify(data.transcript) as string).replace(/['"]+/g, ''),
       );
     } catch (error: any) {
       console.log(JSON.stringify(error));

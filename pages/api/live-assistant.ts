@@ -42,12 +42,12 @@ export default async function handler(
   const agentExecutor = await initializeAgentExecutor(
     tools,
     llm,
-    'chat-zero-shot-react-description',
+    'zero-shot-react-description',
     true,
   );
 
   const promptTemplate = PromptTemplate.fromTemplate(
-    `Given the current transcription of a conversation, identify important topics and generate an important fact or responses relevant to the conversation.
+    `Given the current transcription of a conversation, generate a relevant relevant response to the transcript.
       Be concise and be polite.
      Transcription: {transcription}.
 `,
