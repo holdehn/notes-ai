@@ -242,7 +242,6 @@ export default function () {
         </div>
         <footer className="m-auto">
           <a href="https://twitter.com/mayowaoshin">
-            Powered by LangChain. Demo built by Mayo (Twitter: @mayowaoshin) and
             Holden (Twitter: @holdehnj)
           </a>
         </footer>
