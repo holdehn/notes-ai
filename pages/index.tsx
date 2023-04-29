@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main>
       <Head>
-        <title>EduNotes- AI powered assistant</title>
+        <title>NotesAI- Work smarter, not harder</title>
         <meta
           name="description"
           content="Organize and manage different subjects while getting personalized AI tutoring."

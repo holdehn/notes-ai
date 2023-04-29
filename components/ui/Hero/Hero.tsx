@@ -18,7 +18,7 @@ export default function Hero() {
   useEffect(() => {
     if (user && session) {
       sessionStorage.setItem('userID', JSON.stringify(user.id));
-      router.push('/home'); // Navigate to the dashboard
+      router.push('/my-notes'); // Navigate to the dashboard
     }
   }, [session, router, user]); // Add router as a dependency
 

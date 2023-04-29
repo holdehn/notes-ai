@@ -23,17 +23,7 @@ interface FileDisplay {
 }
 
 function getRandomColor() {
-  const colors = [
-    'blue',
-    'pink',
-    'red',
-    'green',
-    'yellow',
-    'black',
-    'gray',
-    'indigo',
-    'purple',
-  ];
+  const colors = ['blue', 'red', 'green', 'yellow', 'gray', 'indigo', 'purple'];
   const shades = [400, 500, 600, 700, 800];
 
   const randomColor = colors[Math.floor(Math.random() * colors.length)];

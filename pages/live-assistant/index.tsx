@@ -11,7 +11,7 @@ export default function () {
   return (
     <>
       <Head>
-        <title>EduNotes - Live Assistant</title>
+        <title>NotesAI - Live Assistant</title>
       </Head>
 
       <LiveAssistantComponent />

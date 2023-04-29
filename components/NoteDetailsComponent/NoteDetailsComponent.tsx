@@ -45,7 +45,6 @@ import {
 import { useRouter } from 'next/router';
 
 const navigation = [
-  { name: 'Home', href: '/home', icon: HomeIcon, current: false },
   { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
   {
     name: 'Live Assistant',

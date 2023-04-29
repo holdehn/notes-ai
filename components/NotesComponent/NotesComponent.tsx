@@ -28,8 +28,6 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
 import { createSupabaseClient } from 'supabase-client';
 import { Session, useUser } from '@supabase/auth-helpers-react';
-import AgentModal from '../Modals/AgentModal';
-import CreateAgentModal from '../Modals/CreateAgentModal/CreateAgentModal';
 import GenerateNotesModal from '../Modals/GenerateNotesModal/GenerateNotesModal';
 import { useSession } from '@supabase/auth-helpers-react';
 import { format } from 'date-fns';
@@ -40,7 +38,6 @@ function formatDateTime(dateString: string | number | Date) {
 }
 
 const navigation = [
-  { name: 'Home', href: '/home', icon: HomeIcon, current: false },
   { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
   {
     name: 'Live Assistant',
@@ -110,11 +107,11 @@ const projects = [
 const agents = [
   {
     id: 1,
-    title: 'Summary',
+    title: 'Audio',
     bgColorClass: 'bg-blue-600',
 
-    initials: 'S',
-    description: 'Summarize Context.',
+    initials: 'A',
+    description: 'Audio Files.',
     href: '#',
     imageUrl:
       'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-01.jpg',
@@ -123,12 +120,12 @@ const agents = [
   },
   {
     id: 2,
-    title: 'Observation',
+    title: 'PDF',
     bgColorClass: 'bg-red-600',
 
-    initials: 'O',
-    description: 'Make Observations.',
-    href: '#',
+    initials: 'P',
+    description: 'PDF Files.',
+    href: 'P',
     imageUrl:
       'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-02.jpg',
     imageAlt:
@@ -136,10 +133,10 @@ const agents = [
   },
   {
     id: 3,
-    title: 'Topic',
+    title: 'Video',
     bgColorClass: 'bg-purple-600',
-    initials: 'T',
-    description: 'Relate to a topic.',
+    initials: 'V',
+    description: 'Video Files.',
     href: '#',
     imageUrl:
       'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
@@ -147,11 +144,11 @@ const agents = [
       'Person using a pen to cross a task off a productivity paper card.',
   },
   {
-    id: 3,
-    title: 'Research',
+    id: 4,
+    title: 'Other',
     bgColorClass: 'bg-blue-800',
-    initials: 'R',
-    description: 'Research Notes.',
+    initials: 'O',
+    description: 'Other Files.',
     href: '#',
     imageUrl:
       'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
@@ -535,37 +532,6 @@ export default function () {
                   </a>
                 ))}
               </div>
-              <div className="mt-8">
-                {/* Secondary navigation */}
-                <h3
-                  className="px-3 text-sm font-medium text-gray-500"
-                  id="desktop-teams-headline"
-                >
-                  Agents
-                </h3>
-                <div
-                  className="mt-1 space-y-1"
-                  role="group"
-                  aria-labelledby="desktop-teams-headline"
-                >
-                  {teams.map((team) => (
-                    <a
-                      key={team.name}
-                      href={team.href}
-                      className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                    >
-                      <span
-                        className={classNames(
-                          team.bgColorClass,
-                          'mr-4 h-2.5 w-2.5 rounded-full',
-                        )}
-                        aria-hidden="true"
-                      />
-                      <span className="truncate">{team.name}</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
             </nav>
           </div>
         </div>
@@ -683,150 +649,21 @@ export default function () {
               </div>
             </div>
           </div>
-          <main className="flex-1 bg-gray-100">
+          <main className="flex-1">
             {/* Page title & actions */}
-            <div className="border-b bg-white border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <div className="bg-purple-600  px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="min-w-0 flex-1">
-                <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+                <h1 className="text-lg font-medium leading-6 text-gray-50 sm:truncate">
                   NotesAI
                 </h1>
               </div>
-              <div className="mt-4 flex sm:ml-4 sm:mt-0">
-                <button
-                  onClick={() => setOpenAgentModal(true)}
-                  className="sm:order-0 order-1 ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-0"
-                >
-                  Select Agent
-                </button>
-                <AgentModal open={openAgentModal} setOpen={setOpenAgentModal} />
-                <button
-                  onClick={() => setOpenAddContextModal(true)}
-                  className="order-0 inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 sm:order-1 sm:ml-3"
-                >
-                  Create Agent
-                </button>
-                <CreateAgentModal
-                  open={openAddContextModal}
-                  setOpen={setOpenAddContextModal}
-                />
-              </div>
             </div>
-            {/* Pinned projects */}
-            <div className="mt-6 px-4 sm:px-6 lg:px-8 bg-gray-100">
-              <h2 className="text-sm font-medium text-gray-900">Agents</h2>
-              <ul
-                role="list"
-                className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4"
-              >
-                {agents.map((tool) => (
-                  <li
-                    key={tool.id}
-                    className="relative col-span-1 flex rounded-md shadow-sm"
-                  >
-                    <a href="#" className="w-full flex">
-                      <div
-                        className={classNames(
-                          tool.bgColorClass,
-                          'flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
-                        )}
-                      >
-                        {tool.initials}
-                      </div>
-                      <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-600 bg-white hover:shadow-lg cursor-pointer">
-                        <div className="flex-1 truncate px-4 py-2 text-sm h-full">
-                          <p className="font-medium text-gray-900 hover:text-gray-600 mb-2">
-                            {tool.title}
-                          </p>
-                          <p className="text-gray-500 h-full overflow-y-auto">
-                            {tool.description}
-                          </p>
-                        </div>
-                        <Menu as="div" className="flex-shrink-0 pr-2">
-                          <Menu.Button className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-                            <span className="sr-only">Open options</span>
-                            <EllipsisVerticalIcon
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                          </Menu.Button>
-                          <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
-                          >
-                            <Menu.Items className="absolute right-10 top-3 z-10 mx-3 mt-1 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                              <div className="py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                      )}
-                                    >
-                                      View
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                              <div className="py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                      )}
-                                    >
-                                      Removed from pinned
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                      )}
-                                    >
-                                      Share
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                            </Menu.Items>
-                          </Transition>
-                        </Menu>
-                      </div>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
             {/* Projects list (only on smallest breakpoint) */}
-            <div className="mt-10 sm:hidden">
+            <div className="sm:hidden py-4 pb-4">
               <div className="px-4 sm:px-6">
                 <h2 className="text-sm font-medium text-gray-900">Notes</h2>
               </div>
-              <ul
-                role="list"
-                className="mt-3 divide-y divide-gray-100 border-t border-gray-200"
-              >
+              <ul role="list">
                 {notes?.map((note: any) => (
                   <li key={note.index}>
                     <a
@@ -857,7 +694,7 @@ export default function () {
                 ))}
               </ul>
             </div>
-            <div className="px-4 py-5 mt-6 sm:px-6 border-gray-200 border-t bg-white">
+            <div className="px-4 py-5sm:px-6 border-gray-200  bg-white">
               <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
                 <div className="ml-4 mt-4">
                   <h1 className="text-base font-bold leading-6 text-gray-900">
@@ -883,7 +720,7 @@ export default function () {
               </div>
             </div>
             {/* Projects table (small breakpoint and up) */}
-            <div className="hidden sm:block">
+            <div className="hidden sm:block mt-4">
               <div className="inline-block min-w-full border-b align-middle">
                 <table className="min-w-full">
                   <thead>

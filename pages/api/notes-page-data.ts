@@ -22,7 +22,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { data: notesData, error: notesError } = await supabaseClient
     .from('notes')
     .select('*')
-    .eq('user_id', userID);
+    .eq('user_id', userID)
+    .order('created_at', { ascending: false });
 
   if (notesError) {
     return res.status(500).json({ error: notesError.message });

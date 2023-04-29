@@ -12,7 +12,7 @@ export default function () {
   return (
     <>
       <Head>
-        <title>EduNotes - Learn Anything</title>
+        <title>NotesAI - Generate notes from your lecture</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <NotesLayout>

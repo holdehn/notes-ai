@@ -48,7 +48,6 @@ import { supabaseClient } from '@/supabase-client';
 import SessionSuccess from '../Modals/SessionSuccess/SessionSuccess';
 
 const navigation = [
-  { name: 'Home', href: '/home', icon: HomeIcon, current: false },
   { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: false },
   {
     name: 'Live Assistant',

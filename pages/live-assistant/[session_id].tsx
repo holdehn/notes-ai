@@ -11,7 +11,7 @@ export default function () {
   return (
     <>
       <Head>
-        <title>EduNotes - Session Details</title>
+        <title>NotesAI - Live Session Details</title>
       </Head>
 
       <LiveAssistantComponent />
