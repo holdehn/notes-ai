@@ -241,8 +241,8 @@ export default function () {
           </main>
         </div>
         <footer className="m-auto">
-          <a href="https://twitter.com/mayowaoshin">
-            Holden (Twitter: @holdehnj)
+          <a href="https://twitter.com/holdehnj">
+            Powered by LangChain. Holden (Twitter: @holdehnj)
           </a>
         </footer>
       </LearningAssistantLayout>
