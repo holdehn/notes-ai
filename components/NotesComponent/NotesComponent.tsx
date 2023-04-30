@@ -166,10 +166,11 @@ const NotesComponent: React.FC = () => {
     fetcher,
   );
   const handleLogout = async () => {
-    await supabaseClient.auth.signOut();
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) return alert(error.message);
+
     router.push('/');
   };
-
   const notes = data?.notes?.map(
     (
       note: {
@@ -465,8 +466,7 @@ const NotesComponent: React.FC = () => {
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="/"
+                        <button
                           onClick={handleLogout}
                           className={classNames(
                             active
@@ -476,7 +476,7 @@ const NotesComponent: React.FC = () => {
                           )}
                         >
                           Logout
-                        </a>
+                        </button>
                       )}
                     </Menu.Item>
                   </div>

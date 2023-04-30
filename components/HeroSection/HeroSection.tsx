@@ -124,8 +124,8 @@ export default function HeroSection() {
             </div>
             <div className="max-w-md mx-auto mt-4">
               <Auth
-                view="magic_link"
-                magicLink={true}
+                view="sign_in"
+                magicLink={false}
                 dark={false}
                 showLinks={false}
                 supabaseClient={supabase}
