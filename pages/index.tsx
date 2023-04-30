@@ -2,9 +2,20 @@ import Features from '@/components/ui/Features';
 import Footer from '@/components/ui/Footer';
 import Hero from '@/components/ui/Hero';
 import Navbar from '@/components/ui/Navbar';
+import { useSession } from '@supabase/auth-helpers-react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function Home() {
+  const router = useRouter();
+  const session = useSession();
+
+  useEffect(() => {
+    if (session) {
+      router.push('/my-classes');
+    }
+  }, [session]);
   return (
     <main>
       <Head>

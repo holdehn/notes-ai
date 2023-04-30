@@ -15,12 +15,6 @@ export default function Hero() {
   const session = useSession();
   const supabase = useSupabaseClient();
   const router = useRouter(); // Initialize useRouter
-  useEffect(() => {
-    if (user && session) {
-      sessionStorage.setItem('userID', JSON.stringify(user.id));
-      router.push('/my-notes'); // Navigate to the dashboard
-    }
-  }, [session, router, user]); // Add router as a dependency
 
   return (
     <section className="py-20 relative sm:py-24 bg-blue-950">
