@@ -56,6 +56,7 @@
     "next": "13.2.3",
     "next-connect": "^0.13.0",
     "node-fetch": "^3.3.1",
+    "nookies": "^2.5.2",
     "openai": "^3.2.1",
     "parse-multipart": "^1.0.4",
     "react": "18.2.0",

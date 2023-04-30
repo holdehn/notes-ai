@@ -162,7 +162,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function () {
+const NotesComponent: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openNotesModal, setOpenNotesModal] = useState(false);
   const [openAgentModal, setOpenAgentModal] = useState(false);
@@ -177,6 +177,7 @@ export default function () {
     userID ? `/api/notes-page-data?userID=${userID}` : null,
     fetcher,
   );
+
   const notes = data?.notes?.map(
     (
       note: {
@@ -197,7 +198,7 @@ export default function () {
       context: note.context,
       functionality: note.functionality,
       agent_name: note.agent_name,
-      created_at: formatDateTime(note.created_at), // Use the formatDateTime function here
+      created_at: formatDateTime(note.created_at),
       bgColorClass: note.color_theme,
     }),
   );
@@ -803,4 +804,6 @@ export default function () {
       </div>
     </>
   );
-}
+};
+
+export default NotesComponent;

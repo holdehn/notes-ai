@@ -704,7 +704,7 @@ export default function NoteDetailsComponent() {
                             Notes
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900">
-                            {JSON.parse(note?.[0]?.notes)?.map(
+                            {JSON.parse(note?.[0]?.notes || '[]')?.map(
                               (
                                 point: string,
                                 index: Key | null | undefined,

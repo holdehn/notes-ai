@@ -24,12 +24,10 @@ interface FileDisplay {
 
 function getRandomColor() {
   const colors = ['blue', 'red', 'green', 'gray', 'indigo', 'purple'];
-  const shades = [400, 500, 600, 700, 800];
 
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
-  const randomShade = shades[Math.floor(Math.random() * shades.length)];
 
-  return `bg-${randomColor}-${randomShade}`;
+  return `bg-${randomColor}-600`;
 }
 
 export default function GenerateNotesModal(props: Props) {
