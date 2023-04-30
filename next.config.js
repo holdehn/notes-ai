@@ -5,11 +5,10 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     config.experiments = { ...config.experiments, topLevelAwait: true };
 
-    // Exclude the supabase folder from the build
+    // Exclude the entire supabase folder from the build
     config.module.rules.push({
-      test: /\.tsx?$/,
-      include: /supabase/,
-      use: 'null-loader',
+      test: /supabase[\\/].*\.(ts|js)$/,
+      use: 'ignore-loader',
     });
 
     if (!isServer) {
