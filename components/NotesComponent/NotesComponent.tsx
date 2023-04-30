@@ -1,28 +1,15 @@
-import {
-  Fragment,
-  JSXElementConstructor,
-  Key,
-  ReactElement,
-  ReactFragment,
-  ReactPortal,
-  use,
-  useEffect,
-  useState,
-} from 'react';
+import { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
-  Bars4Icon,
-  ClockIcon,
-  HomeIcon,
   XMarkIcon,
   NewspaperIcon,
 } from '@heroicons/react/24/outline';
 import {
   ChevronRightIcon,
   ChevronUpDownIcon,
-  EllipsisVerticalIcon,
   MagnifyingGlassIcon,
+  UserIcon,
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
@@ -202,6 +189,8 @@ const NotesComponent: React.FC = () => {
       bgColorClass: note.color_theme,
     }),
   );
+  const avatar_url = data?.user?.avatar_url;
+  const name = data?.user?.name;
 
   return (
     <>
@@ -335,7 +324,7 @@ const NotesComponent: React.FC = () => {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-indigo-800 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-gray-100 lg:pb-4 lg:pt-5">
           <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -344,21 +333,28 @@ const NotesComponent: React.FC = () => {
             />
           </div>
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
+          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-gray-100">
             {/* User account dropdown */}
             <Menu as="div" className="relative inline-block px-3 text-left">
               <div>
                 <Menu.Button className="group w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100">
                   <span className="flex w-full items-center justify-between">
                     <span className="flex min-w-0 items-center justify-between space-x-3">
-                      <img
-                        className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
-                        src="https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg"
-                        alt=""
-                      />
+                      {avatar_url ? (
+                        <img
+                          className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-100"
+                          src={avatar_url}
+                          alt=""
+                        />
+                      ) : (
+                        <UserIcon
+                          className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+                          aria-hidden="true"
+                        />
+                      )}
                       <span className="flex min-w-0 flex-1 flex-col">
                         <span className="truncate text-sm font-medium text-gray-900">
-                          Erlich Bachman
+                          {name} Erlich Bachman
                         </span>
                         <span className="truncate text-sm text-gray-500">
                           @holdehnj
@@ -652,13 +648,14 @@ const NotesComponent: React.FC = () => {
           </div>
           <main className="flex-1">
             {/* Page title & actions */}
-            <div className="bg-purple-600  px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <div className="bg-gradient-to-r from-indigo-600 via-purple-700 to-indigo-800 px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="min-w-0 flex-1">
                 <h1 className="text-lg font-medium leading-6 text-gray-50 sm:truncate">
                   NotesAI
                 </h1>
               </div>
             </div>
+
             {/* Projects list (only on smallest breakpoint) */}
             <div className="sm:hidden py-4 pb-4">
               <div className="px-4 sm:px-6">
