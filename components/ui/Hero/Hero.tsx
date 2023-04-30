@@ -37,6 +37,7 @@ export default function Hero() {
                 dark={true}
                 showLinks={false}
                 supabaseClient={supabase}
+                redirectTo="/my-notes"
                 theme="dark"
                 appearance={{
                   theme: ThemeSupa,

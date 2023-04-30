@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { Link } from 'react-scroll';
+import { useRouter } from 'next/router';
 
 const navigation = [
   { name: 'Home', href: 'home' },
@@ -17,6 +18,12 @@ export default function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const session = useSession();
   const supabase = useSupabaseClient();
+  const router = useRouter();
+  useEffect(() => {
+    if (session) {
+      router.push('/my-notes');
+    }
+  }, [session]);
 
   return (
     <div className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">

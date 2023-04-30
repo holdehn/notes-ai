@@ -13,11 +13,12 @@ import {
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
-import { createSupabaseClient } from 'supabase-client';
+import { createSupabaseClient, supabaseClient } from 'supabase-client';
 import { Session, useUser } from '@supabase/auth-helpers-react';
 import GenerateNotesModal from '../Modals/GenerateNotesModal/GenerateNotesModal';
 import { useSession } from '@supabase/auth-helpers-react';
 import { format } from 'date-fns';
+import router from 'next/router';
 
 function formatDateTime(dateString: string | number | Date) {
   const date = new Date(dateString);
@@ -164,6 +165,10 @@ const NotesComponent: React.FC = () => {
     userID ? `/api/notes-page-data?userID=${userID}` : null,
     fetcher,
   );
+  const handleLogout = async () => {
+    await supabaseClient.auth.signOut();
+    router.push('/');
+  };
 
   const notes = data?.notes?.map(
     (
@@ -461,7 +466,8 @@ const NotesComponent: React.FC = () => {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="#"
+                          href="/"
+                          onClick={handleLogout}
                           className={classNames(
                             active
                               ? 'bg-gray-100 text-gray-900'
