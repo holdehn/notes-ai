@@ -31,5 +31,6 @@
     ".next/types/**/*.ts", "components/Modals/GenerateNotesPDFModal",
 
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "supabase/functions/generate-transcription/index.ts",
+]
 }
