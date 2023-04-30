@@ -97,28 +97,33 @@ export default function GenerateNotesModal(props: Props) {
       upload_ids.push(file.name);
     });
 
-    const noteId = uuidv4();
+    try {
+      const response = await fetch('/api/create-note-supabase', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userID,
+          fileObjects,
+          formikValues: formik.values,
+          agentName,
+          transcription,
+          notes,
+          summary,
+        }),
+      });
 
-    const { data, error } = await supabaseClient.from('notes').insert([
-      {
-        id: noteId,
-        title: formik.values.title,
-        context: formik.values.context,
-        functionality: formik.values.functionality,
-        upload_ids: upload_ids,
-        user_id: userID,
-        agent_name: agentName,
-        color_theme: getRandomColor(),
-        transcription: transcription,
-        notes: notes,
-        summary: summary,
-      },
-    ]);
+      const data = await response.json();
 
-    if (error) {
+      if (data.error) {
+        console.log('error :>> ', data.error);
+      } else {
+        router.push(`/my-notes/${data.noteId}`);
+      }
+    } catch (error) {
       console.log('error :>> ', error);
     }
-    router.push(`/my-notes/${noteId}`);
 
     setOpen(false);
   };

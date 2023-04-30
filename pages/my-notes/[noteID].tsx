@@ -21,10 +21,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const supabase = createServerSupabaseClient(ctx);
-  await supabase.auth.setSession({
-    access_token: accessToken,
-    refresh_token: refreshToken,
-  });
 
   const user = await supabase.auth.getUser();
 
