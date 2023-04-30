@@ -1,14 +1,18 @@
+// /api/get-note.ts
+
 import { NextApiRequest, NextApiResponse } from 'next';
-import { supabaseClient } from '@/supabase-client';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { noteId, userId } = req.query;
 
   if (!noteId || !userId) {
-    return res.status(400).json({ error: 'Note ID is required' });
+    return res.status(400).json({ error: 'Note ID and User ID are required' });
   }
 
-  const { data: noteData, error: noteError } = await supabaseClient
+  const supabase = createServerSupabaseClient({ req, res });
+
+  const { data: noteData, error: noteError } = await supabase
     .from('notes')
     .select('*')
     .match({ id: noteId, user_id: userId });

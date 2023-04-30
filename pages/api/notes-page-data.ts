@@ -1,7 +1,7 @@
 // /api/notes-page-data.ts
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { supabaseClient } from '@/supabase-client';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { userID } = req.query;
@@ -10,7 +10,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ error: 'User ID is required' });
   }
 
-  const { data: userData, error: userError } = await supabaseClient
+  const supabase = createServerSupabaseClient({ req, res });
+
+  const { data: userData, error: userError } = await supabase
     .from('users')
     .select('*')
     .eq('id', userID);
@@ -19,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ error: userError.message });
   }
 
-  const { data: notesData, error: notesError } = await supabaseClient
+  const { data: notesData, error: notesError } = await supabase
     .from('notes')
     .select('*')
     .eq('user_id', userID)
@@ -29,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ error: notesError.message });
   }
 
-  const { data: sessionData, error: sessionsError } = await supabaseClient
+  const { data: sessionData, error: sessionsError } = await supabase
     .from('live_sessions')
     .select('*')
     .eq('user_id', userID);
