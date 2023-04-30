@@ -1,6 +1,6 @@
-import { serve } from 'https://deno.land/std@0.160.0/http/server.ts';
-import { corsHeaders } from '/Users/holden/Projects/edulink/supabase/_shared/cors.ts';
-import FormData from 'https://cdn.skypack.dev/form-data';
+import { serve } from 'https://deno.land/std@0.160.0/http/server.ts'; //@ts-ignore
+import { corsHeaders } from '/Users/holden/Projects/edulink/supabase/_shared/cors.ts'; //@ts-ignore
+import FormData from 'https://cdn.skypack.dev/form-data'; //@ts-ignore
 
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
