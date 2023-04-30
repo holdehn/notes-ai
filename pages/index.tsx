@@ -6,24 +6,6 @@ import Features from '@/components/FeatureSection/FeatureSection';
 import PricingSection from '@/components/PricingSection/PricingSection';
 import { Element } from 'react-scroll';
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const cookies = parseCookies(ctx);
-  const accessToken = cookies['my-access-token'];
-  const refreshToken = cookies['my-refresh-token'];
-
-  if (accessToken && refreshToken) {
-    return {
-      redirect: {
-        destination: '/my-notes',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {}, // Return empty props
-  };
-};
 export default function Home() {
   return (
     <main>
