@@ -5,6 +5,8 @@ import Head from 'next/head';
 import Features from '@/components/FeatureSection/FeatureSection';
 import PricingSection from '@/components/PricingSection/PricingSection';
 import { Element } from 'react-scroll';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const cookies = parseCookies(ctx);
@@ -25,6 +27,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 export default function Home() {
+  const session = parseCookies().session;
+  const router = useRouter();
+  useEffect(() => {
+    if (session) {
+      router.push('/my-notes');
+    }
+  }, [session]);
   return (
     <main>
       <Head>
