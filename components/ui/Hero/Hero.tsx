@@ -11,11 +11,8 @@ import {
 import { useRouter } from 'next/router';
 
 export default function Hero() {
-  const user = useUser();
   const session = useSession();
   const supabase = useSupabaseClient();
-  const router = useRouter(); // Initialize useRouter
-
   return (
     <section className="py-20 relative sm:py-24 bg-blue-950">
       <div className="custom-screen relative z-10">
