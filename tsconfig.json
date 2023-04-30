@@ -28,11 +28,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "components/Modals/GenerateNotesPDFModal"
+    ".next/types/**/*.ts", "components/Modals/GenerateNotesPDFModal",
+
   ],
-  "exclude": [
-    "node_modules",
-    "supabase" // Exclude the entire supabase folder
-  ]
+  "exclude": ["node_modules"]
 }
