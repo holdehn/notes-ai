@@ -6,6 +6,7 @@ import Features from '@/components/FeatureSection/FeatureSection';
 import PricingSection from '@/components/PricingSection/PricingSection';
 import { Element } from 'react-scroll';
 import { useRouter } from 'next/router';
+import { useSession, useUser } from '@supabase/auth-helpers-react';
 import { useEffect } from 'react';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -27,13 +28,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 export default function Home() {
-  const session = parseCookies().session;
   const router = useRouter();
+  const session = useSession();
+
   useEffect(() => {
     if (session) {
       router.push('/my-notes');
     }
-  }, [session]);
+  }, [session, router]);
   return (
     <main>
       <Head>

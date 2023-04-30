@@ -663,7 +663,7 @@ const NotesComponent: React.FC = () => {
             </div>
 
             {/* Projects list (only on smallest breakpoint) */}
-            <div className="sm:hidden py-4 pb-4">
+            <div className="sm:hidden py-4 pb-4 flex-grow">
               <div className="px-4 sm:px-6">
                 <h2 className="text-sm font-medium text-gray-900">Notes</h2>
               </div>
@@ -724,7 +724,7 @@ const NotesComponent: React.FC = () => {
               </div>
             </div>
             {/* Projects table (small breakpoint and up) */}
-            <div className="hidden sm:block mt-4">
+            <div className="hidden sm:block mt-4 flex-grow">
               <div className="inline-block min-w-full border-b align-middle">
                 <table className="min-w-full">
                   <thead>
