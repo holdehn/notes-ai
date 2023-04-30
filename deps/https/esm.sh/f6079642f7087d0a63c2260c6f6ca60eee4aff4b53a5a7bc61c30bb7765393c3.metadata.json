@@ -1,0 +1,25 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Sat, 29 Apr 2023 22:33:39 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=iOQjztXgQq%2F%2FLaFTNNHEsYD98ZHt5cW6ZInGmYnADCq1UxMFPA1YGvgUP5jb9Nx%2FmW%2BlTde9ifGjH8AOMS%2BK8FXPO4u51CaxlbVk0CwgkB88DmDd33uwuRWduTdpzz%2FHJFpEkR8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "last-modified": "Mon, 24 Apr 2023 12:33:00 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7bfb0204f9aff9ea-SJC",
+    "accept-ranges": "bytes",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "content-length": "4578",
+    "content-type": "application/typescript; charset=utf-8",
+    "cf-cache-status": "HIT",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "age": "468039"
+  },
+  "url": "https://esm.sh/v117/@supabase/realtime-js@2.7.2/dist/module/RealtimeClient.d.ts",
+  "now": {
+    "secs_since_epoch": 1682807617,
+    "nanos_since_epoch": 66795000
+  }
+}

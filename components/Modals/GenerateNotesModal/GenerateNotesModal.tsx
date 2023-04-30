@@ -23,7 +23,7 @@ interface FileDisplay {
 }
 
 function getRandomColor() {
-  const colors = ['blue', 'red', 'green', 'yellow', 'gray', 'indigo', 'purple'];
+  const colors = ['blue', 'red', 'green', 'gray', 'indigo', 'purple'];
   const shades = [400, 500, 600, 700, 800];
 
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -61,7 +61,6 @@ export default function GenerateNotesModal(props: Props) {
       setFileObjects([...fileObjects, file]);
 
       setNextId(nextId + 1);
-      console.log('files :>> ', files, fileObjects);
     }
   };
 
@@ -122,46 +121,22 @@ export default function GenerateNotesModal(props: Props) {
     setOpen(false);
   };
 
-  const sendAudio = async (chunk: Blob, originalFile: File) => {
+  const sendAudio = async (file: File) => {
     try {
-      if (!chunk) {
+      if (!file) {
         alert('Please upload an audio file');
         return;
       }
       const formData = new FormData();
-      const chunkAsFile = new File([chunk], originalFile.name, {
-        type: originalFile.type,
-      });
-      formData.append('file', chunkAsFile);
-
-      console.log(`Sending chunk: ${chunkAsFile.name}`);
-
-      // Continue with the existing sendAudio logic
-
-      const res = await fetch('/api/transcribe', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.log('error' + JSON.stringify(errorData));
-        throw new Error(errorData.message);
-      }
-
-      const data = await res.json();
-      console.log('data' + JSON.stringify(data));
-
-      if (!data.transcript || !data.transcript.text) {
-        console.log(
-          `No transcription data received for chunk: ${chunkAsFile.name}`,
-        );
-        throw new Error('Transcription data is missing or invalid');
-      }
-
-      console.log('transcription' + JSON.stringify(data.transcript.text));
-
-      const transcription = data.transcript.text;
+      formData.append('file', file);
+      const data = await supabaseClient.functions.invoke(
+        'generate-transcription',
+        {
+          body: formData,
+        },
+      );
+      const transcription = data.data.transcript.text;
+      setConvertedText(transcription);
       return transcription;
     } catch (error: any) {
       console.log(JSON.stringify(error));
@@ -193,9 +168,7 @@ export default function GenerateNotesModal(props: Props) {
       }
 
       const data = await response.json();
-      console.log('notes :>> ', JSON.stringify(data.data.text));
       const noteData = data.data.text;
-      console.log('noteData :>> ', noteData);
       return noteData;
     } catch (error: any) {
       console.log(JSON.stringify(error));
@@ -228,15 +201,12 @@ export default function GenerateNotesModal(props: Props) {
       }
 
       const data = await response.json();
-      console.log('notes :>> ', JSON.stringify(data.data.text));
       const noteData = JSON.stringify(data.data.text);
-      console.log('noteData :>> ', noteData);
 
       // Split the output at every newline and return an array of bullet points
       const bulletPoints = noteData
         .split('\\n')
         .filter((line) => line.length > 0);
-      console.log('bulletPoints :>> ', bulletPoints);
       return bulletPoints;
     } catch (error: any) {
       console.log(JSON.stringify(error));
@@ -256,46 +226,20 @@ export default function GenerateNotesModal(props: Props) {
     context: '',
     functionality: '',
   };
-  const CHUNK_SIZE = 4 * 1024 * 1024; // 4 MB
-  const processChunks = useCallback(
-    async (file: File) => {
-      let fullTranscription = '';
-      let currentChunkStart = 0;
-
-      while (currentChunkStart < file.size) {
-        const chunkEnd = Math.min(currentChunkStart + CHUNK_SIZE, file.size);
-        const chunk = file.slice(currentChunkStart, chunkEnd);
-
-        console.log(
-          `Processing chunk from ${currentChunkStart} to ${chunkEnd}`,
-        );
-        console.log(`Chunk MIME type: ${chunk.type}`);
-
-        const transcription = await sendAudio(chunk, file);
-        fullTranscription += transcription;
-
-        currentChunkStart = chunkEnd;
-      }
-
-      return fullTranscription;
-    },
-    [sendAudio],
-  );
 
   // Update the onSubmit function
   const onSubmit = async (values: any, { resetForm }: any) => {
     //if no file and no youtube return
-    console.log('fileObjects :>> ', fileObjects);
     if (fileObjects.length === 0) {
       return;
     }
     setLoading(true);
 
-    const transcription = await processChunks(fileObjects[0]);
-    console.log('transcription :>> ', transcription);
+    const transcription = await sendAudio(fileObjects[0]);
+
     const summary = await createNotesSummary(transcription);
     const notes = await createNotesFacts(transcription, values.context);
-    console.log('notes2upload :>> ', notes);
+
     insertAndNavigate(transcription, notes, summary as string);
     resetForm();
     setLoading(false);
@@ -424,10 +368,9 @@ export default function GenerateNotesModal(props: Props) {
                     * Only Audio Files are supported at this time
                   </p>
                   <p className="text-xs mt-2 italic text-gray-500">
-                    * File Size is limited to like 4 or 5 MB. (TODO: Increase
-                    file size limit)
+                    * File Size is limited to 25 MB.
                   </p>
-                  <p className="text-xs mt-2 italic text-gray-800">
+                  <p className="text-sm mt-2 italic text-gray-800">
                     Please be patient with loading times
                   </p>
                   <ul className="mt-4">

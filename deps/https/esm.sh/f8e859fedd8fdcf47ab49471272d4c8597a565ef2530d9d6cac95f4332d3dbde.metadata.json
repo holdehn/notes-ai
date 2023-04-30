@@ -1,0 +1,25 @@
+{
+  "headers": {
+    "age": "164929",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Izz8pa4Q8NDioM%2Bc0Yq%2BqxEcuOd0bjdAeT5qffShF3rj8Cd5hGOW5jgcZPCJ8WX4OLfAlIycHezzZrkVpq0wHDiayaHIyic2VdurSJqYsA9js5M4mW850vo97%2BXaui5e%2BUOkXfs%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "accept-ranges": "bytes",
+    "server": "cloudflare",
+    "last-modified": "Fri, 28 Apr 2023 00:44:50 GMT",
+    "date": "Sat, 29 Apr 2023 22:33:39 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "r2",
+    "cf-cache-status": "HIT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "521",
+    "cf-ray": "7bfb02058a2bf9ea-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v117/@supabase/storage-js@2.5.1/dist/module/StorageClient.d.ts",
+  "now": {
+    "secs_since_epoch": 1682807617,
+    "nanos_since_epoch": 93653000
+  }
+}

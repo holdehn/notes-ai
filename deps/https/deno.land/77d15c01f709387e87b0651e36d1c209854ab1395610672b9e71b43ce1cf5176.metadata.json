@@ -1,0 +1,35 @@
+{
+  "headers": {
+    "content-security-policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+    "cross-origin-resource-policy": "same-origin",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "server-timing": "attempt;val=1,cdn-cache-hit,cdn-pop;desc=\"LAX53-P1\",cdn-rid;desc=\"lYiClE3THYCLZvk7xbkVG72yipzSMFWciqcLPxoDmIsorTQAA3S0fA==\",cdn-hit-layer;desc=\"EDGE\",cdn-downstream-fbl;dur=1, fetchSource;dur=38",
+    "age": "8144645",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Accept-Encoding, Origin",
+    "x-amz-cf-pop": "LAX53-P1",
+    "x-amz-version-id": "dbwsIELeBXen.Jf6VATJmNwNr0iT.8P.",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-cache": "Hit from cloudfront",
+    "x-frame-options": "DENY",
+    "cross-origin-opener-policy": "same-origin",
+    "x-amz-replication-status": "COMPLETED",
+    "cross-origin-embedder-policy": "same-origin",
+    "accept-ranges": "bytes",
+    "x-content-type-options": "nosniff",
+    "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+    "etag": "\"15c6952b6a9b987fd0230b929ef7077f\"",
+    "x-amz-cf-id": "lYiClE3THYCLZvk7xbkVG72yipzSMFWciqcLPxoDmIsorTQAA3S0fA==",
+    "content-length": "618",
+    "via": "http/2 edgeproxy-h",
+    "server": "deno/gcp-us-west2",
+    "access-control-allow-origin": "*",
+    "date": "Wed, 25 Jan 2023 16:39:49 GMT",
+    "last-modified": "Mon, 17 Oct 2022 18:03:13 GMT"
+  },
+  "url": "https://deno.land/std@0.160.0/async/deadline.ts",
+  "now": {
+    "secs_since_epoch": 1682809431,
+    "nanos_since_epoch": 365461000
+  }
+}

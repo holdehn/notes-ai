@@ -701,7 +701,7 @@ export default function () {
                     Generate Notes
                   </h1>
                   <p className="mt-1 text-sm text-gray-400">
-                    Generate notes for meetings, lectures, and so much more!
+                    Generate lecture notes from your audio!
                   </p>
                 </div>
                 <div className="ml-4 mt-4 flex-shrink-0">

@@ -1,0 +1,23 @@
+{
+  "headers": {
+    "cross-origin-embedder-policy": "same-origin",
+    "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+    "x-content-type-options": "nosniff",
+    "x-deno-warning": "Implicitly using latest version (v1.0.1) for https://deno.land/x/fetch/mod.ts",
+    "x-frame-options": "DENY",
+    "cross-origin-resource-policy": "same-origin",
+    "vary": "Accept-Encoding",
+    "date": "Sat, 29 Apr 2023 22:47:49 GMT",
+    "via": "http/2 edgeproxy-h",
+    "server": "deno/gcp-us-west2",
+    "location": "/x/fetch@v1.0.1/mod.ts",
+    "cross-origin-opener-policy": "same-origin",
+    "access-control-allow-origin": "*",
+    "referrer-policy": "strict-origin-when-cross-origin"
+  },
+  "url": "https://deno.land/x/fetch/mod.ts",
+  "now": {
+    "secs_since_epoch": 1682808467,
+    "nanos_since_epoch": 852937000
+  }
+}

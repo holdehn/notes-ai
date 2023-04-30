@@ -1,0 +1,23 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "date": "Sat, 29 Apr 2023 22:33:39 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=kFMl%2FTv6GXO9ahdD59Zs9TEV%2FG75K9UltTPN8AsSJyOxnQ8pZrOIgRkJCJSGzcpeJ2apXia52%2F5Yu8mlsgtlB0raF%2BMyEWHeyPbP6HbEe%2FyOQAKJ9fJVv3%2Fn%2F%2B%2FB0gk5MDU%2BUCs%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "x-content-source": "workers-kv",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cf-ray": "7bfb020438f7f9ea-SJC",
+    "cf-cache-status": "HIT",
+    "content-type": "application/javascript; charset=utf-8",
+    "age": "164929",
+    "last-modified": "Fri, 28 Apr 2023 00:44:50 GMT"
+  },
+  "url": "https://esm.sh/v117/@supabase/gotrue-js@2.23.0/deno/gotrue-js.mjs",
+  "now": {
+    "secs_since_epoch": 1682807616,
+    "nanos_since_epoch": 882149000
+  }
+}

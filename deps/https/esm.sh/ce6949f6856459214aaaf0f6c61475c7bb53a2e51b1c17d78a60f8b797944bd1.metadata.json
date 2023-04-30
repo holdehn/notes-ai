@@ -1,0 +1,23 @@
+{
+  "headers": {
+    "date": "Sat, 29 Apr 2023 22:33:39 GMT",
+    "cf-ray": "7bfb020438faf9ea-SJC",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "age": "468040",
+    "last-modified": "Mon, 24 Apr 2023 12:32:59 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "content-type": "application/javascript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=4MIcK%2BnhPzOYuXFS6aE6kc9HT0j4rJ1gdhHvAyVGo2QU8cwn5qiIewaxDq5bdXHVQpcTtBYSzXS1Cz1JFds9VlLc8o%2Btv9Ugn%2FVtIc9R%2B%2FjBY8IWAgCKOfrTpUQ8N0ym6Y3J%2BLs%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-cache-status": "HIT",
+    "x-content-source": "workers-kv",
+    "access-control-allow-origin": "*"
+  },
+  "url": "https://esm.sh/v117/@supabase/storage-js@2.5.1/deno/storage-js.mjs",
+  "now": {
+    "secs_since_epoch": 1682807616,
+    "nanos_since_epoch": 906023000
+  }
+}

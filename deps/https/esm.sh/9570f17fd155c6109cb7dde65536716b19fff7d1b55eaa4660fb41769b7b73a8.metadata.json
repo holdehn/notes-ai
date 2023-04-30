@@ -1,0 +1,25 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "accept-ranges": "bytes",
+    "cf-cache-status": "HIT",
+    "date": "Sat, 29 Apr 2023 22:33:39 GMT",
+    "cf-ray": "7bfb02058a30f9ea-SJC",
+    "age": "164928",
+    "last-modified": "Fri, 28 Apr 2023 00:44:51 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "13204",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=If5eUSSO%2FKD9201%2Bcbak0clcFE4wgCpwnjJS%2BmfWGycfaGvRllEz%2Fv4AZ0WNDxjPDrMFApagQNmGPR3AA5jXGJUKjilrxI0ABkuosDeKiIbvQLvDkXNsElU25LWxyh0Wo2wCz8U%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "r2"
+  },
+  "url": "https://esm.sh/v117/@supabase/postgrest-js@1.6.0/dist/module/select-query-parser.d.ts",
+  "now": {
+    "secs_since_epoch": 1682807617,
+    "nanos_since_epoch": 88529000
+  }
+}

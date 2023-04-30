@@ -1,0 +1,6 @@
+import GoTrueAdminApi from './GoTrueAdminApi.d.ts';
+import GoTrueClient from './GoTrueClient.d.ts';
+export { GoTrueAdminApi, GoTrueClient };
+export * from './lib/types.d.ts';
+export * from './lib/errors.d.ts';
+//# sourceMappingURL=index.d.ts.map

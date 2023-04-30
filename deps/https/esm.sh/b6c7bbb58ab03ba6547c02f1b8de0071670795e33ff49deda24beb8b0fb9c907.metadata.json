@@ -1,0 +1,20 @@
+{
+  "headers": {
+    "content-length": "0",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "cf-ray": "7bfb02017df3f9ea-SJC",
+    "location": "https://esm.sh/@supabase/supabase-js@2.21.0",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=keJQmsoJomf%2BdX45hGtFO%2FZ8lmGBRNdAsRNuediWIG2AGrfXHCvZ9onOTf0WVoKECjh8yW1AiidS0LzylCUTuhR%2Bn4Tebcxv7dOvKcW1vDxO3gE0jR4fCEWjg1X0OJCAURaLdaE%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Sat, 29 Apr 2023 22:33:39 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=600",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/@supabase/supabase-js@^2.1.0",
+  "now": {
+    "secs_since_epoch": 1682807616,
+    "nanos_since_epoch": 764416000
+  }
+}

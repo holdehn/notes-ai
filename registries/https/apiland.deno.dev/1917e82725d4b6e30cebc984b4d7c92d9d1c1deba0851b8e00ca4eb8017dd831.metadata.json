@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "vary": "Accept-Encoding",
+    "cache-control": "max-age=86400",
+    "server": "deno/gcp-us-west2",
+    "date": "Sat, 29 Apr 2023 23:40:31 GMT",
+    "content-type": "application/json",
+    "via": "http/2 edgeproxy"
+  },
+  "url": "https://apiland.deno.dev/completions/resolve/std/__latest__/mime/mod.ts",
+  "now": {
+    "secs_since_epoch": 1682811629,
+    "nanos_since_epoch": 203285000
+  }
+}
