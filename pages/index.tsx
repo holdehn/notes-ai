@@ -5,21 +5,13 @@ import Head from 'next/head';
 import Features from '@/components/FeatureSection/FeatureSection';
 import PricingSection from '@/components/PricingSection/PricingSection';
 import { Element } from 'react-scroll';
-import { useSession } from '@supabase/auth-helpers-react';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const { accessToken, refreshToken } = ctx.query;
+  const cookies = parseCookies(ctx);
+  const accessToken = cookies['my-access-token'];
+  const refreshToken = cookies['my-refresh-token'];
 
   if (accessToken && refreshToken) {
-    // Set the cookies
-    const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
-    ctx.res.setHeader('Set-Cookie', [
-      `my-access-token=${accessToken}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure; HttpOnly`,
-      `my-refresh-token=${refreshToken}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure; HttpOnly`,
-    ]);
-
     return {
       redirect: {
         destination: '/my-notes',
@@ -29,19 +21,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   return {
-    props: {},
+    props: {}, // Return empty props
   };
 };
-
 export default function Home() {
-  const router = useRouter();
-  const session = useSession();
-
-  useEffect(() => {
-    if (session) {
-      router.push('/my-notes');
-    }
-  }, [session, router]);
   return (
     <main>
       <Head>
