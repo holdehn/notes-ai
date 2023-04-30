@@ -20,6 +20,14 @@ export default function HeroSection() {
   const session = useSession();
   const supabase = useSupabaseClient();
 
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      router.push('/my-notes');
+    }
+  }, [session]);
+
   return (
     <div className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
       <header className="absolute inset-x-0 top-0 z-50">
