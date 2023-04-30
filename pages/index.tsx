@@ -1,9 +1,10 @@
-import Features from '@/components/ui/Features';
-import Footer from '@/components/ui/Footer';
-import Hero from '@/components/ui/Hero';
+import Hero from '@/components/HeroSection/HeroSection';
 import { GetServerSidePropsContext } from 'next';
 import { parseCookies } from 'nookies';
 import Head from 'next/head';
+import Features from '@/components/FeatureSection/FeatureSection';
+import PricingSection from '@/components/PricingSection/PricingSection';
+import { Element } from 'react-scroll';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const cookies = parseCookies(ctx);
@@ -23,7 +24,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     props: {}, // Return empty props
   };
 };
-
 export default function Home() {
   return (
     <main>
@@ -34,10 +34,15 @@ export default function Home() {
           content="Organize and manage different subjects while getting personalized AI tutoring."
         />
       </Head>
-      {/* <Navbar /> */}
-      <Hero />
-      <Features />
-      <Footer />
+      <Element name="home">
+        <Hero />
+      </Element>
+      <Element name="features">
+        <Features />
+      </Element>
+      <Element name="pricing">
+        <PricingSection />
+      </Element>
     </main>
   );
 }

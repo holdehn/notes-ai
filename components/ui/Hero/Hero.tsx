@@ -33,6 +33,9 @@ export default function Hero() {
             <div className="max-w-md mx-auto mt-4">
               <Auth
                 view="magic_link"
+                magicLink={true}
+                dark={true}
+                showLinks={false}
                 supabaseClient={supabase}
                 theme="dark"
                 appearance={{

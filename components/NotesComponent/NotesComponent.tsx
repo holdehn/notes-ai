@@ -335,7 +335,7 @@ const NotesComponent: React.FC = () => {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-blue-50 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-indigo-800 lg:pb-4 lg:pt-5">
           <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
