@@ -10,6 +10,7 @@ import {
   ChevronUpDownIcon,
   MagnifyingGlassIcon,
   UserIcon,
+  PlusIcon,
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
@@ -663,7 +664,7 @@ const NotesComponent: React.FC = () => {
             </div>
 
             {/* Projects list (only on smallest breakpoint) */}
-            <div className="sm:hidden py-4 pb-4 flex-grow">
+            <div className="sm:hidden py-4 pb-4">
               <div className="px-4 sm:px-6">
                 <h2 className="text-sm font-medium text-gray-900">Notes</h2>
               </div>
@@ -723,8 +724,18 @@ const NotesComponent: React.FC = () => {
                 </div>
               </div>
             </div>
+            <div className="fixed bottom-4 right-4 z-50 sm:hidden">
+              <button
+                type="button"
+                onClick={() => setOpenNotesModal(true)}
+                className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                <span className="sr-only">Generate Notes</span>
+                <PlusIcon className="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
             {/* Projects table (small breakpoint and up) */}
-            <div className="hidden sm:block mt-4 flex-grow">
+            <div className="hidden sm:block mt-4">
               <div className="inline-block min-w-full border-b align-middle">
                 <table className="min-w-full">
                   <thead>
