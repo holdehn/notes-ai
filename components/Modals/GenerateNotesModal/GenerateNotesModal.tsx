@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
+  userID: string | undefined;
 }
 
 interface FileDisplay {
@@ -31,7 +32,7 @@ function getRandomColor() {
 }
 
 export default function GenerateNotesModal(props: Props) {
-  const { open, setOpen } = props;
+  const { open, setOpen, userID } = props;
   const session = useSession();
   const { mutate } = useSWRConfig();
   const cancelButtonRef = useRef(null);
@@ -40,12 +41,9 @@ export default function GenerateNotesModal(props: Props) {
   const [files, setFiles] = useState<FileDisplay[]>([]);
   const [fileObjects, setFileObjects] = useState<File[]>([]);
   const [nextId, setNextId] = useState<number>(1);
-  const token = session?.access_token;
   const [name, setName] = useState<string>('');
-  const [functionality, setFunctionality] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [agentName, setAgentName] = useState<string>('Summary');
-  const [noteId, setNoteId] = useState<string>('');
   const router = useRouter();
 
   const handleFile = (e: any) => {
@@ -85,8 +83,7 @@ export default function GenerateNotesModal(props: Props) {
     notes: any,
     summary: string,
   ) => {
-    const user_id = session?.user?.id;
-    if (!user_id) return;
+    if (!userID) return;
 
     const upload_ids: string[] = [];
     fileObjects.forEach((file) => {
@@ -102,7 +99,7 @@ export default function GenerateNotesModal(props: Props) {
         context: formik.values.context,
         functionality: formik.values.functionality,
         upload_ids: upload_ids,
-        user_id: user_id,
+        user_id: userID,
         agent_name: agentName,
         color_theme: getRandomColor(),
         transcription: transcription,

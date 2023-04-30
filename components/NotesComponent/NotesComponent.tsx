@@ -720,6 +720,7 @@ const NotesComponent: React.FC = () => {
                   <GenerateNotesModal
                     open={openNotesModal}
                     setOpen={setOpenNotesModal}
+                    userID={userID}
                   />
                 </div>
               </div>
