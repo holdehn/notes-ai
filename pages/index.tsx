@@ -13,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     if (session) {
-      router.push('/my-classes');
+      router.push('/my-notes');
     }
   }, [session]);
   return (
