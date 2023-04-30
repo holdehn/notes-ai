@@ -57,7 +57,7 @@ export default function HeroSection() {
           onClose={setMobileMenuOpen}
         >
           <div className="fixed inset-0 z-50" />
-          <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto  px-6 py-6 sm:ring-1 sm:ring-gray-900/10">
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6">
@@ -85,7 +85,7 @@ export default function HeroSection() {
         </Dialog>
       </header>
 
-      <div className="relative isolate px-6  lg:px-8 pt-12">
+      <div className="relative isolate px-6 lg:px-8 pt-12 h-screen flex flex-col items-center">
         <div
           className="absolute inset-x-0 -top-32 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-64"
           aria-hidden="true"
@@ -98,7 +98,7 @@ export default function HeroSection() {
             }}
           />
         </div>
-        <div className="mx-auto max-w-2xl pt-14 sm:py-32 lg:py-24">
+        <div className="mx-auto max-w-2xl pt-8 xs:pt-12 sm:pt-24 lg:pt-32 my-auto">
           {' '}
           {/* Change padding values */}
           <div className="text-center">
