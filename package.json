@@ -47,6 +47,7 @@
     "form-data": "^4.0.0",
     "formik": "^2.2.9",
     "gray-matter": "^4.0.3",
+    "ignore-loader": "^0.1.2",
     "katex": "^0.16.6",
     "lamejs": "^1.2.1",
     "langchain": "^0.0.52",

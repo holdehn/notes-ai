@@ -1,3 +1,5 @@
 # Supabase
 .branches
 .temp
+./functions/
+generate-transcription.ts
