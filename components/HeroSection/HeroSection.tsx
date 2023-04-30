@@ -85,7 +85,7 @@ export default function HeroSection() {
         </Dialog>
       </header>
 
-      <div className="relative isolate px-6 lg:px-8 pt-12 h-screen flex flex-col items-center">
+      <div className="relative isolate px-6 lg:px-8 h-screen flex flex-col items-center">
         <div
           className="absolute inset-x-0 -top-32 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-64"
           aria-hidden="true"
