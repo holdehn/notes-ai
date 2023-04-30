@@ -1,3 +1,7 @@
 # Supabase
 .branches
 .temp
+
+# Ignore _shared and functions folders
+_shared/
+functions/
