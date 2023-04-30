@@ -6,6 +6,7 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { Link } from 'react-scroll';
 import { useRouter } from 'next/router';
+import { getURL } from '@/pages/api/helpers';
 
 const navigation = [
   { name: 'Home', href: 'home' },
@@ -124,8 +125,9 @@ export default function HeroSection() {
             </div>
             <div className="max-w-md mx-auto mt-4">
               <Auth
-                view="sign_in"
-                magicLink={false}
+                view="magic_link"
+                magicLink={true}
+                redirectTo={getURL()}
                 dark={false}
                 showLinks={false}
                 supabaseClient={supabase}
