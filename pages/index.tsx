@@ -1,20 +1,17 @@
 import Hero from '@/components/HeroSection/HeroSection';
 import { GetServerSidePropsContext } from 'next';
+import { parseCookies } from 'nookies';
 import Head from 'next/head';
 import Features from '@/components/FeatureSection/FeatureSection';
 import PricingSection from '@/components/PricingSection/PricingSection';
 import { Element } from 'react-scroll';
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  // Create authenticated Supabase Client
-  const supabase = createServerSupabaseClient(ctx);
-  // Check if we have a session
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const cookies = parseCookies(ctx);
+  const accessToken = cookies['my-access-token'];
+  const refreshToken = cookies['my-refresh-token'];
 
-  if (session) {
+  if (accessToken && refreshToken) {
     return {
       redirect: {
         destination: '/my-notes',
