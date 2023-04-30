@@ -98,7 +98,7 @@ export default function HeroSection() {
             }}
           />
         </div>
-        <div className="mx-auto max-w-2xl pt-8 xs:pt-12 sm:pt-24 lg:pt-32 my-auto">
+        <div className="mx-auto max-w-2xl pt-8 xs:pt-12 sm:pt-24 lg:pt-16 my-auto">
           {' '}
           {/* Change padding values */}
           <div className="text-center">
