@@ -21,6 +21,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  if (accessToken && refreshToken) {
+    // Set the cookies
+    const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
+    ctx.res.setHeader('Set-Cookie', [
+      `my-access-token=${accessToken}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure; HttpOnly`,
+      `my-refresh-token=${refreshToken}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure; HttpOnly`,
+    ]);
+  }
   const supabase = createServerSupabaseClient(ctx);
   await supabase.auth.setSession({
     access_token: accessToken,
@@ -70,34 +78,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
           notes: notesData,
           sessions: sessionData,
         },
-        accessToken,
-        refreshToken,
       },
     },
   };
 };
-export default function ({
-  fallback,
-  accessToken,
-  refreshToken,
-}: {
-  fallback: any;
-  accessToken: string;
-  refreshToken: string;
-}) {
+export default function ({ fallback }: { fallback: any }) {
   const router = useRouter();
 
-  useEffect(() => {
-    if (accessToken && refreshToken) {
-      // Set the cookies
-      const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
-      document.cookie = `my-access-token=${accessToken}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
-      document.cookie = `my-refresh-token=${refreshToken}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
-
-      // Remove the tokens from the URL
-      router.replace('/my-notes');
-    }
-  }, [accessToken, refreshToken, router]);
   return (
     <>
       <Head>
