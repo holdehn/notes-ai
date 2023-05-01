@@ -3,8 +3,15 @@ import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { v4 as uuidv4 } from 'uuid';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { userID, formikValues, agentName, transcription, upload_ids } =
-    req.body;
+  const {
+    userID,
+    formikValues,
+    agentName,
+    transcription,
+    notes,
+    summary,
+    upload_ids,
+  } = req.body;
 
   if (!userID) {
     return res.status(400).json({ error: 'User ID is required' });
@@ -27,6 +34,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         agent_name: agentName,
         color_theme: getRandomColor(),
         transcription: transcription,
+        notes: notes,
+        summary: summary,
       },
     ]);
 
