@@ -220,21 +220,18 @@ export default function GenerateNotesModal(props: Props) {
         `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/create-summary`,
       );
       // Use fetchEventSource for streaming
-      await fetchEventSource(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/create-summary`,
-        {
-          method: 'POST',
-          body: JSON.stringify({ transcription: content }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'same-origin',
-          onmessage: (ev) => {
-            summaryData = ev.data;
-            callback(summaryData); // Call the callback function with the streamed summary data
-          },
+      await fetchEventSource(JSON.stringify(process.env.CREATE_NOTE_ENDPOINT), {
+        method: 'POST',
+        body: JSON.stringify({ transcription: content }),
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        credentials: 'same-origin',
+        onmessage: (ev) => {
+          summaryData = ev.data;
+          callback(summaryData); // Call the callback function with the streamed summary data
+        },
+      });
       console.log('summaryData :>> ', JSON.stringify(summaryData));
     } catch (error: any) {
       console.log(JSON.stringify(error));
