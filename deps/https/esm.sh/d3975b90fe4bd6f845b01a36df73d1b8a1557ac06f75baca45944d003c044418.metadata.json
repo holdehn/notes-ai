@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "age": "50811",
+    "cf-cache-status": "HIT",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=fukfvHzdJLFUARCn6aTuaT1JRbvO9gmkLD%2BZOD5xCb6ZXFfT0CZVHPDqH7iqCrjRo5IqmR2s4eHMTeybRy5LUL1H8pwAPBSD3fv8qgV0qaBChNqj46zXHXqU0vZF9ojOSEO7Woo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 19:43:14 GMT",
+    "cf-ray": "7c0a83220b116462-SJC",
+    "x-content-source": "workers-kv",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "last-modified": "Mon, 01 May 2023 05:36:23 GMT",
+    "content-type": "application/javascript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v118/object-hash@3.0.0/deno/object-hash.mjs",
+  "now": {
+    "secs_since_epoch": 1682970189,
+    "nanos_since_epoch": 203776000
+  }
+}

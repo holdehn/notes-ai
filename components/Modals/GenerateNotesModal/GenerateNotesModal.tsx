@@ -7,9 +7,7 @@ import { useSWRConfig } from 'swr';
 import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
-import { useCallback } from 'react';
-import SelectAgentMenu from '@/components/SelectAgentMenu';
-import { v4 as uuidv4 } from 'uuid';
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { useRouter } from 'next/router';
 
 interface Props {
@@ -85,11 +83,7 @@ export default function GenerateNotesModal(props: Props) {
   };
 
   // Add a new function to save the note to Supabase
-  const insertAndNavigate = async (
-    transcription: string,
-    notes: any,
-    summary: string,
-  ) => {
+  const insertAndNavigate = async (transcription: string) => {
     if (!userID) return;
 
     const upload_ids: string[] = [];
@@ -109,8 +103,6 @@ export default function GenerateNotesModal(props: Props) {
           formikValues: formik.values,
           agentName,
           transcription,
-          notes,
-          summary,
         }),
       });
 
@@ -157,22 +149,24 @@ export default function GenerateNotesModal(props: Props) {
       alert('Please upload a string file');
       return;
     }
+
     try {
-      // Invoke the "create-summary" function using the Supabase client
-      const data = await supabaseClient.functions.invoke('create-summary', {
-        body: JSON.stringify({
-          transcription: content,
-        }),
+      // Set the endpoint URL
+      const endpoint = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/create-summary`;
+
+      // Use fetchEventSource for streaming
+      await fetchEventSource(endpoint, {
+        method: 'POST',
+        body: JSON.stringify({ transcription: content }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'text/event-stream', // Add the Accept header for streaming
+        },
+        onmessage: (ev) => {
+          const noteData = ev.data;
+          // Process the noteData here or update your state if needed
+        },
       });
-
-      // Check if the response contains an error
-      if (data.error) {
-        console.log('createNotes error' + JSON.stringify(data.error));
-        throw new Error(data.error.message);
-      }
-
-      const noteData = data.data.text;
-      return noteData;
     } catch (error: any) {
       console.log(JSON.stringify(error));
       alert(`Error: ${error.message}`);
@@ -243,7 +237,7 @@ export default function GenerateNotesModal(props: Props) {
     const summary = await createNotesSummary(transcription);
     const notes = await createNotesFacts(transcription, values.context);
 
-    insertAndNavigate(transcription, notes, summary as string);
+    insertAndNavigate(transcription);
     resetForm();
     setLoading(false);
   };

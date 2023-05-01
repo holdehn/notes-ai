@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "cf-ray": "7c0a5014d997ce5c-SJC",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Mon, 01 May 2023 19:08:24 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=8EQkNv1JJrvL%2BeTHMVSkHDtCR5du8zTvGPvqU1JVeAJCsLfuVBkn%2Bczw6faOd41DA8p3eYdrUKFNk8oLVVHQLEQVpujsU6nWARKmhqysmV8DupEN9MUhbSSalkKv11QoHQsrRE8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "3701"
+  },
+  "url": "https://esm.sh/v118/langchain@0.0.67/dist/prompts/chat.d.ts",
+  "now": {
+    "secs_since_epoch": 1682968099,
+    "nanos_since_epoch": 465098000
+  }
+}

@@ -1,0 +1,5 @@
+import { LLMChain, LLMChainInput } from "./llm_chain.d.ts";
+import { Optional } from "../types/type-utils.d.ts";
+export declare class ConversationChain extends LLMChain {
+    constructor({ prompt, outputKey, memory, ...rest }: Optional<LLMChainInput, "prompt">);
+}

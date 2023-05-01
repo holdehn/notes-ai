@@ -1,0 +1,20 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Mon, 01 May 2023 19:25:44 GMT",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "vary": "Origin, User-Agent, Accept-Encoding",
+    "cache-control": "public, max-age=86400",
+    "content-type": "application/javascript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=pKfkyjO19CnMNg8yvhktk59lj34AsJ7fnQFDlpHfI1q7YEWvuQf%2FwjuQsUDYCR%2BRpblbGOcPkVn5Ql8b4vGBo40G4h7bl9J70v3MgsPPrQLUItTW%2BRi5NalkM6C0FqKc854UiY8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0a6981de85aaaf-SJC"
+  },
+  "url": "https://esm.sh/langchain@0.0.52&no-dts/chat_models/openai",
+  "now": {
+    "secs_since_epoch": 1682969139,
+    "nanos_since_epoch": 899276000
+  }
+}

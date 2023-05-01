@@ -1,0 +1,29 @@
+/* esm.sh - esbuild bundle(langchain@0.0.67/text_splitter) deno production */
+var h=class{constructor(e){Object.defineProperty(this,"pageContent",{enumerable:!0,configurable:!0,writable:!0,value:void 0}),Object.defineProperty(this,"metadata",{enumerable:!0,configurable:!0,writable:!0,value:void 0}),this.pageContent=e.pageContent?e.pageContent.toString():this.pageContent,this.metadata=e.metadata??{}}};var c=class{constructor(e){if(Object.defineProperty(this,"chunkSize",{enumerable:!0,configurable:!0,writable:!0,value:1e3}),Object.defineProperty(this,"chunkOverlap",{enumerable:!0,configurable:!0,writable:!0,value:200}),this.chunkSize=e?.chunkSize??this.chunkSize,this.chunkOverlap=e?.chunkOverlap??this.chunkOverlap,this.chunkOverlap>=this.chunkSize)throw new Error("Cannot have chunkOverlap >= chunkSize")}async createDocuments(e,r=[]){let n=r.length>0?r:new Array(e.length).fill({}),i=new Array;for(let t=0;t<e.length;t+=1){let s=e[t],a=1,o=null;for(let l of await this.splitText(s)){let g=0;if(o){let v=s.indexOf(l),y=s.indexOf(o)+o.length;g=(s.slice(y,v).match(/\n/g)||[]).length}a+=g;let f=(l.match(/\n/g)||[]).length,m=n[t].loc&&typeof n[t].loc=="object"?{...n[t].loc}:{};m.lines={from:a,to:a+f};let k={...n[t],loc:m};i.push(new h({pageContent:l,metadata:k})),a+=f,o=l}}return i}async splitDocuments(e){let r=e.filter(t=>t.pageContent!==void 0),n=r.map(t=>t.pageContent),i=r.map(t=>t.metadata);return this.createDocuments(n,i)}joinDocs(e,r){let n=e.join(r).trim();return n===""?null:n}mergeSplits(e,r){let n=[],i=[],t=0;for(let a of e){let o=a.length;if(t+o>=this.chunkSize&&(t>this.chunkSize&&console.warn(`Created a chunk of size ${t}, +
+which is longer than the specified ${this.chunkSize}`),i.length>0)){let l=this.joinDocs(i,r);for(l!==null&&n.push(l);t>this.chunkOverlap||t+o>this.chunkSize&&t>0;)t-=i[0].length,i.shift()}i.push(a),t+=o}let s=this.joinDocs(i,r);return s!==null&&n.push(s),n}},b=class extends c{constructor(e){super(e),Object.defineProperty(this,"separator",{enumerable:!0,configurable:!0,writable:!0,value:`
+
+`}),this.separator=e?.separator??this.separator}async splitText(e){let r;return this.separator?r=e.split(this.separator):r=e.split(""),this.mergeSplits(r,this.separator)}},d=class extends c{constructor(e){super(e),Object.defineProperty(this,"separators",{enumerable:!0,configurable:!0,writable:!0,value:[`
+
+`,`
+`," ",""]}),this.separators=e?.separators??this.separators}async splitText(e){let r=[],n=this.separators[this.separators.length-1];for(let s of this.separators){if(s===""){n=s;break}if(e.includes(s)){n=s;break}}let i;n?i=e.split(n):i=e.split("");let t=[];for(let s of i)if(s.length<this.chunkSize)t.push(s);else{if(t.length){let o=this.mergeSplits(t,n);r.push(...o),t=[]}let a=await this.splitText(s);r.push(...a)}if(t.length){let s=this.mergeSplits(t,n);r.push(...s)}return r}},p=class extends c{constructor(e){super(e),Object.defineProperty(this,"encodingName",{enumerable:!0,configurable:!0,writable:!0,value:void 0}),Object.defineProperty(this,"allowedSpecial",{enumerable:!0,configurable:!0,writable:!0,value:void 0}),Object.defineProperty(this,"disallowedSpecial",{enumerable:!0,configurable:!0,writable:!0,value:void 0}),Object.defineProperty(this,"tokenizer",{enumerable:!0,configurable:!0,writable:!0,value:void 0}),Object.defineProperty(this,"registry",{enumerable:!0,configurable:!0,writable:!0,value:void 0}),this.encodingName=e?.encodingName??"gpt2",this.allowedSpecial=e?.allowedSpecial??[],this.disallowedSpecial=e?.disallowedSpecial??"all"}async splitText(e){if(!this.tokenizer){let o=await p.imports();this.tokenizer=o.get_encoding(this.encodingName),this.registry=new FinalizationRegistry(l=>l.free()),this.registry.register(this,this.tokenizer)}let r=[],n=this.tokenizer.encode(e,this.allowedSpecial,this.disallowedSpecial),i=0,t=Math.min(i+this.chunkSize,n.length),s=n.slice(i,t),a=new TextDecoder;for(;i<n.length;)r.push(a.decode(this.tokenizer.decode(s))),i+=this.chunkSize-this.chunkOverlap,t=Math.min(i+this.chunkSize,n.length),s=n.slice(i,t);return r}static async imports(){try{return await import("/v118/@dqbd/tiktoken@1.0.7/deno/tiktoken.mjs")}catch(e){throw console.error(e),new Error("Please install @dqbd/tiktoken as a dependency with, e.g. `npm install -S @dqbd/tiktoken`")}}},w=class extends d{constructor(e){super(e),Object.defineProperty(this,"separators",{enumerable:!0,configurable:!0,writable:!0,value:[`
+## `,`
+### `,`
+#### `,`
+##### `,`
+###### `,"```\n\n",`
+
+***
+
+`,`
+
+---
+
+`,`
+
+___
+
+`,`
+
+`,`
+`," ",""]})}};export{b as CharacterTextSplitter,w as MarkdownTextSplitter,d as RecursiveCharacterTextSplitter,c as TextSplitter,p as TokenTextSplitter};
+//# sourceMappingURL=text_splitter.js.map

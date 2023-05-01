@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "vary": "Origin, Accept-Encoding",
+    "content-length": "1680",
+    "cf-ray": "7c0a50b19ecbfabe-SJC",
+    "cache-control": "public, max-age=31536000, immutable",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=MODUhyeXgwaufXMvlJeCc0oYmoDVMYcoiWvoWmBsjqc6P3mlh7167pbdHjjPkk%2Bf2vhg6ZQ%2F7gzTW70m0mg1cE5XJN1YhTB8KV8OCXiOkeJnHCG3sk%2FRdaCz4ZJOf21HnALpJ24%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "date": "Mon, 01 May 2023 19:08:49 GMT"
+  },
+  "url": "https://esm.sh/v118/langchain@0.0.67/dist/chains/conversational_retrieval_chain.d.ts",
+  "now": {
+    "secs_since_epoch": 1682968124,
+    "nanos_since_epoch": 466354000
+  }
+}

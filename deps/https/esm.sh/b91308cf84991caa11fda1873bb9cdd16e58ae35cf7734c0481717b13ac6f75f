@@ -1,0 +1,2 @@
+/* esm.sh - langchain@0.0.67/text_splitter */
+export * from "https://esm.sh/v118/langchain@0.0.67/deno/text_splitter.js";
