@@ -84,6 +84,11 @@ export default function ({
   refreshToken: string;
 }) {
   const router = useRouter();
+  useEffect(() => {
+    if (!fallback) {
+      router.push('/');
+    }
+  }, [fallback]);
 
   return (
     <>
