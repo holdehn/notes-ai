@@ -214,7 +214,9 @@ export default function GenerateNotesModal(props: Props) {
 
     try {
       // Set the endpoint URL
-      const endpoint = `${process.env.CREATE_NOTE_ENDPOINT}`;
+      const endpoint =
+        process.env.CREATE_NOTE_ENDPOINT ||
+        'https://rdlpunszfgaitaujocdd.functions.supabase.co/create-summary';
       console.log('endpoint :>> ', endpoint);
 
       // Use fetchEventSource for streaming
