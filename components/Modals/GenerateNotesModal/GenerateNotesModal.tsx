@@ -214,10 +214,9 @@ export default function GenerateNotesModal(props: Props) {
 
     try {
       // Set the endpoint URL
-      const endpoint =
-        process.env.CREATE_NOTE_ENDPOINT ||
-        'https://rdlpunszfgaitaujocdd.functions.supabase.co/create-summary';
+      const endpoint = process.env.CREATE_NOTE_ENDPOINT || '';
       console.log('endpoint :>> ', endpoint);
+      let summaryData = '';
 
       // Use fetchEventSource for streaming
       await fetchEventSource(endpoint, {
@@ -228,11 +227,11 @@ export default function GenerateNotesModal(props: Props) {
         },
         credentials: 'same-origin',
         onmessage: (ev) => {
-          const summaryData = ev.data;
+          summaryData = ev.data;
           callback(summaryData); // Call the callback function with the streamed summary data
         },
       });
-      console.log('summaryData :>> ', summaryData);
+      console.log('summaryData :>> ', JSON.stringify(summaryData));
     } catch (error: any) {
       console.log(JSON.stringify(error));
       alert(`Error: ${error.message}`);
