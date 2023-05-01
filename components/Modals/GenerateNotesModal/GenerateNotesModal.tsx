@@ -225,7 +225,6 @@ export default function GenerateNotesModal(props: Props) {
         body: JSON.stringify({ transcription: content }),
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'text/event-stream', // Add the Accept header for streaming
         },
         credentials: 'same-origin',
         onmessage: (ev) => {
@@ -233,6 +232,7 @@ export default function GenerateNotesModal(props: Props) {
           callback(summaryData); // Call the callback function with the streamed summary data
         },
       });
+      console.log('summaryData :>> ', summaryData);
     } catch (error: any) {
       console.log(JSON.stringify(error));
       alert(`Error: ${error.message}`);
