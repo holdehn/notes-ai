@@ -86,8 +86,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 export default function ({
   fallback,
-  accessToken,
-  refreshToken,
 }: {
   fallback: any;
   accessToken: string;
@@ -95,18 +93,6 @@ export default function ({
 }) {
   const router = useRouter();
 
-  useEffect(() => {
-    if (accessToken && refreshToken) {
-      // Set the cookies
-      const isSecure = process.env.NODE_ENV === 'production';
-      const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
-      document.cookie = `my-access-token=${accessToken}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
-      document.cookie = `my-refresh-token=${refreshToken}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
-
-      // Remove the tokens from the URL
-      router.replace('/my-notes');
-    }
-  }, [accessToken, refreshToken, router]);
   return (
     <>
       <Head>
