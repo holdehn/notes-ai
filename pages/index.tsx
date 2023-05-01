@@ -39,7 +39,7 @@ export default function Home() {
 
   useEffect(() => {
     if (session) {
-      router.push('/my-notes');
+      router.replace('/my-notes');
     }
   }, [session, router]);
   return (
