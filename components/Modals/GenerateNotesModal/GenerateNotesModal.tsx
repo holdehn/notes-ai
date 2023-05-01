@@ -83,7 +83,11 @@ export default function GenerateNotesModal(props: Props) {
   };
 
   // Add a new function to save the note to Supabase
-  const insertAndNavigate = async (transcription: string) => {
+  const insertAndNavigate = async (
+    transcription: string,
+    bulletPoints: string[],
+    summary: string,
+  ) => {
     if (!userID) return;
 
     const upload_ids: string[] = [];
@@ -111,13 +115,17 @@ export default function GenerateNotesModal(props: Props) {
       if (data.error) {
         console.log('error :>> ', data.error);
       } else {
-        router.push(`/my-notes/${data.noteId}`);
+        router.push(
+          `/my-notes/${data.noteId}?transcription=${encodeURIComponent(
+            transcription,
+          )}&stream=true&bulletPoints=${encodeURIComponent(
+            JSON.stringify(bulletPoints),
+          )}&summary=${encodeURIComponent(summary)}`,
+        );
       }
     } catch (error) {
       console.log('error :>> ', error);
     }
-
-    setOpen(false);
   };
 
   const sendAudio = async (file: File) => {
@@ -144,7 +152,10 @@ export default function GenerateNotesModal(props: Props) {
     }
   };
 
-  const createNotesSummary = async (content: string) => {
+  const createNotesSummary = async (
+    content: string,
+    callback: (summary: string) => void,
+  ) => {
     if (!content) {
       alert('Please upload a string file');
       return;
@@ -163,8 +174,8 @@ export default function GenerateNotesModal(props: Props) {
           Accept: 'text/event-stream', // Add the Accept header for streaming
         },
         onmessage: (ev) => {
-          const noteData = ev.data;
-          // Process the noteData here or update your state if needed
+          const summaryData = ev.data;
+          callback(summaryData); // Call the callback function with the streamed summary data
         },
       });
     } catch (error: any) {
@@ -234,13 +245,23 @@ export default function GenerateNotesModal(props: Props) {
 
     const transcription = await sendAudio(fileObjects[0]);
 
-    const summary = await createNotesSummary(transcription);
+    let streamedSummary = '';
+    await createNotesSummary(transcription, (summary) => {
+      streamedSummary = summary;
+    });
+
     const notes = await createNotesFacts(transcription, values.context);
 
-    insertAndNavigate(transcription);
+    // Pass the streamedSummary to the insertAndNavigate function
+    insertAndNavigate(
+      transcription,
+      notes as unknown as string[],
+      streamedSummary,
+    );
     resetForm();
     setLoading(false);
   };
+
   const formik = useFormik({
     initialValues: intialValues,
     validationSchema: validationSchema,
