@@ -7,14 +7,15 @@ import { useSWRConfig } from 'swr';
 import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
-import { fetchEventSource } from '@microsoft/fetch-event-source';
+import { useCallback } from 'react';
+import SelectAgentMenu from '@/components/SelectAgentMenu';
+import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
   userID: string | undefined;
-  accessToken: string;
 }
 
 interface FileDisplay {
@@ -31,7 +32,9 @@ function getRandomColor() {
 }
 
 export default function GenerateNotesModal(props: Props) {
-  const { open, setOpen, userID, accessToken } = props;
+  const { open, setOpen, userID } = props;
+  const session = useSession();
+  const { mutate } = useSWRConfig();
   const cancelButtonRef = useRef(null);
   const [notesText, setNotesText] = useState(''); // Add this line
   const [convertedText, setConvertedText] = useState('');
@@ -84,7 +87,7 @@ export default function GenerateNotesModal(props: Props) {
   // Add a new function to save the note to Supabase
   const insertAndNavigate = async (
     transcription: string,
-    bulletPoints: string[],
+    notes: any,
     summary: string,
   ) => {
     if (!userID) return;
@@ -106,6 +109,8 @@ export default function GenerateNotesModal(props: Props) {
           formikValues: formik.values,
           agentName,
           transcription,
+          notes,
+          summary,
         }),
       });
 
@@ -114,17 +119,13 @@ export default function GenerateNotesModal(props: Props) {
       if (data.error) {
         console.log('error :>> ', data.error);
       } else {
-        router.push(
-          `/my-notes/${data.noteId}?transcription=${encodeURIComponent(
-            transcription,
-          )}&stream=true&bulletPoints=${encodeURIComponent(
-            JSON.stringify(bulletPoints),
-          )}&summary=${encodeURIComponent(summary)}`,
-        );
+        router.push(`/my-notes/${data.noteId}`);
       }
     } catch (error) {
       console.log('error :>> ', error);
     }
+
+    setOpen(false);
   };
 
   const sendAudio = async (file: File) => {
@@ -147,6 +148,33 @@ export default function GenerateNotesModal(props: Props) {
     } catch (error: any) {
       console.log(JSON.stringify(error));
 
+      alert(`Error: ${error.message}`);
+    }
+  };
+
+  const createNotesSummary = async (content: string) => {
+    if (!content) {
+      alert('Please upload a string file');
+      return;
+    }
+    try {
+      // Invoke the "create-summary" function using the Supabase client
+      const data = await supabaseClient.functions.invoke('create-summary', {
+        body: JSON.stringify({
+          transcription: content,
+        }),
+      });
+
+      // Check if the response contains an error
+      if (data.error) {
+        console.log('createNotes error' + JSON.stringify(data.error));
+        throw new Error(data.error.message);
+      }
+
+      const noteData = data.data.text;
+      return noteData;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
       alert(`Error: ${error.message}`);
     }
   };
@@ -202,43 +230,7 @@ export default function GenerateNotesModal(props: Props) {
     functionality: '',
   };
 
-  const createNotesSummary = async (
-    content: string,
-    callback: (summary: string) => void,
-    accessToken: string,
-  ) => {
-    if (!content) {
-      alert('Please upload a string file');
-      return;
-    }
-
-    try {
-      // Set the endpoint URL
-
-      let summaryData = '';
-      console.log(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/create-summary`,
-      );
-      // Use fetchEventSource for streaming
-      await fetchEventSource(JSON.stringify(process.env.CREATE_NOTE_ENDPOINT), {
-        method: 'POST',
-        body: JSON.stringify({ transcription: content }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin',
-        onmessage: (ev) => {
-          summaryData = ev.data;
-          callback(summaryData); // Call the callback function with the streamed summary data
-        },
-      });
-      console.log('summaryData :>> ', JSON.stringify(summaryData));
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-      alert(`Error: ${error.message}`);
-    }
-  };
-
+  // Update the onSubmit function
   const onSubmit = async (values: any, { resetForm }: any) => {
     //if no file and no youtube return
     if (fileObjects.length === 0) {
@@ -248,27 +240,13 @@ export default function GenerateNotesModal(props: Props) {
 
     const transcription = await sendAudio(fileObjects[0]);
 
-    let streamedSummary = '';
-    await createNotesSummary(
-      transcription,
-      (summary) => {
-        streamedSummary = summary;
-      },
-      accessToken as unknown as string,
-    );
-
+    const summary = await createNotesSummary(transcription);
     const notes = await createNotesFacts(transcription, values.context);
 
-    // Pass the streamedSummary to the insertAndNavigate function
-    insertAndNavigate(
-      transcription,
-      notes as unknown as string[],
-      streamedSummary,
-    );
+    insertAndNavigate(transcription, notes, summary as string);
     resetForm();
     setLoading(false);
   };
-
   const formik = useFormik({
     initialValues: intialValues,
     validationSchema: validationSchema,
