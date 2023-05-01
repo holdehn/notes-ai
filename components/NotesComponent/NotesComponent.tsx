@@ -151,7 +151,10 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const NotesComponent: React.FC = () => {
+interface notesComponentProps {
+  accessToken: string;
+}
+const NotesComponent = ({ accessToken }: notesComponentProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openNotesModal, setOpenNotesModal] = useState(false);
   const [openAgentModal, setOpenAgentModal] = useState(false);
@@ -721,6 +724,7 @@ const NotesComponent: React.FC = () => {
                     open={openNotesModal}
                     setOpen={setOpenNotesModal}
                     userID={userID}
+                    accessToken={accessToken}
                   />
                 </div>
               </div>

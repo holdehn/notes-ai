@@ -14,6 +14,7 @@ interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
   userID: string | undefined;
+  accessToken: string;
 }
 
 interface FileDisplay {
@@ -30,8 +31,7 @@ function getRandomColor() {
 }
 
 export default function GenerateNotesModal(props: Props) {
-  const { open, setOpen, userID } = props;
-  const session = useSession();
+  const { open, setOpen, userID, accessToken } = props;
   const cancelButtonRef = useRef(null);
   const [notesText, setNotesText] = useState(''); // Add this line
   const [convertedText, setConvertedText] = useState('');
@@ -244,9 +244,6 @@ export default function GenerateNotesModal(props: Props) {
     setLoading(true);
 
     const transcription = await sendAudio(fileObjects[0]);
-
-    const session = useSession();
-    const accessToken = session?.access_token; // Get the access token from the session
 
     let streamedSummary = '';
     await createNotesSummary(

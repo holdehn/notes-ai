@@ -70,12 +70,19 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
           user: userData,
           notes: notesData,
           sessions: sessionData,
+          accessToken,
         },
       },
     },
   };
 };
-export default function ({ fallback }: { fallback: any }) {
+export default function ({
+  fallback,
+  accessToken,
+}: {
+  fallback: any;
+  accessToken: string;
+}) {
   const router = useRouter();
   const session = useSession();
 
@@ -92,7 +99,7 @@ export default function ({ fallback }: { fallback: any }) {
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <SWRConfig value={{ fallback }}>
-        <NotesComponent />
+        <NotesComponent accessToken={accessToken} />
       </SWRConfig>
     </>
   );
