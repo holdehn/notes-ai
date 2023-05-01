@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "age": "2447",
+    "date": "Mon, 01 May 2023 07:00:57 GMT",
+    "server": "cloudflare",
+    "content-length": "10499",
+    "accept-ranges": "bytes",
+    "cf-ray": "7c06268419941701-SJC",
+    "cf-cache-status": "HIT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=7GTOITAwI%2F1kXCh7uhNvhUwKPFhOWY3CdlMmCEVOzxRhXQ4tgaUWeS4SYkYFe8Mr8C6y2JABIZgjDxaJHIXNK4iUFn3id4VUAzV3vWsXoie0iXGzSOqeClU8RjwZyyPGGsrA4d4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "last-modified": "Mon, 01 May 2023 06:20:10 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "r2",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v118/typeorm@0.3.15/driver/sqlserver/SqlServerConnectionOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1682924457,
+    "nanos_since_epoch": 332717000
+  }
+}

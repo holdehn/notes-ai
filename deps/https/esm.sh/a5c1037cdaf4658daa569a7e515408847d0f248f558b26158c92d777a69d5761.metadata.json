@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "last-modified": "Mon, 01 May 2023 06:20:10 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Mon, 01 May 2023 07:00:57 GMT",
+    "access-control-allow-methods": "*",
+    "content-length": "380",
+    "cf-ray": "7c0626858b821701-SJC",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=AarL4VG9DYno7pEcvlmSlyc3%2BkAKGNV3tvZnozh5uKYl9XBwmH9X37EZATWwQafDzs4U0IpnKIyRZQ%2F765HIviJCu29jxhMtR6CKKYsKL583ezpP0ISy6N6FdsojeaPNVnRjW0Y%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "cf-cache-status": "HIT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "accept-ranges": "bytes",
+    "x-content-source": "r2",
+    "access-control-allow-origin": "*",
+    "age": "2447"
+  },
+  "url": "https://esm.sh/v118/typeorm@0.3.15/error/ForbiddenTransactionModeOverrideError.d.ts",
+  "now": {
+    "secs_since_epoch": 1682924457,
+    "nanos_since_epoch": 494366000
+  }
+}

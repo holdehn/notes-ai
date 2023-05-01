@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cf-ray": "7c06262f8d9b9879-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-source": "r2",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Mon, 01 May 2023 07:00:44 GMT",
+    "content-length": "17305",
+    "server": "cloudflare",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=9yIo913NMGM8rdnxnMZucRlvUXOzK16wV%2BGrfHC6WFi3UAsDuyAv33cAb13H49g5ERVQJN%2FNTKFmcvX5mp%2FfidNnIJ0cephsNP7vld37g6dgHtq%2BXliHpSWb1DJm9dej%2Bn2vFH0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/axios@1.4.0/index.d.ts",
+  "now": {
+    "secs_since_epoch": 1682924444,
+    "nanos_since_epoch": 63299000
+  }
+}

@@ -1,0 +1,2 @@
+import { LangChainTracer } from "./tracers.d.ts";
+export declare function getTracingCallbackHandler(session?: string): Promise<LangChainTracer>;

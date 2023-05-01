@@ -1,0 +1,10 @@
+{
+  "headers": {
+    "cache-control": "max-age=604800, immutable"
+  },
+  "url": "https://esm.langchain/.well-known/deno-import-intellisense.json",
+  "now": {
+    "secs_since_epoch": 1682924340,
+    "nanos_since_epoch": 670717000
+  }
+}

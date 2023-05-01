@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "x-content-source": "r2",
+    "access-control-allow-origin": "*",
+    "last-modified": "Mon, 01 May 2023 06:20:11 GMT",
+    "cf-ray": "7c0626883f5e1701-SJC",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 07:00:58 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=PkGNqSX2eCnFWJTtzrC4xnQ6kfIVxM9ewHcScvGvPt7H5vbd36DFNEeo%2BAN7YUw39OK5vwD0jFeybbgnCd1wYco5QbtPO0z%2BZDPHv9oTtRiA0Ri6jaWOOgzRcfEVV7cIgSE4efw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "183218",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "cf-cache-status": "HIT",
+    "age": "2447",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "accept-ranges": "bytes",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v118/@types/node@18.16.0/crypto.d.ts",
+  "now": {
+    "secs_since_epoch": 1682924457,
+    "nanos_since_epoch": 814471000
+  }
+}

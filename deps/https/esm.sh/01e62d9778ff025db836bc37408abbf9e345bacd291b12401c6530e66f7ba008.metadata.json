@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Mon, 01 May 2023 07:00:57 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=l7J0dyv25I3lKK4AlSeDtuP24V%2BlONL18np8WF7rnCqwxF047jJXkXfOXWEEOHKiTneolzqripEEmHgQ48CCdo%2FudPiGAWX8xS96OZh%2ByBGZ%2By%2FzpkYZS%2FDhwKIJ1jWGvWAwvuA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "accept-ranges": "bytes",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "age": "2447",
+    "last-modified": "Mon, 01 May 2023 06:20:10 GMT",
+    "cf-cache-status": "HIT",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "content-length": "9297",
+    "x-content-source": "r2",
+    "cf-ray": "7c06268419871701-SJC"
+  },
+  "url": "https://esm.sh/v118/typeorm@0.3.15/driver/mongodb/MongoConnectionOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1682924457,
+    "nanos_since_epoch": 352896000
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "2117",
+    "x-content-source": "r2",
+    "accept-ranges": "bytes",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "last-modified": "Mon, 01 May 2023 06:20:10 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Mon, 01 May 2023 07:00:57 GMT",
+    "age": "2447",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=i7%2FSCvAHrxw%2FsedxJKxZ9dhQV6NXTWsUVuHsIVtsNxVcpkHcoAAuesDVWtQ4rKGoNZulkwdfBEg6ySwmnHyHrRu5QANZzsLkjwIs4cBiJGnpgRx9MW9ZYCvwUnfJSJhtYuU5I0Q%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c062683686a1701-SJC",
+    "server": "cloudflare",
+    "cf-cache-status": "HIT"
+  },
+  "url": "https://esm.sh/v118/typeorm@0.3.15/driver/types/GeoJsonTypes.d.ts",
+  "now": {
+    "secs_since_epoch": 1682924457,
+    "nanos_since_epoch": 237718000
+  }
+}

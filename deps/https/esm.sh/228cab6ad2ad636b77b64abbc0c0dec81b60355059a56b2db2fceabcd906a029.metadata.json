@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "cf-ray": "7c06268368341701-SJC",
+    "content-length": "156",
+    "age": "2447",
+    "x-content-source": "r2",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "last-modified": "Mon, 01 May 2023 06:20:10 GMT",
+    "date": "Mon, 01 May 2023 07:00:57 GMT",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=rP6LMwjojg%2FnefcmKx2We4Lm60O4kBoEcGlJzoQ%2Fxxt6nAr1x%2BTiWL00epgheYBYSALLT2%2BVawur2ZHCV3KPXFVu6tnWMQERfgRaY45w8LZOFf6Nzb%2F4sttVCzH6rFbRtVTCgBM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-cache-status": "HIT",
+    "accept-ranges": "bytes"
+  },
+  "url": "https://esm.sh/v118/typeorm@0.3.15/decorator/listeners/AfterSoftRemove.d.ts",
+  "now": {
+    "secs_since_epoch": 1682924457,
+    "nanos_since_epoch": 94381000
+  }
+}

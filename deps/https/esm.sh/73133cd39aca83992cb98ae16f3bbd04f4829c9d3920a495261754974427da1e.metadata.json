@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "1130",
+    "cf-cache-status": "HIT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=LQ2hAgKrHY1036PxwT1%2FMHe9p6Awx8M%2BzCCR6T4Gc%2FK2KHpZCbpGBAOOLXwwEKrq9PSWVA3WteE1FFBWP7V03zwgTJJHM3WpiRlDGCgSaeE7wYZXcUynNiwEdO%2B5zsgBMRVRpCc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "last-modified": "Mon, 01 May 2023 06:20:10 GMT",
+    "access-control-allow-origin": "*",
+    "age": "2447",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "server": "cloudflare",
+    "cf-ray": "7c062684197f1701-SJC",
+    "date": "Mon, 01 May 2023 07:00:57 GMT",
+    "accept-ranges": "bytes",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "r2"
+  },
+  "url": "https://esm.sh/v118/typeorm@0.3.15/driver/aurora-mysql/AuroraMysqlConnectionOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1682924457,
+    "nanos_since_epoch": 345942000
+  }
+}

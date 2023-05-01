@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "content-length": "15577",
+    "cf-ray": "7c062683686f1701-SJC",
+    "x-content-source": "r2",
+    "accept-ranges": "bytes",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=zRdNjZECCzKhb6zQxZNpLWCH62VyNZdq8yzgS0n%2BIDnticJFmfBAeH%2Fla0MC4V%2FMD0dEK59uUXTw2igA4lRTGd3Cpe2PIn2yykxdIxD20Q40dXNn8ec%2BLLpiijEmistkk9WBrM4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "content-type": "application/typescript; charset=utf-8",
+    "cf-cache-status": "HIT",
+    "last-modified": "Mon, 01 May 2023 06:20:10 GMT",
+    "date": "Mon, 01 May 2023 07:00:57 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-methods": "*",
+    "age": "2447"
+  },
+  "url": "https://esm.sh/v118/typeorm@0.3.15/entity-manager/MongoEntityManager.d.ts",
+  "now": {
+    "secs_since_epoch": 1682924457,
+    "nanos_since_epoch": 232643000
+  }
+}
