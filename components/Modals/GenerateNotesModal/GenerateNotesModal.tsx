@@ -226,7 +226,6 @@ export default function GenerateNotesModal(props: Props) {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'text/event-stream', // Add the Accept header for streaming
-          Authorization: `Bearer ${accessToken}`, // Add the Authorization header
         },
         credentials: 'same-origin',
         onmessage: (ev) => {

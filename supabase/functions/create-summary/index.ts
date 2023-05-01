@@ -10,20 +10,6 @@ import { OpenAIChat } from 'https://esm.sh/langchain@0.0.67/llms/openai';
 import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'https://esm.sh/langchain@0.0.67/chains';
 
-const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
-  `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from a transcript of a lecture.
-  Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
-  Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
-  Do not repeat {name}'s name in your output
-  `,
-);
-const humanPromptTemplate = HumanMessagePromptTemplate.fromTemplate('{input}');
-
-const prompt = ChatPromptTemplate.fromPromptMessages([
-  systemPromptTemplate,
-  humanPromptTemplate,
-]);
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -31,6 +17,20 @@ serve(async (req) => {
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
   console.log(OPENAI_API_KEY);
   try {
+    const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
+      `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from a transcript of a lecture.
+  Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
+  Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
+  Do not repeat {name}'s name in your output
+  `,
+    );
+    const humanPromptTemplate =
+      HumanMessagePromptTemplate.fromTemplate('{input}');
+
+    const prompt = ChatPromptTemplate.fromPromptMessages([
+      systemPromptTemplate,
+      humanPromptTemplate,
+    ]);
     const { transcription } = await req.json();
     console.log(transcription);
     const textSplitter = new RecursiveCharacterTextSplitter({
