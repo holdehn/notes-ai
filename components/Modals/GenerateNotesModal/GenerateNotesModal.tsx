@@ -158,23 +158,19 @@ export default function GenerateNotesModal(props: Props) {
       return;
     }
     try {
-      const response = await fetch('/api/create-summary', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      // Invoke the "create-summary" function using the Supabase client
+      const data = await supabaseClient.functions.invoke('create-summary', {
         body: JSON.stringify({
           transcription: content,
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log('createNotes error' + JSON.stringify(errorData));
-        throw new Error(errorData.message);
+      // Check if the response contains an error
+      if (data.error) {
+        console.log('createNotes error' + JSON.stringify(data.error));
+        throw new Error(data.error.message);
       }
 
-      const data = await response.json();
       const noteData = data.data.text;
       return noteData;
     } catch (error: any) {

@@ -121,7 +121,7 @@ export default function HeroSection() {
               <Auth
                 view="magic_link"
                 magicLink={true}
-                redirectTo={'/my-notes'}
+                redirectTo={getURL()}
                 dark={false}
                 showLinks={false}
                 supabaseClient={supabase}

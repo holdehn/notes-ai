@@ -4,6 +4,9 @@ import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import NotesComponent from '@/components/NotesComponent/NotesComponent';
+import { useEffect } from 'react';
+import { useSession } from '@supabase/auth-helpers-react';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const cookies = parseCookies(ctx);
@@ -73,6 +76,15 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 export default function ({ fallback }: { fallback: any }) {
+  const router = useRouter();
+  const session = useSession();
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/');
+    }
+  }, [session]);
+
   return (
     <>
       <Head>
