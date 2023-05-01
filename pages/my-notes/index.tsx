@@ -4,8 +4,6 @@ import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import NotesComponent from '@/components/NotesComponent/NotesComponent';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const cookies = parseCookies(ctx);
@@ -22,19 +20,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const supabase = createServerSupabaseClient(ctx);
-  // Check if we have a session
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
+  await supabase.auth.setSession({
+    access_token: accessToken,
+    refresh_token: refreshToken,
+  });
 
   const user = await supabase.auth.getUser();
 
@@ -78,17 +67,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
           user: userData,
           notes: notesData,
           sessions: sessionData,
-          initialSession: session,
         },
-        accessToken,
-        refreshToken,
       },
     },
   };
 };
 export default function ({ fallback }: { fallback: any }) {
-  const router = useRouter();
-
   return (
     <>
       <Head>

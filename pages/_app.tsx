@@ -16,8 +16,6 @@ const montserrat = Montserrat({
 function MyApp({ Component, pageProps }: AppProps) {
   const [supabase] = useState(() => createBrowserSupabaseClient());
 
-  const isSecure = process.env.NODE_ENV === 'production';
-
   supabase.auth.onAuthStateChange((event, session) => {
     if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
       // delete cookies on sign out
