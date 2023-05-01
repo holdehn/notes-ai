@@ -21,19 +21,20 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
-  if (accessToken && refreshToken) {
-    // Set the cookies
-    const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
-    ctx.res.setHeader('Set-Cookie', [
-      `my-access-token=${accessToken}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure; HttpOnly`,
-      `my-refresh-token=${refreshToken}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure; HttpOnly`,
-    ]);
-  }
   const supabase = createServerSupabaseClient(ctx);
-  await supabase.auth.setSession({
-    access_token: accessToken,
-    refresh_token: refreshToken,
-  });
+  // Check if we have a session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
   const user = await supabase.auth.getUser();
 
@@ -77,6 +78,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
           user: userData,
           notes: notesData,
           sessions: sessionData,
+          initialSession: session,
         },
         accessToken,
         refreshToken,
