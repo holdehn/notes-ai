@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cf-ray": "7c0bd1648a77cf05-SJC",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "r2",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=FWi1DPLRBSBr8b3AN1U8IMxDYa16ncEd2mc%2Ft73V7FqtcR80AIzYESwNavr1MkMdue1XYy%2B0Z1ovCXogKq3KV3WEKaqfr9%2BfozULB4aKpTHbKWxUhj110ya3Mo4ZmjCIVxNM%2Fq8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "access-control-allow-methods": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "390",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v118/@redis/bloom@1.2.0/dist/commands/t-digest/RANK.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 661637000
+  }
+}

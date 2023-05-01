@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=MJFoBz4zeW1%2FapQ86dm44ZprL0p%2FzQGCX7yDlcvK9zVq5VHKc%2BDtcqgpqzow1D61RyN7X9yOPc%2FtTTaOCrwxz1lHxwwtNl4G6QSP3n%2BQl%2Fo2iGibysT89z24j81JVLT1BYstK8U%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "r2",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "328",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7c0bd16e1daecf05-SJC"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/SDIFFSTORE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 312581000
+  }
+}

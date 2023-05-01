@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "399",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "r2",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=2sgrBvlaKoLcgTTthxpzCoS1tBHKZXgFzN1JvA7tJw9zD50KnDqn5575Dpu%2FHM2j1EFHS9wGLfSdwJbFod56qSbMXhA2VbB%2B24W5ApW73xP4GxYzZeYo9f58F57CFpEaQt2P%2FVY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd1648adbcf05-SJC",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/search@1.1.2/dist/commands/SUGGET_WITHSCORES.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 401727000
+  }
+}

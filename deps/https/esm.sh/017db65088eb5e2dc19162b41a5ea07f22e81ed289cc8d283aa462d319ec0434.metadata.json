@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "cf-ray": "7c0bd171c9a6cf05-SJC",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "334",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "r2",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=4ZOT%2FI5KkkwQo3nQlq7W6XxTcavaRikVt68Q%2FZzkifFu7KKQfcgDdnlbfP%2FAGAUn5DVXcdXehgnIoDhTdtOKgDH9adaw%2FQVM2CT89jzbVnpBEJZkPwfRcHy%2FSvylbTA7HyffULI%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/ZPOPMIN_COUNT.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 31664000
+  }
+}

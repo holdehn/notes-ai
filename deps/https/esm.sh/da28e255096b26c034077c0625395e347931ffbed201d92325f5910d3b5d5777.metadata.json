@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "x-content-source": "r2",
+    "content-length": "427",
+    "access-control-allow-methods": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=neWNmrdOE6W5VWN80QmOqbbihrQjb6n0gVeVgCBpNfSBX0Dih5hWPr7vMM682Fy0Wbo4noaMVSxq53txhnSVTprOM2bXvsmtk5bUAGpiWHsdSnaH5pNLvk4wAclq2J%2BdcA7cEgA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7c0bd171591dcf05-SJC",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/XTRIM.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 901080000
+  }
+}

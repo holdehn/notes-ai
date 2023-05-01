@@ -1,0 +1,25 @@
+{
+  "headers": {
+    "cf-ray": "7c0bd1bfcb01fa9e-SJC",
+    "content-type": "application/javascript; charset=utf-8",
+    "age": "63871",
+    "last-modified": "Mon, 01 May 2023 05:47:09 GMT",
+    "cache-control": "public, max-age=86400",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=wWx5st8zAOpI646m7oqPUO2EcGIqp10WvgUO6%2BB00VXat54sy%2BuSpqDWzFSpDiPGeNMg8MZ%2BM0FXOI0MZXmDQ2v5F1tG9SGMnlZ06rufLsDAOLWesEpkv76joK8qhKJAbl4%2FLH4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-expose-headers": "X-TypeScript-Types",
+    "cf-cache-status": "HIT",
+    "vary": "Origin, User-Agent, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "date": "Mon, 01 May 2023 23:31:40 GMT",
+    "x-typescript-types": "https://esm.sh/v118/langchain@0.0.52/llms/openai.d.ts",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/langchain@0.0.52/llms/openai",
+  "now": {
+    "secs_since_epoch": 1682983896,
+    "nanos_since_epoch": 977640000
+  }
+}

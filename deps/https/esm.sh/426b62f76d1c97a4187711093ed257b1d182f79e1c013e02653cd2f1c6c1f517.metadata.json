@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "476",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=ioq3fsren0ia3fwZufiMFZJdgtN5J4suvWmFN8YuxQypXLuXcOhG4wYELREi9h3T1MPCd5EKwrZTpiMw5H2xjxezE5zUxjFH%2B7QaDpCDnTjytbyySW82gbOR4r8%2FEXINaqKcedE%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7c0bd171d9bacf05-SJC",
+    "server": "cloudflare",
+    "x-content-source": "r2",
+    "access-control-allow-origin": "*"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/ZRANGEBYSCORE_WITHSCORES.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 19114000
+  }
+}

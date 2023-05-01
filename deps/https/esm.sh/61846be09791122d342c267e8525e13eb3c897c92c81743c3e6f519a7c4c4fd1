@@ -1,0 +1,20 @@
+import { RedisClientType } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/client/index.d.ts';
+import { RedisCommandArgument, RedisFunctions, RedisScripts } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+import { QueryOptions } from './commands/index.d.ts';
+import { QueryReply } from './commands/QUERY.d.ts';
+declare type GraphReply<T> = Omit<QueryReply, 'headers' | 'data'> & {
+    data?: Array<T>;
+};
+declare type GraphClientType = RedisClientType<{
+    graph: {
+        query: typeof import('./commands/QUERY.d.ts');
+        roQuery: typeof import('./commands/RO_QUERY.d.ts');
+    };
+}, RedisFunctions, RedisScripts>;
+export default class Graph {
+    #private;
+    constructor(client: GraphClientType, name: string);
+    query<T>(query: RedisCommandArgument, options?: QueryOptions): Promise<GraphReply<T>>;
+    roQuery<T>(query: RedisCommandArgument, options?: QueryOptions): Promise<GraphReply<T>>;
+}
+export {};

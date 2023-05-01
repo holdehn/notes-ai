@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "111",
+    "content-type": "application/typescript; charset=utf-8",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c0bd16e1d62cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=3h5xeJRj08hnaJcdtYnZ%2BDEFjcWaNyC6ixVzc7ju5xJyfTCakI818HA17ocI7efoRShxsH6%2Fnj25Dc1CUt1Gq6KUiEKkWSxDZWt1A37SAJ1pAdDOUmGbosJLtxCKHaWc9gkClyM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/MEMORY_PURGE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 666753000
+  }
+}

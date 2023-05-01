@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "content-length": "310",
+    "x-content-source": "r2",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=W6RSd8PK9C8FkbVHYVgFWb2E52ZTK9Via20YmNeL01r3rhF5pd9vENYr3iWIAgDThHI80ikuoIePz6JOPlZwVffs9JEboDcZRhfuUEi9h7sXrwC9YQ2TSryhnWkeAghGlnLA6Yw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7c0bd16e1dc9cf05-SJC",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/SRANDMEMBER_COUNT.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 411048000
+  }
+}

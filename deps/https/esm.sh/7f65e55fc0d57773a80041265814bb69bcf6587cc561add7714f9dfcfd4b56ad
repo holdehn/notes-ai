@@ -1,0 +1,17 @@
+import { RedisCommandArguments } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+import { Filter, RawLabels, SampleRawReply, SampleReply } from './index.d.ts';
+export declare const IS_READ_ONLY = true;
+export interface MGetOptions {
+    LATEST?: boolean;
+}
+export declare function transformArguments(filter: Filter, options?: MGetOptions): RedisCommandArguments;
+export declare type MGetRawReply = Array<[
+    key: string,
+    labels: RawLabels,
+    sample: SampleRawReply
+]>;
+export interface MGetReply {
+    key: string;
+    sample: SampleReply;
+}
+export declare function transformReply(reply: MGetRawReply): Array<MGetReply>;

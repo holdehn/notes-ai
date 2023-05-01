@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=zEsUvYGWmSt66XVD3bYl8cAAsJCXjy2ZwCxrLe2t7PK945urdEccA1aWzw%2F7SgbDow3H9SFERmgGwn76q0ngg2zpwq5OwdaAZM9dTXgsSW84x1CktLTJfx7phsGP8Asm7G9kHb4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "x-content-source": "r2",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd171d9b6cf05-SJC",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "571"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/ZRANGE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 985454000
+  }
+}

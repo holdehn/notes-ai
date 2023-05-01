@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "content-length": "328",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd16e1db2cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=4eQbPB04C96uwJ4uhBpXYBVJ2%2B78w8aofgNLNGkxEnNLuoNSg%2F6Dz8N0wRHdZvfpqi6gA1J9ysA0aXUvj93MaHdTBG%2BlzA8jsitWJtvpAeCp%2FtUMebxnqOm0CyDiNOcgzX1O8Ms%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/SETNX.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 22364000
+  }
+}

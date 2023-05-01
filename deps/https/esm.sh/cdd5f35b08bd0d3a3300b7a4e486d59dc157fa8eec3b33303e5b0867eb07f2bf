@@ -1,0 +1,11 @@
+import { RedisCommandArgument, RedisCommandArguments } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+export declare const FIRST_KEY_INDEX = 1;
+interface InsertOptions {
+    CAPACITY?: number;
+    ERROR?: number;
+    EXPANSION?: number;
+    NOCREATE?: true;
+    NONSCALING?: true;
+}
+export declare function transformArguments(key: string, items: RedisCommandArgument | Array<RedisCommandArgument>, options?: InsertOptions): RedisCommandArguments;
+export { transformBooleanArrayReply as transformReply } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/generic-transformers.d.ts';

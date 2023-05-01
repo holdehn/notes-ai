@@ -1,0 +1,4 @@
+export { default } from './commands/index.d.ts';
+export { RediSearchSchema, SchemaFieldTypes, SchemaTextFieldPhonetics, SearchReply, VectorAlgorithms } from './commands/index.d.ts';
+export { AggregateSteps, AggregateGroupByReducers } from './commands/AGGREGATE.d.ts';
+export { SearchOptions } from './commands/SEARCH.d.ts';

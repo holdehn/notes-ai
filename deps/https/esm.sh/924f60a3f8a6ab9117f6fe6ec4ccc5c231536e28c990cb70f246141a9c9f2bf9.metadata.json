@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "r2",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "264",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=p8WabP3nedM1ygu7uOfCN%2BZ%2BJE1CTGTz%2FjLcuXKZnAIzCfOe68MYKghBYstvM0Pd6gyYb1TfM5sX%2BCD81Hzli%2BXDMvs2S8CRrYcItmhuoj38w7J62jhARFy9qSMDkhqhmFm1niA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7c0bd16ddc97cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/CLUSTER_ADDSLOTSRANGE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 416545000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=D3AECgRYhn36WTJGGBWytTfBtDnTJojt8tsOBXYE3Pk6XuHIP1xkdXT2FGQkP5RPR5i%2FsErfDQfUtR1cM%2BzN%2F%2FMR5oTFfXQmq8mE7EMuibuHo6Eze95R4wOB4ad9wQjF8XX%2FKTk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "349",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd1648a64cf05-SJC"
+  },
+  "url": "https://esm.sh/v118/@redis/bloom@1.2.0/dist/commands/cuckoo/LOADCHUNK.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983882,
+    "nanos_since_epoch": 938495000
+  }
+}

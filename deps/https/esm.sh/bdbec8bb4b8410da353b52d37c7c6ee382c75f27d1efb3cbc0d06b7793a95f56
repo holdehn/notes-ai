@@ -1,0 +1,9 @@
+import { RedisCommandArgument, RedisCommandArguments } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+import { CompressionOption } from './index.d.ts';
+export declare const FIRST_KEY_INDEX = 1;
+interface MergeOptions extends CompressionOption {
+    OVERRIDE?: boolean;
+}
+export declare function transformArguments(destKey: RedisCommandArgument, srcKeys: RedisCommandArgument | Array<RedisCommandArgument>, options?: MergeOptions): RedisCommandArguments;
+export declare function transformReply(): 'OK';
+export {};

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-methods": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare",
+    "cf-ray": "7c0bd16a78e2cf05-SJC",
+    "content-length": "2397",
+    "x-content-source": "r2",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=5W1GK%2BAniY4SPEPty35OaVrRnmRjoYRNMTm%2Bf1sQOOazmLkkL%2FAjrXDCW8SMXhaouJ6y%2FC%2BtGANTY3Y34hgoDqNN%2B3YdNJ5U6KNj6PVl0LohMHooXfdybPygIWhH8T06bDJuTtQ%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/client/socket.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 727766000
+  }
+}

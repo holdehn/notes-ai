@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd157ec8bcf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=sAvSjx5VUu73gRfV9dAp%2BQqlpBAT450lVAvLHRVotWYCsJkL0Ww01xihiHDhQGu2dPHA9kVfdwumJMmiKOE2afz%2FfKYN2dqS%2FcUrN4IbFcmFSW8f3lTxQAutkYDbvT9Of8UFA54%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Mon, 01 May 2023 23:31:23 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "content-length": "1795",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/langchain@0.0.52/dist/chains/serde.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983880,
+    "nanos_since_epoch": 718421000
+  }
+}

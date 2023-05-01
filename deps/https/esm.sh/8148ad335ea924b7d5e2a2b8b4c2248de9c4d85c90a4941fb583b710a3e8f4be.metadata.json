@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "content-length": "111",
+    "x-content-source": "r2",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=HhEhaFmgoESldxZIO%2B2yDHgozb%2BByst1sIvGCbZGWcfJPJh5CSl3F3%2FWj5VyYLKl3BvTD%2FLWxc7%2Fplw0y3t3P%2F5tDNUKuoZywdIBi76VYMYdHZP0oOJYToYp1wc0mWy%2BXD54ZvQ%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cf-ray": "7c0bd16e1d3ccf05-SJC",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/LATENCY_DOCTOR.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 615509000
+  }
+}

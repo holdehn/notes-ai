@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "cf-ray": "7c0bd164bb0acf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=mrNfda5Unso12SjRD9JLGFDg8bkYfz3Ntnu6sXGqLjI5D2BEgaQ3B5kJqZSOYANw4CYQR7upcSYL6JBgbAn%2BiDn2E7PDY7KQ0NuqQE4kSFtqEfS3renOw3CR%2F2j3fGOaj343I84%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "content-length": "477",
+    "content-type": "application/typescript; charset=utf-8",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "r2"
+  },
+  "url": "https://esm.sh/v118/@redis/time-series@1.0.4/dist/commands/MREVRANGE_WITHLABELS.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983882,
+    "nanos_since_epoch": 923264000
+  }
+}

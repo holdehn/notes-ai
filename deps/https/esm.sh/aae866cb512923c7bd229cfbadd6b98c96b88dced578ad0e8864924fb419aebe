@@ -1,0 +1,6 @@
+import { RedisCommandArgument, RedisCommandArguments } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+import { QueryOptionsBackwardCompatible } from './index.d.ts';
+export { FIRST_KEY_INDEX } from './QUERY.d.ts';
+export declare const IS_READ_ONLY = true;
+export declare function transformArguments(graph: RedisCommandArgument, query: RedisCommandArgument, options?: QueryOptionsBackwardCompatible, compact?: boolean): RedisCommandArguments;
+export { transformReply } from './QUERY.d.ts';

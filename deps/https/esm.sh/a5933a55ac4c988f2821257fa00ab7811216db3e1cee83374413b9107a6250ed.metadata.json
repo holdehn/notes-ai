@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "404",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "cf-ray": "7c0bd1648a6acf05-SJC",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=89GkhgCBeopaH9TF%2FvqG1pungvqQTgRP53dD4q3dYm13H8UEpVnmxLURWeFO3b9J5nqVoDxyk%2B45D%2Bb0oI9SAXuKOG6m85%2FUR2Xe8jugi6N2KcFwQlI8lojAOMIWaA8gN2QPVKc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v118/@redis/bloom@1.2.0/dist/commands/t-digest/BYREVRANK.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 585822000
+  }
+}

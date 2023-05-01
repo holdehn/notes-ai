@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "content-length": "133",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=kR0YW5blpd7Ednw02R%2B3rympft3Z%2B3nJRVMKYhSdBz3G%2F%2BOl%2BAH8bx30FnVDZBMK23SHa45%2FCaLnzNHD86a4cXpjkoxKTgdtOeUIZijsBcNFIq87zO8Leqrnh2lyZN7RciruxKo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c0bd16ddcaccf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/CLUSTER_RESET.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 767176000
+  }
+}

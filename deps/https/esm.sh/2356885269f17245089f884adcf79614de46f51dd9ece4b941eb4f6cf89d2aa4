@@ -1,0 +1,7 @@
+import { AggregateOptions, AggregateRawReply } from './AGGREGATE.d.ts';
+import { ProfileOptions, ProfileRawReply, ProfileReply } from './index.d.ts';
+export declare const IS_READ_ONLY = true;
+export declare function transformArguments(index: string, query: string, options?: ProfileOptions & AggregateOptions): Array<string>;
+type ProfileAggeregateRawReply = ProfileRawReply<AggregateRawReply>;
+export declare function transformReply(reply: ProfileAggeregateRawReply): ProfileReply;
+export {};

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "content-length": "184",
+    "access-control-allow-methods": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=40hWBc5jAq3NgOlCu%2FcB5GMv0B9yZe%2Bl85NCvTvR9VvW%2Bi82PZfrmQtniOHbn%2F97icnZYZcWIoUTZyVJ1j3VMGCfy8DKpBT1sXi0uodj0dt3z5uKpVxBKwGj5M5tFRt4laAuTAg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd16ddce0cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/FLUSHDB.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 845975000
+  }
+}

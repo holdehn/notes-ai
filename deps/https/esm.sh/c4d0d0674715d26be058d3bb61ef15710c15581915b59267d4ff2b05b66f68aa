@@ -1,0 +1,13 @@
+import { SelectedLabels, Labels, Filter } from './index.d.ts';
+import { MGetOptions, MGetRawReply, MGetReply } from './MGET.d.ts';
+import { RedisCommandArguments } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+export declare const IS_READ_ONLY = true;
+interface MGetWithLabelsOptions extends MGetOptions {
+    SELECTED_LABELS?: SelectedLabels;
+}
+export declare function transformArguments(filter: Filter, options?: MGetWithLabelsOptions): RedisCommandArguments;
+export interface MGetWithLabelsReply extends MGetReply {
+    labels: Labels;
+}
+export declare function transformReply(reply: MGetRawReply): Array<MGetWithLabelsReply>;
+export {};

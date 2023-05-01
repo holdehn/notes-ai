@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=kzF36OcymnWqXsQX6kwcO0Fka9oIhICtOdYkW%2BcXdOle%2FNi678JeJogZQC3iyPlcyro0bX9wUz6GOpiK6PQutgM8ZDPhnvaFutoLt0oO4xwMSc7mRR0mzVgOlAxrZRQQ%2FFyJsqA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd16ddce3cf05-SJC",
+    "x-content-source": "r2",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "209"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/FUNCTION_DUMP.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 551116000
+  }
+}

@@ -1,0 +1,3 @@
+import { RediSearchSchema } from './index.d.ts';
+export declare function transformArguments(index: string, schema: RediSearchSchema): Array<string>;
+export declare function transformReply(): 'OK';

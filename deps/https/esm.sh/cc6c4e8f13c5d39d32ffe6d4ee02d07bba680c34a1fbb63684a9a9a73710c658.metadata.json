@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=5C8uUzAd%2Fe%2BPvRlVD1ZiNGhU0%2FAj8em3NYr32KFlq3A09g%2For8DBcx6p1Z5W8icWkOGB4L9PvwwpZHkgQCuNw8YWlqVvHFscRHv7DwoUsOzqdTIFhwh4DtjbM87sbyiSTUkQy3Y%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "x-content-source": "r2",
+    "content-length": "618",
+    "cf-ray": "7c0bd16ddcf4cf05-SJC",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/GEOPOS.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 696200000
+  }
+}

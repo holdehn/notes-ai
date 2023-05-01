@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=1pa8MA2biw3cf0Bk0SGee%2FDpI5g7T3GgVXDbzAyJCkPhMRczZUBIeZl9FfEIGueH9D1yqtGRCqCBjPLWsYKSLquYp81fy3WRZe8c8RDS2AY8VMXpTleBLpq2VYWuv%2BZv3HASbRE%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd16ddd09cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "283",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Mon, 01 May 2023 23:31:27 GMT"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/GETDEL.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 688252000
+  }
+}

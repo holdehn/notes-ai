@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=8cDIbeDMk6quzEY4MXXTw4aXtbW0ox44GDKlt84AxYcCU1Qd%2By4%2FR%2FMg%2FrapF43mGe%2FUB8whAcgtp2JISd4y%2Bk7BaV1OSCBQI%2FfrUQMaiQkOVpqAJz1sWojomR0%2Bd%2FQdbPlB5xA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7c0bd16ddc60cf05-SJC",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "297",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-source": "r2"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/ACL_SETUSER.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 418836000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "518",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=WCt1bATmW%2B1%2FEPp2Dft4wBHGpsJBzv66UoI2D9a%2BxlGjgw0m0NHFtSjGS4OuM828N54zap%2Bho6wk3RPSaQWKp4pfb0mWpyNZjUzZrs6Zb2McFi1uFCoVslVij%2B8rrJx1NxFc%2F%2F0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd1648a8fcf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v118/@redis/graph@1.1.0/dist/commands/RO_QUERY.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 655339000
+  }
+}

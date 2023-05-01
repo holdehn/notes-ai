@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "262",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=YHVoztDlp1NjRr3yJYqT2SHvdB9aRwZW0c2kwO220vF%2BTN0gdnq%2BsMWeij%2BNL%2Fe8rCP1WaxL2Atg4UL7lSRuQfykJTd3luRs2%2FePt3w56WS%2Fuo%2Bx%2Bay1Aa40dNHxPV3832hd1t4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7c0bd16ddcd8cf05-SJC",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "r2"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/EXPIRETIME.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 556244000
+  }
+}

@@ -1,0 +1,5 @@
+import { RedisCommandArguments } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+import { IncrDecrOptions } from './index.d.ts';
+export declare const FIRST_KEY_INDEX = 1;
+export declare function transformArguments(key: string, value: number, options?: IncrDecrOptions): RedisCommandArguments;
+export declare function transformReply(): number;

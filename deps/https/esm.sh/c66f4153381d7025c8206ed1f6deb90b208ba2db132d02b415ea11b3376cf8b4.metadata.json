@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=aWkpK6yxOlNP137uo7BEFgwZGO9N5VG2HJba%2Fzo6Dg1dTr1AVhqkocghexlU4VmFK68ymNoyvwZ7sFtsTvq1HPpPadi8a2kC2Rc6gQ6AKG8Rk%2FB6Y5Eny%2BLQHLgjFmBzuBJpiZY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "504",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd16ddcf5cf05-SJC",
+    "access-control-allow-methods": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/GEORADIUS.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 724219000
+  }
+}

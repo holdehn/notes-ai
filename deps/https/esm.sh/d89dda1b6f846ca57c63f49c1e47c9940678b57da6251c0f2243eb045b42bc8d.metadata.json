@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=d43J7aONnMT1X9VyUfMa0G5aZwB8L%2BjBWRhsWfemF%2BT7UgoksFMvyhTVLgSdTPfpB7VSX%2FzVDOTOHM9smCb21yWvFq3qbCq3ukvwguD%2FbPYHmh%2F2Q0liYxINoHvRkUJrKy3a018%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "cf-ray": "7c0bd1648a93cf05-SJC",
+    "content-length": "264",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v118/@redis/json@1.0.4/dist/commands/ARRAPPEND.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 442372000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=7pvcltM54GsmapdNVC1hZ3jtSQnU4w2qFNBKEAMQoXW7IcNto%2BdgyL1lm9y1xnqdm92jvf8QL%2FiApdzB%2FPZ9tH%2FobqwE5DTxOBDM0MntHoxxHdYUT7HkiTpBri%2FAOu47XCQYWNg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd16e1d91cf05-SJC",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "306",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/RENAME.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 807187000
+  }
+}

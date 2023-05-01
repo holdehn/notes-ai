@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cf-ray": "7c0bd171c9abcf05-SJC",
+    "access-control-allow-origin": "*",
+    "x-content-source": "r2",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "459",
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=KBRtXkQuBnNFxQXuDn7%2FQDaGLJg0HFS5MVX4%2FY7fX94WtQ3Q%2FLXGdIXXH7j2c8JdcMYiAdasNdbtvcQ4GDOcVGnrXhWCCI1Ht09hR9KcAdK5vn71XZGrxzgZk80k1ZCvjgnDivo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/ZRANDMEMBER_COUNT_WITHSCORES.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 965192000
+  }
+}

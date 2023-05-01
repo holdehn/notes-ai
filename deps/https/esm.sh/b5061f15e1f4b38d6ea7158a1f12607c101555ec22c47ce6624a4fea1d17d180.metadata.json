@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7c0bd16ddcf9cf05-SJC",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=mZKeviKnhuYn585cZ9SQF%2Bvxs3Ta6Vltlgamty0lGf%2FmbJwSgQEg4eIbI8keiqcEWD%2BrlOlPBx2rbwgtR%2FAROjN7bTIEXPBQ6jBpDxoBkOitmtGQosXftsxCqR39Inm%2Bou4dcI0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "x-content-source": "r2",
+    "content-length": "537"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/GEORADIUSBYMEMBER_RO_WITH.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 522281000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "content-length": "109",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=PBhhuteBKn2aU%2FbpcWRU4Giwp%2F362LZXjOq6PzJWFG2HKAQVR9thoEawFZzuF7lt%2F0uL0Tt8QxTsgMdSr0D0jacHXGXzPDTuOmk5DpUXMVxbCJ3lO1RAaKwJcaxof0V6j9eUh54%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd16ddca0cf05-SJC",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/CLUSTER_FLUSHSLOTS.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 706095000
+  }
+}

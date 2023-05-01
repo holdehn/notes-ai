@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=zJTdqNR6l3Tp6zQ1KPZH30nzmtHXabuv06eZoHSdtaSjA81hyltkMB%2FlBnj%2F2cdgNccJTrmWR8o%2B4Z9Uv7U6RAs6%2BIXaCMoJhJTusbSPUsPoZZamstCFMX1MUjkLjSyB3yBl2hk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "256",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd1648ad4cf05-SJC",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "r2"
+  },
+  "url": "https://esm.sh/v118/@redis/search@1.1.2/dist/commands/SUGADD.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 426540000
+  }
+}

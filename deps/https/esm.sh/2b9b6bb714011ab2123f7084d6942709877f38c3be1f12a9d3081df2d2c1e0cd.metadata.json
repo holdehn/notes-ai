@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7c0bd16f0e76cf05-SJC",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Hg6Xegrs0mYKGGW6D5fVY0hvlH1ePddDqP5sISCBGEP202OOpj6hfKkcBpLbs7sqvoXvL3xFHWZh0rFnySQQqebhM3hnJEH9mfziNjPxkQUcRe3yTfZKGb%2Bq1Nhl2thzEwJFXOk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "content-length": "141",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "r2"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/SWAPDB.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 495719000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "content-length": "164",
+    "cf-ray": "7c0bd1648a89cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "r2",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=4jMvRtu21KWEv3%2BJb6YgEA4frWAO1OjpHVoxp8I1ql7bEpiydfmJfHlwCBRkoa6haN8aqEZDOJMgGBhcL3on1HQt9OyQtMQpjBN%2F9Cq2KOT%2FeIM75Z4EigxQc4BW0g47jp5qNkY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v118/@redis/graph@1.1.0/dist/commands/DELETE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 403663000
+  }
+}

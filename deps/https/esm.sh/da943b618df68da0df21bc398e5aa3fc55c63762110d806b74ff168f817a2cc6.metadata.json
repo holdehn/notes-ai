@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "content-length": "343",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=C%2Fr1dqZ5yIurjWuy220QHyq1P0nGiGdlZxNEYfm%2FvqstrBIpm2DYlloovH%2F6SIQW2eK11hoXUs7lstPjA8unbZYUm2aQ37MHEsApKqAz5OsoHMYxJuJN2dnCSRQFYoAXb74Tgpw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd1648aefcf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "server": "cloudflare",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "r2",
+    "access-control-allow-origin": "*"
+  },
+  "url": "https://esm.sh/v118/@redis/time-series@1.0.4/dist/commands/CREATERULE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 420011000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "content-length": "130",
+    "access-control-allow-origin": "*",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=l%2FUQHQBHp2KQm0fpGra2v%2FWWpcwFPD27s5xveoyINCumy%2FS%2F%2FevBsyTLYsJwcuds2p7gr6A6c9x5SP9inWkbwcwlTMTD10pAGXpysSlhqGMnXguuKp7yy78VVzzAkiIFCVN5EXA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd16ddcaacf05-SJC",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/CLUSTER_REPLICAS.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 372170000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "579",
+    "cache-control": "public, max-age=31536000, immutable",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=xoVxOvI9BYYmU5JNjVLGrgffKcRYFdrv7HmhzRzTgzbBiuZhX3H4D6CfAAELhGd98IkOy2GhIbwJWgM%2B0fZoENMVMA%2F4IXR478WH1H6WI%2F7ZWpNJof8v%2BT%2BYsZ3LlMpqenUgHqg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd16ddce9cf05-SJC"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/FUNCTION_LIST_WITHCODE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 570142000
+  }
+}

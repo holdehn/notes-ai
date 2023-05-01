@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-source": "r2",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=4XMlMhp0Y3KIblGBsXQ3wf3ATdO67ZZETXXmi0ex3qwIw3ul5u2jhWUB7kqIhIQfYIlwjq2gE5kDgKVb6pJ%2FWLD0kMqKKALNtisRkG4ggQlgfGTJqp2MnZRSgZxHqK52W28ysxs%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "592",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c0bd170e877cf05-SJC",
+    "access-control-allow-methods": "*",
+    "date": "Mon, 01 May 2023 23:31:28 GMT"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/XCLAIM.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 59151000
+  }
+}

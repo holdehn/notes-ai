@@ -1,0 +1,8 @@
+import { SearchOptions, SearchRawReply } from './SEARCH.d.ts';
+import { ProfileOptions, ProfileRawReply, ProfileReply } from './index.d.ts';
+import { RedisCommandArguments } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+export declare const IS_READ_ONLY = true;
+export declare function transformArguments(index: string, query: string, options?: ProfileOptions & SearchOptions): RedisCommandArguments;
+type ProfileSearchRawReply = ProfileRawReply<SearchRawReply>;
+export declare function transformReply(reply: ProfileSearchRawReply, withoutDocuments: boolean): ProfileReply;
+export {};

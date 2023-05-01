@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "482",
+    "x-content-source": "r2",
+    "access-control-allow-methods": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Mon, 01 May 2023 23:31:25 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=lfMpUTGasCRHK7pTPMIxREjdLmHqZWM2%2BJkdVs0L7KOJvC9qkLE3XEyJ7g2tihRsxUt8BFGxLoTq0gYaYnHU7pVFCmwwd9%2B9WsZIagBoayeNLbq64s83jbh1S0H7%2BzqbfCfcvCE%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "cf-ray": "7c0bd1648a63cf05-SJC"
+  },
+  "url": "https://esm.sh/v118/@redis/bloom@1.2.0/dist/commands/cuckoo/INSERTNX.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983882,
+    "nanos_since_epoch": 795631000
+  }
+}

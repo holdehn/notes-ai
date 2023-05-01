@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=fmXrTjPgjKt4PNR21DaO6zEWxjQ9P8Yc9TwGiRdHPvUao8kqxux8XbeJP8d3H%2BApidMa3LELJq7QFbUi5OC6e%2FL%2BGlA3rmkW8JPmr%2FcoIROLpZF%2BrBz8qf0ytXWHi3NZxVvHoA4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "server": "cloudflare",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c0bd170e879cf05-SJC",
+    "x-content-source": "r2",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "397",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/XCLAIM_JUSTID.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 61287000
+  }
+}

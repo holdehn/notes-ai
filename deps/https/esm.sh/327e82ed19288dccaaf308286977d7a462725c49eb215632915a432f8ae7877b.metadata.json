@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=3gcXXS%2BWOVpKQb%2B4fqSWsU1oO1cGfYnk%2BntZDRyVD0JBaPFDR2lTwnIGLhieWulpiddYozlE%2FNcNF%2BVlt2fUeh%2B3vz8GRWlxnF7KPpOmMHsFXFxubdXx4JZ%2FsRIkb7%2Fd8OPznGQ%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "content-length": "281",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd16e1d2ecf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "x-content-source": "r2",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/INCRBY.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 722351000
+  }
+}

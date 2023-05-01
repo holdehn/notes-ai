@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cf-ray": "7c0bd1648a53cf05-SJC",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=zbWsJ8vdmRqYUySpdGXZR327pna0m4lzcwgRI1NZk%2BnY62mwYB3eIBTG0cjU9sAsjjIrex%2FH5C%2BVjowy3C5MXqN56n2zgv9o9n75mgETUyFkCBdV2rqaNepg33ozp054jvZPHlw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "r2",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "289",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "access-control-allow-origin": "*",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/@redis/bloom@1.2.0/dist/commands/count-min-sketch/INCRBY.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 175504000
+  }
+}

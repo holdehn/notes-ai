@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding",
+    "content-length": "277",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "r2",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=s3gpP%2FVz3PfNUEDTEORXsbv5pTZ76t6vE93vgT9oPb3SF4rSj2k%2BK3pf1%2BOvfOeqe3xmUjronBH7SHDu9MoeGpoWkeOvBvjNMeiaIAxIX5daIZLXV3WCprTAkzXKpBY1%2FyLzONs%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "cf-ray": "7c0bd1648ac7cf05-SJC"
+  },
+  "url": "https://esm.sh/v118/@redis/search@1.1.2/dist/commands/DICTDEL.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 744488000
+  }
+}

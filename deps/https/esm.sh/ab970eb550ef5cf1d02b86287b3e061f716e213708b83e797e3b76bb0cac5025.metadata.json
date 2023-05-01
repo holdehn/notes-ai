@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=E0KE86x%2FSbt0wqixp1mx9Ag6QcFzg5BiXpsHAkUXGhuG2fTmMUA2dOt4svOY4XnpzSJMp6IJH6vB2atkCYpHRulNm%2FvymAoVGh6pPnvIy3eVR%2Bk2E%2BYR2kcYARyrqmgH5Eb6M5I%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare",
+    "cf-ray": "7c0bd16ddc6fcf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "access-control-allow-methods": "*",
+    "content-length": "428",
+    "x-content-source": "r2",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/BITPOS.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 344846000
+  }
+}

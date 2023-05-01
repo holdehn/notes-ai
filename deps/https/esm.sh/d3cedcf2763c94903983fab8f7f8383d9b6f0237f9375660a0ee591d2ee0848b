@@ -1,0 +1,192 @@
+import * as ADD from './ADD.d.ts';
+import * as ALTER from './ALTER.d.ts';
+import * as CREATE from './CREATE.d.ts';
+import * as CREATERULE from './CREATERULE.d.ts';
+import * as DECRBY from './DECRBY.d.ts';
+import * as DEL from './DEL.d.ts';
+import * as DELETERULE from './DELETERULE.d.ts';
+import * as GET from './GET.d.ts';
+import * as INCRBY from './INCRBY.d.ts';
+import * as INFO_DEBUG from './INFO_DEBUG.d.ts';
+import * as INFO from './INFO.d.ts';
+import * as MADD from './MADD.d.ts';
+import * as MGET from './MGET.d.ts';
+import * as MGET_WITHLABELS from './MGET_WITHLABELS.d.ts';
+import * as QUERYINDEX from './QUERYINDEX.d.ts';
+import * as RANGE from './RANGE.d.ts';
+import * as REVRANGE from './REVRANGE.d.ts';
+import * as MRANGE from './MRANGE.d.ts';
+import * as MRANGE_WITHLABELS from './MRANGE_WITHLABELS.d.ts';
+import * as MREVRANGE from './MREVRANGE.d.ts';
+import * as MREVRANGE_WITHLABELS from './MREVRANGE_WITHLABELS.d.ts';
+import { RedisCommandArguments } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+declare const _default: {
+    ADD: typeof ADD;
+    add: typeof ADD;
+    ALTER: typeof ALTER;
+    alter: typeof ALTER;
+    CREATE: typeof CREATE;
+    create: typeof CREATE;
+    CREATERULE: typeof CREATERULE;
+    createRule: typeof CREATERULE;
+    DECRBY: typeof DECRBY;
+    decrBy: typeof DECRBY;
+    DEL: typeof DEL;
+    del: typeof DEL;
+    DELETERULE: typeof DELETERULE;
+    deleteRule: typeof DELETERULE;
+    GET: typeof GET;
+    get: typeof GET;
+    INCRBY: typeof INCRBY;
+    incrBy: typeof INCRBY;
+    INFO_DEBUG: typeof INFO_DEBUG;
+    infoDebug: typeof INFO_DEBUG;
+    INFO: typeof INFO;
+    info: typeof INFO;
+    MADD: typeof MADD;
+    mAdd: typeof MADD;
+    MGET: typeof MGET;
+    mGet: typeof MGET;
+    MGET_WITHLABELS: typeof MGET_WITHLABELS;
+    mGetWithLabels: typeof MGET_WITHLABELS;
+    QUERYINDEX: typeof QUERYINDEX;
+    queryIndex: typeof QUERYINDEX;
+    RANGE: typeof RANGE;
+    range: typeof RANGE;
+    REVRANGE: typeof REVRANGE;
+    revRange: typeof REVRANGE;
+    MRANGE: typeof MRANGE;
+    mRange: typeof MRANGE;
+    MRANGE_WITHLABELS: typeof MRANGE_WITHLABELS;
+    mRangeWithLabels: typeof MRANGE_WITHLABELS;
+    MREVRANGE: typeof MREVRANGE;
+    mRevRange: typeof MREVRANGE;
+    MREVRANGE_WITHLABELS: typeof MREVRANGE_WITHLABELS;
+    mRevRangeWithLabels: typeof MREVRANGE_WITHLABELS;
+};
+export default _default;
+export declare enum TimeSeriesAggregationType {
+    AVG = "AVG",
+    AVERAGE = "AVG",
+    FIRST = "FIRST",
+    LAST = "LAST",
+    MIN = "MIN",
+    MINIMUM = "MIN",
+    MAX = "MAX",
+    MAXIMUM = "MAX",
+    SUM = "SUM",
+    RANGE = "RANGE",
+    COUNT = "COUNT",
+    STD_P = "STD.P",
+    STD_S = "STD.S",
+    VAR_P = "VAR.P",
+    VAR_S = "VAR.S",
+    TWA = "TWA"
+}
+export declare enum TimeSeriesDuplicatePolicies {
+    BLOCK = "BLOCK",
+    FIRST = "FIRST",
+    LAST = "LAST",
+    MIN = "MIN",
+    MAX = "MAX",
+    SUM = "SUM"
+}
+export declare enum TimeSeriesReducers {
+    AVG = "AVG",
+    SUM = "SUM",
+    MIN = "MIN",
+    MINIMUM = "MIN",
+    MAX = "MAX",
+    MAXIMUM = "MAX",
+    RANGE = "range",
+    COUNT = "COUNT",
+    STD_P = "STD.P",
+    STD_S = "STD.S",
+    VAR_P = "VAR.P",
+    VAR_S = "VAR.S"
+}
+export declare type Timestamp = number | Date | string;
+export declare function transformTimestampArgument(timestamp: Timestamp): string;
+export declare function pushRetentionArgument(args: RedisCommandArguments, retention?: number): RedisCommandArguments;
+export declare enum TimeSeriesEncoding {
+    COMPRESSED = "COMPRESSED",
+    UNCOMPRESSED = "UNCOMPRESSED"
+}
+export declare function pushEncodingArgument(args: RedisCommandArguments, encoding?: TimeSeriesEncoding): RedisCommandArguments;
+export declare function pushChunkSizeArgument(args: RedisCommandArguments, chunkSize?: number): RedisCommandArguments;
+export declare function pushDuplicatePolicy(args: RedisCommandArguments, duplicatePolicy?: TimeSeriesDuplicatePolicies): RedisCommandArguments;
+export declare type RawLabels = Array<[label: string, value: string]>;
+export declare type Labels = {
+    [label: string]: string;
+};
+export declare function transformLablesReply(reply: RawLabels): Labels;
+export declare function pushLabelsArgument(args: RedisCommandArguments, labels?: Labels): RedisCommandArguments;
+export interface IncrDecrOptions {
+    TIMESTAMP?: Timestamp;
+    RETENTION?: number;
+    UNCOMPRESSED?: boolean;
+    CHUNK_SIZE?: number;
+    LABELS?: Labels;
+}
+export declare function transformIncrDecrArguments(command: 'TS.INCRBY' | 'TS.DECRBY', key: string, value: number, options?: IncrDecrOptions): RedisCommandArguments;
+export declare type SampleRawReply = [timestamp: number, value: string];
+export interface SampleReply {
+    timestamp: number;
+    value: number;
+}
+export declare function transformSampleReply(reply: SampleRawReply): SampleReply;
+export declare enum TimeSeriesBucketTimestamp {
+    LOW = "-",
+    HIGH = "+",
+    MID = "~"
+}
+export interface RangeOptions {
+    LATEST?: boolean;
+    FILTER_BY_TS?: Array<Timestamp>;
+    FILTER_BY_VALUE?: {
+        min: number;
+        max: number;
+    };
+    COUNT?: number;
+    ALIGN?: Timestamp;
+    AGGREGATION?: {
+        type: TimeSeriesAggregationType;
+        timeBucket: Timestamp;
+        BUCKETTIMESTAMP?: TimeSeriesBucketTimestamp;
+        EMPTY?: boolean;
+    };
+}
+export declare function pushRangeArguments(args: RedisCommandArguments, fromTimestamp: Timestamp, toTimestamp: Timestamp, options?: RangeOptions): RedisCommandArguments;
+interface MRangeGroupBy {
+    label: string;
+    reducer: TimeSeriesReducers;
+}
+export declare function pushMRangeGroupByArguments(args: RedisCommandArguments, groupBy?: MRangeGroupBy): RedisCommandArguments;
+export declare type Filter = string | Array<string>;
+export declare function pushFilterArgument(args: RedisCommandArguments, filter: string | Array<string>): RedisCommandArguments;
+export interface MRangeOptions extends RangeOptions {
+    GROUPBY?: MRangeGroupBy;
+}
+export declare function pushMRangeArguments(args: RedisCommandArguments, fromTimestamp: Timestamp, toTimestamp: Timestamp, filter: Filter, options?: MRangeOptions): RedisCommandArguments;
+export declare type SelectedLabels = string | Array<string>;
+export declare function pushWithLabelsArgument(args: RedisCommandArguments, selectedLabels?: SelectedLabels): RedisCommandArguments;
+export interface MRangeWithLabelsOptions extends MRangeOptions {
+    SELECTED_LABELS?: SelectedLabels;
+}
+export declare function pushMRangeWithLabelsArguments(args: RedisCommandArguments, fromTimestamp: Timestamp, toTimestamp: Timestamp, filter: Filter, options?: MRangeWithLabelsOptions): RedisCommandArguments;
+export declare function transformRangeReply(reply: Array<SampleRawReply>): Array<SampleReply>;
+declare type MRangeRawReply = Array<[
+    key: string,
+    labels: RawLabels,
+    samples: Array<SampleRawReply>
+]>;
+interface MRangeReplyItem {
+    key: string;
+    samples: Array<SampleReply>;
+}
+export declare function transformMRangeReply(reply: MRangeRawReply): Array<MRangeReplyItem>;
+export interface MRangeWithLabelsReplyItem extends MRangeReplyItem {
+    labels: Labels;
+}
+export declare function transformMRangeWithLabelsReply(reply: MRangeRawReply): Array<MRangeWithLabelsReplyItem>;
+export declare function pushLatestArgument(args: RedisCommandArguments, latest?: boolean): RedisCommandArguments;

@@ -1,0 +1,2 @@
+/* esm.sh - langchain@0.0.52/llms/openai */
+export * from "https://esm.sh/v118/langchain@0.0.52/deno/llms/openai.js";

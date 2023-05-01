@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "content-length": "356",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "r2",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=McfdBGeuHtjfVDMysIo7G8B0e%2FeR1LM9uLeql7L4o3Y0PcVmDMdWHSFQVd4ZH7W1K5%2BhyXCTGIzrtg7GnJBQS8Om93zttYnnY8JTAgTVwKPkqxbP0J29r%2BlvyE%2B4y3CrfX0s9v8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7c0bd16e1db7cf05-SJC",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/SINTER.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 311242000
+  }
+}

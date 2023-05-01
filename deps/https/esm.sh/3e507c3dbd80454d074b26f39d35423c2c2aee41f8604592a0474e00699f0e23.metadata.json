@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "x-content-source": "r2",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "content-length": "387",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=YlL25SglMlA3Qev8NP9MuDaLF9gRom6UEX9mW%2BlWLivEAoEegpKPzy4BL0k%2FCxIiUDYse96n%2FQWyoZllyn%2Bm9Yz1z30zjuIL8X6lnGlH9ZKkpkQmP6ACl%2BoTxWllE1pD11R9W9I%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c0bd1648a66cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/bloom@1.2.0/dist/commands/cuckoo/SCANDUMP.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 123887000
+  }
+}

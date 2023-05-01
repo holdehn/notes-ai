@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=omTIHRgujrPWBY0DGRjuki1TrR4Pt7FFt5SiFfu5tQKIizX5jKAHNOwrfR5vsv6yNn5Q%2BqBgV2kYheV8tN%2BzQrn9O6BDKeXrXAL%2Fim69OCfzyv%2B0ZwJQNE%2FNi601wkP%2FgOi66pY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7c0bd16ddc9dcf05-SJC",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "content-length": "264",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/CLUSTER_DELSLOTSRANGE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 460977000
+  }
+}

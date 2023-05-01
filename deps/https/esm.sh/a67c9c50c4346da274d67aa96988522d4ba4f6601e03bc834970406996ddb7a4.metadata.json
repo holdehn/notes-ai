@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cf-ray": "7c0bd170e875cf05-SJC",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "636",
+    "access-control-allow-origin": "*",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=y21fzti%2BgkVN7ixkHr5MAqZ3cqYGsc9EU8rKqBk%2BmXUob5l7VnRwtjtjdjITCDDzOjRnz1v9vk0PzVzBLch5OlnTLJ%2BKYjDny0bQoMS05VuoHA2n23sm6%2BQ%2FkiX4CVsdSAg30FU%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/XAUTOCLAIM_JUSTID.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 55350000
+  }
+}

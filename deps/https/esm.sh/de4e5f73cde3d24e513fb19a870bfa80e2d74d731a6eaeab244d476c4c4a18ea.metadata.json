@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "344",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=v7%2FXlnRDZ0LU1lwmO9EzS2x1Wb7HQ3vmIGnXng4HxgrIGqajEZsGHPcRHUFclBt0qSCX7%2F3hw65UZSEgurIwTqZmcLSkSIr9JmyMT2QtDWlM0o4XmNPef4HJU9QvLQ5Fg8ZRgcY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "x-content-source": "r2",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7c0bd16e1d24cf05-SJC",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/HRANDFIELD_COUNT_WITHVALUES.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 619378000
+  }
+}

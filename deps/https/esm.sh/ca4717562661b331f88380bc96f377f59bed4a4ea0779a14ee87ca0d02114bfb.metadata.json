@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd16e1d64cf05-SJC",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "1110",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=nhcD5Sq1KhRw4mHyPwPoFJ7Msw7y1c2Hs2xopGRg3pWpPGAoEv5TvI0Ml02OYsBj2lKjJ%2FKhln15pnrhJ7uzHSrLGTclwkuqH2t1y1uvtcL98%2FidUk3PqMNB9dMm4DOifdgpgkM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/MEMORY_STATS.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 14613000
+  }
+}

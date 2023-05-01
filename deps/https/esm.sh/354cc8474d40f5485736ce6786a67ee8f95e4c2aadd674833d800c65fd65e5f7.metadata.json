@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "x-content-source": "r2",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "cf-ray": "7c0bd17209f3cf05-SJC",
+    "content-length": "382",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=A3dptSrajrYKn2QAaD%2FMQ7ALRcEtVF4fA0YCrrG0PYMhDqsJ4UpbFK3NCp%2F3HdfojF%2F%2B%2FH1xbhUKP5R1cEI5J2JIa7dbJ922vrIzZz2c9Jw8ypPgGjPcwnUj2jHHfnkGCiVi0D8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/ZSCORE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 938914000
+  }
+}

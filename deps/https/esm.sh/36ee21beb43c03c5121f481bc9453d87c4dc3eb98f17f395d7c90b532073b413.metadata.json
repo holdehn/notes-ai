@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "content-length": "145",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=q7PhjX20hwh4FgE7oVogQ0b%2FTTZUSUD3T%2FFS11JX2jj6uM5p%2BgGcyOHMAHcvbW91B52UW%2B26NHbdfvToEeQACqHcyBmVOtLXvIETWcwLX%2BekhGNMnNIWO2RUa%2Fm6BgGM8uSzEug%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd16ddca2cf05-SJC",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/CLUSTER_GETKEYSINSLOT.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 370543000
+  }
+}

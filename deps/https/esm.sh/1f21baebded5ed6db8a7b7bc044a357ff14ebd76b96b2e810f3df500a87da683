@@ -1,0 +1,3 @@
+import { RedisCommandArguments } from 'https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts';
+export declare function transformArguments(dictionary: string, term: string | Array<string>): RedisCommandArguments;
+export declare function transformReply(): number;

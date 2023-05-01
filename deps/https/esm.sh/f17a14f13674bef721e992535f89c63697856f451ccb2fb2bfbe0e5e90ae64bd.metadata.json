@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=ah53EQeAKqO74pon2Kr3UdCrVy1j0rZeZYDIkWiIdeQZJfXpwyi31KUDJ1dGZjOxD19ROWSyh8dgIZ1YsASdbK4Pjy4n2YKn2i%2B9vSD1rULoXbH8zmMOZKvRYjZQN46vtbCjxkk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd16e1d55cf05-SJC",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "x-content-source": "r2",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "400",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/LPOS_COUNT.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 21391000
+  }
+}

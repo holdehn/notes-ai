@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "content-length": "271",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd1648a5dcf05-SJC",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=PtkJrr6QqeX4%2Bnew1D1ALsFJC0syFpP6PBU%2BytSopLbFGf%2FX13AvrQYVYMqOBXH5HR4IuY4MDM5OHJeGVAk6%2BFsfHXOPVDfGjtSp8cF8YX5LNKslr%2B5vBcuDs3U892sz%2FlQ8BBg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-source": "r2",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/@redis/bloom@1.2.0/dist/commands/cuckoo/ADDNX.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983882,
+    "nanos_since_epoch": 843118000
+  }
+}

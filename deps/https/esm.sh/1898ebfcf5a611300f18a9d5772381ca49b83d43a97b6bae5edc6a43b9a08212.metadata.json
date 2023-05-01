@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "111",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Rn%2F1vo2oF7zsCu5jkcKLaBF%2FiITC2MGxOwlt7pqqb%2BJEpjs2Y4uP6%2B0lXVcOLvOt6iMwDBRmBaUpjDVARK2Rqs9s2xWJSGA%2BEgzmbeRxDZm0mPCEuVg6enQtCH0WEVTLPPfK4NI%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "content-type": "application/typescript; charset=utf-8",
+    "cf-ray": "7c0bd170e86ccf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/UNWATCH.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 847247000
+  }
+}

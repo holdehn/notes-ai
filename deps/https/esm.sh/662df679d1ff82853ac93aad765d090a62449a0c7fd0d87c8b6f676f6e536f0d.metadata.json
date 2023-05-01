@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c0bd1648a60cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=C7ocGHYQicI6%2FoBEDkTWuN4QF%2BJ1yvoIszoJVGWF%2FZzeuikMsNM4Wuo50Q%2FyDbl1AqeoUUSKaAbETM8L203k%2Ff%2BIa254L%2BMFw66KoMixQUimzHffwRbQB3YoWbkLhMXa5WaFj0o%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "x-content-source": "r2",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "313"
+  },
+  "url": "https://esm.sh/v118/@redis/bloom@1.2.0/dist/commands/cuckoo/EXISTS.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983882,
+    "nanos_since_epoch": 898136000
+  }
+}

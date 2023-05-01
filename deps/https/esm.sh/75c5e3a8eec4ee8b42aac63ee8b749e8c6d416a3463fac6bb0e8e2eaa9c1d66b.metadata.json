@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=CMVVb22j5hogm05%2B8jI6mf%2FRVBOLZy6dotJ%2Btg5N6WnY95ioPeULXglAN23ElZQnJ6%2B5a4QRI%2FwqpUoWVOKkpSGDFjlgpViH9kO6rPkpStRjcaADz2qQlRf0y9tD1kVAKUn1Q9E%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "content-length": "325",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c0bd16e1d20cf05-SJC"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/HRANDFIELD.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 742493000
+  }
+}

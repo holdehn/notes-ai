@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=NsDqHXaqcumV16oWv41UHqwaxCDOcFlVWfKwdElBsmw9XSQT0CDlcReA1nStMrpmqP9qu4Wo68HMtqrZyAfA79cgJ3dLXQePcp%2FCQdB7TpGCDNoHJhz%2FAekE%2FHFk9KU61jSCuxM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "content-length": "372",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "cf-ray": "7c0bd1648af1cf05-SJC"
+  },
+  "url": "https://esm.sh/v118/@redis/time-series@1.0.4/dist/commands/DECRBY.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 736015000
+  }
+}

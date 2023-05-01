@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=HGNoXdtQJPIjbYdG3EnodvgreyJ0B%2FJjd%2F6AqK3l32WiQLBYHR1Y1gEiRTBrBkAaCA62xn6WfIJj%2BWvhQYWspGDQ4aWzUcVzT4R7%2BRuxsQDtBdYyGlmvB4XIWjnMgmzyPrmLApU%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "server": "cloudflare",
+    "cf-ray": "7c0bd1648af3cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "192",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v118/@redis/time-series@1.0.4/dist/commands/DELETERULE.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 505800000
+  }
+}

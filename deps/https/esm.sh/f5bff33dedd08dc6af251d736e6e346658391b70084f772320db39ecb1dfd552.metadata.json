@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "cf-ray": "7c0bd16e1d73cf05-SJC",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "311",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=deNTfaiGKuC3gcKm1%2FOpOTNqRN2tlFcTT7uio5mB3DC48F34%2FyRLGSccvv6aNYqIQr1JfVaaAYwsHY5JAbN7HTX9nLdPDi55YD62lJk1U3MNztDUaDpOC9LfNBN1W7HTD0tSCyA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "r2",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/OBJECT_FREQ.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983885,
+    "nanos_since_epoch": 359914000
+  }
+}

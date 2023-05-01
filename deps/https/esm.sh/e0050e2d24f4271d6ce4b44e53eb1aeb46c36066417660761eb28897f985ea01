@@ -1,0 +1,14 @@
+import { AggregateOptions, AggregateRawReply, AggregateReply } from './AGGREGATE.d.ts';
+export { FIRST_KEY_INDEX, IS_READ_ONLY } from './AGGREGATE.d.ts';
+interface AggregateWithCursorOptions extends AggregateOptions {
+    COUNT?: number;
+}
+export declare function transformArguments(index: string, query: string, options?: AggregateWithCursorOptions): import("https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/index.d.ts").RedisCommandArguments;
+type AggregateWithCursorRawReply = [
+    result: AggregateRawReply,
+    cursor: number
+];
+interface AggregateWithCursorReply extends AggregateReply {
+    cursor: number;
+}
+export declare function transformReply(reply: AggregateWithCursorRawReply): AggregateWithCursorReply;

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "x-content-source": "r2",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=wZdJbJ3Up%2BPmCoXHnZieSQM8it09aN8UThLobyRK60iu4fP3DszoJlesI8pR7IzwN95nBL%2F2j09kkZl%2FgC5W3IzjZL24ecYCMJdM9jXXTLwvjOGDDWGBp5QQE0sIb%2FKLwl0UlaY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "173",
+    "cf-ray": "7c0bd16ddc7ccf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Mon, 01 May 2023 23:31:27 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/CLIENT_GETREDIR.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 400417000
+  }
+}

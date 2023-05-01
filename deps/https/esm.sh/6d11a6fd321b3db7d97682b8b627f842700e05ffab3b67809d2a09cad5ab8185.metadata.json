@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "vary": "Origin, Accept-Encoding",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "481",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Iv7IELLnHn303joCvZ6WeYDzOcot7JzWJisTH6pLDSebYBirtWGS7gxYAonEI0swtjJFT1bw5vC74fw7ZNI9I2gZAQPoh%2BEo%2FAScy92WKWHWxhqPJoMKdmsyTwHA7RpI0r7Q610%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7c0bd1648a90cf05-SJC"
+  },
+  "url": "https://esm.sh/v118/@redis/graph@1.1.0/dist/commands/SLOWLOG.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 98821000
+  }
+}

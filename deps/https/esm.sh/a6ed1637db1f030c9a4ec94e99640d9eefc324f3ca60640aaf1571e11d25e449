@@ -1,0 +1,27 @@
+import { BaseChain } from "../base.d.ts";
+import { BaseMemory } from "../../memory/base.d.ts";
+import type { SqlDatabase } from "../../sql_db.d.ts";
+import { ChainValues } from "../../schema/index.d.ts";
+import { SerializedSqlDatabaseChain } from "../serde.d.ts";
+import { BaseLanguageModel } from "../../base_language/index.d.ts";
+export declare class SqlDatabaseChain extends BaseChain {
+    llm: BaseLanguageModel;
+    database: SqlDatabase;
+    prompt: import("../../index.d.ts").PromptTemplate;
+    topK: number;
+    inputKey: string;
+    outputKey: string;
+    returnDirect: boolean;
+    constructor(fields: {
+        llm: BaseLanguageModel;
+        database: SqlDatabase;
+        inputKey?: string;
+        outputKey?: string;
+        memory?: BaseMemory;
+    });
+    _call(values: ChainValues): Promise<ChainValues>;
+    _chainType(): "sql_database_chain";
+    get inputKeys(): string[];
+    static deserialize(data: SerializedSqlDatabaseChain, SqlDatabaseFromOptionsParams: (typeof SqlDatabase)["fromOptionsParams"]): Promise<SqlDatabaseChain>;
+    serialize(): SerializedSqlDatabaseChain;
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=D0fs0UqA%2BA9GTSHLkr2wVXuzn8uvz8%2BpoFtjPtKYvGOtpp%2Bdpv7n3q9J5yf%2FApXMmNTTowZ%2BDmANN2rtKxvaZK%2Bz1L8QFM6kdt9ImK%2BrG%2FtsMSthcV2wSGR24X1TxnQGyuHU7gk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c0bd1677dd8cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "1805",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "access-control-allow-origin": "*"
+  },
+  "url": "https://esm.sh/v118/@redis/bloom@1.2.0/dist/commands/t-digest/index.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 316399000
+  }
+}

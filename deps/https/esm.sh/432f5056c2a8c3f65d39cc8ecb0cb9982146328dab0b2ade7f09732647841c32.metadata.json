@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=gSSyDlHjJ%2BZEF%2BSikrpLg7AhxAde33J7cS%2Bv9Ec5fMNyL6HKnPgnbHIwe4m3I%2BMKjcij5bo5yd14Vb3gkoaixBUGyWQcYJnl0DIiHiXSWhCSmOu%2FHPzE7eimOqqg9GMNFHapFzo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd1648ac9cf05-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "207",
+    "date": "Mon, 01 May 2023 23:31:26 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v118/@redis/search@1.1.2/dist/commands/DROPINDEX.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983883,
+    "nanos_since_epoch": 716952000
+  }
+}

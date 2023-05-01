@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Mon, 01 May 2023 23:31:28 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "669",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=9fOaXW6z5OqQLNt8bTz6kPQeD4pSvQ%2BxT%2FDmHpx2ip61JrfQ8zsGKkXFnTLqQ0LfmT7RXiR52k15IOm7UsGMNC1iDxtMv%2FHpCFUyQz2sj%2FDmPTJ6XE6GfPW31tfItXMbeKeQ%2B%2Fk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "x-content-source": "r2",
+    "cf-ray": "7c0bd171591ecf05-SJC",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v118/@redis/client@1.5.7/dist/lib/commands/ZADD.d.ts",
+  "now": {
+    "secs_since_epoch": 1682983884,
+    "nanos_since_epoch": 940772000
+  }
+}
