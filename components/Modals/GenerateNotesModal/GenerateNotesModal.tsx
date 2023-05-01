@@ -151,40 +151,6 @@ export default function GenerateNotesModal(props: Props) {
     }
   };
 
-  const createNotesSummary = async (
-    content: string,
-    callback: (summary: string) => void,
-    accessToken: string,
-  ) => {
-    if (!content) {
-      alert('Please upload a string file');
-      return;
-    }
-
-    try {
-      // Set the endpoint URL
-      const endpoint = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/create-summary`;
-
-      // Use fetchEventSource for streaming
-      await fetchEventSource(endpoint, {
-        method: 'POST',
-        body: JSON.stringify({ transcription: content }),
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'text/event-stream', // Add the Accept header for streaming
-          Authorization: `Bearer ${accessToken}`, // Add the Authorization header
-        },
-        onmessage: (ev) => {
-          const summaryData = ev.data;
-          callback(summaryData); // Call the callback function with the streamed summary data
-        },
-      });
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-      alert(`Error: ${error.message}`);
-    }
-  };
-
   const createNotesFacts = async (content: string, context: string) => {
     if (!content) {
       alert('Please upload a string file');
@@ -234,6 +200,40 @@ export default function GenerateNotesModal(props: Props) {
     title: '',
     context: '',
     functionality: '',
+  };
+
+  const createNotesSummary = async (
+    content: string,
+    callback: (summary: string) => void,
+    accessToken: string,
+  ) => {
+    if (!content) {
+      alert('Please upload a string file');
+      return;
+    }
+
+    try {
+      // Set the endpoint URL
+      const endpoint = `${process.env.CREATE_NOTE_ENDPOINT}`;
+
+      // Use fetchEventSource for streaming
+      await fetchEventSource(endpoint, {
+        method: 'POST',
+        body: JSON.stringify({ transcription: content }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'text/event-stream', // Add the Accept header for streaming
+          Authorization: `Bearer ${accessToken}`, // Add the Authorization header
+        },
+        onmessage: (ev) => {
+          const summaryData = ev.data;
+          callback(summaryData); // Call the callback function with the streamed summary data
+        },
+      });
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      alert(`Error: ${error.message}`);
+    }
   };
 
   const onSubmit = async (values: any, { resetForm }: any) => {
