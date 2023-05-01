@@ -215,6 +215,7 @@ export default function GenerateNotesModal(props: Props) {
     try {
       // Set the endpoint URL
       const endpoint = `${process.env.CREATE_NOTE_ENDPOINT}`;
+      console.log('endpoint :>> ', endpoint);
 
       // Use fetchEventSource for streaming
       await fetchEventSource(endpoint, {
