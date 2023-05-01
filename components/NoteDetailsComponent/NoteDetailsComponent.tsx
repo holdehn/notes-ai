@@ -116,15 +116,9 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-interface Props {
-  stream?: any;
-  transcription?: any;
-  bulletPoints?: any;
-  summary?: any;
-}
-export default function NoteDetailsComponent(props: Props) {
-  const { stream, transcription, summary, bulletPoints } = props;
+export default function NoteDetailsComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [bulletPoints, setBulletPoints] = useState([]);
 
   const session = useSession();
 

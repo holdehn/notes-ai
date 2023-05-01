@@ -151,10 +151,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-interface notesComponentProps {
-  accessToken: string;
-}
-const NotesComponent = ({ accessToken }: notesComponentProps) => {
+const NotesComponent = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openNotesModal, setOpenNotesModal] = useState(false);
   const [openAgentModal, setOpenAgentModal] = useState(false);
@@ -724,7 +721,6 @@ const NotesComponent = ({ accessToken }: notesComponentProps) => {
                     open={openNotesModal}
                     setOpen={setOpenNotesModal}
                     userID={userID}
-                    accessToken={accessToken}
                   />
                 </div>
               </div>

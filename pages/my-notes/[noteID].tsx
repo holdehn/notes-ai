@@ -4,7 +4,6 @@ import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import NoteDetailsComponent from '@/components/NoteDetailsComponent/NoteDetailsComponent';
-import { useRouter } from 'next/router';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const cookies = parseCookies(ctx);
@@ -62,19 +61,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 export default function ({ fallback }: { fallback: any }) {
-  const router = useRouter();
-  const transcription = decodeURIComponent(
-    router.query.transcription as string,
-  );
-  const stream = router.query.stream === 'true';
-
-  const bulletPoints = router.query.bulletPoints
-    ? JSON.parse(decodeURIComponent(router.query.bulletPoints as string))
-    : [];
-  const summary = router.query.summary
-    ? decodeURIComponent(router.query.summary as string)
-    : '';
-
   return (
     <>
       <Head>
@@ -82,12 +68,7 @@ export default function ({ fallback }: { fallback: any }) {
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <SWRConfig value={{ fallback }}>
-        <NoteDetailsComponent
-          transcription={transcription}
-          stream={stream}
-          bulletPoints={bulletPoints}
-          summary={summary}
-        />
+        <NoteDetailsComponent />
       </SWRConfig>
     </>
   );
