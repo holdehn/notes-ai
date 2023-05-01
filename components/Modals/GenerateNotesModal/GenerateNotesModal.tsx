@@ -228,6 +228,7 @@ export default function GenerateNotesModal(props: Props) {
           Accept: 'text/event-stream', // Add the Accept header for streaming
           Authorization: `Bearer ${accessToken}`, // Add the Authorization header
         },
+        credentials: 'same-origin',
         onmessage: (ev) => {
           const summaryData = ev.data;
           callback(summaryData); // Call the callback function with the streamed summary data
