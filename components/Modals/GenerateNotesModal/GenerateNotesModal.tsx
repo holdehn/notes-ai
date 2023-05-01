@@ -32,7 +32,6 @@ function getRandomColor() {
 export default function GenerateNotesModal(props: Props) {
   const { open, setOpen, userID } = props;
   const session = useSession();
-  const { mutate } = useSWRConfig();
   const cancelButtonRef = useRef(null);
   const [notesText, setNotesText] = useState(''); // Add this line
   const [convertedText, setConvertedText] = useState('');
@@ -155,6 +154,7 @@ export default function GenerateNotesModal(props: Props) {
   const createNotesSummary = async (
     content: string,
     callback: (summary: string) => void,
+    accessToken: string,
   ) => {
     if (!content) {
       alert('Please upload a string file');
@@ -172,6 +172,7 @@ export default function GenerateNotesModal(props: Props) {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'text/event-stream', // Add the Accept header for streaming
+          Authorization: `Bearer ${accessToken}`, // Add the Authorization header
         },
         onmessage: (ev) => {
           const summaryData = ev.data;
@@ -235,7 +236,6 @@ export default function GenerateNotesModal(props: Props) {
     functionality: '',
   };
 
-  // Update the onSubmit function
   const onSubmit = async (values: any, { resetForm }: any) => {
     //if no file and no youtube return
     if (fileObjects.length === 0) {
@@ -245,10 +245,17 @@ export default function GenerateNotesModal(props: Props) {
 
     const transcription = await sendAudio(fileObjects[0]);
 
+    const session = useSession();
+    const accessToken = session?.access_token; // Get the access token from the session
+
     let streamedSummary = '';
-    await createNotesSummary(transcription, (summary) => {
-      streamedSummary = summary;
-    });
+    await createNotesSummary(
+      transcription,
+      (summary) => {
+        streamedSummary = summary;
+      },
+      accessToken as unknown as string,
+    );
 
     const notes = await createNotesFacts(transcription, values.context);
 
