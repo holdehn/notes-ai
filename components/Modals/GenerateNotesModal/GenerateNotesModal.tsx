@@ -8,7 +8,6 @@ import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
-import pdfParse from 'pdf-parse';
 
 interface Props {
   open: boolean;
@@ -138,12 +137,20 @@ export default function GenerateNotesModal(props: Props) {
         return;
       }
 
-      // Read the file as an ArrayBuffer
-      const fileBuffer = await file.arrayBuffer();
+      const formData = new FormData();
+      formData.append('file', file);
 
-      // Extract text from the PDF using pdf-parse
-      const pdfData = await pdfParse(fileBuffer as Buffer);
-      const extractedText = pdfData.text;
+      const response = await fetch('/api/load-pdf', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const extractedText = data.text;
       console.log('extractedText :>> ', extractedText);
       setConvertedText(extractedText);
       return extractedText;
