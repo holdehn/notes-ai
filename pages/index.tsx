@@ -18,10 +18,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const {
       data: { session },
     } = await supabase.auth.getSession();
+    console.log(session);
 
     // Check if there is an active session
     if (session) {
       const user = await supabase.auth.getUser();
+      console.log(user);
+      console.log('user' + user.data.user?.id);
 
       // Check if there is an active user
       if (user) {
