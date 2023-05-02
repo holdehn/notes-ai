@@ -1,7 +1,24 @@
-/** @type {import('next').NextConfig} */
+// next.config.js
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Cross-Origin-Embedder-Policy',
+            value: 'require-corp',
+          },
+          {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin',
+          },
+        ],
+      },
+    ];
+  },
   webpack: (config, { isServer }) => {
     config.experiments = { ...config.experiments, topLevelAwait: true };
 
@@ -14,5 +31,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-
-//This configuration should help with the fs module issue, but keep in mind that it's a workaround and might not be the best solution. It's still recommended to address the root cause of the problem, which might be related to the package or its usage.

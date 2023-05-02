@@ -303,7 +303,7 @@ export default function GenerateNotesModal(props: Props) {
       const audioFile = new File([audioBlob], 'audio.mp3', {
         type: 'audio/mp3',
       });
-      console.log('step 6');
+      console.log('step 6 converted');
 
       // Return the audio file
       return audioFile;
