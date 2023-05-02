@@ -308,7 +308,6 @@ export default function GenerateNotesModal(props: Props) {
     }
   };
 
-  // Update the onSubmit function
   const onSubmit = async (values: any, { resetForm }: any) => {
     // If no file and no YouTube return
     if (fileObjects.length === 0) {
@@ -331,8 +330,10 @@ export default function GenerateNotesModal(props: Props) {
       transcription = await sendAudio(file);
     }
 
-    const summary = await createNotesSummary(transcription);
-    const notes = await createNotesFacts(transcription, values.context);
+    const [summary, notes] = await Promise.all([
+      createNotesSummary(transcription),
+      createNotesFacts(transcription, values.context),
+    ]);
 
     insertAndNavigate(transcription, notes, summary as string);
     resetForm();
