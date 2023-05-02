@@ -17,8 +17,16 @@ const navigation = [
 
 export default function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const session = useSession();
   const supabase = useSupabaseClient();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      router.push('/my-notes');
+    }
+  }, [session]);
 
   return (
     <div className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
