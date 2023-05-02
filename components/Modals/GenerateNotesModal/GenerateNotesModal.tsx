@@ -43,21 +43,23 @@ export default function GenerateNotesModal(props: Props) {
   const [loading, setLoading] = useState(false);
   const [agentName, setAgentName] = useState<string>('Summary');
   const [submitted, setSubmitted] = useState(false);
-
   const router = useRouter();
+
   const handleFile = (e: any) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
-      // Check if the uploaded file is an audio or PDF file
+      // Check if the uploaded file is an audio, video, or PDF file
       const fileType = file.type.split('/')[0];
       const fileSubType = file.type.split('/')[1];
 
       if (
-        (fileType !== 'audio' && fileType !== 'application') ||
+        (fileType !== 'audio' &&
+          fileType !== 'video' &&
+          fileType !== 'application') ||
         (fileType === 'application' && fileSubType !== 'pdf')
       ) {
-        alert('Please upload an audio or PDF file');
+        alert('Please upload an audio, video, or PDF file');
         return;
       }
 

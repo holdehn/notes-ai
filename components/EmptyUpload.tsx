@@ -17,6 +17,7 @@ export default function EmptyUpload({ onFileChange }: Props) {
         multiple
         accept="audio/*,video/*,application/pdf" // Accept audio, video, and PDF files
       />
+
       <div className="text-center">
         <svg
           className="mx-auto h-12 w-12 text-gray-400"
