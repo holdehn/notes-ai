@@ -31,6 +31,6 @@
     ".next/types/**/*.ts", "components/Modals/GenerateNotesPDFModal",
 
   ],
-  "exclude": ["node_modules", "supabase/functions/generate-transcription/index.ts","supabase/functions/create-summary/index.ts"
+  "exclude": ["node_modules", "supabase/functions/generate-transcription/index.ts","supabase/functions/upload-audio/index.ts","supabase/functions/create-summary/index.ts", "/Users/holden/Projects/notes-ai/supabase/functions/_shared/supabase.ts"
 ]
 }
