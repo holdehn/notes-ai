@@ -8,17 +8,31 @@ import { Element } from 'react-scroll';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createServerSupabaseClient(ctx);
+
   const cookies = parseCookies(ctx);
   const accessToken = cookies['my-access-token'];
   const refreshToken = cookies['my-refresh-token'];
 
   if (accessToken && refreshToken) {
-    return {
-      redirect: {
-        destination: '/my-notes',
-        permanent: false,
-      },
-    };
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    // Check if there is an active session
+    if (session) {
+      const user = await supabase.auth.getUser();
+
+      // Check if there is an active user
+      if (user) {
+        return {
+          redirect: {
+            destination: '/my-notes',
+            permanent: false,
+          },
+        };
+      }
+    }
   }
 
   return {

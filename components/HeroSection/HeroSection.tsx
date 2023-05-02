@@ -131,7 +131,7 @@ export default function HeroSection() {
                 magicLink={true}
                 dark={false}
                 showLinks={false}
-                redirectTo={`${getURL()}/my-notes`}
+                redirectTo="/my-notes"
                 supabaseClient={supabase}
                 theme="dark"
                 appearance={{
