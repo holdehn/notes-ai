@@ -9,7 +9,6 @@ import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-import { fetchEventSource } from '@microsoft/fetch-event-source';
 
 interface Props {
   open: boolean;
@@ -198,43 +197,32 @@ export default function GenerateNotesModal(props: Props) {
   const createNotesSummary = async (content: string) => {
     if (!content) {
       alert('Please upload a string file');
-      throw new Error('No content provided');
+      return;
     }
+    try {
+      const response = await fetch('/api/create-summary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          transcription: content,
+        }),
+      });
 
-    return new Promise(async (resolve, reject) => {
-      try {
-        const endpoint =
-          process.env.CREATE_SUMMARY_ENDPOINT ||
-          'https://rdlpunszfgaitaujocdd.functions.supabase.co/generate-transcription';
-        console.log('endpoint :>> ', endpoint);
-        let summary = '';
-
-        await fetchEventSource(endpoint, {
-          method: 'POST',
-          body: JSON.stringify({ transcription: content }),
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'text/event-stream',
-          },
-          onmessage(event) {
-            if (event.event === 'end') {
-              resolve(summary);
-            } else {
-              summary += event.data;
-              console.log('Summary (updated):', summary);
-            }
-          },
-          onerror(event) {
-            console.log('Error:', event.message);
-            reject(event.message);
-          },
-        });
-      } catch (error: any) {
-        console.log(JSON.stringify(error));
-        alert(`Error: ${error.message}`);
-        reject(error.message);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log('createNotes error' + JSON.stringify(errorData));
+        throw new Error(errorData.message);
       }
-    });
+
+      const data = await response.json();
+      const noteData = data.data.text;
+      return noteData;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      alert(`Error: ${error.message}`);
+    }
   };
 
   const createNotesFacts = async (content: string, context: string) => {
