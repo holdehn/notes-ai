@@ -200,14 +200,11 @@ export default function GenerateNotesModal(props: Props) {
       return;
     }
     try {
-      const response = await supabaseClient.functions.invoke(
-        'generate-summary',
-        {
-          body: {
-            text: content,
-          },
+      const response = await supabaseClient.functions.invoke('create-summary', {
+        body: {
+          text: content,
         },
-      );
+      });
 
       const summary = response.data.summary;
       console.log('summary :>> ', summary);
