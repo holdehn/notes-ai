@@ -9,6 +9,7 @@ import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 
 interface Props {
   open: boolean;
@@ -197,32 +198,38 @@ export default function GenerateNotesModal(props: Props) {
   const createNotesSummary = async (content: string) => {
     if (!content) {
       alert('Please upload a string file');
-      return;
+      throw new Error('No content provided');
     }
-    try {
-      const response = await fetch('/api/create-summary', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          transcription: content,
-        }),
-      });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log('createNotes error' + JSON.stringify(errorData));
-        throw new Error(errorData.message);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const endpoint = process.env.CREATE_SUMMARY_ENDPOINT || '';
+        console.log('endpoint :>> ', endpoint);
+        let summary = '';
+
+        await fetchEventSource(endpoint, {
+          method: 'POST',
+          body: JSON.stringify({ transcription: content }),
+          headers: { 'Content-Type': 'application/json' },
+          onmessage(event) {
+            if (event.event === 'end') {
+              resolve(summary);
+            } else {
+              summary += event.data;
+              console.log('Summary (updated):', summary);
+            }
+          },
+          onerror(event) {
+            console.log('Error:', event.message);
+            reject(event.message);
+          },
+        });
+      } catch (error: any) {
+        console.log(JSON.stringify(error));
+        alert(`Error: ${error.message}`);
+        reject(error.message);
       }
-
-      const data = await response.json();
-      const noteData = data.data.text;
-      return noteData;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-      alert(`Error: ${error.message}`);
-    }
+    });
   };
 
   const createNotesFacts = async (content: string, context: string) => {
@@ -279,31 +286,26 @@ export default function GenerateNotesModal(props: Props) {
     try {
       // Create an FFmpeg instance
       const ffmpeg = createFFmpeg({ log: true });
-      console.log('ffmpeg :>> ', ffmpeg);
+
       // Load the FFmpeg instance
       await ffmpeg.load();
-      console.log('step 1');
+
       // Write the video file to FFmpeg's file system
       ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(videoFile));
-      console.log('step 2');
 
       // Run the FFmpeg command to convert the video to MP3
       await ffmpeg.run('-i', 'input.mp4', '-vn', '-b:a', '128k', 'output.mp3');
-      console.log('step 3');
 
       // Read the output MP3 file from FFmpeg's file system
       const audioData = ffmpeg.FS('readFile', 'output.mp3');
-      console.log('step 4');
 
       // Create a Blob from the output MP3 data
       const audioBlob = new Blob([audioData.buffer], { type: 'audio/mp3' });
-      console.log('step 5');
 
       // Convert the Blob to a File
       const audioFile = new File([audioBlob], 'audio.mp3', {
         type: 'audio/mp3',
       });
-      console.log('step 6 converted');
 
       // Return the audio file
       return audioFile;
@@ -343,11 +345,13 @@ export default function GenerateNotesModal(props: Props) {
     resetForm();
     setLoading(false);
   };
+
   const formik = useFormik({
     initialValues: intialValues,
     validationSchema: validationSchema,
     onSubmit,
   });
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
