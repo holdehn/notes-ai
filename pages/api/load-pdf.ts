@@ -1,6 +1,23 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import busboy from 'busboy';
-import pdfParse from 'pdf-parse';
+import { getDocument } from 'pdfjs-dist';
+import { TextItem } from 'pdfjs-dist/types/src/display/api';
+
+async function extractTextFromPdf(buffer: Buffer): Promise<string> {
+  const pdf = await getDocument(buffer).promise;
+  let extractedText = '';
+
+  for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+    const page = await pdf.getPage(pageNumber);
+    const textContent = await page.getTextContent();
+    const strings = textContent.items
+      .filter((item): item is TextItem => 'str' in item)
+      .map((item) => item.str);
+    extractedText += strings.join(' ') + '\n';
+  }
+
+  return extractedText;
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,26 +25,18 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     try {
-      // Parse request using Busboy
       const busboyInstance = busboy({ headers: req.headers });
       req.pipe(busboyInstance);
-      console.log('output');
-      // Extract the file from the request
+
       busboyInstance.on('file', (name, file) => {
         const chunks: Buffer[] = [];
         file.on('data', (data) => {
           chunks.push(data);
         });
-        console.log('output1');
 
         file.on('end', async () => {
-          // Read the PDF from the request
           const pdfBuffer = Buffer.concat(chunks);
-          console.log('output2');
-          // Extract text from the PDF using pdf-parse
-          const pdfData = await pdfParse(pdfBuffer);
-          const extractedText = pdfData.text;
-          console.log('output3' + extractedText);
+          const extractedText = await extractTextFromPdf(pdfBuffer);
           res.status(200).json({ text: extractedText });
         });
       });
