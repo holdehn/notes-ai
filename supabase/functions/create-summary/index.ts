@@ -5,7 +5,7 @@ import {
   HumanMessagePromptTemplate,
 } from 'https://esm.sh/langchain@0.0.67/prompts';
 import { RecursiveCharacterTextSplitter } from 'https://esm.sh/langchain@0.0.67/text_splitter';
-import { CallbackManager } from 'https://esm.sh/langchain@0.0.67/callbacks';
+
 import { OpenAIChat } from 'https://esm.sh/langchain@0.0.67/llms/openai';
 import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'https://esm.sh/langchain@0.0.67/chains';
@@ -36,52 +36,15 @@ serve(async (req) => {
     });
     const docs = await textSplitter.createDocuments([transcription]);
 
-    const streaming = req.headers.get('accept') === 'text/event-stream';
+    const llm = new OpenAIChat({ openAIApiKey: OPENAI_API_KEY });
+    const chain = loadSummarizationChain(llm, {
+      prompt: prompt,
+    });
+    const response = await chain.call({ input_documents: docs });
 
-    if (streaming) {
-      const encoder = new TextEncoder();
-      const stream = new TransformStream();
-      const writer = stream.writable.getWriter();
-
-      const llm = new OpenAIChat({
-        streaming,
-        openAIApiKey: OPENAI_API_KEY,
-        callbackManager: CallbackManager.fromHandlers({
-          handleLLMNewToken: async (token) => {
-            await writer.ready;
-            await writer.write(encoder.encode(`data: ${token}\n\n`));
-          },
-          handleLLMEnd: async () => {
-            await writer.ready;
-            await writer.close();
-          },
-          handleLLMError: async (e) => {
-            await writer.ready;
-            await writer.abort(e);
-          },
-        }),
-      });
-
-      const chain = loadSummarizationChain(llm, {
-        prompt: prompt,
-      });
-
-      chain.call({ input_documents: docs }).catch((e) => console.error(e));
-
-      return new Response(stream.readable, {
-        headers: { ...corsHeaders, 'Content-Type': 'text/event-stream' },
-      });
-    } else {
-      const llm = new OpenAIChat({ openAIApiKey: OPENAI_API_KEY });
-      const chain = loadSummarizationChain(llm, {
-        prompt: prompt,
-      });
-      const response = await chain.call({ input_documents: docs });
-
-      return new Response(JSON.stringify(response), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
+    return new Response(JSON.stringify(response), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (e) {
     console.error(e);
     return new Response(JSON.stringify({ error: e.message }), {
