@@ -1,11 +1,11 @@
-import { serve } from 'https://deno.land/std@0.160.0/http/server.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
 } from 'https://esm.sh/langchain@0.0.67/prompts';
 import { RecursiveCharacterTextSplitter } from 'https://esm.sh/langchain@0.0.67/text_splitter';
-import { ConsoleCallbackHandler } from 'https://esm.sh/langchain@0.0.67/callbacks';
+import { CallbackManager } from 'https://esm.sh/langchain@0.0.67/callbacks';
 import { OpenAIChat } from 'https://esm.sh/langchain@0.0.67/llms/openai';
 import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'https://esm.sh/langchain@0.0.67/chains';
@@ -29,54 +29,62 @@ serve(async (req) => {
     return new Response('ok', { headers: corsHeaders });
   }
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-  console.log(OPENAI_API_KEY);
   try {
     const { transcription } = await req.json();
-    console.log(transcription);
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 1000,
     });
     const docs = await textSplitter.createDocuments([transcription]);
-    console.log(docs);
 
     const streaming = req.headers.get('accept') === 'text/event-stream';
-    console.log('streaming', streaming);
-    const consoleHandler = new ConsoleCallbackHandler();
 
-    const llm = new OpenAIChat({
-      streaming,
-      openAIApiKey: OPENAI_API_KEY,
-      maxTokens: 400,
-      modelName: 'gpt-4',
-      temperature: 0,
-      callbacks: [consoleHandler],
-    });
-    console.log('llm', llm);
-    const chain = loadSummarizationChain(llm, {
-      prompt: prompt,
-    });
-    console.log('chain', chain);
-
-    const { writable, readable } = new TransformStream();
-
-    const response = new Response(readable, {
-      headers: { ...corsHeaders, 'Content-Type': 'text/event-stream' },
-    });
-
-    chain.call({ input_documents: docs }).then((result) => {
-      console.log(result);
+    if (streaming) {
       const encoder = new TextEncoder();
-      writable
-        .getWriter()
-        .write(encoder.encode(`data: ${JSON.stringify(result)}\n\n`));
-      writable.getWriter().close();
-    });
-    return new Response(JSON.stringify(response), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+      const stream = new TransformStream();
+      const writer = stream.writable.getWriter();
+
+      const llm = new OpenAIChat({
+        streaming,
+        openAIApiKey: OPENAI_API_KEY,
+        callbackManager: CallbackManager.fromHandlers({
+          handleLLMNewToken: async (token) => {
+            await writer.ready;
+            await writer.write(encoder.encode(`data: ${token}\n\n`));
+          },
+          handleLLMEnd: async () => {
+            await writer.ready;
+            await writer.close();
+          },
+          handleLLMError: async (e) => {
+            await writer.ready;
+            await writer.abort(e);
+          },
+        }),
+      });
+
+      const chain = loadSummarizationChain(llm, {
+        prompt: prompt,
+      });
+
+      chain.call({ input_documents: docs }).catch((e) => console.error(e));
+
+      return new Response(stream.readable, {
+        headers: { ...corsHeaders, 'Content-Type': 'text/event-stream' },
+      });
+    } else {
+      const llm = new OpenAIChat({ openAIApiKey: OPENAI_API_KEY });
+      const chain = loadSummarizationChain(llm, {
+        prompt: prompt,
+      });
+      const response = await chain.call({ input_documents: docs });
+
+      return new Response(JSON.stringify(response), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
   } catch (e) {
+    console.error(e);
     return new Response(JSON.stringify({ error: e.message }), {
-      status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
