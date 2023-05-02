@@ -1,8 +1,6 @@
 // components/LiveTranscription.tsx
-import CreateAgent from '@/pages/api/create-agent';
+
 import { useEffect, useState } from 'react';
-import CreateAgentModal from './Modals/CreateAgentModal/CreateAgentModal';
-import LiveAgentOptions from './LiveAgentOptions/LiveAgentOptions';
 
 interface LiveTranscriptionProps {
   onStartSession: () => void;
