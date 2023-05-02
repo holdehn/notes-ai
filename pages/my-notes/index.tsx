@@ -27,66 +27,56 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const user = await supabase.auth.getUser();
 
   // Check if there is an active user
-  if (user) {
-    // Check if the user exists in the database
+  if (user && user.data.user) {
+    const userId = user.data.user.id;
+
+    // Fetch notes-page-data using the supabaseClient
     const { data: userData, error: userError } = await supabase
       .from('users')
       .select('*')
-      .eq('id', user.data.user?.id as string);
+      .eq('id', userId);
 
     if (userError) {
-      console.error('Error fetching user from database:', userError);
-    }
-
-    // If the user exists in the database, redirect them to the /my-notes page
-    if (userData && userData.length > 0) {
-      await supabase.auth.signOut();
       return {
-        redirect: {
-          destination: '/my-notes',
-          permanent: false,
-        },
+        notFound: true,
       };
     }
-  }
 
-  // Fetch notes-page-data using the supabaseClient
-  const { data: userData, error: userError } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', user.data.user?.id as string);
+    const { data: notesData, error: notesError } = await supabase
+      .from('notes')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
 
-  if (userError) {
+    const { data: sessionData, error: sessionsError } = await supabase
+      .from('live_sessions')
+      .select('*')
+      .eq('user_id', userId);
+
+    // Return the notes-page-data in the props
     return {
-      notFound: true,
+      props: {
+        fallback: {
+          [`/api/notes-page-data?userID=${userId}`]: {
+            user: session.user,
+            notes: notesData,
+            sessions: sessionData,
+            initalSession: session,
+          },
+        },
+      },
     };
   }
 
-  const { data: notesData, error: notesError } = await supabase
-    .from('notes')
-    .select('*')
-    .eq('user_id', user.data.user?.id as string)
-    .order('created_at', { ascending: false });
-
-  const { data: sessionData, error: sessionsError } = await supabase
-    .from('live_sessions')
-    .select('*')
-    .eq('user_id', user.data.user?.id as string);
-
-  // Return the notes-page-data in the props
+  // If there is no active user, redirect to the homepage
   return {
-    props: {
-      fallback: {
-        [`/api/notes-page-data?userID=${user.data.user?.id}`]: {
-          user: session.user,
-          notes: notesData,
-          sessions: sessionData,
-          initalSession: session,
-        },
-      },
+    redirect: {
+      destination: '/',
+      permanent: false,
     },
   };
 };
+
 export default function ({
   fallback,
   initalSession,
@@ -95,12 +85,13 @@ export default function ({
   initalSession: any;
 }) {
   const router = useRouter();
+  const session = useSession();
 
   useEffect(() => {
-    if (!initalSession) {
+    if (!session) {
       router.push('/');
     }
-  }, [initalSession]);
+  }, [session]);
 
   return (
     <>
