@@ -71,9 +71,13 @@ serve(async (req) => {
         .write(encoder.encode(`data: ${JSON.stringify(result)}\n\n`));
       writable.getWriter().close();
     });
-    return response;
+    return new Response(JSON.stringify(response), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (e) {
-    console.error(e);
-    return new Response(e.message, { status: 500 });
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
