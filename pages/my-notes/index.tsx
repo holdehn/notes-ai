@@ -9,11 +9,13 @@ import { useSession } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const cookies = parseCookies(ctx);
-  const accessToken = cookies['my-access-token'];
-  const refreshToken = cookies['my-refresh-token'];
+  const supabase = createServerSupabaseClient(ctx);
 
-  if (!accessToken || !refreshToken) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
     return {
       redirect: {
         destination: '/',
@@ -21,12 +23,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       },
     };
   }
-
-  const supabase = createServerSupabaseClient(ctx);
-  await supabase.auth.setSession({
-    access_token: accessToken,
-    refresh_token: refreshToken,
-  });
 
   const user = await supabase.auth.getUser();
 
@@ -67,9 +63,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     props: {
       fallback: {
         [`/api/notes-page-data?userID=${user.data.user?.id}`]: {
-          user: userData,
+          user: session.user,
           notes: notesData,
           sessions: sessionData,
+          initalSession: session,
         },
       },
     },
@@ -77,19 +74,18 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 export default function ({
   fallback,
-  accessToken,
+  initalSession,
 }: {
   fallback: any;
-  accessToken: string;
+  initalSession: any;
 }) {
   const router = useRouter();
-  const session = useSession();
 
   useEffect(() => {
-    if (!session) {
+    if (!initalSession) {
       router.push('/');
     }
-  }, [session]);
+  }, [initalSession]);
 
   return (
     <>

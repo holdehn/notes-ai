@@ -17,7 +17,7 @@ const navigation = [
 
 export default function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const session = useSession();
+
   const supabase = useSupabaseClient();
 
   return (
@@ -121,7 +121,7 @@ export default function HeroSection() {
               <Auth
                 view="magic_link"
                 magicLink={true}
-                redirectTo={getURL()}
+                redirectTo={`${window.location.origin}/my-notes`}
                 dark={false}
                 showLinks={false}
                 supabaseClient={supabase}

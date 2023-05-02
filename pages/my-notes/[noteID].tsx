@@ -6,12 +6,14 @@ import { SWRConfig } from 'swr';
 import NoteDetailsComponent from '@/components/NoteDetailsComponent/NoteDetailsComponent';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const cookies = parseCookies(ctx);
-  const accessToken = cookies['my-access-token'];
-  const refreshToken = cookies['my-refresh-token'];
+  const supabase = createServerSupabaseClient(ctx);
   const noteId = ctx.query.noteID;
 
-  if (!accessToken || !refreshToken || !noteId) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
     return {
       redirect: {
         destination: '/',
@@ -20,24 +22,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
-  const supabase = createServerSupabaseClient(ctx);
-  await supabase.auth.setSession({
-    access_token: accessToken,
-    refresh_token: refreshToken,
-  });
-
-  const user = await supabase.auth.getUser();
-
-  if (!user) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
-  const user_id = user.data.user?.id;
+  const user_id = session?.user?.id;
 
   const { data: noteData, error: noteError } = await supabase
     .from('notes')
