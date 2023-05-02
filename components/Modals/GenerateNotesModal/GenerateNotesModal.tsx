@@ -141,6 +141,7 @@ export default function GenerateNotesModal(props: Props) {
         alert('Please upload a PDF file');
         return;
       }
+      console.log('file :>> ', file);
 
       const formData = new FormData();
       formData.append('file', file);
@@ -284,6 +285,7 @@ export default function GenerateNotesModal(props: Props) {
     let transcription;
 
     if (fileType === 'application') {
+      console.log('fileObjects[0] :>> ', fileObjects[0]);
       transcription = await loadPDF(fileObjects[0]);
     } else {
       transcription = await sendAudio(fileObjects[0]);
