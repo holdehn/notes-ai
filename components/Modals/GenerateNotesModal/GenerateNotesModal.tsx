@@ -210,7 +210,10 @@ export default function GenerateNotesModal(props: Props) {
         await fetchEventSource(endpoint, {
           method: 'POST',
           body: JSON.stringify({ transcription: content }),
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'text/event-stream',
+          },
           onmessage(event) {
             if (event.event === 'end') {
               resolve(summary);

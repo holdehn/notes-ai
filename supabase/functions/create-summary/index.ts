@@ -39,61 +39,39 @@ serve(async (req) => {
     const docs = await textSplitter.createDocuments([transcription]);
     console.log(docs);
 
-    // Check if the request is for a streaming response.
     const streaming = req.headers.get('accept') === 'text/event-stream';
     console.log('streaming', streaming);
     const consoleHandler = new ConsoleCallbackHandler();
 
-    if (streaming) {
-      const llm = new OpenAIChat({
-        streaming,
-        openAIApiKey: OPENAI_API_KEY,
-        maxTokens: 400,
-        modelName: 'gpt-4',
-        temperature: 0,
-        callbacks: [consoleHandler],
-      });
-      console.log('llm', llm);
-      const chain = loadSummarizationChain(llm, {
-        prompt: prompt,
-      });
-      console.log('chain', chain);
+    const llm = new OpenAIChat({
+      streaming,
+      openAIApiKey: OPENAI_API_KEY,
+      maxTokens: 400,
+      modelName: 'gpt-4',
+      temperature: 0,
+      callbacks: [consoleHandler],
+    });
+    console.log('llm', llm);
+    const chain = loadSummarizationChain(llm, {
+      prompt: prompt,
+    });
+    console.log('chain', chain);
 
-      const stream = new TransformStream();
+    const { writable, readable } = new TransformStream();
 
-      chain
-        .call(
-          {
-            input_documents: docs,
-          },
-          [consoleHandler],
-        )
-        .catch((e) => {
-          console.error(e);
-        });
-      return new Response(stream.readable, {
-        headers: { ...corsHeaders, 'Content-Type': 'text/event-stream' },
-      });
-    } else {
-      const llm = new OpenAIChat({
-        streaming,
-        openAIApiKey: OPENAI_API_KEY,
-        maxTokens: 400,
-        modelName: 'gpt-4',
-        temperature: 0,
-        callbacks: [consoleHandler],
-      });
-      const chain = loadSummarizationChain(llm, {
-        prompt: prompt,
-      });
-      const result = await chain.call(
-        {
-          input_documents: docs,
-        },
-        [consoleHandler],
-      );
-      return new Response(JSON.stringify(result), { headers: corsHeaders });
-    }
+    const response = new Response(readable, {
+      headers: { ...corsHeaders, 'Content-Type': 'text/event-stream' },
+    });
+
+    chain.call({ input_documents: docs }).then((result) => {
+      console.log(result);
+      const encoder = new TextEncoder();
+      writable
+        .getWriter()
+        .write(encoder.encode(`data: ${JSON.stringify(result)}\n\n`));
+      writable.getWriter().close();
+    });
+    return response;
   } catch (e) {
     console.error(e);
     return new Response(e.message, { status: 500 });
