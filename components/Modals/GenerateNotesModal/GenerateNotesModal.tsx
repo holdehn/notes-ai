@@ -203,7 +203,9 @@ export default function GenerateNotesModal(props: Props) {
 
     return new Promise(async (resolve, reject) => {
       try {
-        const endpoint = process.env.CREATE_SUMMARY_ENDPOINT || '';
+        const endpoint =
+          process.env.CREATE_SUMMARY_ENDPOINT ||
+          'https://rdlpunszfgaitaujocdd.functions.supabase.co/generate-transcription';
         console.log('endpoint :>> ', endpoint);
         let summary = '';
 
