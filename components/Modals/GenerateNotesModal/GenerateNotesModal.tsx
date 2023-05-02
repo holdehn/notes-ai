@@ -7,10 +7,8 @@ import { useSWRConfig } from 'swr';
 import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
-import { useCallback } from 'react';
-import SelectAgentMenu from '@/components/SelectAgentMenu';
-import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
+import pdfParse from 'pdf-parse';
 
 interface Props {
   open: boolean;
@@ -44,15 +42,17 @@ export default function GenerateNotesModal(props: Props) {
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [agentName, setAgentName] = useState<string>('Summary');
+  const [submitted, setSubmitted] = useState(false);
+
   const router = useRouter();
   const handleFile = (e: any) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
-      // Check if the uploaded file is an audio or video file
+      // Check if the uploaded file is an audio or PDF file
       const fileType = file.type.split('/')[0];
-      if (fileType !== 'audio' && fileType !== 'video') {
-        alert('Please upload an audio or video file');
+      if (fileType !== 'audio' && fileType !== 'application') {
+        alert('Please upload an audio or PDF file');
         return;
       }
 
@@ -83,6 +83,7 @@ export default function GenerateNotesModal(props: Props) {
     setFileObjects([]);
     setOpen(false);
     setLoading(false);
+    setSubmitted(false); // Add this line
     formik.resetForm();
   };
 
@@ -128,6 +129,29 @@ export default function GenerateNotesModal(props: Props) {
     }
 
     setOpen(false);
+  };
+
+  const loadPDF = async (file: File) => {
+    try {
+      if (!file) {
+        alert('Please upload a PDF file');
+        return;
+      }
+
+      // Read the file as an ArrayBuffer
+      const fileBuffer = await file.arrayBuffer();
+
+      // Extract text from the PDF using pdf-parse
+      const pdfData = await pdfParse(fileBuffer as Buffer);
+      const extractedText = pdfData.text;
+      console.log('extractedText :>> ', extractedText);
+      setConvertedText(extractedText);
+      return extractedText;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+
+      alert(`Error: ${error.message}`);
+    }
   };
 
   const sendAudio = async (file: File) => {
@@ -244,7 +268,14 @@ export default function GenerateNotesModal(props: Props) {
     }
     setLoading(true);
 
-    const transcription = await sendAudio(fileObjects[0]);
+    const fileType = fileObjects[0].type.split('/')[0];
+    let transcription;
+
+    if (fileType === 'application') {
+      transcription = await loadPDF(fileObjects[0]);
+    } else {
+      transcription = await sendAudio(fileObjects[0]);
+    }
 
     const summary = await createNotesSummary(transcription);
     const notes = await createNotesFacts(transcription, values.context);
@@ -331,6 +362,7 @@ export default function GenerateNotesModal(props: Props) {
                             id="title"
                             value={formik.values.title}
                             onChange={formik.handleChange}
+                            disabled={submitted} // Add this line
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder="e.g. Linear Regression Lecture"
                           />
@@ -356,6 +388,7 @@ export default function GenerateNotesModal(props: Props) {
                             id="context"
                             value={formik.values.context}
                             onChange={formik.handleChange}
+                            disabled={submitted} // Add this line
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder="e.g. Lecture recording for Linear Regression"
                           />
