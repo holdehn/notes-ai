@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
+import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 
 interface Props {
   open: boolean;
@@ -272,23 +273,65 @@ export default function GenerateNotesModal(props: Props) {
     context: '',
     functionality: '',
   };
+  const convertVideoToMp3 = async (videoFile: string | Blob | Buffer) => {
+    try {
+      // Create an FFmpeg instance
+      const ffmpeg = createFFmpeg({ log: true });
+      console.log('ffmpeg :>> ', ffmpeg);
+      // Load the FFmpeg instance
+      await ffmpeg.load();
+      console.log('step 1');
+      // Write the video file to FFmpeg's file system
+      ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(videoFile));
+      console.log('step 2');
+
+      // Run the FFmpeg command to convert the video to MP3
+      await ffmpeg.run('-i', 'input.mp4', '-vn', '-b:a', '128k', 'output.mp3');
+      console.log('step 3');
+
+      // Read the output MP3 file from FFmpeg's file system
+      const audioData = ffmpeg.FS('readFile', 'output.mp3');
+      console.log('step 4');
+
+      // Create a Blob from the output MP3 data
+      const audioBlob = new Blob([audioData.buffer], { type: 'audio/mp3' });
+      console.log('step 5');
+
+      // Convert the Blob to a File
+      const audioFile = new File([audioBlob], 'audio.mp3', {
+        type: 'audio/mp3',
+      });
+      console.log('step 6');
+
+      // Return the audio file
+      return audioFile;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
   // Update the onSubmit function
   const onSubmit = async (values: any, { resetForm }: any) => {
-    //if no file and no youtube return
+    // If no file and no YouTube return
     if (fileObjects.length === 0) {
       return;
     }
     setLoading(true);
 
-    const fileType = fileObjects[0].type.split('/')[0];
+    const file = fileObjects[0];
+    const fileType = file.type.split('/')[0];
     let transcription;
 
     if (fileType === 'application') {
       console.log('fileObjects[0] :>> ', fileObjects[0]);
-      transcription = await loadPDF(fileObjects[0]);
+      transcription = await loadPDF(file);
+    } else if (fileType === 'video') {
+      // If the file is a video, convert it to audio and then send it to sendAudio
+      const audioFile = await convertVideoToMp3(file);
+      transcription = await sendAudio(audioFile);
     } else {
-      transcription = await sendAudio(fileObjects[0]);
+      transcription = await sendAudio(file);
     }
 
     const summary = await createNotesSummary(transcription);
@@ -303,7 +346,6 @@ export default function GenerateNotesModal(props: Props) {
     validationSchema: validationSchema,
     onSubmit,
   });
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
