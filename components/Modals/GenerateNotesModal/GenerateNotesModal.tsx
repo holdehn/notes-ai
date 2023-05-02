@@ -50,7 +50,12 @@ export default function GenerateNotesModal(props: Props) {
 
       // Check if the uploaded file is an audio or PDF file
       const fileType = file.type.split('/')[0];
-      if (fileType !== 'audio' && fileType !== 'application') {
+      const fileSubType = file.type.split('/')[1];
+
+      if (
+        (fileType !== 'audio' && fileType !== 'application') ||
+        (fileType === 'application' && fileSubType !== 'pdf')
+      ) {
         alert('Please upload an audio or PDF file');
         return;
       }
