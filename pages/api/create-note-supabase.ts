@@ -48,9 +48,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).json({ noteId: noteId });
 };
 
-// Helper function to generate a random color
-const getRandomColor = () => {
-  // Add your color generation logic here
-};
+function getRandomColor() {
+  const colors = ['blue', 'red', 'green', 'gray', 'indigo', 'purple'];
 
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+  return `bg-${randomColor}-600`;
+}
 export default handler;

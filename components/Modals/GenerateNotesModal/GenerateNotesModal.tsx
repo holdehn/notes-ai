@@ -21,14 +21,6 @@ interface FileDisplay {
   id: number;
 }
 
-function getRandomColor() {
-  const colors = ['blue', 'red', 'green', 'gray', 'indigo', 'purple'];
-
-  const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-  return `bg-${randomColor}-600`;
-}
-
 export default function GenerateNotesModal(props: Props) {
   const { open, setOpen, userID } = props;
   const session = useSession();
@@ -314,6 +306,7 @@ export default function GenerateNotesModal(props: Props) {
       return;
     }
     setLoading(true);
+    setSubmitted(true);
 
     const file = fileObjects[0];
     const fileType = file.type.split('/')[0];
