@@ -26,13 +26,28 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const user = await supabase.auth.getUser();
 
-  if (!user) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
+  // Check if there is an active user
+  if (user) {
+    // Check if the user exists in the database
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', user.data.user?.id as string);
+
+    if (userError) {
+      console.error('Error fetching user from database:', userError);
+    }
+
+    // If the user exists in the database, redirect them to the /my-notes page
+    if (userData && userData.length > 0) {
+      await supabase.auth.signOut();
+      return {
+        redirect: {
+          destination: '/my-notes',
+          permanent: false,
+        },
+      };
+    }
   }
 
   // Fetch notes-page-data using the supabaseClient
