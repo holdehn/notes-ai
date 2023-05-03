@@ -49,9 +49,9 @@ export default async function handler(
 
   const llm = new OpenAIChat({
     openAIApiKey: openAIApiKey,
-    maxTokens: 400,
+    maxTokens: 250,
     modelName: 'gpt-3.5-turbo',
-    temperature: 0,
+    temperature: 0.3,
   });
 
   const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
@@ -82,8 +82,7 @@ export default async function handler(
     - Bullet point format 
     - Separate each bullet point with a new line
     - Each bullet point should be informative to the user
-    - Go into detail if needed
-      - Subdetails are allowed
+    - Each bullet point should be a complete sentence and informative to the user
 
     `,
   );
