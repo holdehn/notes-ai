@@ -16,6 +16,7 @@ export default function EmptyUpload({ onFileChange }: Props) {
         onChange={onFileChange}
         multiple
         accept="audio/*,video/*,application/pdf" // Accept audio, video, and PDF files
+        capture // Add this attribute
       />
 
       <div className="text-center">

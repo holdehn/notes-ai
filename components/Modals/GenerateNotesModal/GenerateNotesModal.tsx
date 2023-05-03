@@ -45,11 +45,19 @@ export default function GenerateNotesModal(props: Props) {
       const fileType = file.type.split('/')[0];
       const fileSubType = file.type.split('/')[1];
 
+      // Add support for M4A and other video formats
       if (
         (fileType !== 'audio' &&
           fileType !== 'video' &&
           fileType !== 'application') ||
-        (fileType === 'application' && fileSubType !== 'pdf')
+        (fileType === 'application' && fileSubType !== 'pdf') ||
+        (fileType === 'audio' &&
+          fileSubType !== 'mp4' &&
+          fileSubType !== 'm4a') ||
+        (fileType === 'video' &&
+          fileSubType !== 'mp4' &&
+          fileSubType !== 'webm' &&
+          fileSubType !== 'ogg')
       ) {
         alert('Please upload an audio, video, or PDF file');
         return;
@@ -276,10 +284,21 @@ export default function GenerateNotesModal(props: Props) {
       await ffmpeg.load();
 
       // Write the video file to FFmpeg's file system
-      ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(videoFile));
+      const inputFileName =
+        fileObjects[0].type.split('/')[1] === 'webm'
+          ? 'input.webm'
+          : 'input.mp4';
+      ffmpeg.FS('writeFile', inputFileName, await fetchFile(videoFile));
 
       // Run the FFmpeg command to convert the video to MP3
-      await ffmpeg.run('-i', 'input.mp4', '-vn', '-b:a', '128k', 'output.mp3');
+      await ffmpeg.run(
+        '-i',
+        inputFileName,
+        '-vn',
+        '-b:a',
+        '128k',
+        'output.mp3',
+      );
 
       // Read the output MP3 file from FFmpeg's file system
       const audioData = ffmpeg.FS('readFile', 'output.mp3');
