@@ -477,10 +477,6 @@ export default function GenerateNotesModal(props: Props) {
                     </div>
                   </div>
                   <EmptyUpload onFileChange={handleFile} />
-
-                  <p className="text-xs mt-2 italic text-gray-500">
-                    * Only Audio Files are supported at this time
-                  </p>
                   <p className="text-xs mt-2 italic text-gray-500">
                     * File Size is limited to 25 MB.
                   </p>
