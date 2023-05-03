@@ -1,4 +1,4 @@
-import Hero from '@/components/HeroSection/HeroSection';
+import HeroSection from '@/components/HeroSection/HeroSection';
 import { GetServerSidePropsContext } from 'next';
 import { parseCookies } from 'nookies';
 import Head from 'next/head';
@@ -50,7 +50,7 @@ export default function Home() {
         />
       </Head>
       <Element name="home">
-        <Hero />
+        <HeroSection />
       </Element>
       <Element name="features">
         <Features />
