@@ -336,7 +336,7 @@ const NotesComponent = () => {
             <img
               className="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
-              alt="Your Company"
+              alt="NotesAI"
             />
           </div>
           {/* Sidebar component, swap this element with another sidebar if you like */}
@@ -361,7 +361,7 @@ const NotesComponent = () => {
                       )}
                       <span className="flex min-w-0 flex-1 flex-col">
                         <span className="truncate text-sm font-medium text-gray-900">
-                          {name} Erlich Bachman
+                          Demo
                         </span>
                         <span className="truncate text-sm text-gray-500">
                           @demo

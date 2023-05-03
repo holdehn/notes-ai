@@ -203,7 +203,7 @@ export default function NoteDetailsComponent() {
                     <img
                       className="h-8 w-auto"
                       src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
-                      alt="Your Company"
+                      alt="NotesAI Logo"
                     />
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
@@ -281,7 +281,7 @@ export default function NoteDetailsComponent() {
             <img
               className="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
-              alt="Your Company"
+              alt="NotesAI"
             />
           </div>
           {/* Sidebar component, swap this element with another sidebar if you like */}
@@ -292,14 +292,21 @@ export default function NoteDetailsComponent() {
                 <Menu.Button className="group w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100">
                   <span className="flex w-full items-center justify-between">
                     <span className="flex min-w-0 items-center justify-between space-x-3">
-                      <img
-                        className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
-                        src="https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/0.4863484854631659.jpg"
-                        alt=""
-                      />
+                      {avatar_url ? (
+                        <img
+                          className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-100"
+                          src={avatar_url}
+                          alt=""
+                        />
+                      ) : (
+                        <UserIcon
+                          className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+                          aria-hidden="true"
+                        />
+                      )}
                       <span className="flex min-w-0 flex-1 flex-col">
                         <span className="truncate text-sm font-medium text-gray-900">
-                          Erlich Bachman
+                          Demo
                         </span>
                         <span className="truncate text-sm text-gray-500">
                           @demo

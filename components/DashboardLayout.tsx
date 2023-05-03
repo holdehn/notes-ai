@@ -42,7 +42,7 @@ export default (props: Props) => {
                     <img
                       className="h-8 w-8"
                       src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
+                      alt="NotesAI Logo"
                     />
                   </div>
                   <div className="hidden md:block">
