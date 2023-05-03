@@ -127,7 +127,7 @@ export default function TextInput() {
           href="https://twitter.com/holdehnj"
           className="text-blue-600 dark:text-blue-500 hover:underline"
         >
-          @holdehnj
+          @demo
         </a>
         .
       </p>

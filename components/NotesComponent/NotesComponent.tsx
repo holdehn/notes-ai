@@ -364,7 +364,7 @@ const NotesComponent = () => {
                           {name} Erlich Bachman
                         </span>
                         <span className="truncate text-sm text-gray-500">
-                          @holdehnj
+                          @demo
                         </span>
                       </span>
                     </span>
