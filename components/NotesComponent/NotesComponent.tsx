@@ -257,8 +257,8 @@ const NotesComponent = () => {
                   <div className="flex flex-shrink-0 items-center px-4">
                     <img
                       className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
-                      alt="Your Company"
+                      src="https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/logo%20copy.png"
+                      alt="Musiklink Logo"
                     />
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
