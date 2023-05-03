@@ -44,7 +44,7 @@ export default async function handler(
   // });
 
   // const texts = splitter.createDocuments([transcription]);
-  const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 2000 });
+  const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 2500 });
   const docs = await textSplitter.createDocuments([transcription]);
 
   const llm = new OpenAIChat({
