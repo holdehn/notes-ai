@@ -1,15 +1,15 @@
 {
   "headers": {
-    "date": "Sun, 30 Apr 2023 18:34:35 GMT",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Wed, 03 May 2023 17:32:55 GMT",
     "vary": "Accept-Encoding",
     "server": "deno/gcp-us-west2",
     "via": "http/2 edgeproxy",
-    "cache-control": "max-age=86400",
-    "content-type": "application/json; charset=utf-8"
+    "cache-control": "max-age=86400"
   },
   "url": "https://crux.land/.well-known/deno-import-intellisense.json",
   "now": {
-    "secs_since_epoch": 1682879675,
-    "nanos_since_epoch": 579802000
+    "secs_since_epoch": 1683135171,
+    "nanos_since_epoch": 711298000
   }
 }
