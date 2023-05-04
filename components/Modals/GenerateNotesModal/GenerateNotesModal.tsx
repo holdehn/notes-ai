@@ -9,6 +9,11 @@ import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+import {
+  createNotesFacts,
+  createNotesSummary,
+  insertNote,
+} from '@/components/api';
 
 interface Props {
   open: boolean;
@@ -89,7 +94,7 @@ export default function GenerateNotesModal(props: Props) {
   // Add a new function to save the note to Supabase
   const insertAndNavigate = async (
     transcription: string,
-    notes: any,
+    notes: string[] | undefined,
     summary: string,
   ) => {
     if (!userID) return;
@@ -100,24 +105,13 @@ export default function GenerateNotesModal(props: Props) {
     });
 
     try {
-      const response = await fetch('/api/create-note-supabase', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userID,
-          fileObjects,
-          formikValues: formik.values,
-          agentName,
-          transcription,
-          notes,
-          summary,
-        }),
+      const data = await insertNote({
+        formikValues: formik.values,
+        userID: userID,
+        fileObjects: fileObjects,
+        transcription,
+        summary,
       });
-
-      const data = await response.json();
-
       if (data.error) {
         console.log('error :>> ', data.error);
       } else {
@@ -186,63 +180,44 @@ export default function GenerateNotesModal(props: Props) {
     }
   };
 
-  const createNotesSummary = async (content: string) => {
+  const handleCreateNotesSummary = async (content: string) => {
     if (!content) {
       alert('Please upload a string file');
       return;
     }
     try {
-      const response = await fetch('/api/create-summary', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          transcription: content,
-        }),
+      const response = await createNotesSummary({
+        transcription: content,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log('createNotes error' + JSON.stringify(errorData));
-        throw new Error(errorData.message);
+      if (!response.data) {
+        throw new Error(response.error);
       }
 
-      const data = await response.json();
-      const noteData = data.data.text;
-      return noteData;
+      return response.data.text;
     } catch (error: any) {
       console.log(JSON.stringify(error));
       alert(`Error: ${error.message}`);
     }
   };
 
-  const createNotesFacts = async (content: string, context: string) => {
+  const handleCreateNotesFacts = async (content: string, context: string) => {
     if (!content) {
       alert('Please upload a string file');
       return;
     }
     try {
-      const response = await fetch('/api/create-notes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          transcription: content,
-          name: name,
-          topic: context,
-        }),
+      const response = await createNotesFacts({
+        transcription: content,
+        name: name,
+        topic: context,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log('createNotes error' + JSON.stringify(errorData));
-        throw new Error(errorData.message);
+      if (!response.data) {
+        throw new Error(response.error);
       }
 
-      const data = await response.json();
-      const noteData = JSON.stringify(data.data.text);
+      const noteData = JSON.stringify(response.data.text);
 
       // Split the output at every newline and return an array of bullet points
       const bulletPoints = noteData
@@ -335,8 +310,8 @@ export default function GenerateNotesModal(props: Props) {
     }
 
     const [summary, notes] = await Promise.all([
-      createNotesSummary(transcription),
-      createNotesFacts(transcription, values.context),
+      handleCreateNotesSummary(transcription),
+      handleCreateNotesFacts(transcription, values.context),
     ]);
 
     insertAndNavigate(transcription, notes, summary as string);
