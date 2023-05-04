@@ -45,19 +45,11 @@ export default function GenerateNotesModal(props: Props) {
       const fileType = file.type.split('/')[0];
       const fileSubType = file.type.split('/')[1];
 
-      // Add support for M4A and other video formats
       if (
         (fileType !== 'audio' &&
           fileType !== 'video' &&
           fileType !== 'application') ||
-        (fileType === 'application' && fileSubType !== 'pdf') ||
-        (fileType === 'audio' &&
-          fileSubType !== 'mp4' &&
-          fileSubType !== 'm4a') ||
-        (fileType === 'video' &&
-          fileSubType !== 'mp4' &&
-          fileSubType !== 'webm' &&
-          fileSubType !== 'ogg')
+        (fileType === 'application' && fileSubType !== 'pdf')
       ) {
         alert('Please upload an audio, video, or PDF file');
         return;

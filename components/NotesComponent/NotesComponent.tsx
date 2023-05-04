@@ -338,7 +338,7 @@ const NotesComponent = () => {
             />
           </div>
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-gray-100">
+          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-blue-50">
             {/* User account dropdown */}
             <Menu as="div" className="relative inline-block px-3 text-left">
               <div>
