@@ -40,6 +40,7 @@ export default function GenerateNotesModal(props: Props) {
   const [loading, setLoading] = useState(false);
   const [agentName, setAgentName] = useState<string>('Summary');
   const [submitted, setSubmitted] = useState(false);
+  const [summaryText, setSummaryText] = useState('');
   const router = useRouter();
 
   const handleFile = (e: any) => {
@@ -180,56 +181,6 @@ export default function GenerateNotesModal(props: Props) {
     }
   };
 
-  const handleCreateNotesSummary = async (content: string) => {
-    if (!content) {
-      alert('Please upload a string file');
-      return;
-    }
-    try {
-      const response = await createNotesSummary({
-        transcription: content,
-      });
-
-      if (!response.data) {
-        throw new Error(response.error);
-      }
-
-      return response.data.text;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-      alert(`Error: ${error.message}`);
-    }
-  };
-
-  const handleCreateNotesFacts = async (content: string, context: string) => {
-    if (!content) {
-      alert('Please upload a string file');
-      return;
-    }
-    try {
-      const response = await createNotesFacts({
-        transcription: content,
-        name: name,
-        topic: context,
-      });
-
-      if (!response.data) {
-        throw new Error(response.error);
-      }
-
-      const noteData = JSON.stringify(response.data.text);
-
-      // Split the output at every newline and return an array of bullet points
-      const bulletPoints = noteData
-        .split('\\n')
-        .filter((line) => line.length > 0);
-      return bulletPoints;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-      alert(`Error: ${error.message}`);
-    }
-  };
-
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
@@ -309,12 +260,17 @@ export default function GenerateNotesModal(props: Props) {
       transcription = await sendAudio(file);
     }
 
-    const [summary, notes] = await Promise.all([
-      handleCreateNotesSummary(transcription),
-      handleCreateNotesFacts(transcription, values.context),
-    ]);
+    // const [summary, notes] = await Promise.all([
+    //   ,
+    //   handleCreateNotesFacts(transcription, values.context),
+    // ]);
 
-    insertAndNavigate(transcription, notes, summary as string);
+    // insertAndNavigate(transcription, notes, summary as string);
+
+    await createNotesSummary(transcription, (data) =>
+      setSummaryText((summaryText) => summaryText + data),
+    );
+
     resetForm();
     setLoading(false);
   };
@@ -324,6 +280,8 @@ export default function GenerateNotesModal(props: Props) {
     validationSchema: validationSchema,
     onSubmit,
   });
+
+  console.log(summaryText);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -465,6 +423,7 @@ export default function GenerateNotesModal(props: Props) {
                       </li>
                     ))}
                   </ul>
+                  {summaryText}
                   {!loading ? (
                     <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                       <button

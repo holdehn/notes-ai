@@ -1,14 +1,15 @@
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { serve } from 'http/server.ts';
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
-} from 'https://esm.sh/langchain@0.0.67/prompts';
-import { RecursiveCharacterTextSplitter } from 'https://esm.sh/langchain@0.0.67/text_splitter';
+} from 'langchain/prompts';
+import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 
-import { OpenAIChat } from 'https://esm.sh/langchain@0.0.67/llms/openai';
+import { OpenAIChat } from 'langchain/llms/openai';
 import { corsHeaders } from '../_shared/cors.ts';
-import { loadSummarizationChain } from 'https://esm.sh/langchain@0.0.67/chains';
+import { loadSummarizationChain } from 'langchain/chains';
+import { CallbackManager } from 'langchain/callbacks';
 
 const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
   `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from a transcript of a lecture.
@@ -28,22 +29,57 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
+
+  const encoder = new TextEncoder();
+  const stream = new TransformStream();
+  const writer = stream.writable.getWriter();
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
   try {
     const { transcription } = await req.json();
+
+    console.log(transcription);
     const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1000,
+      chunkSize: 2000,
     });
     const docs = await textSplitter.createDocuments([transcription]);
 
-    const llm = new OpenAIChat({ openAIApiKey: OPENAI_API_KEY });
+    const llm = new OpenAIChat({
+      openAIApiKey: OPENAI_API_KEY,
+      streaming: true,
+    });
     const chain = loadSummarizationChain(llm, {
       prompt: prompt,
     });
-    const response = await chain.call({ input_documents: docs });
 
-    return new Response(JSON.stringify(response), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    chain
+      .call(
+        {
+          input_documents: docs,
+        },
+        [
+          {
+            handleLLMNewToken: async (token) => {
+              await writer.ready;
+              await writer.write(encoder.encode(`data: ${token}\n\n`));
+            },
+            handleLLMEnd: async () => {
+              await writer.ready;
+              await writer.close();
+            },
+            handleLLMError: async (e) => {
+              await writer.ready;
+              await writer.abort(e);
+            },
+          },
+        ],
+      )
+      .catch((e) => console.error(e));
+
+    return new Response(stream.readable, {
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'text/event-stream',
+      },
     });
   } catch (e) {
     console.error(e);
