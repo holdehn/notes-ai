@@ -24,13 +24,13 @@ export default async function handler(
     return res.status(400).json({ message: 'No transcription in the request' });
   }
 
-  const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 2500 });
+  const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 2000 });
   const docs = await textSplitter.createDocuments([transcription]);
 
   const llm = new OpenAIChat({
     openAIApiKey: openAIApiKey,
-    maxTokens: 300,
-    modelName: 'gpt-4',
+    maxTokens: 250,
+    modelName: 'gpt-3.5-turbo',
     temperature: 0,
   });
 

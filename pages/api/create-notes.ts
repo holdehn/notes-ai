@@ -44,14 +44,14 @@ export default async function handler(
   // });
 
   // const texts = splitter.createDocuments([transcription]);
-  const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 2500 });
+  const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 2000 });
   const docs = await textSplitter.createDocuments([transcription]);
 
   const llm = new OpenAIChat({
     openAIApiKey: openAIApiKey,
     maxTokens: 250,
     modelName: 'gpt-3.5-turbo',
-    temperature: 0.3,
+    temperature: 0,
   });
 
   const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
