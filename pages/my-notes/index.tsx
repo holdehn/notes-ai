@@ -81,6 +81,7 @@ export const getServerSideProps = async (
     },
   };
 };
+
 export default function ({ fallback }: ProvidedProps) {
   const router = useRouter();
   const session = useSession();

@@ -36,6 +36,8 @@ const createNotesSummary = async (
   console.log(
     `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-summary`,
   );
+
+  console.log('transcription' + transcription);
   await fetchEventSource(
     `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-summary`,
     {

@@ -2,4 +2,7 @@
   "deno.enablePaths": ["supabase"],
   "deno.enable": true,
   "deno.importMap": "./supabase/functions/import_map.json"
+
+
 }
+

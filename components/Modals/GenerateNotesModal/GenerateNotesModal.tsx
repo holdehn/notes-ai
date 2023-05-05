@@ -420,9 +420,11 @@ export default function GenerateNotesModal(props: Props) {
                       </li>
                     ))}
                   </ul>
+
                   <p className="text-sm text-gray-200 font-medium text-left mt-8 block items-center">
                     {summaryText}
                   </p>
+
                   {!loading ? (
                     <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                       <button
