@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "age": "151380",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cf-cache-status": "HIT",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=FbnnZuePd6MFkhxjqc7SKlIJC7vJghDjhFQSs1I%2F1ytNOkH8hqnDWq%2FEJuu9L2U8eK%2BjFgIXdzvTFkRm5Wxp%2BMOLUAr3%2FwtOCpld8KW%2BFMXQrwRcOZgrjl2CAzuIuYNQTToMg3o%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Fri, 05 May 2023 19:24:55 GMT",
+    "access-control-allow-origin": "*",
+    "content-type": "application/javascript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "last-modified": "Thu, 04 May 2023 01:21:55 GMT",
+    "server": "cloudflare",
+    "cf-ray": "7c2b5dcce987ce9c-SJC",
+    "x-content-source": "workers-kv"
+  },
+  "url": "https://esm.sh/v119/p-queue@6.6.2/deno/p-queue.mjs",
+  "now": {
+    "secs_since_epoch": 1683314692,
+    "nanos_since_epoch": 8913000
+  }
+}

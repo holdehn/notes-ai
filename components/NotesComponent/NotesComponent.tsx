@@ -29,21 +29,21 @@ function formatDateTime(dateString: string | number | Date) {
 const navigation = [
   { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
   {
-    name: 'Live Assistant',
-    href: '/live-assistant',
+    name: 'Live Notes',
+    href: '#not-implemented-yet',
     icon: SmartToyIcon,
     current: false,
   },
   {
     name: 'Research',
-    href: '/research',
+    href: '#not-implemented-yet',
     icon: MagnifyingGlassIcon,
     current: false,
   },
 
   {
     name: 'Settings',
-    href: '/settings',
+    href: '#not-implemented-yet',
     icon: Bars3CenterLeftIcon,
     current: false,
   },
@@ -329,7 +329,7 @@ const NotesComponent = () => {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-gray-100 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-gradient-to-r from-indigo-900 to-purple-900 lg:pb-4 lg:pt-5">
           <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -338,7 +338,7 @@ const NotesComponent = () => {
             />
           </div>
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-blue-50">
+          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-gradient-to-r from-indigo-900 to-purple-900">
             {/* User account dropdown */}
             <Menu as="div" className="relative inline-block px-3 text-left">
               <div>
@@ -500,6 +500,7 @@ const NotesComponent = () => {
               </div>
             </div>
             {/* Navigation */}
+
             <nav className="mt-6 px-3">
               <div className="space-y-1">
                 {navigation.map((item) => (
@@ -508,8 +509,8 @@ const NotesComponent = () => {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? 'bg-gray-200 text-gray-900'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900',
+                        ? 'bg-indigo-700 text-white'
+                        : 'text-white hover:bg-indigo-700 hover:text-white',
                       'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
                     )}
                     aria-current={item.current ? 'page' : undefined}
@@ -517,8 +518,8 @@ const NotesComponent = () => {
                     <item.icon
                       className={classNames(
                         item.current
-                          ? 'text-gray-500'
-                          : 'text-gray-400 group-hover:text-gray-500',
+                          ? 'text-white'
+                          : 'text-indigo-300 group-hover:text-white',
                         'mr-3 h-6 w-6 flex-shrink-0',
                       )}
                       aria-hidden="true"
@@ -567,15 +568,30 @@ const NotesComponent = () => {
               </div>
               <div className="flex items-center">
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
+                <Menu as="div" className="relative inline-block px-3 text-left">
                   <div>
-                    <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
+                    <Menu.Button className="group w-full rounded-md bg-indigo-800 px-3.5 py-2 text-left text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-indigo-800">
+                      <span className="flex w-full items-center justify-between">
+                        <span className="flex min-w-0 items-center justify-between space-x-3">
+                          <UserIcon
+                            className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+                            aria-hidden="true"
+                          />
+
+                          <span className="flex min-w-0 flex-1 flex-col">
+                            <span className="truncate text-sm font-medium text-white">
+                              Demo
+                            </span>
+                            <span className="truncate text-sm text-indigo-200">
+                              @demo
+                            </span>
+                          </span>
+                        </span>
+                        <ChevronUpDownIcon
+                          className="h-5 w-5 flex-shrink-0 text-white group-hover:text-indigo-200"
+                          aria-hidden="true"
+                        />
+                      </span>
                     </Menu.Button>
                   </div>
                   <Transition
@@ -646,16 +662,32 @@ const NotesComponent = () => {
           </div>
           <main className="flex-1">
             {/* Page title & actions */}
-            <div className="bg-gradient-to-r from-indigo-600 via-purple-700 to-indigo-800 px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
               <div className="min-w-0 flex-1">
-                <h1 className="text-lg font-medium leading-6 text-gray-50 sm:truncate">
-                  NotesAI
+                <h1 className="text-xl font-bold leading-6 text-gray-50 sm:truncate">
+                  Generate Notes
                 </h1>
+                <p className="mt-1 text-sm text-gray-200">
+                  Generate lecture notes from your audio!
+                </p>
+              </div>
+              <div className="mt-4 sm:mt-0">
+                <button
+                  type="button"
+                  onClick={() => setOpenNotesModal(true)}
+                  className="relative inline-flex items-center space-x-2 rounded-md bg-indigo-600 px-4 py-2 text-base font-semibold text-white shadow-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 transition duration-150 ease-in-out"
+                >
+                  Generate Notes
+                </button>
+                <GenerateNotesModal
+                  open={openNotesModal}
+                  setOpen={setOpenNotesModal}
+                  userID={userID}
+                />
               </div>
             </div>
-
             {/* Projects list (only on smallest breakpoint) */}
-            <div className="sm:hidden py-4 pb-4">
+            <div className="sm:hidden">
               <div className="px-4 sm:px-6">
                 <h2 className="text-sm font-medium text-gray-900">Notes</h2>
               </div>
@@ -690,32 +722,7 @@ const NotesComponent = () => {
                 ))}
               </ul>
             </div>
-            <div className="px-4 py-5sm:px-6 border-gray-200  bg-white">
-              <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-                <div className="ml-4 mt-4">
-                  <h1 className="text-base font-bold leading-6 text-gray-900">
-                    Generate Notes
-                  </h1>
-                  <p className="mt-1 text-sm text-gray-400">
-                    Generate lecture notes from your audio!
-                  </p>
-                </div>
-                <div className="ml-4 mt-4 flex-shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setOpenNotesModal(true)}
-                    className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Generate Notes
-                  </button>
-                  <GenerateNotesModal
-                    open={openNotesModal}
-                    setOpen={setOpenNotesModal}
-                    userID={userID}
-                  />
-                </div>
-              </div>
-            </div>
+
             <div className="fixed bottom-4 right-4 z-50 sm:hidden">
               <button
                 type="button"
@@ -727,39 +734,41 @@ const NotesComponent = () => {
               </button>
             </div>
             {/* Projects table (small breakpoint and up) */}
-            <div className="hidden sm:block mt-4">
+
+            {/* Projects table (small breakpoint and up) */}
+            <div className="hidden sm:block ">
               <div className="inline-block min-w-full border-b align-middle">
                 <table className="min-w-full">
                   <thead>
-                    <tr className="border-t border-gray-200">
+                    <tr className="border-t border-gray-600">
                       <th
-                        className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                        className="border-b border-gray-600 bg-gray-800 px-6 py-3 text-left text-sm font-semibold text-gray-200"
                         scope="col"
                       >
-                        <span className="lg:pl-2">Notes</span>
+                        <span className="lg:pl-2">My Notes</span>
                       </th>
                       <th
-                        className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                        className="border-b border-gray-600 bg-gray-800 px-6 py-3 text-left text-sm font-semibold text-gray-200"
                         scope="col"
                       >
                         Documents
                       </th>
                       <th
-                        className="hidden border-b border-gray-200 bg-gray-100 px-6 py-3 text-right text-sm font-semibold text-gray-900 md:table-cell"
+                        className="hidden border-b border-gray-600 bg-gray-800 px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
                         scope="col"
                       >
                         Last updated
                       </th>
                       <th
-                        className="border-b border-gray-200 bg-gray-100 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
+                        className="border-b border-gray-600 bg-gray-800 py-3 pr-6 text-right text-sm font-semibold text-gray-200"
                         scope="col"
                       />
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100 bg-white">
+                  <tbody className="divide-y divide-gray-600 bg-gray-700">
                     {notes?.map((note: any) => (
                       <tr key={note.index}>
-                        <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
+                        <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-200">
                           <div className="flex items-center space-x-3 lg:pl-2">
                             <div
                               className={classNames(
@@ -772,29 +781,24 @@ const NotesComponent = () => {
                               href={`/my-notes/${note.note_id}`}
                               className="truncate hover:text-gray-600"
                             >
-                              <span>
-                                {note.title}{' '}
-                                <span className="font-normal text-gray-500">
-                                  in {note.team}
-                                </span>
-                              </span>
+                              <span>{note.title}</span>
                             </a>
                           </div>
                         </td>
-                        <td className="px-6 py-3 text-sm font-medium text-gray-500">
+                        <td className="px-6 py-3 text-sm font-medium text-gray-200">
                           <div className="flex items-center space-x-2">
                             <div className="flex flex-shrink-0 -space-x-1">
                               {note.agent_name}
                             </div>
                           </div>
                         </td>
-                        <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
+                        <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-200 md:table-cell">
                           {note.created_at}
                         </td>
                         <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                           <a
                             href={`/my-notes/${note.note_id}`}
-                            className="text-indigo-600 hover:text-indigo-900"
+                            className="text-indigo-400 hover:text-indigo-600"
                           >
                             View
                           </a>

@@ -165,6 +165,14 @@ export default function HeroSection() {
                 }}
               />
             </div>
+            <div className="flex justify-center mt-4">
+              <div className="relative bg-blue-600 hover:bg-blue-600 rounded-full px-3 py-2 text-sm leading-6 text-white ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
+                <a className="font-semibold">
+                  <span className="absolute inset-0" aria-hidden="true" />
+                  How it Works<span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
         <p className="text-center text-white text-sm mt-4">

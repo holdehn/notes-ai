@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "content-type": "application/javascript; charset=utf-8",
+    "server": "cloudflare",
+    "x-content-source": "workers-kv",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c2b5dcce984ce9c-SJC",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "age": "151380",
+    "cf-cache-status": "HIT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "last-modified": "Thu, 04 May 2023 01:21:55 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=vCmnMDJj2bs2fmsarxv5w1w%2FI8ii4MCtLWJ3gWcnD9epPKnGQCUoyE73ckcUuDRvk29%2BH404igbG%2BQWoah%2FAlY7zdIyqNd8x5IUSz1HqKaCs4ZGAMd6ff9wrEYoB2IhORaWmfEo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Fri, 05 May 2023 19:24:55 GMT"
+  },
+  "url": "https://esm.sh/v119/openai@3.2.1/deno/openai.mjs",
+  "now": {
+    "secs_since_epoch": 1683314691,
+    "nanos_since_epoch": 976854000
+  }
+}
