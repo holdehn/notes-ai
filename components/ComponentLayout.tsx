@@ -1,4 +1,4 @@
-import { Component } from '@/types';
+import { Component } from '@/components/api/types';
 import { useState } from 'react';
 import Viewport from './Viewport';
 import { useAppContext } from '@/context/contextApp';

@@ -1,5 +1,4 @@
-import { GetServerSidePropsContext } from 'next';
-import { parseCookies } from 'nookies';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
@@ -8,7 +7,13 @@ import { useEffect } from 'react';
 import { useSession } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export interface ProvidedProps {
+  fallback: Record<string, unknown>;
+}
+
+export const getServerSideProps = async (
+  ctx: GetServerSidePropsContext,
+): Promise<GetServerSidePropsResult<ProvidedProps>> => {
   const supabase = createServerSupabaseClient(ctx);
 
   const {
@@ -76,14 +81,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     },
   };
 };
-
-export default function ({
-  fallback,
-  initalSession,
-}: {
-  fallback: any;
-  initalSession: any;
-}) {
+export default function ({ fallback }: ProvidedProps) {
   const router = useRouter();
   const session = useSession();
 

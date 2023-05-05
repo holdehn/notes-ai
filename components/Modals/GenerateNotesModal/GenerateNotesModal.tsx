@@ -9,6 +9,11 @@ import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+import {
+  createNotesFacts,
+  createNotesSummary,
+  insertNote,
+} from '@/components/api';
 
 interface Props {
   open: boolean;
@@ -35,6 +40,8 @@ export default function GenerateNotesModal(props: Props) {
   const [loading, setLoading] = useState(false);
   const [agentName, setAgentName] = useState<string>('Summary');
   const [submitted, setSubmitted] = useState(false);
+  const [summaryText, setSummaryText] = useState('');
+
   const router = useRouter();
 
   const handleFile = (e: any) => {
@@ -89,7 +96,7 @@ export default function GenerateNotesModal(props: Props) {
   // Add a new function to save the note to Supabase
   const insertAndNavigate = async (
     transcription: string,
-    notes: any,
+    notes: string[] | undefined,
     summary: string,
   ) => {
     if (!userID) return;
@@ -100,23 +107,13 @@ export default function GenerateNotesModal(props: Props) {
     });
 
     try {
-      const response = await fetch('/api/create-note-supabase', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userID,
-          fileObjects,
-          formikValues: formik.values,
-          agentName,
-          transcription,
-          notes,
-          summary,
-        }),
+      const data = await insertNote({
+        formikValues: formik.values,
+        userID: userID,
+        fileObjects: fileObjects,
+        transcription,
+        summary,
       });
-
-      const data = await response.json();
 
       if (data.error) {
         console.log('error :>> ', data.error);
@@ -136,7 +133,6 @@ export default function GenerateNotesModal(props: Props) {
         alert('Please upload a PDF file');
         return;
       }
-      console.log('file :>> ', file);
 
       const formData = new FormData();
       formData.append('file', file);
@@ -152,7 +148,7 @@ export default function GenerateNotesModal(props: Props) {
 
       const data = await response.json();
       const extractedText = data.text;
-      console.log('extractedText :>> ', extractedText);
+
       setConvertedText(extractedText);
       return extractedText;
     } catch (error: any) {
@@ -186,74 +182,74 @@ export default function GenerateNotesModal(props: Props) {
     }
   };
 
-  const createNotesSummary = async (content: string) => {
-    if (!content) {
-      alert('Please upload a string file');
-      return;
-    }
-    try {
-      const response = await fetch('/api/create-summary', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          transcription: content,
-        }),
-      });
+  // const createNotesSummary = async (content: string) => {
+  //   if (!content) {
+  //     alert('Please upload a string file');
+  //     return;
+  //   }
+  //   try {
+  //     const response = await fetch('/api/create-summary', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         transcription: content,
+  //       }),
+  //     });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log('createNotes error' + JSON.stringify(errorData));
-        throw new Error(errorData.message);
-      }
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       console.log('createNotes error' + JSON.stringify(errorData));
+  //       throw new Error(errorData.message);
+  //     }
 
-      const data = await response.json();
-      const noteData = data.data.text;
-      return noteData;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-      alert(`Error: ${error.message}`);
-    }
-  };
+  //     const data = await response.json();
+  //     const noteData = data.data.text;
+  //     return noteData;
+  //   } catch (error: any) {
+  //     console.log(JSON.stringify(error));
+  //     alert(`Error: ${error.message}`);
+  //   }
+  // };
 
-  const createNotesFacts = async (content: string, context: string) => {
-    if (!content) {
-      alert('Please upload a string file');
-      return;
-    }
-    try {
-      const response = await fetch('/api/create-notes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          transcription: content,
-          name: name,
-          topic: context,
-        }),
-      });
+  // const createNotesFacts = async (content: string, context: string) => {
+  //   if (!content) {
+  //     alert('Please upload a string file');
+  //     return;
+  //   }
+  //   try {
+  //     const response = await fetch('/api/create-notes', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         transcription: content,
+  //         name: name,
+  //         topic: context,
+  //       }),
+  //     });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log('createNotes error' + JSON.stringify(errorData));
-        throw new Error(errorData.message);
-      }
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       console.log('createNotes error' + JSON.stringify(errorData));
+  //       throw new Error(errorData.message);
+  //     }
 
-      const data = await response.json();
-      const noteData = JSON.stringify(data.data.text);
+  //     const data = await response.json();
+  //     const noteData = JSON.stringify(data.data.text);
 
-      // Split the output at every newline and return an array of bullet points
-      const bulletPoints = noteData
-        .split('\\n')
-        .filter((line) => line.length > 0);
-      return bulletPoints;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-      alert(`Error: ${error.message}`);
-    }
-  };
+  //     // Split the output at every newline and return an array of bullet points
+  //     const bulletPoints = noteData
+  //       .split('\\n')
+  //       .filter((line) => line.length > 0);
+  //     return bulletPoints;
+  //   } catch (error: any) {
+  //     console.log(JSON.stringify(error));
+  //     alert(`Error: ${error.message}`);
+  //   }
+  // };
 
   //formik validation
   const validationSchema = Yup.object({
@@ -334,12 +330,10 @@ export default function GenerateNotesModal(props: Props) {
       transcription = await sendAudio(file);
     }
 
-    const [summary, notes] = await Promise.all([
-      createNotesSummary(transcription),
-      createNotesFacts(transcription, values.context),
-    ]);
+    await createNotesSummary(transcription, (data) =>
+      setSummaryText((summaryText) => summaryText + data),
+    );
 
-    insertAndNavigate(transcription, notes, summary as string);
     resetForm();
     setLoading(false);
   };
@@ -349,6 +343,8 @@ export default function GenerateNotesModal(props: Props) {
     validationSchema: validationSchema,
     onSubmit,
   });
+
+  console.log(summaryText);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -385,25 +381,25 @@ export default function GenerateNotesModal(props: Props) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 {' '}
                 <form onSubmit={formik.handleSubmit}>
                   <div>
-                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-600">
                       <DocumentTextIcon
-                        className="h-6 w-6 text-purple-600"
+                        className="h-6 w-6 text-gray-50"
                         aria-hidden="true"
                       />
                     </div>
                     <div className="mt-3 text-center sm:mt-5">
                       <Dialog.Title
                         as="h2"
-                        className="text-base font-semibold leading-6 text-gray-900"
+                        className="text-xl font-bold leading-6 text-gray-50"
                       >
                         Generate Notes
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-200">
                           Upload recordings that will be transcribed and turned
                           into notes.
                         </p>
@@ -411,7 +407,7 @@ export default function GenerateNotesModal(props: Props) {
                       <div className="col-span-6 sm:col-span-4 mt-4">
                         <label
                           htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-800 text-left"
+                          className="block text-sm font-medium leading-6 text-gray-200 text-left"
                         >
                           Title:
                         </label>
@@ -422,16 +418,16 @@ export default function GenerateNotesModal(props: Props) {
                             id="title"
                             value={formik.values.title}
                             onChange={formik.handleChange}
-                            disabled={submitted} // Add this line
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. Linear Regression Lecture"
+                            disabled={submitted}
+                            className="block w-full bg-gray-800 rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="e.g. Linear Regression Notes"
                           />
                         </div>
                       </div>
                       <div className="col-span-6 sm:col-span-4 mt-4">
                         <label
                           htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-800 text-left  items-center"
+                          className="block text-sm font-medium leading-6 text-gray-200 text-left items-center"
                         >
                           Topic:
                           <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
@@ -448,15 +444,15 @@ export default function GenerateNotesModal(props: Props) {
                             id="context"
                             value={formik.values.context}
                             onChange={formik.handleChange}
-                            disabled={submitted} // Add this line
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            disabled={submitted}
+                            className="block w-full bg-gray-800 rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder="e.g. Lecture recording for Linear Regression"
                           />
                         </div>
                       </div>
 
                       <div className="mt-2">
-                        <p className="text-sm text-gray-900 font-medium text-left mt-8 block items-center">
+                        <p className="text-sm text-gray-200 font-medium text-left mt-8 block items-center">
                           Upload Context:
                           <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
                             <i
@@ -469,16 +465,13 @@ export default function GenerateNotesModal(props: Props) {
                     </div>
                   </div>
                   <EmptyUpload onFileChange={handleFile} />
-                  <p className="text-xs mt-2 italic text-gray-500">
+                  <p className="text-xs mt-2 italic text-gray-400">
                     * File Size is limited to 25 MB.
-                  </p>
-                  <p className="text-sm mt-2 italic text-gray-800">
-                    Please be patient with loading times
                   </p>
                   <ul className="mt-4">
                     {files.map(({ file, id }) => (
-                      <li key={id} className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-900">
+                      <li key={id} className="flex items-center space-x-2 mb-2">
+                        <span className="text-sm text-gray-200 font-bold bg-gray-800 p-2 rounded-md">
                           {file.name}
                         </span>
                         <button
@@ -490,12 +483,14 @@ export default function GenerateNotesModal(props: Props) {
                       </li>
                     ))}
                   </ul>
+
+                  {summaryText}
                   {!loading ? (
                     <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                       <button
                         type="submit"
-                        disabled={loading} // Add this line
-                        className="inline-flex w-full justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
+                        disabled={loading}
+                        className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
                       >
                         Create Notes
                       </button>

@@ -28,6 +28,8 @@ export default function HeroSection() {
     }
   }, [session]);
 
+  const rootUrl = getURL();
+
   return (
     <div className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -131,7 +133,7 @@ export default function HeroSection() {
                 magicLink={false}
                 dark={false}
                 showLinks={false}
-                redirectTo={getURL()}
+                redirectTo={rootUrl}
                 onlyThirdPartyProviders={true}
                 providers={['google']}
                 supabaseClient={supabase}
@@ -162,6 +164,14 @@ export default function HeroSection() {
                   },
                 }}
               />
+            </div>
+            <div className="flex justify-center mt-4">
+              <div className="relative bg-blue-600 hover:bg-blue-600 rounded-full px-3 py-2 text-sm leading-6 text-white ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
+                <a className="font-semibold">
+                  <span className="absolute inset-0" aria-hidden="true" />
+                  How it Works<span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

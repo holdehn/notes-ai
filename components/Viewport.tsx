@@ -1,5 +1,5 @@
-import { Component } from "@/types";
-import { createPortal } from "react-dom";
+import { Component } from '@/components/api/types';
+import { createPortal } from 'react-dom';
 import React, {
   ReactNode,
   useCallback,
@@ -7,8 +7,8 @@ import React, {
   useMemo,
   useState,
   useRef,
-} from "react";
-import ComponentDir from "./ComponentDir";
+} from 'react';
+import ComponentDir from './ComponentDir';
 
 const template: string = `
 <!DOCTYPE html>
@@ -39,17 +39,17 @@ export default ({
   const containerRef = useRef<HTMLIFrameElement>(null);
   const [previewComponent, setPreviewComponent] = useState<ReactNode>();
 
-  const componentDir = dir == "ltr" ? "ltr" : "rtl";
+  const componentDir = dir == 'ltr' ? 'ltr' : 'rtl';
 
   useEffect(() => {
     const code = component?.[componentDir].preview;
     const modules: string[] = [
-      "React",
-      "useState",
-      "useEffect",
-      "useCallback",
-      "useMemo",
-      "useRef",
+      'React',
+      'useState',
+      'useEffect',
+      'useCallback',
+      'useMemo',
+      'useRef',
     ];
 
     const func = new Function(...modules, `return ${code}`);
@@ -61,8 +61,8 @@ export default ({
           <ComponentDir dir={componentDir}>
             <App />
           </ComponentDir>,
-          iframeEl.contentWindow.document.body
-        )
+          iframeEl.contentWindow.document.body,
+        ),
       );
     }, 300);
 
@@ -83,7 +83,8 @@ export default ({
     <iframe
       ref={containerRef}
       srcDoc={template}
-      className='w-full min-h-[300px] appearance-none border rounded-xl overflow-hidden'>
+      className="w-full min-h-[300px] appearance-none border rounded-xl overflow-hidden"
+    >
       {previewComponent}
     </iframe>
   );
