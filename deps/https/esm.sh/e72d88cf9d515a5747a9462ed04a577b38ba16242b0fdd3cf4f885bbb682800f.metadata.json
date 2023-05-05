@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "x-content-source": "workers-kv",
+    "age": "79641",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=AWv3wEgempgbQWjTSXjkeq6PBPOoA28BSBSfznqjVCPHWipjR8HOSRJA%2BI5Y1BXPQMXac9bqPsgSNCKcQov5DxJJNe6QKDVH6BC7iaaP30qi9jwbDDG00jZtt%2FR6fAFZWZd7nq8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-cache-status": "HIT",
+    "cf-ray": "7c2b5dcce982ce9c-SJC",
+    "date": "Fri, 05 May 2023 19:24:55 GMT",
+    "content-type": "application/javascript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "last-modified": "Thu, 04 May 2023 21:17:34 GMT"
+  },
+  "url": "https://esm.sh/v119/axios@1.4.0/deno/axios.mjs",
+  "now": {
+    "secs_since_epoch": 1683314691,
+    "nanos_since_epoch": 995674000
+  }
+}

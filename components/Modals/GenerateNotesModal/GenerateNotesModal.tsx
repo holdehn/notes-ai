@@ -41,7 +41,6 @@ export default function GenerateNotesModal(props: Props) {
   const [agentName, setAgentName] = useState<string>('Summary');
   const [submitted, setSubmitted] = useState(false);
   const [summaryText, setSummaryText] = useState('');
-
   const router = useRouter();
 
   const handleFile = (e: any) => {
@@ -114,7 +113,6 @@ export default function GenerateNotesModal(props: Props) {
         transcription,
         summary,
       });
-
       if (data.error) {
         console.log('error :>> ', data.error);
       } else {
@@ -133,6 +131,7 @@ export default function GenerateNotesModal(props: Props) {
         alert('Please upload a PDF file');
         return;
       }
+      console.log('file :>> ', file);
 
       const formData = new FormData();
       formData.append('file', file);
@@ -148,7 +147,7 @@ export default function GenerateNotesModal(props: Props) {
 
       const data = await response.json();
       const extractedText = data.text;
-
+      console.log('extractedText :>> ', extractedText);
       setConvertedText(extractedText);
       return extractedText;
     } catch (error: any) {
@@ -181,75 +180,6 @@ export default function GenerateNotesModal(props: Props) {
       alert(`Error: ${error.message}`);
     }
   };
-
-  // const createNotesSummary = async (content: string) => {
-  //   if (!content) {
-  //     alert('Please upload a string file');
-  //     return;
-  //   }
-  //   try {
-  //     const response = await fetch('/api/create-summary', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         transcription: content,
-  //       }),
-  //     });
-
-  //     if (!response.ok) {
-  //       const errorData = await response.json();
-  //       console.log('createNotes error' + JSON.stringify(errorData));
-  //       throw new Error(errorData.message);
-  //     }
-
-  //     const data = await response.json();
-  //     const noteData = data.data.text;
-  //     return noteData;
-  //   } catch (error: any) {
-  //     console.log(JSON.stringify(error));
-  //     alert(`Error: ${error.message}`);
-  //   }
-  // };
-
-  // const createNotesFacts = async (content: string, context: string) => {
-  //   if (!content) {
-  //     alert('Please upload a string file');
-  //     return;
-  //   }
-  //   try {
-  //     const response = await fetch('/api/create-notes', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         transcription: content,
-  //         name: name,
-  //         topic: context,
-  //       }),
-  //     });
-
-  //     if (!response.ok) {
-  //       const errorData = await response.json();
-  //       console.log('createNotes error' + JSON.stringify(errorData));
-  //       throw new Error(errorData.message);
-  //     }
-
-  //     const data = await response.json();
-  //     const noteData = JSON.stringify(data.data.text);
-
-  //     // Split the output at every newline and return an array of bullet points
-  //     const bulletPoints = noteData
-  //       .split('\\n')
-  //       .filter((line) => line.length > 0);
-  //     return bulletPoints;
-  //   } catch (error: any) {
-  //     console.log(JSON.stringify(error));
-  //     alert(`Error: ${error.message}`);
-  //   }
-  // };
 
   //formik validation
   const validationSchema = Yup.object({
@@ -329,6 +259,13 @@ export default function GenerateNotesModal(props: Props) {
     } else {
       transcription = await sendAudio(file);
     }
+
+    // const [summary, notes] = await Promise.all([
+    //   ,
+    //   handleCreateNotesFacts(transcription, values.context),
+    // ]);
+
+    // insertAndNavigate(transcription, notes, summary as string);
 
     await createNotesSummary(transcription, (data) =>
       setSummaryText((summaryText) => summaryText + data),
@@ -483,8 +420,9 @@ export default function GenerateNotesModal(props: Props) {
                       </li>
                     ))}
                   </ul>
-
-                  {summaryText}
+                  <p className="text-sm text-gray-200 font-medium text-left mt-8 block items-center">
+                    {summaryText}
+                  </p>
                   {!loading ? (
                     <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                       <button

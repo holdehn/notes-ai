@@ -1,3 +1,11 @@
+import {
+  CreateNoteParams,
+  CreateNoteResponse,
+  CreateNotesSummaryParams,
+  CreateNotesFactsParams,
+  NoteSummary,
+  Result,
+} from './types';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 
 const insertNote = async (

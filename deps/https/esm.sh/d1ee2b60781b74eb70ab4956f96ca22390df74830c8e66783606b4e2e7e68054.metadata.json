@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "cf-ray": "7c2b5dcd39d9ce9c-SJC",
+    "last-modified": "Thu, 04 May 2023 19:40:56 GMT",
+    "age": "85439",
+    "access-control-allow-origin": "*",
+    "content-type": "application/javascript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=hgNmdr2L8bPKuHd6L80ha1WLsN2CcC4n7cnpvFi3OCWVAqsrbO%2FOclH3NSr4kUU4Wtq84xdEKYHhRXt8235Wl4gAIX7yqyfR4PpXLosJ5ByEDxbjk%2B7fgEVKdJ5uE4TiGCUIE7Q%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Fri, 05 May 2023 19:24:55 GMT",
+    "cf-cache-status": "HIT",
+    "x-content-source": "workers-kv",
+    "access-control-allow-methods": "*",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v119/form-data@4.0.0/deno/form-data.mjs",
+  "now": {
+    "secs_since_epoch": 1683314692,
+    "nanos_since_epoch": 71667000
+  }
+}

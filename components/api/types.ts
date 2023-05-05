@@ -1,23 +1,4 @@
-export type Component = {
-  title: string;
-  ltr: {
-    preview: string;
-    react: {
-      jsxTail: {
-        code: string;
-      }[];
-    };
-  };
-  rtl: {
-    preview: string;
-    react: {
-      jsxTail: {
-        code: string;
-      }[];
-    };
-  };
-};
-interface CreateNoteParams {
+export interface CreateNoteParams {
   userID: string;
   fileObjects: File[];
   formikValues: {
@@ -30,25 +11,25 @@ interface CreateNoteParams {
   summary: string;
 }
 
-type CreateNoteResponse =
+export type CreateNoteResponse =
   | { error: string; noteId?: undefined }
   | { noteId: string; error?: undefined };
 
-interface CreateNotesSummaryParams {
+export interface CreateNotesSummaryParams {
   transcription: string;
 }
 
-interface CreateNotesFactsParams {
+export interface CreateNotesFactsParams {
   transcription: string;
   name: string;
   topic: string;
 }
 
-interface NoteSummary {
+export interface NoteSummary {
   text: string;
 }
 
-type Result<TData, TError> =
+export type Result<TData, TError> =
   | {
       data: TData;
       error?: undefined;
@@ -57,5 +38,3 @@ type Result<TData, TError> =
       error: TError;
       data?: undefined;
     };
-
-export {};
