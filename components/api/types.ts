@@ -1,3 +1,22 @@
+export type Component = {
+  title: string;
+  ltr: {
+    preview: string;
+    react: {
+      jsxTail: {
+        code: string;
+      }[];
+    };
+  };
+  rtl: {
+    preview: string;
+    react: {
+      jsxTail: {
+        code: string;
+      }[];
+    };
+  };
+};
 interface CreateNoteParams {
   userID: string;
   fileObjects: File[];
@@ -38,3 +57,5 @@ type Result<TData, TError> =
       error: TError;
       data?: undefined;
     };
+
+export {};
