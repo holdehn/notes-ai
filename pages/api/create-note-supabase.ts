@@ -1,41 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { v4 as uuidv4 } from 'uuid';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    userID,
-    formikValues,
-    agentName,
-    transcription,
-    notes,
-    summary,
-    upload_ids,
-  } = req.body;
+  const { userID, formikValues, transcription, noteID } = req.body;
 
   if (!userID) {
     return res.status(400).json({ error: 'User ID is required' });
   }
 
   const supabase = createServerSupabaseClient({ req, res });
-  const noteId = uuidv4();
-  console.log('userId', userID);
 
   const { data: noteData, error: noteError } = await supabase
     .from('notes')
     .insert([
       {
-        id: noteId,
+        id: noteID,
         title: formikValues.title,
-        context: formikValues.context,
-        functionality: formikValues.functionality,
-        upload_ids: upload_ids,
+        topic: formikValues.topic,
         user_id: userID,
-        agent_name: agentName,
         color_theme: getRandomColor(),
         transcription: transcription,
-        notes: notes,
-        summary: summary,
       },
     ]);
 
@@ -45,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .json({ error: 'Error inserting note', details: noteError });
   }
 
-  res.status(200).json({ noteId: noteId });
+  res.status(200).json({ noteId: noteID });
 };
 
 function getRandomColor() {

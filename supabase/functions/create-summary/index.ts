@@ -9,7 +9,6 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { OpenAIChat } from 'langchain/llms/openai';
 import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'langchain/chains';
-import { CallbackManager } from 'langchain/callbacks';
 
 const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
   `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from a transcript of a lecture.
@@ -18,11 +17,11 @@ const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
   Do not repeat {name}'s name in your output
   `,
 );
-const humanPromptTemplate = HumanMessagePromptTemplate.fromTemplate('{input}');
+// const humanPromptTemplate = HumanMessagePromptTemplate.fromTemplate('{input}');
 
 const prompt = ChatPromptTemplate.fromPromptMessages([
   systemPromptTemplate,
-  humanPromptTemplate,
+  // humanPromptTemplate,
 ]);
 
 serve(async (req) => {
@@ -36,25 +35,37 @@ serve(async (req) => {
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
   try {
     const { transcription } = await req.json();
+    console.log('transcription', transcription);
 
-    console.log(transcription);
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 2000,
     });
+
     const docs = await textSplitter.createDocuments([transcription]);
 
     const llm = new OpenAIChat({
       openAIApiKey: OPENAI_API_KEY,
+      maxTokens: 250,
+      modelName: 'gpt-3.5-turbo',
+      temperature: 0,
       streaming: true,
     });
-    const chain = loadSummarizationChain(llm, {
-      prompt: prompt,
+
+    const name = 'holden';
+    const topic = 'math';
+
+    const chain = await loadSummarizationChain(llm, {
+      combineMapPrompt: prompt,
+      type: 'map_reduce',
     });
 
+    console.log('chain loaded');
     chain
       .call(
         {
           input_documents: docs,
+          name: name,
+          topic: topic,
         },
         [
           {
@@ -64,6 +75,9 @@ serve(async (req) => {
             },
             handleLLMEnd: async () => {
               await writer.ready;
+              console.log('end of chain');
+              await writer.write(encoder.encode(`data: END_OF_SUMMARY\n\n`));
+              console.log('writer closed');
               await writer.close();
             },
             handleLLMError: async (e) => {
@@ -75,6 +89,7 @@ serve(async (req) => {
       )
       .catch((e) => console.error(e));
 
+    console.log('chain called');
     return new Response(stream.readable, {
       headers: {
         ...corsHeaders,

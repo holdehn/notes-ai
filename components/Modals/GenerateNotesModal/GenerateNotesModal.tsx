@@ -14,11 +14,11 @@ import {
   createNotesSummary,
   insertNote,
 } from '@/components/api';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
-  userID: string | undefined;
 }
 
 interface FileDisplay {
@@ -27,9 +27,9 @@ interface FileDisplay {
 }
 
 export default function GenerateNotesModal(props: Props) {
-  const { open, setOpen, userID } = props;
+  const { open, setOpen } = props;
   const session = useSession();
-  const { mutate } = useSWRConfig();
+  const userID = session?.user?.id;
   const cancelButtonRef = useRef(null);
   const [notesText, setNotesText] = useState(''); // Add this line
   const [convertedText, setConvertedText] = useState('');
@@ -92,39 +92,6 @@ export default function GenerateNotesModal(props: Props) {
     formik.resetForm();
   };
 
-  // Add a new function to save the note to Supabase
-  const insertAndNavigate = async (
-    transcription: string,
-    notes: string[] | undefined,
-    summary: string,
-  ) => {
-    if (!userID) return;
-
-    const upload_ids: string[] = [];
-    fileObjects.forEach((file) => {
-      upload_ids.push(file.name);
-    });
-
-    try {
-      const data = await insertNote({
-        formikValues: formik.values,
-        userID: userID,
-        fileObjects: fileObjects,
-        transcription,
-        summary,
-      });
-      if (data.error) {
-        console.log('error :>> ', data.error);
-      } else {
-        router.push(`/my-notes/${data.noteId}`);
-      }
-    } catch (error) {
-      console.log('error :>> ', error);
-    }
-
-    setOpen(false);
-  };
-
   const loadPDF = async (file: File) => {
     try {
       if (!file) {
@@ -147,7 +114,6 @@ export default function GenerateNotesModal(props: Props) {
 
       const data = await response.json();
       const extractedText = data.text;
-      console.log('extractedText :>> ', extractedText);
       setConvertedText(extractedText);
       return extractedText;
     } catch (error: any) {
@@ -184,14 +150,12 @@ export default function GenerateNotesModal(props: Props) {
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
-    context: Yup.string(),
-    functionality: Yup.string(),
+    topic: Yup.string().notRequired(),
   });
 
   const intialValues = {
     title: '',
-    context: '',
-    functionality: '',
+    topic: '',
   };
   const convertVideoToMp3 = async (videoFile: string | Blob | Buffer) => {
     try {
@@ -242,9 +206,10 @@ export default function GenerateNotesModal(props: Props) {
     if (fileObjects.length === 0) {
       return;
     }
+    if (!userID) return;
     setLoading(true);
     setSubmitted(true);
-
+    const noteID = uuidv4();
     const file = fileObjects[0];
     const fileType = file.type.split('/')[0];
     let transcription;
@@ -260,17 +225,20 @@ export default function GenerateNotesModal(props: Props) {
       transcription = await sendAudio(file);
     }
 
-    // const [summary, notes] = await Promise.all([
-    //   ,
-    //   handleCreateNotesFacts(transcription, values.context),
-    // ]);
+    await insertNote({
+      userID: userID,
+      formikValues: values,
+      transcription: transcription,
+      noteID: noteID,
+    });
+    // await createNotesSummary(transcription, (data) =>
+    //   setSummaryText((summaryText) => summaryText + data),
+    // );
 
-    // insertAndNavigate(transcription, notes, summary as string);
-
-    await createNotesSummary(transcription, (data) =>
-      setSummaryText((summaryText) => summaryText + data),
-    );
-
+    router.push(`/my-notes/${noteID}`);
+    setFiles([]);
+    setName('');
+    setFileObjects([]);
     resetForm();
     setLoading(false);
   };
@@ -280,8 +248,6 @@ export default function GenerateNotesModal(props: Props) {
     validationSchema: validationSchema,
     onSubmit,
   });
-
-  console.log(summaryText);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -377,9 +343,9 @@ export default function GenerateNotesModal(props: Props) {
                         <div className="mt-2">
                           <input
                             type="text"
-                            name="context"
-                            id="context"
-                            value={formik.values.context}
+                            name="topic"
+                            id="topic"
+                            value={formik.values.topic}
                             onChange={formik.handleChange}
                             disabled={submitted}
                             className="block w-full bg-gray-800 rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -421,10 +387,6 @@ export default function GenerateNotesModal(props: Props) {
                     ))}
                   </ul>
 
-                  <p className="text-sm text-gray-200 font-medium text-left mt-8 block items-center">
-                    {summaryText}
-                  </p>
-
                   {!loading ? (
                     <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                       <button
@@ -444,8 +406,8 @@ export default function GenerateNotesModal(props: Props) {
                       </button>
                     </div>
                   ) : (
-                    <div className="w-full text-center mt-3 text-sm font-semibold text-gray-900">
-                      Loading...
+                    <div className="w-full text-center mt-3 text-sm font-bold text-gray-200">
+                      Extracting Text...
                     </div>
                   )}
                 </form>

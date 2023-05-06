@@ -1,14 +1,11 @@
 export interface CreateNoteParams {
   userID: string;
-  fileObjects: File[];
   formikValues: {
     title: string;
-    context: string;
-    functionality: string;
+    topic?: string;
   };
+  noteID: string;
   transcription: string;
-  notes?: string[];
-  summary: string;
 }
 
 export type CreateNoteResponse =
@@ -17,12 +14,15 @@ export type CreateNoteResponse =
 
 export interface CreateNotesSummaryParams {
   transcription: string;
+  userId: string;
+  noteId: string;
+  topic?: string;
+  existingSummary: string | null;
+  name?: string;
 }
 
 export interface CreateNotesFactsParams {
   transcription: string;
-  name: string;
-  topic: string;
 }
 
 export interface NoteSummary {

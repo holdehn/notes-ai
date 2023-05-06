@@ -6,6 +6,7 @@ import {
   ReactFragment,
   ReactPortal,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
@@ -43,6 +44,8 @@ import {
   UserIcon,
 } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/router';
+import { createNotesSummary } from '../api';
+import { set } from 'date-fns';
 
 const navigation = [
   { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
@@ -118,15 +121,12 @@ function classNames(...classes: string[]) {
 
 export default function NoteDetailsComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [bulletPoints, setBulletPoints] = useState([]);
+  const [summaryText, setSummaryText] = useState('');
+  const [summaryInProgress, setSummaryInProgress] = useState(false);
 
   const session = useSession();
-
   const user_id = session?.user?.id;
-  console.log('user_id', user_id);
-
   const router = useRouter();
-
   const noteId = router.query.noteID;
   console.log(JSON.stringify(noteId));
 
@@ -136,6 +136,33 @@ export default function NoteDetailsComponent() {
     noteId ? `/api/get-note?noteId=${noteId}&userId=${user_id}` : null,
     fetcher,
   );
+
+  const [summaryStatus, setSummaryStatus] = useState('idle'); // Add this state variable
+
+  useMemo(() => {
+    // Only run the function if data is not null and summary is not yet created
+    if (!user_id || !noteId || summaryStatus !== 'idle') return;
+    if (data) {
+      if (data.summary) {
+        setSummaryText(data.summary);
+        setSummaryStatus('completed');
+      } else {
+        setSummaryStatus('inProgress');
+        createNotesSummary(
+          {
+            transcription: data.transcription,
+            userId: user_id,
+            noteId: noteId as unknown as string,
+            existingSummary: data.summary,
+          },
+          (summaryData) => {
+            setSummaryText(summaryData);
+          },
+        );
+      }
+    }
+  }, [data, user_id, noteId, summaryStatus]);
+
   if (error) {
     return <div>Error fetching note data</div>;
   }
@@ -276,7 +303,7 @@ export default function NoteDetailsComponent() {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 lg:bg-blue-50 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 bg-gradient-to-r from-indigo-900 to-indigo-900 lg:pb-4 lg:pt-5">
           <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -289,7 +316,7 @@ export default function NoteDetailsComponent() {
             {/* User account dropdown */}
             <Menu as="div" className="relative inline-block px-3 text-left">
               <div>
-                <Menu.Button className="group w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                <Menu.Button className="group w-full rounded-md from-indigo-900 to-indigo-900 px-3.5 py-2 text-left text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-indigo-800">
                   <span className="flex w-full items-center justify-between">
                     <span className="flex min-w-0 items-center justify-between space-x-3">
                       <UserIcon
@@ -298,16 +325,16 @@ export default function NoteDetailsComponent() {
                       />
 
                       <span className="flex min-w-0 flex-1 flex-col">
-                        <span className="truncate text-sm font-medium text-gray-900">
+                        <span className="truncate text-sm font-medium text-white">
                           Demo
                         </span>
-                        <span className="truncate text-sm text-gray-500">
+                        <span className="truncate text-sm text-indigo-200">
                           @demo
                         </span>
                       </span>
                     </span>
                     <ChevronUpDownIcon
-                      className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      className="h-5 w-5 flex-shrink-0 text-white group-hover:text-indigo-200"
                       aria-hidden="true"
                     />
                   </span>
@@ -455,8 +482,8 @@ export default function NoteDetailsComponent() {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? 'bg-gray-200 text-gray-900'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900',
+                        ? 'bg-indigo-700 text-white'
+                        : 'text-white hover:bg-indigo-700 hover:text-white',
                       'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
                     )}
                     aria-current={item.current ? 'page' : undefined}
@@ -464,8 +491,8 @@ export default function NoteDetailsComponent() {
                     <item.icon
                       className={classNames(
                         item.current
-                          ? 'text-gray-500'
-                          : 'text-gray-400 group-hover:text-gray-500',
+                          ? 'text-white'
+                          : 'text-indigo-300 group-hover:text-white',
                         'mr-3 h-6 w-6 flex-shrink-0',
                       )}
                       aria-hidden="true"
@@ -473,37 +500,6 @@ export default function NoteDetailsComponent() {
                     {item.name}
                   </a>
                 ))}
-              </div>
-              <div className="mt-8">
-                {/* Secondary navigation */}
-                <h3
-                  className="px-3 text-sm font-medium text-gray-500"
-                  id="desktop-teams-headline"
-                >
-                  Agents
-                </h3>
-                <div
-                  className="mt-1 space-y-1"
-                  role="group"
-                  aria-labelledby="desktop-teams-headline"
-                >
-                  {teams.map((team) => (
-                    <a
-                      key={team.name}
-                      href={team.href}
-                      className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                    >
-                      <span
-                        className={classNames(
-                          team.bgColorClass,
-                          'mr-4 h-2.5 w-2.5 rounded-full',
-                        )}
-                        aria-hidden="true"
-                      />
-                      <span className="truncate">{team.name}</span>
-                    </a>
-                  ))}
-                </div>
               </div>
             </nav>
           </div>
@@ -695,8 +691,9 @@ export default function NoteDetailsComponent() {
                           <dt className="text-sm font-medium text-gray-500">
                             Summary
                           </dt>
+
                           <dd className="mt-1 text-sm text-gray-900">
-                            {note?.[0].summary}
+                            {summaryText}
                           </dd>
                         </div>
                         <div className="sm:col-span-2">

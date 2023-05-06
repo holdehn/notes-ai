@@ -329,7 +329,7 @@ const NotesComponent = () => {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-gradient-to-r from-indigo-900 to-purple-900 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-gradient-to-r from-indigo-950 to-indigo-900 lg:pb-4 lg:pt-5">
           <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -338,7 +338,7 @@ const NotesComponent = () => {
             />
           </div>
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-gradient-to-r from-indigo-900 to-purple-900">
+          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-gradient-to-r from-indigo-950 to-indigo-900">
             {/* User account dropdown */}
             <Menu as="div" className="relative inline-block px-3 text-left">
               <div>
@@ -682,7 +682,6 @@ const NotesComponent = () => {
                 <GenerateNotesModal
                   open={openNotesModal}
                   setOpen={setOpenNotesModal}
-                  userID={userID}
                 />
               </div>
             </div>
