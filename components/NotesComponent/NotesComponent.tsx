@@ -662,7 +662,7 @@ const NotesComponent = () => {
 
                     <tbody
                       className={`divide-y divide-gray-600 ${
-                        notes?.length > 0 ? 'bg-black' : ''
+                        notes?.length > 0 ? 'bg-gray-700' : ''
                       }`}
                     >
                       {notes?.map((note: any) => (

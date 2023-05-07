@@ -8,7 +8,7 @@ export default function Document() {
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet"
       />
-      <body className="bg-gray-700">
+      <body className="bg-indigo-950">
         <Main />
         <NextScript />
       </body>

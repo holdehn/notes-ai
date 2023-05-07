@@ -369,6 +369,9 @@ export default function GenerateNotesModal(props: Props) {
                   <p className="text-xs mt-2 italic text-gray-400">
                     * File Size is limited to 25 MB.
                   </p>
+                  <p className="text-xs mt-2 italic text-gray-400">
+                    * Only audio and video files are accepted.
+                  </p>
                   <ul className="mt-4">
                     {files.map(({ file, id }) => (
                       <li key={id} className="flex items-center space-x-2 mb-2">
@@ -407,7 +410,7 @@ export default function GenerateNotesModal(props: Props) {
                     </div>
                   ) : (
                     <div className="w-full text-center mt-3 text-sm font-bold text-gray-200">
-                      Extracting Text...
+                      Extracting Text...this may take a moment.
                     </div>
                   )}
                 </form>
