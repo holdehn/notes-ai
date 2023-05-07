@@ -556,7 +556,7 @@ const NotesComponent = () => {
             )}
 
             {/* Page title & actions */}
-            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
+            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gradient-to-r from-[#530808] via-[#000592] to-[#94295f] opacity-90">
               <div className="min-w-0 flex-1">
                 <h1 className="text-xl font-bold leading-6 text-gray-50 sm:truncate">
                   Generate Notes
@@ -634,27 +634,27 @@ const NotesComponent = () => {
                 <div className="inline-block min-w-full border-b align-middle">
                   <table className="min-w-full">
                     <thead>
-                      <tr className="border-t border-gray-600 bg-indigo-950">
+                      <tr className="border-t border-gray-600 bg-black">
                         <th
-                          className="border-b border-gray-600 bg-indigo-950 px-6 py-3 text-left text-sm font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
                           scope="col"
                         >
                           <span className="lg:pl-2">My Notes</span>
                         </th>
                         <th
-                          className="border-b border-gray-600 bg-indigo-950 px-6 py-3 text-left text-sm font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
                           scope="col"
                         >
                           Documents
                         </th>
                         <th
-                          className="hidden border-b border-gray-600 bg-indigo-950 px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
+                          className="hidden border-b border-gray-600 bg-black px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
                           scope="col"
                         >
                           Last updated
                         </th>
                         <th
-                          className="border-b border-gray-600 bg-indigo-950 py-3 pr-6 text-right text-sm font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-black py-3 pr-6 text-right text-sm font-semibold text-gray-200"
                           scope="col"
                         />
                       </tr>
