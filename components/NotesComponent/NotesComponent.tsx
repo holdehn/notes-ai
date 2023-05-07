@@ -556,13 +556,13 @@ const NotesComponent = () => {
             )}
 
             {/* Page title & actions */}
-            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gradient-to-r from-[#530808] via-[#000592] to-[#94295f] opacity-90">
+            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gradient-to-r from-[#530707] via-[#000592] to-[#94295f] opacity-90">
               <div className="min-w-0 flex-1">
                 <h1 className="text-xl font-bold leading-6 text-gray-50 sm:truncate">
-                  Generate Notes
+                  NotesAI
                 </h1>
                 <p className="mt-1 text-sm text-gray-200">
-                  Generate lecture notes from your audio!
+                  Generate high quality lecture notes instantly!
                 </p>
               </div>
               <div className="mt-4 sm:mt-0">
@@ -707,10 +707,12 @@ const NotesComponent = () => {
                     </tbody>
                   </table>
                   {notes?.length === 0 && (
-                    <div className="flex justify-center items-center h-32 bg-black">
-                      <div className="text-white font-bold text-xl">
-                        No notes created yet!
-                      </div>
+                    <div className="flex justify-center items-center h-36 bg-indigo-950">
+                      <button onClick={() => setOpenNotesModal(true)}>
+                        <div className="text-white font-medium text-xl">
+                          Create a note to get started!
+                        </div>
+                      </button>
                     </div>
                   )}
                 </div>

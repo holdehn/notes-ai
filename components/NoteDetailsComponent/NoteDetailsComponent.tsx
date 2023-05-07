@@ -12,28 +12,19 @@ import {
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
-  Bars4Icon,
-  ClockIcon,
-  HomeIcon,
   XMarkIcon,
   NewspaperIcon,
-  ComputerDesktopIcon,
-  ArrowRightIcon,
 } from '@heroicons/react/24/outline';
 import { useSession } from '@supabase/auth-helpers-react';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpDownIcon,
-  EllipsisVerticalIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
-import { supabaseClient } from 'supabase-client';
-import { useUser } from '@supabase/auth-helpers-react';
-import AgentModal from '../Modals/AgentModal';
-import CreateAgentModal from '../Modals/CreateAgentModal/CreateAgentModal';
+
 import Link from 'next/link';
 import { Popover } from '@headlessui/react';
 import {
@@ -660,11 +651,11 @@ export default function NoteDetailsComponent() {
               </div>
             </div>
           </div>
-          <main className="bg-gray-100">
+          <main className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
             {/* Page title & actions */}
-            <div className="border-b bg-white border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <div className="border-b bg-black border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="min-w-0 flex-1">
-                <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+                <h1 className="text-lg font-medium leading-6 text-gray-100 sm:truncate">
                   NotesAI
                 </h1>
               </div>
@@ -714,15 +705,15 @@ export default function NoteDetailsComponent() {
                 </nav>
               </div>
             </div>{' '}
-            <div className="mx-auto mt-4 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+            <div className="pb-4 mx-auto mt-4 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
               <div className="space-y-6 lg:col-span-2 lg:col-start-1">
                 {/* Description list*/}
                 <section aria-labelledby="applicant-information-title">
                   <div className="bg-white shadow sm:rounded-lg">
-                    <div className="px-4 py-5 sm:px-6 bg-purple-100">
+                    <div className="px-4 py-5 sm:px-6 bg-gray-100">
                       <h2
                         id="applicant-information-title"
-                        className="text-lg font-medium leading-6 text-gray-900"
+                        className="text-lg font-bold leading-6 text-gray-900"
                       >
                         {note?.[0].title}
                       </h2>
@@ -730,7 +721,7 @@ export default function NoteDetailsComponent() {
                     <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
                       <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                         <div className="sm:col-span-2">
-                          <dt className="text-sm font-medium text-gray-500">
+                          <dt className="text-md font-bold text-gray-500">
                             Summary
                           </dt>
 
@@ -739,7 +730,7 @@ export default function NoteDetailsComponent() {
                           </dd>
                         </div>
                         <div className="sm:col-span-2">
-                          <dt className="text-sm font-medium text-gray-500">
+                          <dt className="text-md font-bold text-gray-500">
                             Notes
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900">
@@ -752,43 +743,6 @@ export default function NoteDetailsComponent() {
                                   {'- ' + point.trim()}
                                 </p>
                               ))}
-                          </dd>
-                        </div>
-
-                        <div className="sm:col-span-2">
-                          <dt className="text-sm font-medium text-gray-500">
-                            Sources
-                          </dt>
-                          <dd className="mt-1 text-sm text-gray-900">
-                            <ul
-                              role="list"
-                              className="divide-y divide-gray-200 rounded-md border border-gray-200"
-                            >
-                              {attachments.map((attachment) => (
-                                <li
-                                  key={attachment.name}
-                                  className="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
-                                >
-                                  <div className="flex w-0 flex-1 items-center">
-                                    <ComputerDesktopIcon
-                                      className="h-5 w-5 flex-shrink-0 text-gray-400"
-                                      aria-hidden="true"
-                                    />
-                                    <span className="ml-2 w-0 flex-1 truncate">
-                                      {attachment.name}
-                                    </span>
-                                  </div>
-                                  <div className="ml-4 flex-shrink-0">
-                                    <a
-                                      href={attachment.href}
-                                      className="font-medium text-blue-600 hover:text-blue-500"
-                                    >
-                                      Visit
-                                    </a>
-                                  </div>
-                                </li>
-                              ))}
-                            </ul>
                           </dd>
                         </div>
                       </dl>
@@ -814,7 +768,7 @@ export default function NoteDetailsComponent() {
                     id="timeline-title"
                     className="text-lg font-medium text-gray-900"
                   >
-                    Document Details
+                    Details
                   </h2>
 
                   {/* Activity Feed */}
@@ -867,7 +821,7 @@ export default function NoteDetailsComponent() {
                       type="button"
                       className="inline-flex items-center justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                     >
-                      View Transcription
+                      Export Notes
                     </button>
                   </div>
                 </div>
@@ -886,20 +840,6 @@ const user = {
     'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
 };
 
-const breadcrumbs = [
-  { name: 'Jobs', href: '#', current: false },
-  { name: 'Research Agent', href: '#', current: false },
-  { name: 'Applicants', href: '#', current: true },
-];
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-];
-const attachments = [
-  { name: 'www.google.com', href: '#' },
-  { name: 'www.wikepedia.com', href: '#' },
-];
 const eventTypes = {
   applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
   advanced: { icon: HandThumbUpIcon, bgColorClass: 'bg-blue-500' },
@@ -909,48 +849,25 @@ const timeline = [
   {
     id: 1,
     type: eventTypes.applied,
-    content: 'Agent:',
-    target: 'Researcher',
+    content: 'Owner:',
+    target: 'User',
   },
   {
     id: 2,
     type: eventTypes.completed,
-    content: 'Task: ',
-    target: 'Transcription Completed',
+    content: 'Topic: ',
+    target: 'Linear Regression Notes',
   },
   {
     id: 4,
     type: eventTypes.completed,
-    content: 'Task:',
-    target: 'Research Completed',
+    content: 'Date Created:',
+    target: '5/12/2021',
   },
   {
     id: 5,
     type: eventTypes.completed,
-    content: 'Task:',
-    target: 'Notes Completed',
-  },
-];
-const comments = [
-  {
-    id: 1,
-    name: 'Leslie Alexander',
-    date: '4d ago',
-    imageId: '1494790108377-be9c29b29330',
-    body: 'Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.',
-  },
-  {
-    id: 2,
-    name: 'Michael Foster',
-    date: '4d ago',
-    imageId: '1519244703995-f4e0f30006d5',
-    body: 'Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.',
-  },
-  {
-    id: 3,
-    name: 'Dries Vincent',
-    date: '4d ago',
-    imageId: '1506794778202-cad84cf45f1d',
-    body: 'Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.',
+    content: 'File Type:',
+    target: 'Audio',
   },
 ];
