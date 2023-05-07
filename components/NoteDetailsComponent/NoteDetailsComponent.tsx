@@ -340,7 +340,7 @@ export default function NoteDetailsComponent() {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 bg-gradient-to-r from-indigo-900 to-indigo-900 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 bg-gradient-to-r from-indigo-950 to-indigo-900 lg:pb-4 lg:pt-5">
           {/* <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -353,7 +353,7 @@ export default function NoteDetailsComponent() {
             {/* User account dropdown */}
             <Menu as="div" className="relative inline-block px-3 text-left">
               <div>
-                <Menu.Button className="group w-full rounded-md from-indigo-900 to-indigo-900 px-3.5 py-2 text-left text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-indigo-800">
+                <Menu.Button className="group w-full rounded-md from-indigo-950 to-indigo-900 px-3.5 py-2 text-left text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-indigo-800">
                   <span className="flex w-full items-center justify-between">
                     <span className="flex min-w-0 items-center justify-between space-x-3">
                       {finalImageUrl ? (

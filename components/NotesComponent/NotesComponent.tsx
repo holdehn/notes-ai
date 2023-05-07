@@ -544,7 +544,7 @@ const NotesComponent = () => {
               </div>
             </div>
           </div>
-          <main className="flex-1 bg-black">
+          <main className="flex-1">
             {!notes && (
               <div
                 className="absolute inset-x-0 top-0 bottom-0 bg-gray-600"
@@ -634,27 +634,27 @@ const NotesComponent = () => {
                 <div className="inline-block min-w-full border-b align-middle">
                   <table className="min-w-full">
                     <thead>
-                      <tr className="border-t border-gray-600 bg-black">
+                      <tr className="border-t border-gray-600 bg-indigo-950">
                         <th
-                          className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-indigo-950 px-6 py-3 text-left text-sm font-semibold text-gray-200"
                           scope="col"
                         >
                           <span className="lg:pl-2">My Notes</span>
                         </th>
                         <th
-                          className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-indigo-950 px-6 py-3 text-left text-sm font-semibold text-gray-200"
                           scope="col"
                         >
                           Documents
                         </th>
                         <th
-                          className="hidden border-b border-gray-600 bg-black px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
+                          className="hidden border-b border-gray-600 bg-indigo-950 px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
                           scope="col"
                         >
                           Last updated
                         </th>
                         <th
-                          className="border-b border-gray-600 bg-black py-3 pr-6 text-right text-sm font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-indigo-950 py-3 pr-6 text-right text-sm font-semibold text-gray-200"
                           scope="col"
                         />
                       </tr>

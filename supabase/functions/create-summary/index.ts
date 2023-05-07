@@ -11,10 +11,10 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'langchain/chains';
 
 const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
-  `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from a transcript of a lecture.
-  Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
-  Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
-  Do not repeat {name}'s name in your output
+  `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from the transcript of a lecture.
+  Your goal is to write a summary from the perspective of {name} that will highlight key points relevant to learning the material. 
+  Do not respond with anything outside of the transcript. If you don't know, say, "I don't know".
+  Do not repeat {name}'s name in your output.
   `,
 );
 const humanPromptTemplate = HumanMessagePromptTemplate.fromTemplate(`{text}`);
@@ -44,7 +44,7 @@ serve(async (req) => {
 
     const llm = new OpenAIChat({
       openAIApiKey: OPENAI_API_KEY,
-      maxTokens: 400,
+      maxTokens: 250,
       modelName: 'gpt-3.5-turbo',
       temperature: 0,
       streaming: true,
