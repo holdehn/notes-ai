@@ -31,12 +31,12 @@ serve(async (req) => {
       openAIApiKey: OPENAI_API_KEY,
       maxTokens: 400,
       modelName: 'gpt-3.5-turbo',
-      temperature: 0.1,
+      temperature: 0,
       streaming: true,
     });
 
     const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
-      `You are a helpful assistant for {name}. The topic of the content is {topic}. Summarize information from the transcript with bullet points.
+      `You are a helpful assistant for {name}. Summarize information from a transcript with bullet points.
       Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
       Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
       Do not repeat {name}'s name in your output.
@@ -55,7 +55,7 @@ serve(async (req) => {
 
     const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
       `
-      You are a helpful teacher assistant that helps a student {name}. The topic of the lecture is {topic}. Summarize and expand upon information from a transcript of a lecture.
+      You are a helpful teacher assistant for {name}. Summarize and expand upon information from the transcript of a lecture.
       Your goal is to write informative notes from the perspective of {name} that will highlight key points that will be relevant to learning the material.
       Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
       Do not repeat {name}'s name in your output.
@@ -63,7 +63,7 @@ serve(async (req) => {
       Respond with the following format.
       - Bullet point format 
       - Separate each bullet point with a new line
-      - Each bullet point should be informative to the user and give them context about the topic
+      - Each bullet point should be informative to the user
       - Each bullet point should be a complete sentence and informative to the user
   
       `,
@@ -72,7 +72,6 @@ serve(async (req) => {
       systemCombinedPrompt,
       humanCombinedPrompt,
     ]);
-
     const chain = loadSummarizationChain(llm, {
       combinePrompt: chatbotCombinedPrompt,
       type: 'map_reduce',

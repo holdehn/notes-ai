@@ -106,7 +106,7 @@ const NotesComponent = () => {
 
   return (
     <>
-      <div className="min-h-full">
+      <div className="min-h-full bg-black">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -122,7 +122,7 @@ const NotesComponent = () => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
+              <div className="fixed inset-0 bg-gray-600 bg-opacity-75 " />
             </Transition.Child>
 
             <div className="fixed inset-0 z-40 flex">
@@ -544,7 +544,7 @@ const NotesComponent = () => {
               </div>
             </div>
           </div>
-          <main className="flex-1">
+          <main className="flex-1 bg-black">
             {!notes && (
               <div
                 className="absolute inset-x-0 top-0 bottom-0 bg-gray-600"
@@ -634,27 +634,27 @@ const NotesComponent = () => {
                 <div className="inline-block min-w-full border-b align-middle">
                   <table className="min-w-full">
                     <thead>
-                      <tr className="border-t border-gray-600 bg-gray-800">
+                      <tr className="border-t border-gray-600 bg-black">
                         <th
-                          className="border-b border-gray-600 bg-gray-800 px-6 py-3 text-left text-sm font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
                           scope="col"
                         >
                           <span className="lg:pl-2">My Notes</span>
                         </th>
                         <th
-                          className="border-b border-gray-600 bg-gray-800 px-6 py-3 text-left text-sm font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
                           scope="col"
                         >
                           Documents
                         </th>
                         <th
-                          className="hidden border-b border-gray-600 bg-gray-800 px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
+                          className="hidden border-b border-gray-600 bg-black px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
                           scope="col"
                         >
                           Last updated
                         </th>
                         <th
-                          className="border-b border-gray-600 bg-gray-800 py-3 pr-6 text-right text-sm font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-black py-3 pr-6 text-right text-sm font-semibold text-gray-200"
                           scope="col"
                         />
                       </tr>
@@ -662,7 +662,7 @@ const NotesComponent = () => {
 
                     <tbody
                       className={`divide-y divide-gray-600 ${
-                        notes?.length > 0 ? 'bg-gray-700' : ''
+                        notes?.length > 0 ? 'bg-black' : ''
                       }`}
                     >
                       {notes?.map((note: any) => (
@@ -707,8 +707,8 @@ const NotesComponent = () => {
                     </tbody>
                   </table>
                   {notes?.length === 0 && (
-                    <div className="flex justify-center items-center h-32 bg-white">
-                      <div className="text-black font-bold text-xl">
+                    <div className="flex justify-center items-center h-32 bg-black">
+                      <div className="text-white font-bold text-xl">
                         No notes created yet!
                       </div>
                     </div>

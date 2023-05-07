@@ -11,6 +11,14 @@ module.exports = {
       screens: {
         xs: '475px',
       },
+      backgroundColor: {
+        default: '#000',
+      },
+      textColor: {
+        default: '#fff',
+      },
     },
   },
+  variants: {},
+  plugins: [],
 };
