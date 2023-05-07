@@ -31,12 +31,12 @@ serve(async (req) => {
       openAIApiKey: OPENAI_API_KEY,
       maxTokens: 400,
       modelName: 'gpt-3.5-turbo',
-      temperature: 0.7,
+      temperature: 0.1,
       streaming: true,
     });
 
     const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
-      `You are a helpful assistant for {name}, a student studying {topic}, summarize information from a transcript with bullet points.
+      `You are a helpful assistant for {name}. The topic of the content is {topic}. Summarize information from the transcript with bullet points.
       Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
       Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
       Do not repeat {name}'s name in your output.
@@ -65,7 +65,6 @@ serve(async (req) => {
       - Separate each bullet point with a new line
       - Each bullet point should be informative to the user and give them context about the topic
       - Each bullet point should be a complete sentence and informative to the user
-      - There should be a combination longer more informative bullet points and shorter bullet points that are more concise
   
       `,
     );

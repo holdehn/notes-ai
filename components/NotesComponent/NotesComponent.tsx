@@ -544,14 +544,16 @@ const NotesComponent = () => {
               </div>
             </div>
           </div>
-          <main className="flex-1 relative pb-2">
-            <div
-              className="absolute inset-x-0 top-0 bottom-0 bg-gray-600"
-              style={{
-                top: 'calc(100% - 3rem)',
-                minHeight: 'calc(100vh - 3rem)',
-              }}
-            ></div>
+          <main className="flex-1">
+            {!notes && (
+              <div
+                className="absolute inset-x-0 top-0 bottom-0 bg-gray-600"
+                style={{
+                  top: 'calc(100% - 3rem)',
+                  minHeight: 'calc(100vh - 3rem)',
+                }}
+              ></div>
+            )}
 
             {/* Page title & actions */}
             <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
@@ -660,10 +662,10 @@ const NotesComponent = () => {
 
                     <tbody
                       className={`divide-y divide-gray-600 ${
-                        notes.length > 0 ? 'bg-gray-700' : ''
+                        notes?.length > 0 ? 'bg-gray-700' : ''
                       }`}
                     >
-                      {notes.map((note: any) => (
+                      {notes?.map((note: any) => (
                         <tr key={note.index}>
                           <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-200">
                             <div className="flex items-center space-x-3 lg:pl-2">
@@ -704,7 +706,7 @@ const NotesComponent = () => {
                       ))}
                     </tbody>
                   </table>
-                  {notes.length === 0 && (
+                  {notes?.length === 0 && (
                     <div className="flex justify-center items-center h-32 bg-gray-600">
                       <div className="text-white font-bold text-xl">
                         No notes created yet!
