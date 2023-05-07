@@ -231,14 +231,12 @@ export default function GenerateNotesModal(props: Props) {
       transcription: transcription,
       noteID: noteID,
     });
-    // await createNotesSummary(transcription, (data) =>
-    //   setSummaryText((summaryText) => summaryText + data),
-    // );
 
     router.push(`/my-notes/${noteID}`);
     setFiles([]);
     setName('');
     setFileObjects([]);
+
     resetForm();
     setLoading(false);
   };

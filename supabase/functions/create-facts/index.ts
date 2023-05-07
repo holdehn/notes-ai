@@ -1,28 +1,13 @@
 import { serve } from 'http/server.ts';
 import {
   ChatPromptTemplate,
-  SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
+  SystemMessagePromptTemplate,
 } from 'langchain/prompts';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-
 import { OpenAIChat } from 'langchain/llms/openai';
 import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'langchain/chains';
-
-const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
-  `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from a transcript of a lecture.
-  Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
-  Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
-  Do not repeat {name}'s name in your output
-  `,
-);
-const humanPromptTemplate = HumanMessagePromptTemplate.fromTemplate(`{text}`);
-
-const prompt = ChatPromptTemplate.fromPromptMessages([
-  systemPromptTemplate,
-  humanPromptTemplate,
-]);
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -50,11 +35,49 @@ serve(async (req) => {
       streaming: true,
     });
 
-    const chain = await loadSummarizationChain(llm, {
-      combineMapPrompt: prompt,
-      type: 'map_reduce',
-    });
+    const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
+      `You are a helpful assistant for {name}, a student studying {topic}, summarize information from a transcript with bullet points.
+      Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
+      Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
+      Do not repeat {name}'s name in your output.
+  `,
+    );
 
+    const humanPromptMap = HumanMessagePromptTemplate.fromTemplate(`{text}`);
+
+    const chatPromptMap = ChatPromptTemplate.fromPromptMessages([
+      systemPromptMap,
+      humanPromptMap,
+    ]);
+
+    const humanCombinedPrompt =
+      HumanMessagePromptTemplate.fromTemplate(`{text}`);
+
+    const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
+      `
+      You are a helpful teacher assistant that helps a student {name}. The topic of the lecture is {topic}. Summarize and expand upon information from a transcript of a lecture.
+      Your goal is to write informative notes from the perspective of {name} that will highlight key points that will be relevant to learning the material.
+      Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
+      Do not repeat {name}'s name in your output.
+      
+      Respond with the following format.
+      - Bullet point format 
+      - Separate each bullet point with a new line
+      - Each bullet point should be informative to the user
+      - Each bullet point should be a complete sentence and informative to the user
+  
+      `,
+    );
+    const chatbotCombinedPrompt = ChatPromptTemplate.fromPromptMessages([
+      systemCombinedPrompt,
+      humanCombinedPrompt,
+    ]);
+
+    const chain = loadSummarizationChain(llm, {
+      combinePrompt: chatbotCombinedPrompt,
+      type: 'map_reduce',
+      combineMapPrompt: chatPromptMap,
+    });
     console.log('chain loaded');
     chain
       .call(

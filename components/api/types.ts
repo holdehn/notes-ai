@@ -16,13 +16,18 @@ export interface CreateNotesSummaryParams {
   transcription: string;
   userId: string;
   noteId: string;
-  topic?: string;
+  topic: string;
   existingSummary: string | null;
-  name?: string;
+  name: string;
 }
 
 export interface CreateNotesFactsParams {
   transcription: string;
+  userId: string;
+  noteId: string;
+  topic: string;
+  existingNotes: string[] | null;
+  name: string;
 }
 
 export interface NoteSummary {

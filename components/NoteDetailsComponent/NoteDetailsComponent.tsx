@@ -44,7 +44,7 @@ import {
   UserIcon,
 } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/router';
-import { createNotesSummary } from '../api';
+import { createNotesFacts, createNotesSummary } from '../api';
 import { set } from 'date-fns';
 
 const navigation = [
@@ -122,13 +122,20 @@ function classNames(...classes: string[]) {
 export default function NoteDetailsComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [summaryText, setSummaryText] = useState('');
-  const [summaryInProgress, setSummaryInProgress] = useState(false);
+  const [bulletPoints, setBulletPoints] = useState<string>('');
 
   const session = useSession();
   const user_id = session?.user?.id;
   const router = useRouter();
   const noteId = router.query.noteID;
   console.log(JSON.stringify(noteId));
+
+  const name = session?.user?.user_metadata?.full_name;
+  const avatar_url = session?.user?.user_metadata?.avatar_url;
+
+  const proxyUrl = '/api/proxy?imageUrl=';
+
+  const finalImageUrl = proxyUrl + encodeURIComponent(avatar_url);
 
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
@@ -154,6 +161,8 @@ export default function NoteDetailsComponent() {
             userId: user_id,
             noteId: noteId as unknown as string,
             existingSummary: data.summary,
+            name: name,
+            topic: data.topic,
           },
           (summaryData) => {
             setSummaryText(summaryData);
@@ -162,6 +171,34 @@ export default function NoteDetailsComponent() {
       }
     }
   }, [data, user_id, noteId, summaryStatus]);
+
+  const [bulletPointStatus, setBulletPointStatus] = useState('idle');
+
+  useMemo(() => {
+    // Only run the function if data is not null and summary is not yet created
+    if (!user_id || !noteId || bulletPointStatus !== 'idle') return;
+    if (data) {
+      if (data.notes) {
+        setBulletPoints(data.notes);
+        setBulletPointStatus('completed');
+      } else {
+        setBulletPointStatus('inProgress');
+        createNotesFacts(
+          {
+            transcription: data.transcription,
+            userId: user_id,
+            noteId: noteId as unknown as string,
+            existingNotes: data.notes,
+            name: name,
+            topic: data.topic,
+          },
+          (formattedBulletPoints: string[]) => {
+            setBulletPoints(JSON.stringify(formattedBulletPoints));
+          },
+        );
+      }
+    }
+  }, [data, user_id, noteId, bulletPointStatus]);
 
   if (error) {
     return <div>Error fetching note data</div>;
@@ -226,13 +263,13 @@ export default function NoteDetailsComponent() {
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex flex-shrink-0 items-center px-4">
+                  {/* <div className="flex flex-shrink-0 items-center px-4">
                     <img
                       className="h-8 w-auto"
                       src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
                       alt="NotesAI Logo"
                     />
-                  </div>
+                  </div> */}
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
                     <nav className="px-2">
                       <div className="space-y-1">
@@ -304,13 +341,13 @@ export default function NoteDetailsComponent() {
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 bg-gradient-to-r from-indigo-900 to-indigo-900 lg:pb-4 lg:pt-5">
-          <div className="flex flex-shrink-0 items-center px-6">
+          {/* <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
               alt="NotesAI"
             />
-          </div>
+          </div> */}
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
             {/* User account dropdown */}
@@ -319,17 +356,22 @@ export default function NoteDetailsComponent() {
                 <Menu.Button className="group w-full rounded-md from-indigo-900 to-indigo-900 px-3.5 py-2 text-left text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-indigo-800">
                   <span className="flex w-full items-center justify-between">
                     <span className="flex min-w-0 items-center justify-between space-x-3">
-                      <UserIcon
-                        className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
-                        aria-hidden="true"
-                      />
+                      {finalImageUrl ? (
+                        <img
+                          src={finalImageUrl}
+                          className="flex-shrink-0 h-10 w-10 rounded-full"
+                          alt={name}
+                        />
+                      ) : (
+                        <UserIcon
+                          className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+                          aria-hidden="true"
+                        />
+                      )}
 
                       <span className="flex min-w-0 flex-1 flex-col">
                         <span className="truncate text-sm font-medium text-white">
-                          Demo
-                        </span>
-                        <span className="truncate text-sm text-indigo-200">
-                          @demo
+                          {name}
                         </span>
                       </span>
                     </span>
@@ -701,16 +743,15 @@ export default function NoteDetailsComponent() {
                             Notes
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900">
-                            {JSON.parse(note?.[0]?.notes || '[]')?.map(
-                              (
-                                point: string,
-                                index: Key | null | undefined,
-                              ) => (
+                            {(bulletPoints || '')
+                              .slice(2, -2)
+                              .split('- ')
+                              .filter((point) => point.trim().length > 0)
+                              .map((point: string, index: number) => (
                                 <p key={index} className="leading-8">
-                                  {point.replace(/["]+/g, '')}
+                                  {'- ' + point.trim()}
                                 </p>
-                              ),
-                            )}
+                              ))}
                           </dd>
                         </div>
 

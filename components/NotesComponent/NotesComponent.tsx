@@ -48,104 +48,6 @@ const navigation = [
     current: false,
   },
 ];
-const teams = [
-  { name: 'Engineering', href: '#', bgColorClass: 'bg-indigo-500' },
-  { name: 'Human Resources', href: '#', bgColorClass: 'bg-green-500' },
-  { name: 'Customer Success', href: '#', bgColorClass: 'bg-yellow-500' },
-];
-const projects = [
-  {
-    id: 1,
-    title: 'Lecture 2 Statistics',
-    initials: 'LR',
-    team: 'Research',
-    members: [
-      {
-        name: 'Dries Vincent',
-        handle: 'driesvincent',
-        imageUrl:
-          'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Lindsay Walton',
-        handle: 'lindsaywalton',
-        imageUrl:
-          'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Courtney Henry',
-        handle: 'courtneyhenry',
-        imageUrl:
-          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Tom Cook',
-        handle: 'tomcook',
-        imageUrl:
-          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalDocuments: 8,
-    lastUpdated: 'March 17, 2020',
-    pinned: true,
-    bgColorClass: 'bg-pink-600',
-  },
-  // More projects...
-];
-
-const agents = [
-  {
-    id: 1,
-    title: 'Audio',
-    bgColorClass: 'bg-blue-600',
-
-    initials: 'A',
-    description: 'Audio Files.',
-    href: '#',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-01.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 2,
-    title: 'PDF',
-    bgColorClass: 'bg-red-600',
-
-    initials: 'P',
-    description: 'PDF Files.',
-    href: 'P',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-02.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 3,
-    title: 'Video',
-    bgColorClass: 'bg-purple-600',
-    initials: 'V',
-    description: 'Video Files.',
-    href: '#',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 4,
-    title: 'Other',
-    bgColorClass: 'bg-blue-800',
-    initials: 'O',
-    description: 'Other Files.',
-    href: '#',
-    imageUrl:
-      'https://tailwindui.com/img/ecommerce-images/home-page-03-tool-03.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-];
-const pinnedProjects = projects.filter((project) => project.pinned);
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -154,9 +56,6 @@ function classNames(...classes: string[]) {
 const NotesComponent = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openNotesModal, setOpenNotesModal] = useState(false);
-  const [openAgentModal, setOpenAgentModal] = useState(false);
-  const [openAddContextModal, setOpenAddContextModal] = useState(false);
-  const [success, setSuccess] = useState(false);
   const session: Session | null = useSession();
   const userID = session?.user?.id;
 
@@ -166,6 +65,7 @@ const NotesComponent = () => {
     userID ? `/api/notes-page-data?userID=${userID}` : null,
     fetcher,
   );
+
   const handleLogout = async () => {
     const { error } = await supabaseClient.auth.signOut();
     if (error) return alert(error.message);
@@ -196,6 +96,13 @@ const NotesComponent = () => {
       bgColorClass: note.color_theme,
     }),
   );
+
+  const name = session?.user?.user_metadata?.full_name;
+  const avatar_url = session?.user?.user_metadata?.avatar_url;
+
+  const proxyUrl = '/api/proxy?imageUrl=';
+
+  const finalImageUrl = proxyUrl + encodeURIComponent(avatar_url);
 
   return (
     <>
@@ -252,13 +159,13 @@ const NotesComponent = () => {
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex flex-shrink-0 items-center px-4">
+                  {/* <div className="flex flex-shrink-0 items-center px-4">
                     <img
                       className="h-8 w-auto"
                       src="https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/logo%20copy.png"
                       alt="Musiklink Logo"
                     />
-                  </div>
+                  </div> */}
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
                     <nav className="px-2">
                       <div className="space-y-1">
@@ -287,36 +194,6 @@ const NotesComponent = () => {
                           </a>
                         ))}
                       </div>
-                      <div className="mt-8">
-                        <h3
-                          className="px-3 text-sm font-medium text-gray-500"
-                          id="mobile-teams-headline"
-                        >
-                          Teams
-                        </h3>
-                        <div
-                          className="mt-1 space-y-1"
-                          role="group"
-                          aria-labelledby="mobile-teams-headline"
-                        >
-                          {teams.map((team) => (
-                            <a
-                              key={team.name}
-                              href={team.href}
-                              className="group flex items-center rounded-md px-3 py-2 text-base font-medium leading-5 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                            >
-                              <span
-                                className={classNames(
-                                  team.bgColorClass,
-                                  'mr-4 h-2.5 w-2.5 rounded-full',
-                                )}
-                                aria-hidden="true"
-                              />
-                              <span className="truncate">{team.name}</span>
-                            </a>
-                          ))}
-                        </div>
-                      </div>
                     </nav>
                   </div>
                 </Dialog.Panel>
@@ -330,13 +207,13 @@ const NotesComponent = () => {
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-gradient-to-r from-indigo-950 to-indigo-900 lg:pb-4 lg:pt-5">
-          <div className="flex flex-shrink-0 items-center px-6">
+          {/* <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
               alt="NotesAI"
             />
-          </div>
+          </div> */}
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-gradient-to-r from-indigo-950 to-indigo-900">
             {/* User account dropdown */}
@@ -345,18 +222,20 @@ const NotesComponent = () => {
                 <Menu.Button className="group w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100">
                   <span className="flex w-full items-center justify-between">
                     <span className="flex min-w-0 items-center justify-between space-x-3">
-                      <UserIcon
-                        className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
-                        aria-hidden="true"
-                      />
-
-                      <span className="flex min-w-0 flex-1 flex-col">
-                        <span className="truncate text-sm font-medium text-gray-900">
-                          Demo
-                        </span>
-                        <span className="truncate text-sm text-gray-500">
-                          @demo
-                        </span>
+                      {finalImageUrl ? (
+                        <img
+                          src={finalImageUrl}
+                          className="flex-shrink-0 h-10 w-10 rounded-full"
+                          alt={name}
+                        />
+                      ) : (
+                        <UserIcon
+                          className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <span className="truncate text-sm font-medium text-gray-900">
+                        {name}
                       </span>
                     </span>
                     <ChevronUpDownIcon
@@ -573,17 +452,22 @@ const NotesComponent = () => {
                     <Menu.Button className="group w-full rounded-md bg-indigo-800 px-3.5 py-2 text-left text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-indigo-800">
                       <span className="flex w-full items-center justify-between">
                         <span className="flex min-w-0 items-center justify-between space-x-3">
-                          <UserIcon
-                            className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
-                            aria-hidden="true"
-                          />
+                          {finalImageUrl ? (
+                            <img
+                              src={finalImageUrl}
+                              className="flex-shrink-0 h-10 w-10 rounded-full"
+                              alt={name}
+                            />
+                          ) : (
+                            <UserIcon
+                              className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+                              aria-hidden="true"
+                            />
+                          )}
 
                           <span className="flex min-w-0 flex-1 flex-col">
                             <span className="truncate text-sm font-medium text-white">
-                              Demo
-                            </span>
-                            <span className="truncate text-sm text-indigo-200">
-                              @demo
+                              {name}
                             </span>
                           </span>
                         </span>
@@ -660,7 +544,7 @@ const NotesComponent = () => {
               </div>
             </div>
           </div>
-          <main className="flex-1">
+          <main className="flex-1 bg-gray-600">
             {/* Page title & actions */}
             <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
               <div className="min-w-0 flex-1">
@@ -733,9 +617,7 @@ const NotesComponent = () => {
               </button>
             </div>
             {/* Projects table (small breakpoint and up) */}
-
-            {/* Projects table (small breakpoint and up) */}
-            <div className="hidden sm:block ">
+            <div className="hidden sm:block">
               <div className="inline-block min-w-full border-b align-middle">
                 <table className="min-w-full">
                   <thead>

@@ -49,9 +49,9 @@ export default async function handler(
 
   const llm = new OpenAIChat({
     openAIApiKey: openAIApiKey,
-    maxTokens: 250,
+    maxTokens: 400,
     modelName: 'gpt-3.5-turbo',
-    temperature: 0,
+    temperature: 0.1,
   });
 
   const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(

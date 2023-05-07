@@ -176,7 +176,7 @@ export default function HeroSection() {
           </div>
         </div>
         <p className="text-center text-white text-sm mt-4">
-          Demo doens't work on mobile.{' '}
+          Demo doesn't work on mobile.{' '}
         </p>
         <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
           Demo by holden.{' '}
