@@ -365,7 +365,7 @@ export default function GenerateNotesModal(props: Props) {
                       </div>
                     </div>
                   </div>
-                  <EmptyUpload onFileChange={handleFile} />
+                  {!loading && <EmptyUpload onFileChange={handleFile} />}
                   <p className="text-xs mt-2 italic text-gray-400">
                     * File Size is limited to 25 MB.
                   </p>
@@ -375,12 +375,14 @@ export default function GenerateNotesModal(props: Props) {
                         <span className="text-sm text-gray-200 font-bold bg-gray-800 p-2 rounded-md">
                           {file.name}
                         </span>
-                        <button
-                          className="text-red-500 hover:text-red-700"
-                          onClick={() => removeFile(id)}
-                        >
-                          Remove
-                        </button>
+                        {!loading && (
+                          <button
+                            className="text-red-500 hover:text-red-700"
+                            onClick={() => removeFile(id)}
+                          >
+                            Remove
+                          </button>
+                        )}
                       </li>
                     ))}
                   </ul>

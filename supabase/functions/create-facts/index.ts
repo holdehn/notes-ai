@@ -31,7 +31,7 @@ serve(async (req) => {
       openAIApiKey: OPENAI_API_KEY,
       maxTokens: 400,
       modelName: 'gpt-3.5-turbo',
-      temperature: 0.3,
+      temperature: 0.7,
       streaming: true,
     });
 
@@ -63,8 +63,9 @@ serve(async (req) => {
       Respond with the following format.
       - Bullet point format 
       - Separate each bullet point with a new line
-      - Each bullet point should be informative to the user
+      - Each bullet point should be informative to the user and give them context about the topic
       - Each bullet point should be a complete sentence and informative to the user
+      - There should be a combination longer more informative bullet points and shorter bullet points that are more concise
   
       `,
     );

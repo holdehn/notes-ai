@@ -544,7 +544,15 @@ const NotesComponent = () => {
               </div>
             </div>
           </div>
-          <main className="flex-1 bg-gray-600">
+          <main className="flex-1 relative pb-2">
+            <div
+              className="absolute inset-x-0 top-0 bottom-0 bg-gray-600"
+              style={{
+                top: 'calc(100% - 3rem)',
+                minHeight: 'calc(100vh - 3rem)',
+              }}
+            ></div>
+
             {/* Page title & actions */}
             <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
               <div className="min-w-0 flex-1">
@@ -569,6 +577,7 @@ const NotesComponent = () => {
                 />
               </div>
             </div>
+
             {/* Projects list (only on smallest breakpoint) */}
             <div className="sm:hidden">
               <div className="px-4 sm:px-6">
@@ -617,77 +626,92 @@ const NotesComponent = () => {
               </button>
             </div>
             {/* Projects table (small breakpoint and up) */}
+
             <div className="hidden sm:block">
-              <div className="inline-block min-w-full border-b align-middle">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="border-t border-gray-600">
-                      <th
-                        className="border-b border-gray-600 bg-gray-800 px-6 py-3 text-left text-sm font-semibold text-gray-200"
-                        scope="col"
-                      >
-                        <span className="lg:pl-2">My Notes</span>
-                      </th>
-                      <th
-                        className="border-b border-gray-600 bg-gray-800 px-6 py-3 text-left text-sm font-semibold text-gray-200"
-                        scope="col"
-                      >
-                        Documents
-                      </th>
-                      <th
-                        className="hidden border-b border-gray-600 bg-gray-800 px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
-                        scope="col"
-                      >
-                        Last updated
-                      </th>
-                      <th
-                        className="border-b border-gray-600 bg-gray-800 py-3 pr-6 text-right text-sm font-semibold text-gray-200"
-                        scope="col"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-600 bg-gray-700">
-                    {notes?.map((note: any) => (
-                      <tr key={note.index}>
-                        <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-200">
-                          <div className="flex items-center space-x-3 lg:pl-2">
-                            <div
-                              className={classNames(
-                                note.bgColorClass,
-                                'h-2.5 w-2.5 flex-shrink-0 rounded-full',
-                              )}
-                              aria-hidden="true"
-                            />
+              <div className="hidden sm:block">
+                <div className="inline-block min-w-full border-b align-middle">
+                  <table className="min-w-full">
+                    <thead>
+                      <tr className="border-t border-gray-600 bg-gray-800">
+                        <th
+                          className="border-b border-gray-600 bg-gray-800 px-6 py-3 text-left text-sm font-semibold text-gray-200"
+                          scope="col"
+                        >
+                          <span className="lg:pl-2">My Notes</span>
+                        </th>
+                        <th
+                          className="border-b border-gray-600 bg-gray-800 px-6 py-3 text-left text-sm font-semibold text-gray-200"
+                          scope="col"
+                        >
+                          Documents
+                        </th>
+                        <th
+                          className="hidden border-b border-gray-600 bg-gray-800 px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
+                          scope="col"
+                        >
+                          Last updated
+                        </th>
+                        <th
+                          className="border-b border-gray-600 bg-gray-800 py-3 pr-6 text-right text-sm font-semibold text-gray-200"
+                          scope="col"
+                        />
+                      </tr>
+                    </thead>
+
+                    <tbody
+                      className={`divide-y divide-gray-600 ${
+                        notes.length > 0 ? 'bg-gray-700' : ''
+                      }`}
+                    >
+                      {notes.map((note: any) => (
+                        <tr key={note.index}>
+                          <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-200">
+                            <div className="flex items-center space-x-3 lg:pl-2">
+                              <div
+                                className={classNames(
+                                  note.bgColorClass,
+                                  'h-2.5 w-2.5 flex-shrink-0 rounded-full',
+                                )}
+                                aria-hidden="true"
+                              />
+                              <a
+                                href={`/my-notes/${note.note_id}`}
+                                className="truncate hover:text-gray-600"
+                              >
+                                <span>{note.title}</span>
+                              </a>
+                            </div>
+                          </td>
+                          <td className="px-6 py-3 text-sm font-medium text-gray-200">
+                            <div className="flex items-center space-x-2">
+                              <div className="flex flex-shrink-0 -space-x-1">
+                                {note.agent_name}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-200 md:table-cell">
+                            {note.created_at}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                             <a
                               href={`/my-notes/${note.note_id}`}
-                              className="truncate hover:text-gray-600"
+                              className="text-indigo-400 hover:text-indigo-600"
                             >
-                              <span>{note.title}</span>
+                              View
                             </a>
-                          </div>
-                        </td>
-                        <td className="px-6 py-3 text-sm font-medium text-gray-200">
-                          <div className="flex items-center space-x-2">
-                            <div className="flex flex-shrink-0 -space-x-1">
-                              {note.agent_name}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-200 md:table-cell">
-                          {note.created_at}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
-                          <a
-                            href={`/my-notes/${note.note_id}`}
-                            className="text-indigo-400 hover:text-indigo-600"
-                          >
-                            View
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {notes.length === 0 && (
+                    <div className="flex justify-center items-center h-32 bg-gray-600">
+                      <div className="text-white font-bold text-xl">
+                        No notes created yet!
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </main>
