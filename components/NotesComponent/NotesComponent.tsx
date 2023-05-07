@@ -707,8 +707,8 @@ const NotesComponent = () => {
                     </tbody>
                   </table>
                   {notes?.length === 0 && (
-                    <div className="flex justify-center items-center h-32 bg-gray-600">
-                      <div className="text-white font-bold text-xl">
+                    <div className="flex justify-center items-center h-32 bg-white">
+                      <div className="text-black font-bold text-xl">
                         No notes created yet!
                       </div>
                     </div>
