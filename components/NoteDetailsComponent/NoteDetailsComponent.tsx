@@ -1,14 +1,4 @@
-import {
-  Fragment,
-  JSXElementConstructor,
-  Key,
-  ReactElement,
-  ReactFragment,
-  ReactPortal,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
@@ -26,23 +16,56 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
 
 import Link from 'next/link';
-import { Popover } from '@headlessui/react';
+
 import {
-  ArrowLongLeftIcon,
   CheckIcon,
   HandThumbUpIcon,
-  QuestionMarkCircleIcon,
   UserIcon,
 } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/router';
 import { createNotesFacts, createNotesSummary } from '../api';
-import { set } from 'date-fns';
+import { Document, Packer, Paragraph, TextRun } from 'docx';
+import { saveAs } from 'file-saver';
+
+async function saveChanges(noteId: any, userId: any, summary: any, notes: any) {
+  // Save the summary
+  const summaryResponse = await fetch('/api/update-note-summary', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ noteId, userId, summary }),
+  });
+
+  const summaryData = await summaryResponse.json();
+  if (!summaryResponse.ok) {
+    console.error('Error updating summary', summaryData);
+    return;
+  }
+
+  // Save the notes
+  const notesResponse = await fetch('/api/update-note-facts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ noteId, userId, notes }),
+  });
+
+  const notesData = await notesResponse.json();
+  if (!notesResponse.ok) {
+    console.error('Error updating notes', notesData);
+    return;
+  }
+
+  console.log('Summary and Notes updated successfully');
+}
 
 export default function NoteDetailsComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [summaryText, setSummaryText] = useState('');
   const [bulletPoints, setBulletPoints] = useState<string>('');
-
+  const [showSaveButton, setShowSaveButton] = useState(false);
   const session = useSession();
   const user_id = session?.user?.id;
   const router = useRouter();
@@ -134,6 +157,58 @@ export default function NoteDetailsComponent() {
     });
 
     router.push('/');
+  };
+
+  const handleSave = async () => {
+    await saveChanges(noteId, user_id, summaryText, bulletPoints);
+  };
+
+  const exportToDocx = async () => {
+    // Extract the title, summary, and bullet points from the HTML
+    const title = note?.[0].title;
+    const summary = summaryText;
+    const bulletPointsArray = (bulletPoints || '')
+      .slice(2, -2)
+      .split('- ')
+      .filter((point) => point.trim().length > 0);
+
+    // Create the Paragraph elements for the docx file
+    const titleParagraph = new Paragraph({
+      children: [new TextRun({ text: title, bold: true, size: 28 })],
+      spacing: { after: 200 },
+    });
+
+    const summaryParagraph = new Paragraph({
+      children: [new TextRun({ text: 'Summary: ' + summary })],
+      spacing: { after: 200 },
+    });
+
+    const bulletPointParagraphs = bulletPointsArray.map(
+      (point) =>
+        new Paragraph({
+          children: [new TextRun({ text: '- ' + point.trim() })],
+          spacing: { after: 120 },
+        }),
+    );
+
+    // Create the section with the extracted content
+    const section = {
+      children: [titleParagraph, summaryParagraph, ...bulletPointParagraphs],
+    };
+
+    // Create the docx Document
+    const doc = new Document({
+      sections: [section],
+    });
+
+    // Generate the docx file buffer
+    const buffer = await Packer.toBuffer(doc);
+
+    // Save the buffer as a file or provide it as a download in the browser
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    });
+    saveAs(blob, 'exported-notes.docx');
   };
 
   return (
@@ -731,6 +806,7 @@ export default function NoteDetailsComponent() {
                   <div className="mt-6 flex flex-col justify-stretch">
                     <button
                       type="button"
+                      onClick={exportToDocx}
                       className="inline-flex items-center justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                     >
                       Export Notes
