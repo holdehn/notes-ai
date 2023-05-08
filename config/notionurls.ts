@@ -1,3 +1,4 @@
+//for scraping
 export const urls = [
   'https://www.w3schools.com/ai/ai_mathematics.asp',
   'https://www.w3schools.com/ai/ai_linear.asp',

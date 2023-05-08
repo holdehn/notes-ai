@@ -38,78 +38,6 @@ import { useRouter } from 'next/router';
 import { createNotesFacts, createNotesSummary } from '../api';
 import { set } from 'date-fns';
 
-const navigation = [
-  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
-  {
-    name: 'Live Assistant',
-    href: '/live-assistant',
-    icon: SmartToyIcon,
-    current: false,
-  },
-  {
-    name: 'Research',
-    href: '/research',
-    icon: MagnifyingGlassIcon,
-    current: false,
-  },
-
-  {
-    name: 'Settings',
-    href: '/settings',
-    icon: Bars3CenterLeftIcon,
-    current: false,
-  },
-];
-const teams = [
-  { name: 'Engineering', href: '#', bgColorClass: 'bg-indigo-500' },
-  { name: 'Human Resources', href: '#', bgColorClass: 'bg-green-500' },
-  { name: 'Customer Success', href: '#', bgColorClass: 'bg-yellow-500' },
-];
-const projects = [
-  {
-    id: 1,
-    title: 'Sales Call with John 4/19/2021',
-    initials: 'LR',
-    team: 'Research',
-    members: [
-      {
-        name: 'Dries Vincent',
-        handle: 'driesvincent',
-        imageUrl:
-          'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Lindsay Walton',
-        handle: 'lindsaywalton',
-        imageUrl:
-          'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Courtney Henry',
-        handle: 'courtneyhenry',
-        imageUrl:
-          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Tom Cook',
-        handle: 'tomcook',
-        imageUrl:
-          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalDocuments: 8,
-    lastUpdated: 'March 17, 2020',
-    pinned: true,
-    bgColorClass: 'bg-pink-600',
-  },
-  // More projects...
-];
-const pinnedProjects = projects.filter((project) => project.pinned);
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
 export default function NoteDetailsComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [summaryText, setSummaryText] = useState('');
@@ -287,36 +215,6 @@ export default function NoteDetailsComponent() {
                             {item.name}
                           </a>
                         ))}
-                      </div>
-                      <div className="mt-8">
-                        <h3
-                          className="px-3 text-sm font-medium text-gray-500"
-                          id="mobile-teams-headline"
-                        >
-                          Teams
-                        </h3>
-                        <div
-                          className="mt-1 space-y-1"
-                          role="group"
-                          aria-labelledby="mobile-teams-headline"
-                        >
-                          {teams.map((team) => (
-                            <a
-                              key={team.name}
-                              href={team.href}
-                              className="group flex items-center rounded-md px-3 py-2 text-base font-medium leading-5 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                            >
-                              <span
-                                className={classNames(
-                                  team.bgColorClass,
-                                  'mr-4 h-2.5 w-2.5 rounded-full',
-                                )}
-                                aria-hidden="true"
-                              />
-                              <span className="truncate">{team.name}</span>
-                            </a>
-                          ))}
-                        </div>
                       </div>
                     </nav>
                   </div>
@@ -650,7 +548,7 @@ export default function NoteDetailsComponent() {
               </div>
             </div>
           </div>
-          <main className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] opacity-90">
+          <main className="bg-gradient-to-r from-[#0e0c2f] via-[#0d0f3c] to-[#320606] opacity-90">
             {/* Page title & actions */}
             <div className="border-b bg-black border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="min-w-0 flex-1">
@@ -832,12 +730,6 @@ export default function NoteDetailsComponent() {
     </>
   );
 }
-const user = {
-  name: 'Whitney Francis',
-  email: 'whitney@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-};
 
 const eventTypes = {
   applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
@@ -870,3 +762,30 @@ const timeline = [
     target: 'Audio',
   },
 ];
+
+const navigation = [
+  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
+  {
+    name: 'Live Assistant',
+    href: '/live-assistant',
+    icon: SmartToyIcon,
+    current: false,
+  },
+  {
+    name: 'Research',
+    href: '/research',
+    icon: MagnifyingGlassIcon,
+    current: false,
+  },
+
+  {
+    name: 'Settings',
+    href: '/settings',
+    icon: Bars3CenterLeftIcon,
+    current: false,
+  },
+];
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
+}

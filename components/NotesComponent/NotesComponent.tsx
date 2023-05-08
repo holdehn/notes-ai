@@ -14,44 +14,11 @@ import {
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
-import { createSupabaseClient, supabaseClient } from 'supabase-client';
 import { Session, useUser } from '@supabase/auth-helpers-react';
 import GenerateNotesModal from '../Modals/GenerateNotesModal/GenerateNotesModal';
 import { useSession } from '@supabase/auth-helpers-react';
-import { format } from 'date-fns';
 import router from 'next/router';
-
-function formatDateTime(dateString: string | number | Date) {
-  const date = new Date(dateString);
-  return format(date, 'PPP p');
-}
-
-const navigation = [
-  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
-  {
-    name: 'Live Notes',
-    href: '#not-implemented-yet',
-    icon: SmartToyIcon,
-    current: false,
-  },
-  {
-    name: 'Research',
-    href: '#not-implemented-yet',
-    icon: MagnifyingGlassIcon,
-    current: false,
-  },
-
-  {
-    name: 'Settings',
-    href: '#not-implemented-yet',
-    icon: Bars3CenterLeftIcon,
-    current: false,
-  },
-];
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
+import formatDateTime from '@/utils/formatDateTime';
 
 const NotesComponent = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -211,7 +178,7 @@ const NotesComponent = () => {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-gradient-to-r from-black to-indigo-950 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-indigo-900 lg:pb-4 lg:pt-5">
           {/* <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -220,7 +187,7 @@ const NotesComponent = () => {
             />
           </div> */}
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-gradient-to-r from-indigo-950 to-indigo-900">
+          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-indigo-900">
             {/* User account dropdown */}
             <Menu as="div" className="relative inline-block px-3 text-left">
               <div>
@@ -561,7 +528,7 @@ const NotesComponent = () => {
             )}
 
             {/* Page title & actions */}
-            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gradient-to-r from-[#530707] via-[#000592] to-[#94295f] opacity-90">
+            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 opacity-90">
               <div className="min-w-0 flex-1">
                 <h1 className="text-xl font-bold leading-6 text-gray-50 sm:truncate">
                   NotesAI
@@ -731,3 +698,30 @@ const NotesComponent = () => {
 };
 
 export default NotesComponent;
+
+const navigation = [
+  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
+  {
+    name: 'Live Notes',
+    href: '#not-implemented-yet',
+    icon: SmartToyIcon,
+    current: false,
+  },
+  {
+    name: 'Research',
+    href: '#not-implemented-yet',
+    icon: MagnifyingGlassIcon,
+    current: false,
+  },
+
+  {
+    name: 'Settings',
+    href: '#not-implemented-yet',
+    icon: Bars3CenterLeftIcon,
+    current: false,
+  },
+];
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
+}
