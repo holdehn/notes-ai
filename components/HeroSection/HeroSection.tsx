@@ -129,7 +129,7 @@ export default function HeroSection() {
                 magicLink={false}
                 dark={false}
                 showLinks={false}
-                redirectTo={rootUrl}
+                redirectTo={`${rootUrl}/my-notes`}
                 onlyThirdPartyProviders={true}
                 providers={['google']}
                 supabaseClient={supabase}

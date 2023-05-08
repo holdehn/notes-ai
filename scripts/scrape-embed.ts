@@ -1,3 +1,5 @@
+//in case we want to add context to the embeddings
+
 import { Document } from 'langchain/document';
 import * as fs from 'fs/promises';
 import { CustomWebLoader } from '@/utils/custom_web_loader';

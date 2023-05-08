@@ -665,7 +665,13 @@ const NotesComponent = () => {
                       }`}
                     >
                       {notes?.map((note: any) => (
-                        <tr key={note.index}>
+                        <tr
+                          key={note.index}
+                          className="group cursor-pointer hover:bg-purple-400"
+                          onClick={() =>
+                            router.push(`/my-notes/${note.note_id}`)
+                          }
+                        >
                           <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-200">
                             <div className="flex items-center space-x-3 lg:pl-2">
                               <div
@@ -677,7 +683,7 @@ const NotesComponent = () => {
                               />
                               <a
                                 href={`/my-notes/${note.note_id}`}
-                                className="truncate hover:text-gray-600 "
+                                className="truncate "
                               >
                                 <span>{note.title}</span>
                               </a>
@@ -696,7 +702,7 @@ const NotesComponent = () => {
                           <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                             <a
                               href={`/my-notes/${note.note_id}`}
-                              className="text-indigo-400 hover:text-indigo-600"
+                              className="text-indigo-400 group-hover:text-indigo-600"
                             >
                               View
                             </a>
