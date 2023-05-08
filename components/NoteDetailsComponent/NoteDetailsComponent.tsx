@@ -126,6 +126,16 @@ export default function NoteDetailsComponent() {
   }
   const { note } = data;
 
+  const handleLogout = async () => {
+    await fetch('/api/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+    });
+
+    router.push('/');
+  };
+
   return (
     <>
       <div className="min-h-screen">
@@ -362,8 +372,8 @@ export default function NoteDetailsComponent() {
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <button
+                          onClick={handleLogout}
                           className={classNames(
                             active
                               ? 'bg-gray-100 text-gray-900'
@@ -372,7 +382,7 @@ export default function NoteDetailsComponent() {
                           )}
                         >
                           Logout
-                        </a>
+                        </button>
                       )}
                     </Menu.Item>
                   </div>
@@ -766,21 +776,21 @@ const timeline = [
 const navigation = [
   { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
   {
-    name: 'Live Assistant',
-    href: '/live-assistant',
+    name: 'Live Notes',
+    href: '#live-notes',
     icon: SmartToyIcon,
     current: false,
   },
   {
     name: 'Research',
-    href: '/research',
+    href: '#research',
     icon: MagnifyingGlassIcon,
     current: false,
   },
 
   {
     name: 'Settings',
-    href: '/settings',
+    href: '#settings',
     icon: Bars3CenterLeftIcon,
     current: false,
   },

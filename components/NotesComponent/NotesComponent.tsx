@@ -102,7 +102,7 @@ const NotesComponent = () => {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white pb-4 pt-5">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col pb-4 pt-5">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -182,7 +182,7 @@ const NotesComponent = () => {
             />
           </div> */}
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1 bg-indigo-900">
+          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
             {/* User account dropdown */}
             <Menu as="div" className="relative inline-block px-3 text-left">
               <div>
@@ -380,7 +380,7 @@ const NotesComponent = () => {
         {/* Main column */}
         <div className="flex flex-col lg:pl-64">
           {/* Search header */}
-          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:hidden">
+          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 lg:hidden">
             <button
               type="button"
               className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500 lg:hidden"
@@ -454,7 +454,7 @@ const NotesComponent = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <div className="py-1">
                         <Menu.Item>
                           {({ active }) => (
@@ -602,12 +602,7 @@ const NotesComponent = () => {
                         >
                           <span className="lg:pl-2">My Notes</span>
                         </th>
-                        <th
-                          className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
-                          scope="col"
-                        >
-                          Documents
-                        </th>
+
                         <th
                           className="hidden border-b border-gray-600 bg-black px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
                           scope="col"
@@ -651,13 +646,7 @@ const NotesComponent = () => {
                               </a>
                             </div>
                           </td>
-                          <td className="px-6 py-3 text-sm font-medium text-gray-200">
-                            <div className="flex items-center space-x-2">
-                              <div className="flex flex-shrink-0 -space-x-1">
-                                {note.topic}
-                              </div>
-                            </div>
-                          </td>
+
                           <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-200 md:table-cell">
                             {note.created_at}
                           </td>

@@ -115,7 +115,7 @@ export default function HeroSection() {
           {/* Change padding values */}
           <div className="text-center">
             <h1 className="text-5xl font-bold tracking-tight text-white sm:text-5xl">
-              Taking lecture notes is so April 2023.{' '}
+              Taking notes is so April 2023.{' '}
             </h1>
             <div className="hidden sm:flex sm:justify-center">
               <div className="relative rounded-full px-3 py-6 text-sm leading-6 text-indigo-200 ring-1 ring-gray-900/10 hover:ring-gray-900/20">

@@ -33,8 +33,8 @@ export default function GenerateNotesModal(props: Props) {
   const cancelButtonRef = useRef(null);
   const [notesText, setNotesText] = useState(''); // Add this line
   const [convertedText, setConvertedText] = useState('');
-  const [files, setFiles] = useState<FileDisplay[]>([]);
-  const [fileObjects, setFileObjects] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileDisplay | null>(null);
+  const [fileObject, setFileObject] = useState<File | null>(null);
   const [nextId, setNextId] = useState<number>(1);
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState(false);
@@ -44,6 +44,11 @@ export default function GenerateNotesModal(props: Props) {
   const router = useRouter();
 
   const handleFile = (e: any) => {
+    if (fileObject) {
+      setFiles(null);
+      setFileObject(null);
+    }
+
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
@@ -65,27 +70,23 @@ export default function GenerateNotesModal(props: Props) {
         file: file,
         id: nextId,
       };
-      setFiles([...files, fileDisplay]);
-      setFileObjects([...fileObjects, file]);
+      setFiles(fileDisplay);
+      setFileObject(file);
 
       setNextId(nextId + 1);
     }
   };
 
-  const removeFile = (id: number) => {
-    const newFiles = files.filter((file) => file.id !== id);
-    const newFileObjects = fileObjects.filter(
-      (file) => file.name !== files[id].file.name,
-    );
-    setFiles(newFiles);
-    setFileObjects(newFileObjects);
+  const removeFile = () => {
+    setFiles(null);
+    setFileObject(null);
   };
 
   const handleClose = () => {
     if (loading) return;
-    setFiles([]);
+    setFiles(null);
     setName('');
-    setFileObjects([]);
+    setFileObject(null);
     setOpen(false);
     setLoading(false);
     setSubmitted(false); // Add this line
@@ -166,9 +167,7 @@ export default function GenerateNotesModal(props: Props) {
 
       // Write the video file to FFmpeg's file system
       const inputFileName =
-        fileObjects[0].type.split('/')[1] === 'webm'
-          ? 'input.webm'
-          : 'input.mp4';
+        fileObject?.type.split('/')[1] === 'webm' ? 'input.webm' : 'input.mp4';
       ffmpeg.FS('writeFile', inputFileName, await fetchFile(videoFile));
 
       // Run the FFmpeg command to convert the video to MP3
@@ -202,14 +201,14 @@ export default function GenerateNotesModal(props: Props) {
 
   const onSubmit = async (values: any, { resetForm }: any) => {
     // If no file and no YouTube return
-    if (fileObjects.length === 0) {
+    if (!fileObject) {
       return;
     }
     if (!userID) return;
     setLoading(true);
     setSubmitted(true);
     const noteID = uuidv4();
-    const file = fileObjects[0];
+    const file = fileObject;
     const fileType = file.type.split('/')[0];
     let transcription;
 
@@ -231,9 +230,9 @@ export default function GenerateNotesModal(props: Props) {
     });
 
     router.push(`/my-notes/${noteID}`);
-    setFiles([]);
+    setFiles(null);
     setName('');
-    setFileObjects([]);
+    setFileObject(null);
 
     resetForm();
     setLoading(false);
@@ -371,21 +370,21 @@ export default function GenerateNotesModal(props: Props) {
                     * Only audio and video files are accepted.
                   </p>
                   <ul className="mt-4">
-                    {files.map(({ file, id }) => (
-                      <li key={id} className="flex items-center space-x-2 mb-2">
+                    {files?.file?.name && (
+                      <li className="flex items-center space-x-2 mb-2">
                         <span className="text-sm text-gray-200 font-bold bg-gray-800 p-2 rounded-md">
-                          {file.name}
+                          {files?.file?.name}
                         </span>
                         {!loading && (
                           <button
                             className="text-red-500 hover:text-red-700"
-                            onClick={() => removeFile(id)}
+                            onClick={() => removeFile()}
                           >
                             Remove
                           </button>
                         )}
                       </li>
-                    ))}
+                    )}
                   </ul>
 
                   {!loading ? (
