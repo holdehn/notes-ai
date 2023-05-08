@@ -67,6 +67,7 @@
     "react-dropzone": "^14.2.3",
     "react-markdown": "^8.0.5",
     "react-merge-refs": "^2.0.1",
+    "react-player": "^2.12.0",
     "react-scroll": "^1.8.9",
     "read-file": "^0.2.0",
     "stripe": "^12.0.0",
@@ -80,6 +81,7 @@
     "yup": "^1.1.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/busboy": "^1.5.0",
     "@types/classnames": "^2.3.1",
     "@types/cookie": "^0.5.1",
@@ -88,6 +90,7 @@
     "@types/katex": "^0.16.0",
     "@types/lodash.debounce": "^4.0.7",
     "@types/multer": "^1.4.7",
+    "@types/next": "^9.0.0",
     "@types/node": "^18.16.1",
     "@types/pdf-parse": "^1.1.1",
     "@types/react": "^18.0.28",
