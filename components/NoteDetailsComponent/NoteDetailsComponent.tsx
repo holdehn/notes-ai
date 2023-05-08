@@ -119,7 +119,6 @@ export default function NoteDetailsComponent() {
   const user_id = session?.user?.id;
   const router = useRouter();
   const noteId = router.query.noteID;
-  console.log(JSON.stringify(noteId));
 
   const name = session?.user?.user_metadata?.full_name;
   const avatar_url = session?.user?.user_metadata?.avatar_url;

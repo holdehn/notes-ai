@@ -38,10 +38,6 @@ const sendSummaryToSupabase = async ({
   userId: string;
 }) => {
   try {
-    console.log('Sending summary:', summary);
-    console.log('Sending noteID:', noteId);
-    console.log('Sending userID:', userId);
-
     const response = await fetch('/api/update-note-summary', {
       method: 'POST',
       headers: {
@@ -60,7 +56,6 @@ const sendSummaryToSupabase = async ({
     }
 
     const data = await response.json();
-    console.log('Summary updated:', data);
   } catch (error) {
     console.error('Error updating summary:', error);
   }
@@ -75,10 +70,6 @@ const sendNotesToSupabase = async ({
   userId: string;
 }) => {
   try {
-    console.log('Sending notes:', notes);
-    console.log('Sending noteID:', noteId);
-    console.log('Sending userID:', userId);
-
     const response = await fetch('/api/update-note-facts', {
       method: 'POST',
       headers: {
@@ -97,7 +88,6 @@ const sendNotesToSupabase = async ({
     }
 
     const data = await response.json();
-    console.log('Notes updated:', data);
   } catch (error) {
     console.error('Error updating notes:', error);
   }

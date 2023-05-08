@@ -25,7 +25,7 @@ export default function TextInput() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log('Submitted:', values);
+
     fetch('/api/chat', {
       method: 'POST',
       headers: {

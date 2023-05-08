@@ -112,7 +112,7 @@ export default function NotesForm() {
 
   const handleGenerate = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log('Submitted:', values);
+
     fetch('/api/create-notes', {
       method: 'POST',
       headers: {

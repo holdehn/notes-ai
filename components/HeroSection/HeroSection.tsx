@@ -121,10 +121,6 @@ export default function HeroSection() {
               <div className="relative rounded-full px-3 py-6 text-sm leading-6 text-indigo-200 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                 Upload lecture recordings or PDF's and recieve premium high
                 quality notes instantly{' '}
-                <a href="#" className="font-semibold text-indigo-500">
-                  <span className="absolute inset-0" aria-hidden="true" />
-                  Learn more <span aria-hidden="true">&rarr;</span>
-                </a>
               </div>
             </div>
             <div className="max-w-md mx-auto mt-4">
@@ -175,9 +171,6 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
-        <p className="text-center text-white text-sm mt-4">
-          Demo doesn't work on mobile.{' '}
-        </p>
         <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
           Demo by holden.{' '}
           <a

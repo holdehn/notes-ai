@@ -67,7 +67,12 @@ const NotesComponent = () => {
   );
 
   const handleLogout = async () => {
-    const { error } = await supabaseClient.auth.signOut();
+    await fetch('/api/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+    });
+
     if (error) return alert(error.message);
 
     router.push('/');
