@@ -558,6 +558,7 @@ export default function NoteDetailsComponent() {
               </div>
             </div>
           </div>
+
           <main className="bg-gradient-to-r from-[#0e0c2f] via-[#0d0f3c] to-[#320606] opacity-90">
             {/* Page title & actions */}
             <div className="border-b bg-black border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
@@ -615,7 +616,11 @@ export default function NoteDetailsComponent() {
             <div className="pb-4 mx-auto mt-4 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
               <div className="space-y-6 lg:col-span-2 lg:col-start-1">
                 {/* Description list*/}
-                <section aria-labelledby="applicant-information-title">
+                <section
+                  id="editable-content"
+                  contentEditable="true"
+                  aria-labelledby="applicant-information-title"
+                >
                   <div className="bg-white shadow sm:rounded-lg">
                     <div className="px-4 py-5 sm:px-6 bg-gray-100">
                       <h2
