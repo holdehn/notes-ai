@@ -206,7 +206,7 @@ const NotesComponent = () => {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-gradient-to-r from-indigo-950 to-indigo-900 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-gradient-to-r from-black to-indigo-950 lg:pb-4 lg:pt-5">
           {/* <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -582,15 +582,12 @@ const NotesComponent = () => {
 
             {/* Projects list (only on smallest breakpoint) */}
             <div className="sm:hidden">
-              <div className="px-4 sm:px-6">
-                <h2 className="text-sm font-medium text-gray-900">Notes</h2>
-              </div>
               <ul role="list">
                 {notes?.map((note: any) => (
                   <li key={note.index}>
                     <a
                       href={`/my-notes/${note.note_id}`}
-                      className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
+                      className="group flex items-center justify-between px-4 py-4 hover:bg-purple-400 sm:px-6"
                     >
                       <span className="flex items-center space-x-3 truncate">
                         <span
@@ -600,11 +597,8 @@ const NotesComponent = () => {
                           )}
                           aria-hidden="true"
                         />
-                        <span className="truncate text-sm font-medium leading-6">
+                        <span className="truncate text-sm font-medium leading-6 text-white">
                           {note.title}{' '}
-                          <span className="truncate font-normal text-gray-500">
-                            with {note.context}
-                          </span>
                         </span>
                       </span>
                       <ChevronRightIcon
@@ -672,13 +666,13 @@ const NotesComponent = () => {
                               <div
                                 className={classNames(
                                   note.bgColorClass,
-                                  'h-2.5 w-2.5 flex-shrink-0 rounded-full',
+                                  'h-2.5 w-2.5 flex-shrink-0 rounded-full ',
                                 )}
                                 aria-hidden="true"
                               />
                               <a
                                 href={`/my-notes/${note.note_id}`}
-                                className="truncate hover:text-gray-600"
+                                className="truncate hover:text-gray-600 "
                               >
                                 <span>{note.title}</span>
                               </a>
