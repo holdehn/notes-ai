@@ -103,6 +103,5 @@ export default async function handler(
     name: name,
     topic: topic,
   });
-  console.log(output);
   return res.status(200).json({ data: output });
 }

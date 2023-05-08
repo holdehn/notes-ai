@@ -11,23 +11,22 @@ export default async function handler(
       // Parse request using Busboy
       const busboyInstance = busboy({ headers: req.headers });
       req.pipe(busboyInstance);
-      console.log('output');
+
       // Extract the file from the request
       busboyInstance.on('file', (name, file) => {
         const chunks: Buffer[] = [];
         file.on('data', (data) => {
           chunks.push(data);
         });
-        console.log('output1');
 
         file.on('end', async () => {
           // Read the PDF from the request
           const pdfBuffer = Buffer.concat(chunks);
-          console.log('output2');
+
           // Extract text from the PDF using pdf-parse
           const pdfData = await pdfParse(pdfBuffer);
           const extractedText = pdfData.text;
-          console.log('output3' + extractedText);
+
           res.status(200).json({ text: extractedText });
         });
       });

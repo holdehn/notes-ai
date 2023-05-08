@@ -28,26 +28,12 @@ export const getServerSideProps = async (
     };
   }
 
-  const user = await supabase.auth.getUser();
-
   // Check if there is an active user
-  if (user && user.data.user) {
-    const userId = user.data.user.id;
-    // Fetch notes-page-data using the supabaseClient
-    const { data: userData, error: userError } = await supabase
-      .from('users')
-      .select('*')
-      .eq('id', userId);
-
-    if (userError) {
-      return {
-        notFound: true,
-      };
-    }
-
+  if (session && session.user?.id) {
+    const userId = session.user?.id;
     const { data: notesData, error: notesError } = await supabase
       .from('notes')
-      .select('*')
+      .select('id, title, created_at, color_theme, user_id, topic')
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
 
@@ -55,11 +41,7 @@ export const getServerSideProps = async (
     return {
       props: {
         fallback: {
-          [`/api/notes-page-data?userID=${userId}`]: {
-            user: user,
-            notes: notesData,
-            initalSession: session,
-          },
+          [`/api/notes-page-data?userID=${userId}`]: {},
         },
       },
     };
@@ -74,13 +56,7 @@ export const getServerSideProps = async (
   };
 };
 
-export default function ({
-  fallback,
-  userData,
-}: {
-  fallback: ProvidedProps;
-  userData: any;
-}) {
+export default function ({ fallback }: { fallback: ProvidedProps }) {
   const router = useRouter();
   const session = useSession();
 

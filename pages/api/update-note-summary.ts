@@ -12,7 +12,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const supabase = createServerSupabaseClient({ req, res });
-  console.log('Updating summary:', summary);
 
   const { data, error } = await supabase
     .from('notes')
@@ -24,7 +23,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .status(500)
       .json({ error: 'Error updating summary', details: error });
   }
-  console.log('Summary updated:', JSON.stringify(data));
 
   res.status(200).json({ message: 'Summary updated', data });
 };

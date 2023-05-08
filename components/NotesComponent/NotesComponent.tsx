@@ -15,7 +15,7 @@ import {
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
 import { Session, useUser } from '@supabase/auth-helpers-react';
-import GenerateNotesModal from '../Modals/GenerateNotesModal/GenerateNotesModal';
+import GenerateNotesModal from '../GenerateNotesModal';
 import { useSession } from '@supabase/auth-helpers-react';
 import router from 'next/router';
 import formatDateTime from '@/utils/formatDateTime';
@@ -49,23 +49,18 @@ const NotesComponent = () => {
       note: {
         color_theme: any;
         created_at: any;
-        functionality: any;
-        context: any;
         id: any;
         title: any[];
-        description: any;
-        agent_name: any;
+        topic: any;
       },
       i: number,
     ) => ({
       index: i + 1,
       note_id: note.id,
       title: note.title,
-      context: note.context,
-      functionality: note.functionality,
-      agent_name: note.agent_name,
       created_at: formatDateTime(note.created_at),
       bgColorClass: note.color_theme,
+      topic: note.topic,
     }),
   );
 
@@ -659,7 +654,7 @@ const NotesComponent = () => {
                           <td className="px-6 py-3 text-sm font-medium text-gray-200">
                             <div className="flex items-center space-x-2">
                               <div className="flex flex-shrink-0 -space-x-1">
-                                {note.agent_name}
+                                {note.topic}
                               </div>
                             </div>
                           </td>

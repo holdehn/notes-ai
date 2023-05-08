@@ -12,8 +12,6 @@ import ffmpegPath from '@ffmpeg-installer/ffmpeg';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 async function transcribe(file: Buffer, contentType: string) {
-  console.log(`Transcribing file with contentType: ${contentType}`);
-
   const form = new FormData();
   form.append('file', file, {
     contentType,
@@ -36,43 +34,7 @@ async function transcribe(file: Buffer, contentType: string) {
   if (!response.ok) {
     console.log(response);
   }
-  console.log(`Transcription API response status: ${response.status}`);
   return response;
-}
-
-//convert to mp3 from any other format
-//mp3 instead of wav to keep file size to openai api limit
-async function convertToMp3(buffer: Buffer, fileType: string): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    const input = new stream.PassThrough();
-    input.end(buffer);
-    console.log('input');
-
-    const chunks: Buffer[] = [];
-    const output = new Transform({
-      transform(chunk, encoding, callback) {
-        chunks.push(chunk);
-        callback();
-      },
-    });
-
-    console.log('output');
-    const command = ffmpeg(input)
-      .setFfmpegPath(ffmpegPath.path) // Add this line
-      .inputFormat(fileType.split('/')[1])
-      .outputFormat('mp3')
-      .output(output)
-      .on('error', (error) => {
-        reject(error);
-      });
-
-    console.log('command');
-    command.run();
-    console.log('run');
-    output.on('finish', () => {
-      resolve(Buffer.concat(chunks));
-    });
-  });
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -84,7 +46,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       busboyInstance.on('file', async (name, file, info) => {
         // stream file to openai
         const fileType = info.mimeType;
-        console.log(fileType);
 
         let responseData = Buffer.from([]);
         file.on('data', (data) => {

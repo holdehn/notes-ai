@@ -56,6 +56,5 @@ export default async function handler(
   const output = await chain.call({
     input_documents: docs,
   });
-  console.log(output);
   return res.status(200).json({ data: output });
 }

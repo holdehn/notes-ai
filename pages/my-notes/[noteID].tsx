@@ -13,7 +13,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (!session) {
+  const user_id = (await supabase.auth.getUser()).data?.user?.id;
+  if (!user_id || !session) {
     return {
       redirect: {
         destination: '/',
@@ -21,8 +22,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       },
     };
   }
-
-  const user_id = session?.user?.id;
 
   const { data: noteData, error: noteError } = await supabase
     .from('notes')

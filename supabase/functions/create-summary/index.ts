@@ -55,7 +55,6 @@ serve(async (req) => {
       type: 'map_reduce',
     });
 
-    console.log('chain loaded');
     chain
       .call(
         {
@@ -72,9 +71,9 @@ serve(async (req) => {
             },
             handleLLMEnd: async () => {
               await writer.ready;
-              console.log('end of chain');
+
               await writer.write(encoder.encode(`data: END_OF_SUMMARY\n\n`));
-              console.log('writer closed');
+
               await writer.close();
             },
             handleLLMError: async (e) => {
@@ -86,7 +85,6 @@ serve(async (req) => {
       )
       .catch((e) => console.error(e));
 
-    console.log('chain called');
     return new Response(stream.readable, {
       headers: {
         ...corsHeaders,

@@ -12,18 +12,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const supabase = createServerSupabaseClient({ req, res });
 
-  const { data: userData, error: userError } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', userID);
-
-  if (userError) {
-    return res.status(500).json({ error: userError.message });
-  }
-
   const { data: notesData, error: notesError } = await supabase
     .from('notes')
-    .select('*')
+    .select('id, title, created_at, color_theme, user_id, topic')
     .eq('user_id', userID)
     .order('created_at', { ascending: false });
 
@@ -31,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ error: notesError.message });
   }
 
-  return res.status(200).json({ user: userData, notes: notesData });
+  return res.status(200).json({ notes: notesData });
 };
 
 export default handler;

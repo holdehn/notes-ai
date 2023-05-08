@@ -19,9 +19,8 @@ serve(async (req: Request) => {
         },
       );
     }
-    console.log('step2');
+
     const fileType = file.type;
-    console.log(fileType);
 
     const newFormData = new FormData();
     newFormData.set('file', file);
@@ -39,7 +38,6 @@ serve(async (req: Request) => {
     );
 
     if (!response.ok) {
-      console.log(response);
       return new Response(
         JSON.stringify({ success: false, error: 'Whisper API request failed' }),
         {
