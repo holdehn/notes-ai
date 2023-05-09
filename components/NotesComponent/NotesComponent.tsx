@@ -73,7 +73,7 @@ const NotesComponent = () => {
 
   return (
     <>
-      <div className="min-h-full bg-black">
+      <div className="min-h-full">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -173,7 +173,7 @@ const NotesComponent = () => {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-indigo-900 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-gradient-to-r from-indigo-950 to-indigo-900 lg:pb-4 lg:pt-5">
           {/* <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -390,28 +390,6 @@ const NotesComponent = () => {
               <Bars3CenterLeftIcon className="h-6 w-6" aria-hidden="true" />
             </button>
             <div className="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-1">
-                <form className="flex w-full md:ml-0" action="#" method="GET">
-                  <label htmlFor="search-field" className="sr-only">
-                    Search
-                  </label>
-                  <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
-                      <MagnifyingGlassIcon
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <input
-                      id="search-field"
-                      name="search-field"
-                      className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 focus:border-transparent focus:outline-none focus:ring-0 focus:placeholder:text-gray-400 sm:text-sm"
-                      placeholder="Search"
-                      type="search"
-                    />
-                  </div>
-                </form>
-              </div>
               <div className="flex items-center">
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative inline-block px-3 text-left">
@@ -511,24 +489,14 @@ const NotesComponent = () => {
               </div>
             </div>
           </div>
-          <main className="flex-1">
-            {!notes && (
-              <div
-                className="absolute inset-x-0 top-0 bottom-0 bg-gray-600"
-                style={{
-                  top: 'calc(100% - 3rem)',
-                  minHeight: 'calc(100vh - 3rem)',
-                }}
-              ></div>
-            )}
-
+          <main className="flex-1 p-6">
             {/* Page title & actions */}
-            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 opacity-90">
+            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gray-200">
               <div className="min-w-0 flex-1">
-                <h1 className="text-xl font-bold leading-6 text-gray-50 sm:truncate">
+                <h1 className="text-xl font-bold leading-6 text-black sm:truncate">
                   NotesAI
                 </h1>
-                <p className="mt-1 text-sm text-gray-200">
+                <p className="mt-1 text-sm text-gray-900">
                   Generate high quality lecture notes instantly!
                 </p>
               </div>
@@ -550,11 +518,13 @@ const NotesComponent = () => {
             {/* Projects list (only on smallest breakpoint) */}
             <div className="sm:hidden">
               <ul role="list">
-                {notes?.map((note: any) => (
+                {notes?.map((note: any, index: number) => (
                   <li key={note.index}>
                     <a
                       href={`/my-notes/${note.note_id}`}
-                      className="group flex items-center justify-between px-4 py-4 hover:bg-purple-400 sm:px-6"
+                      className={`group flex items-center justify-between px-4 py-4 sm:px-6 ${
+                        index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-100'
+                      } hover:bg-purple-400`}
                     >
                       <span className="flex items-center space-x-3 truncate">
                         <span
@@ -564,7 +534,7 @@ const NotesComponent = () => {
                           )}
                           aria-hidden="true"
                         />
-                        <span className="truncate text-sm font-medium leading-6 text-white">
+                        <span className="truncate text-sm font-medium leading-6 text-black">
                           {note.title}{' '}
                         </span>
                       </span>
@@ -618,18 +588,20 @@ const NotesComponent = () => {
 
                     <tbody
                       className={`divide-y divide-gray-600 ${
-                        notes?.length > 0 ? 'bg-indigo-950' : ''
+                        notes?.length > 0 ? 'bg-purple-100' : ''
                       }`}
                     >
-                      {notes?.map((note: any) => (
+                      {notes?.map((note: any, index: number) => (
                         <tr
                           key={note.index}
-                          className="group cursor-pointer hover:bg-purple-400"
+                          className={`group cursor-pointer hover:bg-purple-400 ${
+                            index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-100'
+                          }`}
                           onClick={() =>
                             router.push(`/my-notes/${note.note_id}`)
                           }
                         >
-                          <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-200">
+                          <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-black">
                             <div className="flex items-center space-x-3 lg:pl-2">
                               <div
                                 className={classNames(
@@ -647,13 +619,13 @@ const NotesComponent = () => {
                             </div>
                           </td>
 
-                          <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-200 md:table-cell">
+                          <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-black md:table-cell">
                             {note.created_at}
                           </td>
                           <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                             <a
                               href={`/my-notes/${note.note_id}`}
-                              className="text-indigo-400 group-hover:text-indigo-600"
+                              className="text-indigo-600 group-hover:text-indigo-800"
                             >
                               View
                             </a>

@@ -7,6 +7,14 @@ export interface CreateNoteParams {
   noteID: string;
   transcription: string;
 }
+export interface CreatePublicNoteParams {
+  formikValues: {
+    title: string;
+    topic?: string;
+  };
+  noteID: string;
+  transcription: string;
+}
 
 export type CreateNoteResponse =
   | { error: string; noteId?: undefined }
@@ -21,12 +29,28 @@ export interface CreateNotesSummaryParams {
   name: string;
 }
 
+export interface CreateNotesSummaryParams {
+  transcription: string;
+  noteId: string;
+  topic: string;
+  existingSummary: string | null;
+  name: string;
+}
+
 export interface CreateNotesFactsParams {
   transcription: string;
   userId: string;
   noteId: string;
   topic: string;
   existingNotes: string[] | null;
+  name: string;
+}
+
+export interface CreatePublicNotesParams {
+  transcription: string;
+  noteId: string;
+  topic: string;
+
   name: string;
 }
 

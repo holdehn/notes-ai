@@ -48,6 +48,7 @@ export default function FeatureSection() {
             making it easier than ever to stay organized and focused.
           </p>
         </div>
+
         <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-4 lg:gap-x-12">
           {features.map((feature) => (
             <div

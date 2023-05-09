@@ -9,7 +9,11 @@ import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-import { insertNote } from '@/components/api';
+import {
+  createNotesFacts,
+  createNotesSummary,
+  insertPublicNote,
+} from '@/components/api';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
@@ -22,20 +26,19 @@ interface FileDisplay {
   id: number;
 }
 
-export default function GenerateNotesModal(props: Props) {
+export default function GeneratePublicNotesModal(props: Props) {
   const { open, setOpen } = props;
-  const session = useSession();
-  const userID = session?.user?.id;
   const cancelButtonRef = useRef(null);
-  const [notesText, setNotesText] = useState(''); // Add this line
+
   const [convertedText, setConvertedText] = useState('');
   const [files, setFiles] = useState<FileDisplay | null>(null);
   const [fileObject, setFileObject] = useState<File | null>(null);
   const [nextId, setNextId] = useState<number>(1);
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState(false);
-  const [agentName, setAgentName] = useState<string>('Summary');
+
   const [submitted, setSubmitted] = useState(false);
+
   const router = useRouter();
 
   const handleFile = (e: any) => {
@@ -71,7 +74,6 @@ export default function GenerateNotesModal(props: Props) {
       setNextId(nextId + 1);
     }
   };
-
   const removeFile = () => {
     setFiles(null);
     setFileObject(null);
@@ -86,36 +88,6 @@ export default function GenerateNotesModal(props: Props) {
     setLoading(false);
     setSubmitted(false); // Add this line
     formik.resetForm();
-  };
-
-  const loadPDF = async (file: File) => {
-    try {
-      if (!file) {
-        alert('Please upload a PDF file');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const response = await fetch('/api/load-pdf', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const extractedText = data.text;
-      setConvertedText(extractedText);
-      return extractedText;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-
-      alert(`Error: ${error.message}`);
-    }
   };
 
   const sendAudio = async (file: File) => {
@@ -184,6 +156,36 @@ export default function GenerateNotesModal(props: Props) {
     }
   };
 
+  const loadPDF = async (file: File) => {
+    try {
+      if (!file) {
+        alert('Please upload a PDF file');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/load-pdf', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const extractedText = data.text;
+      setConvertedText(extractedText);
+      return extractedText;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+
+      alert(`Error: ${error.message}`);
+    }
+  };
+
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
@@ -200,7 +202,6 @@ export default function GenerateNotesModal(props: Props) {
     if (!fileObject) {
       return;
     }
-    if (!userID) return;
     setLoading(true);
     setSubmitted(true);
     const noteID = uuidv4();
@@ -217,15 +218,13 @@ export default function GenerateNotesModal(props: Props) {
     } else {
       transcription = await sendAudio(file);
     }
-
-    await insertNote({
-      userID: userID,
+    await insertPublicNote({
       formikValues: values,
       transcription: transcription,
       noteID: noteID,
     });
 
-    router.push(`/my-notes/${noteID}`);
+    router.push(`/${noteID}`);
     setFiles(null);
     setName('');
     setFileObject(null);
