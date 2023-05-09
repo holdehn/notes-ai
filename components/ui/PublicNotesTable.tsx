@@ -23,13 +23,13 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
       <div className="  h-1/2 py-8 sm:block hidden sm:items-center sm:justify-between sm:px-6 rounded-lg lg:px-8 bg-black">
         <div className="min-w-0 flex-1">
           <h1 className="text-xl font-bold leading-6 text-white sm:truncate">
-            Public Notes
+            Community Notes
           </h1>
           <p className="mt-1 text-sm text-purple-100">
             Generate high quality lecture notes instantly!
           </p>
         </div>
-        <div className="inline-flex mt-4">
+        <div className="mt-4">
           <button
             type="button"
             onClick={() => setOpenNotesModal(true)}
@@ -45,7 +45,12 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
       </div>
 
       {/* Projects list (only on smallest breakpoint) */}
-      <div className="sm:hidden">
+      <div className="pt-3 sm:hidden sm:items-center sm:justify-between sm:px-6 rounded-lg lg:px-8 bg-black">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-md pb-3 pl-2 font-bold leading-6 text-white sm:truncate">
+            Community Notes
+          </h1>
+        </div>{' '}
         <ul role="list">
           {notes?.slice(0, maxRows).map((note: any, index: number) => (
             <li key={note.index}>

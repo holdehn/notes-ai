@@ -290,7 +290,7 @@ export default function GenerateNotesModal(props: Props) {
                         as="h2"
                         className="text-xl font-bold leading-6 text-gray-50"
                       >
-                        Generate Public Notes
+                        Generate Notes
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-200">
