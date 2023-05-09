@@ -17,7 +17,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
   return (
     <main className="flex-1 p-8 px-24">
       {/* Page title & actions */}
-      <div className="px-8 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gray-200">
+      <div className="px-8 py-8 sm:block hidden sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gray-200">
         <div className="min-w-0 flex-1">
           <h1 className="text-xl font-bold leading-6 text-black sm:truncate">
             Public Notes
@@ -96,7 +96,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
                     className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
                     scope="col"
                   >
-                    <span className="lg:pl-2">My Notes</span>
+                    <span className="lg:pl-2">Public Notes</span>
                   </th>
 
                   <th
