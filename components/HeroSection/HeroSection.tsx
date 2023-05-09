@@ -58,7 +58,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
         </nav>
       </header>
 
-      <div className=" h-3/4 pt-16 relative isolate px-6 lg:px-8 flex flex-col items-center">
+      <div className=" h-3/4 pt-16 pb-12 relative isolate px-6 lg:px-8 flex flex-col items-center">
         <div
           className="absolute inset-x-0 -top-32 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-64"
           aria-hidden="true"
@@ -76,7 +76,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
           {/* Change padding values */}
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-4xl">
-              Never worry about taking notes again.{' '}
+              Generate Lecture Notes Instantly.{' '}
             </h1>
             <div className="relative rounded-full px-3 py-6 text-md font-medium leading-6 text-indigo-100">
               Generate high quality notes in an instant using NotesAI, powered
@@ -85,7 +85,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
                 href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-purple-400 underline hover:text-indigo-200 transition-colors duration-200"
+                className="text-purple-300 underline hover:text-indigo-200 transition-colors duration-200"
               >
                 Youtube Demo
               </a>
