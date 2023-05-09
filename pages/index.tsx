@@ -89,7 +89,7 @@ export default function Home({ notes }: { notes: any }) {
   return (
     <main>
       <Head>
-        <title>NotesAI- Work Smarter, Not Harder</title>
+        <title>NotesAI- Work smarter, not harder</title>
         <meta
           name="description"
           content="Organize and manage different subjects while getting personalized AI tutoring."

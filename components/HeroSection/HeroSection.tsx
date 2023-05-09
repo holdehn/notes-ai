@@ -90,9 +90,9 @@ export default function HeroSection({ noteData }: { noteData: any }) {
                 magicLink={false}
                 dark={false}
                 showLinks={false}
-                redirectTo={`${rootUrl}/my-notes`}
+                redirectTo={`${rootUrl}/my-notes/`}
                 onlyThirdPartyProviders={true}
-                providers={['google']}
+                providers={['google', 'discord']}
                 supabaseClient={supabase}
                 socialLayout="horizontal"
                 theme="dark"
@@ -124,16 +124,15 @@ export default function HeroSection({ noteData }: { noteData: any }) {
               />
             </div>
             <div className="flex justify-center mt-4">
-              <div className="relative bg-purple-600 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white">
-                <a
-                  onClick={() => setOpenPublicNoteModal(true)}
-                  className="font-semibold cursor-pointer"
-                >
-                  <span className="absolutes inset-0" aria-hidden="true" />
-                  Try it now!
-                  <span aria-hidden="true" />
-                </a>
-              </div>
+              <button
+                onClick={() => setOpenPublicNoteModal(true)}
+                className="relative bg-purple-600 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white
+font-semibold cursor-pointer"
+              >
+                <span className="absolutes inset-0" aria-hidden="true" />
+                Generate Note
+                <span aria-hidden="true" />
+              </button>
             </div>
 
             <GeneratePublicNotesModal

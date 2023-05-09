@@ -35,7 +35,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
             onClick={() => setOpenNotesModal(true)}
             className="relative sm:block hidden items-center space-x-2 rounded-md bg-indigo-600 px-4 py-2 text-base font-semibold text-white shadow-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 transition duration-150 ease-in-out"
           >
-            Generate Notes
+            Generate Note
           </button>
           <GeneratePublicNotesModal
             open={openNotesModal}
