@@ -79,8 +79,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
               Generate Lecture Notes Instantly.{' '}
             </h1>
             <div className="relative rounded-full px-3 py-6 text-md font-medium leading-6 text-indigo-100">
-              Generate high quality notes in an instant using NotesAI, powered
-              by GPT. <br />
+              Upload an audio, video, or PDF file to get started! <br />
               <a
                 href="https://youtu.be/R6eTRUpeLYs?t=18"
                 target="_blank"
