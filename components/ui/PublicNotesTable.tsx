@@ -50,7 +50,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
           {notes?.slice(0, maxRows).map((note: any, index: number) => (
             <li key={note.index}>
               <a
-                href={`/my-notes/${note.note_id}`}
+                href={`/${note.note_id}`}
                 className={`group flex items-center justify-between px-4 py-4 sm:px-6 ${
                   index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-200'
                 } hover:bg-purple-400`}
@@ -115,10 +115,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
                           )}
                           aria-hidden="true"
                         />
-                        <a
-                          href={`/my-notes/${note.note_id}`}
-                          className="truncate "
-                        >
+                        <a href={`/${note.note_id}`} className="truncate ">
                           <span>{note.title}</span>
                         </a>
                       </div>
