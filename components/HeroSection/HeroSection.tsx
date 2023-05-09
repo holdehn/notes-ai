@@ -58,7 +58,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
         </nav>
       </header>
 
-      <div className=" h-3/4 pt-12 relative isolate px-6 lg:px-8 flex flex-col items-center">
+      <div className=" h-3/4 pt-16 relative isolate px-6 lg:px-8 flex flex-col items-center">
         <div
           className="absolute inset-x-0 -top-32 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-64"
           aria-hidden="true"
@@ -71,19 +71,24 @@ export default function HeroSection({ noteData }: { noteData: any }) {
             }}
           />
         </div>
-        <div className="mx-auto max-w-2xl pt-8 xs:pt-12 sm:pt-24 lg:pt-16 my-auto">
+        <div className="mx-auto max-w-2xl pt-12 p-12 xs:pt-12 sm:pt-24 lg:pt-16 my-auto">
           {' '}
           {/* Change padding values */}
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-4xl">
-              Never worry about lecture notes again.{' '}
+              Never worry about taking notes again.{' '}
             </h1>
-            <div className="hidden sm:flex sm:justify-center">
-              <div className="relative rounded-full px-3 py-6 text-md font-medium leading-6 text-indigo-100">
-                Generate high quality notes in an instant using NotesAI, powered
-                by OpenAI. <br />{' '}
-                <span className="text-white">Try it now!</span>
-              </div>
+            <div className="relative rounded-full px-3 py-6 text-md font-medium leading-6 text-indigo-100">
+              Generate high quality notes in an instant using NotesAI, powered
+              by GPT. <br />
+              <a
+                href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-400 underline hover:text-indigo-200 transition-colors duration-200"
+              >
+                Youtube Demo
+              </a>
             </div>
             <div className="max-w-xs mx-auto mt-4">
               <Auth
@@ -127,10 +132,10 @@ export default function HeroSection({ noteData }: { noteData: any }) {
             <div className="flex justify-center mt-4 mb-4 p-4">
               <button
                 onClick={() => setOpenPublicNoteModal(true)}
-                className="relative bg-purple-600 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white font-semibold cursor-pointer"
+                className="relative bg-purple-600 hover:bg-purple-800 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white font-semibold cursor-pointer"
               >
                 <span className="absolutes inset-0" aria-hidden="true" />
-                Click here for the demo!
+                Click here to try yourself!
                 <span aria-hidden="true" />
               </button>
             </div>
