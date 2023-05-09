@@ -82,7 +82,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
               Generate high quality notes in an instant using NotesAI, powered
               by GPT. <br />
               <a
-                href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
+                href="https://youtu.be/R6eTRUpeLYs?t=18"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-purple-300 underline hover:text-indigo-200 transition-colors duration-200"
