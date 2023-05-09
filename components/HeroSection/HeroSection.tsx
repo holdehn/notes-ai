@@ -25,7 +25,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
   const rootUrl = getURL();
 
   return (
-    <div className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f]">
+    <div className="bg-gradient-to-r from-[#1c0232] via-[#000592] to-[#94295f]">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
           className="flex items-center justify-between p-6 lg:px-8 bg-gradient-to-r from-[#000000] via-[#020320] to-[#210a15] opacity-90"
@@ -124,13 +124,13 @@ export default function HeroSection({ noteData }: { noteData: any }) {
               />
             </div>
             <div className="flex justify-center mt-4">
-              <div className="relative bg-purple-600 rounded-full px-3 py-2 text-sm leading-6 text-white">
+              <div className="relative bg-purple-600 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white">
                 <a
                   onClick={() => setOpenPublicNoteModal(true)}
                   className="font-semibold cursor-pointer"
                 >
-                  <span className="absolute inset-0" aria-hidden="true" />
-                  Try it out!
+                  <span className="absolutes inset-0" aria-hidden="true" />
+                  Try it now!
                   <span aria-hidden="true" />
                 </a>
               </div>

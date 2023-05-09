@@ -89,7 +89,7 @@ export default function Home({ notes }: { notes: any }) {
   return (
     <main>
       <Head>
-        <title>NotesAI- Generate Notes Instantly</title>
+        <title>NotesAI- Generative Lecture Notes</title>
         <meta
           name="description"
           content="Organize and manage different subjects while getting personalized AI tutoring."

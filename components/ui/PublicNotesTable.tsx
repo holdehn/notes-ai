@@ -18,18 +18,18 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
   };
 
   return (
-    <main className="flex-1 p-8 px-24">
+    <main className="flex-1 p-8">
       {/* Page title & actions */}
-      <div className="px-8 py-8 sm:block hidden sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gray-200">
+      <div className="  h-1/2 py-8 sm:block hidden sm:items-center sm:justify-between sm:px-6 rounded-lg lg:px-8 bg-black">
         <div className="min-w-0 flex-1">
-          <h1 className="text-xl font-bold leading-6 text-black sm:truncate">
-            Example Notes
+          <h1 className="text-xl font-bold leading-6 text-white sm:truncate">
+            Public Notes
           </h1>
-          <p className="mt-1 text-sm text-gray-900">
+          <p className="mt-1 text-sm text-purple-100">
             Generate high quality lecture notes instantly!
           </p>
         </div>
-        <div className="mt-4">
+        <div className="inline-flex mt-4">
           <button
             type="button"
             onClick={() => setOpenNotesModal(true)}
@@ -52,7 +52,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
               <a
                 href={`/my-notes/${note.note_id}`}
                 className={`group flex items-center justify-between px-4 py-4 sm:px-6 ${
-                  index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-100'
+                  index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-200'
                 } hover:bg-purple-400`}
               >
                 <span className="flex items-center space-x-3 truncate">
@@ -77,7 +77,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
         </ul>
       </div>
 
-      <div className="fixed bottom-4 right-4 z-50 sm:hidden">
+      <div className="fixed bottom-4 z-50 sm:hidden">
         <button
           type="button"
           onClick={() => setOpenNotesModal(true)}
@@ -91,30 +91,8 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
 
       <div className="hidden sm:block">
         <div className="hidden sm:block">
-          <div className="inline-block min-w-full border-b align-middle">
-            <table className="min-w-full px-8">
-              <thead>
-                <tr className="border-t border-gray-600 bg-black">
-                  <th
-                    className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
-                    scope="col"
-                  >
-                    <span className="lg:pl-2">Public Notes</span>
-                  </th>
-
-                  <th
-                    className="hidden border-b border-gray-600 bg-black px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
-                    scope="col"
-                  >
-                    Last updated
-                  </th>
-                  <th
-                    className="border-b border-gray-600 bg-black py-3 pr-6 text-right text-sm font-semibold text-gray-200"
-                    scope="col"
-                  />
-                </tr>
-              </thead>
-
+          <div className="min-w-full border-b align-middle">
+            <table className="min-w-full">
               <tbody
                 className={`divide-y divide-gray-600 ${
                   notes?.length > 0 ? 'bg-purple-100' : ''
@@ -124,7 +102,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
                   <tr
                     key={note.index}
                     className={`group cursor-pointer hover:bg-purple-400 ${
-                      index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-100'
+                      index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-200'
                     }`}
                     onClick={() => handlePublicNoteClick(note.note_id)}
                   >
@@ -154,7 +132,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
                         href={`/my-notes/${note.note_id}`}
                         className="text-indigo-600 group-hover:text-indigo-800"
                       >
-                        View
+                        View Note
                       </a>
                     </td>
                   </tr>
