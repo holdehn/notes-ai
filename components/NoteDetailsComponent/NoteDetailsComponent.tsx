@@ -634,7 +634,7 @@ export default function NoteDetailsComponent() {
             </div>
           </div>
 
-          <main className="bg-gradient-to-r from-[#0e0c2f] via-[#0d0f3c] to-[#320606] opacity-90">
+          <main className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#570d32]">
             {/* Page title & actions */}
             <div className="border-b bg-black border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="min-w-0 flex-1">

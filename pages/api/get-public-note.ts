@@ -15,7 +15,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { data: noteData, error: noteError } = await supabase
     .from('public_notes')
     .select('*')
-    .match({ id: noteId });
+    .match({ id: noteId })
+    .order('created_at', { ascending: false });
 
   if (noteError) {
     return res.status(500).json({ error: noteError.message });

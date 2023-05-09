@@ -13,6 +13,9 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
   const [openNotesModal, setOpenNotesModal] = useState(false);
 
   const maxRows = 8;
+  const handlePublicNoteClick = (noteId: string) => {
+    router.push(`/${noteId}`);
+  };
 
   return (
     <main className="flex-1 p-8 px-24">
@@ -20,7 +23,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
       <div className="px-8 py-8 sm:block hidden sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gray-200">
         <div className="min-w-0 flex-1">
           <h1 className="text-xl font-bold leading-6 text-black sm:truncate">
-            Public Notes
+            Example Notes
           </h1>
           <p className="mt-1 text-sm text-gray-900">
             Generate high quality lecture notes instantly!
@@ -55,7 +58,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
                 <span className="flex items-center space-x-3 truncate">
                   <span
                     className={classNames(
-                      note.bgColorClass,
+                      'bg-indigo-800',
                       'h-2.5 w-2.5 flex-shrink-0 rounded-full',
                     )}
                     aria-hidden="true"
@@ -89,7 +92,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
       <div className="hidden sm:block">
         <div className="hidden sm:block">
           <div className="inline-block min-w-full border-b align-middle">
-            <table className="min-w-full">
+            <table className="min-w-full px-8">
               <thead>
                 <tr className="border-t border-gray-600 bg-black">
                   <th
@@ -123,13 +126,13 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
                     className={`group cursor-pointer hover:bg-purple-400 ${
                       index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-100'
                     }`}
-                    onClick={() => router.push(`/${note.note_id}`)}
+                    onClick={() => handlePublicNoteClick(note.note_id)}
                   >
                     <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-black">
                       <div className="flex items-center space-x-3 lg:pl-2">
                         <div
                           className={classNames(
-                            note.bgColorClass,
+                            'bg-indigo-800',
                             'h-2.5 w-2.5 flex-shrink-0 rounded-full ',
                           )}
                           aria-hidden="true"

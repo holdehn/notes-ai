@@ -41,7 +41,7 @@ export default function FeatureSection() {
             AI-Powered Note Taking{' '}
           </h2>
           <p className="mt-3 text-3xl font-extrabold leading-9 text-white">
-            Never worry about lecture notes again.
+            Taking lecture notes is so April 2023.
           </p>
           <p className="mt-4 text-lg leading-7 text-gray-300">
             Our AI-powered solution simplifies the process of note-taking,

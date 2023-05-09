@@ -41,7 +41,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
   const { data: noteData, error: noteError } = await supabase
     .from('public_notes')
-    .select('id, title, created_at, topic, color_theme');
+    .select('id, title, created_at, topic, color_theme')
+    .order('created_at', { ascending: false });
 
   if (noteError) {
     return {

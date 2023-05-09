@@ -25,7 +25,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
   const rootUrl = getURL();
 
   return (
-    <div className="bg-gradient-to-r from-[#30007d] via-[#0d136d] to-[#470b52] opacity-90">
+    <div className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f]">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
           className="flex items-center justify-between p-6 lg:px-8 bg-gradient-to-r from-[#000000] via-[#020320] to-[#210a15] opacity-90"
@@ -76,7 +76,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
           {/* Change padding values */}
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-4xl">
-              Taking lecture notes is so April 2023.{' '}
+              Never worry about lecture notes again.{' '}
             </h1>
             <div className="hidden sm:flex sm:justify-center">
               <div className="relative rounded-full px-3 py-6 text-md font-medium leading-6 text-indigo-100">

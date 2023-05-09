@@ -41,10 +41,6 @@ export default function NoteDetailsPublic() {
   const router = useRouter();
   const noteId = router.query.notePublicID;
 
-  const navigateHome = () => {
-    router.push('/');
-  };
-
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error } = useSWR(
