@@ -1,17 +1,16 @@
 import { useRouter } from 'next/router';
 import { ChevronRightIcon, PlusIcon } from '@heroicons/react/20/solid';
 import GeneratePublicNotesModal from '@/components/GeneratePublicNotesModal';
+import { useState } from 'react';
 
 interface publicNotesTableProps {
-  openNotesModal: boolean;
-
-  setOpenNotesModal: (open: boolean) => void;
   notes: any;
 }
 
 export default function PublicNotesTable(props: publicNotesTableProps) {
-  const { openNotesModal, setOpenNotesModal, notes } = props;
+  const { notes } = props;
   const router = useRouter();
+  const [openNotesModal, setOpenNotesModal] = useState(false);
 
   const maxRows = 8;
 

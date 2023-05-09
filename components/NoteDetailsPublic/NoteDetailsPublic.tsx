@@ -32,9 +32,7 @@ export default function NoteDetailsPublic() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [summaryText, setSummaryText] = useState('');
   const [bulletPoints, setBulletPoints] = useState<string>('');
-  const [showSaveButton, setShowSaveButton] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const session = useSession();
+
   const supabase = useSupabaseClient();
   const [openPublicNoteModal, setOpenPublicNoteModal] = useState(false);
 

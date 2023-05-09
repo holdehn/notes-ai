@@ -21,7 +21,6 @@ export default function HeroSection({ noteData }: { noteData: any }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const supabase = useSupabaseClient();
   const [openPublicNoteModal, setOpenPublicNoteModal] = useState(false);
-  const [openNotesModal, setOpenNotesModal] = useState(false);
 
   const rootUrl = getURL();
 
@@ -158,11 +157,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
         </div>
       </div>
       <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-400">
-        <PublicNotesTable
-          openNotesModal={openNotesModal}
-          setOpenNotesModal={setOpenNotesModal}
-          notes={noteData}
-        />
+        <PublicNotesTable notes={noteData} />
         <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-400">
           Demo by holden.{' '}
           <a
