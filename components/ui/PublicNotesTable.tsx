@@ -18,7 +18,7 @@ export default function PublicNotesTable(props: publicNotesTableProps) {
   };
 
   return (
-    <main className="flex-1 p-8">
+    <main className="flex-1">
       {/* Page title & actions */}
       <div className="  h-1/2 py-8 sm:block hidden sm:items-center sm:justify-between sm:px-6 rounded-lg lg:px-8 bg-black">
         <div className="min-w-0 flex-1">

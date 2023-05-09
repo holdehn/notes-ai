@@ -81,7 +81,8 @@ export default function HeroSection({ noteData }: { noteData: any }) {
             <div className="hidden sm:flex sm:justify-center">
               <div className="relative rounded-full px-3 py-6 text-md font-medium leading-6 text-indigo-100">
                 Generate high quality notes in an instant using NotesAI, powered
-                by OpenAI. <br />
+                by OpenAI. <br />{' '}
+                <span className="text-white">Try it now!</span>
               </div>
             </div>
             <div className="max-w-xs mx-auto mt-4">
@@ -123,14 +124,13 @@ export default function HeroSection({ noteData }: { noteData: any }) {
                 }}
               />
             </div>
-            <div className="flex justify-center mt-4">
+            <div className="flex justify-center mt-4 mb-4 p-4">
               <button
                 onClick={() => setOpenPublicNoteModal(true)}
-                className="relative bg-purple-600 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white
-font-semibold cursor-pointer"
+                className="relative bg-purple-600 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white font-semibold cursor-pointer"
               >
                 <span className="absolutes inset-0" aria-hidden="true" />
-                Generate Note
+                Click here for the demo!
                 <span aria-hidden="true" />
               </button>
             </div>
@@ -155,7 +155,7 @@ font-semibold cursor-pointer"
           />
         </div>
       </div>
-      <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-400">
+      {/* <div className="relative rounded-full py-1 text-sm  text-gray-400">
         <PublicNotesTable notes={noteData} />
         <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-400">
           Demo by holden.{' '}
@@ -168,7 +168,7 @@ font-semibold cursor-pointer"
             Twitter <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
