@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "x-content-source": "r2",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=i%2BO12n6krlM%2F%2FFVfakNfLj7IzrpajayC1b%2B%2FdBZlOK2OghA6f2ai9V2cnZWcmbff227pi3cGvvJyzXyZZ93cah55YoYT5SIVAUBVt0jecYp5EaRWJ6g29sKGegunAMLJtvFkaVA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "date": "Wed, 10 May 2023 22:06:28 GMT",
+    "cf-ray": "7c557d4efa8b2af1-LAX",
+    "content-length": "2409"
+  },
+  "url": "https://esm.sh/v119/cohere-ai@5.1.0/dist/cohere.d.ts",
+  "now": {
+    "secs_since_epoch": 1683756385,
+    "nanos_since_epoch": 705627000
+  }
+}

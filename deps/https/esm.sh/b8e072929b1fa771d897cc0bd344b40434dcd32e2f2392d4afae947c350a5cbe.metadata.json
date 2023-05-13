@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Wed, 10 May 2023 22:06:27 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=ksTYa41Joe%2FG2za3IZXCxGsxazpCS5nnjn7xCjj6pde8r08Rw2KyPNU%2FCNJdaqgOdM%2BX9SeSb%2F0j6rXNJ1Lo78yspHhDeFk9G%2BHlzVfMPaukulOJIOnBqM9AryrpJTRKgEuYH7A%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c557d4c2fa42af1-LAX",
+    "server": "cloudflare",
+    "x-content-source": "r2",
+    "content-length": "1894",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v119/langchain@0.0.67/dist/embeddings/cohere.d.ts",
+  "now": {
+    "secs_since_epoch": 1683756385,
+    "nanos_since_epoch": 157591000
+  }
+}

@@ -6,6 +6,7 @@ export interface CreateNoteParams {
   };
   noteID: string;
   transcription: string;
+  type: string;
 }
 export interface CreatePublicNoteParams {
   formikValues: {
@@ -35,6 +36,7 @@ export interface CreateNotesSummaryParams {
   topic: string;
   existingSummary: string | null;
   name: string;
+  type: string;
 }
 
 export interface CreateNotesFactsParams {
@@ -44,6 +46,7 @@ export interface CreateNotesFactsParams {
   topic: string;
   existingNotes: string[] | null;
   name: string;
+  type: string;
 }
 
 export interface CreatePublicNotesParams {

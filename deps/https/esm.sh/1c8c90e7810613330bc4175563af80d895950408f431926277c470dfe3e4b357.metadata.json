@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "date": "Fri, 12 May 2023 04:39:55 GMT",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=lUS3sBaGTSnwXNoikwjWdbaSqSVXG9grEuqR3tgSFyV9tBAeJ26EYGDi0MU%2BWhFFIt1GGHwsbljBTXuSAN2zjIPJpCfpAtzO8EROhaX45lWxaokf%2BAcOTrwwitQmPq5geF4ZQZ0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "workers-kv",
+    "age": "43",
+    "content-type": "application/javascript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "last-modified": "Fri, 12 May 2023 04:39:12 GMT",
+    "server": "cloudflare",
+    "cf-cache-status": "HIT",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7c5ffb0c9f9a7e7c-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v120/cohere-ai@5.1.0/deno/cohere-ai.mjs",
+  "now": {
+    "secs_since_epoch": 1683866395,
+    "nanos_since_epoch": 643534000
+  }
+}

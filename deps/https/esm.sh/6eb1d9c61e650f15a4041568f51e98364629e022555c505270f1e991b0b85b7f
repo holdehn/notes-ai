@@ -1,0 +1,2 @@
+/* esm.sh - langchain@0.0.67/embeddings */
+export * from "https://esm.sh/v119/langchain@0.0.67/deno/embeddings.js";

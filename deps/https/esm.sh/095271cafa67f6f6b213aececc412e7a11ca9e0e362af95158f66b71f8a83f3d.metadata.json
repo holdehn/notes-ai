@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=7vw51zx8yC6oGFy8bVGIdzlim17SLfkbW%2FvuQbaf6u1yyZx3qe4YGC705wgZvK5x6mNQfykAKdDZAxIlNphnfHoi0kAynt2Jyw4kmx5APo71kLHJHNQ2ipZTU1Od4LnwlylnzOA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c5ffad858d62a89-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-type": "application/javascript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "workers-kv",
+    "date": "Fri, 12 May 2023 04:39:47 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v120/zod-to-json-schema@3.21.0/deno/zod-to-json-schema.mjs",
+  "now": {
+    "secs_since_epoch": 1683866387,
+    "nanos_since_epoch": 380005000
+  }
+}

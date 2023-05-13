@@ -33,7 +33,7 @@ export const getServerSideProps = async (
     const userId = session.user?.id;
     const { data: notesData, error: notesError } = await supabase
       .from('notes')
-      .select('id, title, created_at, color_theme, user_id, topic')
+      .select('*')
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
 
@@ -41,7 +41,7 @@ export const getServerSideProps = async (
     return {
       props: {
         fallback: {
-          [`/api/notes-page-data?userID=${userId}`]: {},
+          [`/api/notes-page-data?userID=${userId}`]: notesData,
         },
       },
     };

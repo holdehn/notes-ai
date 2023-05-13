@@ -1,0 +1,6 @@
+export { HNSWLib } from "./hnswlib.d.ts";
+export { Chroma } from "./chroma.d.ts";
+export { PineconeStore } from "./pinecone.d.ts";
+export { VectorStore, SaveableVectorStore } from "./base.d.ts";
+export { SupabaseVectorStore } from "./supabase.d.ts";
+export { PrismaVectorStore } from "./prisma.d.ts";

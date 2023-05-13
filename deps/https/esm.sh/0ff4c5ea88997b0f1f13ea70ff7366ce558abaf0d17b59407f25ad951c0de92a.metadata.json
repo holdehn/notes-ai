@@ -1,0 +1,20 @@
+{
+  "headers": {
+    "cf-ray": "7c559630a9812aa6-LAX",
+    "date": "Wed, 10 May 2023 22:23:27 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=w0jXEcKxfRuudxy%2FBHuseiE8RWA7XmUOaqLv4xpkJLqhQD2bcl7eSzygk7gHgnyBoVsFzPMo318%2B4E8rPr%2BYng40Ou5iZyYFFtGnkda64rcrIljpPGdeWo0Z0FdrYYDgJwkb6xw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-type": "application/javascript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v120/ml-kmeans@6.0.0/deno/ml-kmeans.mjs",
+  "now": {
+    "secs_since_epoch": 1683757404,
+    "nanos_since_epoch": 769087000
+  }
+}

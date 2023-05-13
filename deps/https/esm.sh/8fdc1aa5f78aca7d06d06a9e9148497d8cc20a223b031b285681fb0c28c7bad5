@@ -1,0 +1,46 @@
+import { GetEmbeddingIncludeEnum, QueryEmbeddingIncludeEnum } from "./generated/index.d.ts";
+import { DefaultApi } from "./generated/api.d.ts";
+export declare class OpenAIEmbeddingFunction {
+    private api_key;
+    private org_id;
+    private model;
+    constructor(openai_api_key: string, openai_model?: string, openai_organization_id?: string);
+    generate(texts: string[]): Promise<number[][]>;
+}
+export declare class CohereEmbeddingFunction {
+    private api_key;
+    constructor(cohere_api_key: string);
+    generate(texts: string[]): Promise<any>;
+}
+type CallableFunction = {
+    generate(texts: string[]): Promise<number[][]>;
+};
+export declare class Collection {
+    name: string;
+    private api;
+    embeddingFunction: CallableFunction | undefined;
+    constructor(name: string, api: DefaultApi, embeddingFunction?: CallableFunction);
+    add(ids: string | string[], embeddings: number[] | number[][] | undefined, metadatas?: object | object[], documents?: string | string[], increment_index?: boolean): Promise<any>;
+    count(): Promise<any>;
+    get(ids?: string[], where?: object, limit?: number, offset?: number, include?: GetEmbeddingIncludeEnum[], where_document?: object): Promise<any>;
+    update(ids: string | string[], embeddings?: number[] | number[][], metadatas?: object | object[], documents?: string | string[]): Promise<any>;
+    query(query_embeddings: number[] | number[][] | undefined, n_results?: number, where?: object, query_text?: string | string[], where_document?: object, // {"$contains":"search_string"}
+    include?: QueryEmbeddingIncludeEnum[]): Promise<any>;
+    peek(limit?: number): Promise<any>;
+    createIndex(): Promise<import("https://esm.sh/v120/axios@0.26.1/index.d.ts").AxiosResponse<any, any>>;
+    delete(ids?: string[], where?: object): Promise<any>;
+}
+export declare class ChromaClient {
+    private api;
+    constructor(basePath?: string);
+    reset(): Promise<import("https://esm.sh/v120/axios@0.26.1/index.d.ts").AxiosResponse<any, any>>;
+    version(): Promise<any>;
+    heartbeat(): Promise<any>;
+    createCollection(name: string, metadata?: object, embeddingFunction?: CallableFunction): Promise<Collection>;
+    getOrCreateCollection(name: string, metadata?: object, embeddingFunction?: CallableFunction): Promise<Collection>;
+    listCollections(): Promise<any>;
+    getCollection(name: string, embeddingFunction?: CallableFunction): Promise<Collection>;
+    deleteCollection(name: string): Promise<any>;
+}
+export {};
+//# sourceMappingURL=index.d.ts.map

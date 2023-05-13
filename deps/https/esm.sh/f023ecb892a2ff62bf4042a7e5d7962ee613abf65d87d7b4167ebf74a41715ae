@@ -1,0 +1,2 @@
+/* esm.sh - ml-pca@4.1.1 */
+export * from "https://esm.sh/v120/ml-pca@4.1.1/deno/ml-pca.mjs";

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "cf-ray": "7c5556248dc608cc-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-source": "r2",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=12LTfiaczA8A2Kc6Bsp%2BhcvY9aiQT4cI5lNdpcD0eqaI%2BzJI%2BxW%2F4QuvR5G1ks9MwZyU61vvueLkb9luMgmCaCMziIiwtl3ukPmZtLMYdoCWOQ6vif%2B9TjA3k1qrgAcJrMPoI8g%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "1072",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Wed, 10 May 2023 21:39:43 GMT",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v120/@pinecone-database/pinecone@0.1.5/dist/pinecone-generated-ts-fetch/models/UpsertResponse.d.ts",
+  "now": {
+    "secs_since_epoch": 1683754781,
+    "nanos_since_epoch": 524563000
+  }
+}

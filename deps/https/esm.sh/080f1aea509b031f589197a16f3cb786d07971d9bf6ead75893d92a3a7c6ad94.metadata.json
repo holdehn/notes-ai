@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-expose-headers": "X-TypeScript-Types",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=JJMhQLwe%2F8%2BiwA1zwO3tYEkHA2%2BTZhzz7E101Q9Mbay5NGDh0%2BuLD6p0lRnDu%2BOFpELVvGmI9dFT4VtqP7%2BoRkC0U1crClqYJmuTmQxUVU9SGDE3FDpDrIhsecqapcXrg76LeHY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-typescript-types": "https://esm.sh/v120/langchain@0.0.67/vectorstores.d.ts",
+    "vary": "Origin, User-Agent, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Wed, 10 May 2023 21:39:36 GMT",
+    "cf-ray": "7c5555e5eb6508cc-LAX",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=86400",
+    "content-type": "application/javascript; charset=utf-8",
+    "access-control-allow-origin": "*"
+  },
+  "url": "https://esm.sh/langchain@0.0.67/vectorstores",
+  "now": {
+    "secs_since_epoch": 1683754773,
+    "nanos_since_epoch": 799883000
+  }
+}

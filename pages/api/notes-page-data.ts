@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { data: notesData, error: notesError } = await supabase
     .from('notes')
-    .select('id, title, created_at, color_theme, user_id, topic')
+    .select('*')
     .eq('user_id', userID)
     .order('created_at', { ascending: false });
 

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cf-ray": "7c5ffadd3e432a89-LAX",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Fri, 12 May 2023 04:39:48 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=ugPrbO0jze4V2mLPJIl1N4F7FF9AqXmZnSZsIIHcTysF4opVHwsRSQQJQaFioiykpezy7e9np4UEtOCLYc%2BE7nMLIeQEfTCWVIcaR9hOPmvPKkbqoINX%2BEYoE%2B5hr8%2BwAC%2BqAjY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-source": "r2",
+    "server": "cloudflare",
+    "content-length": "1478",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*"
+  },
+  "url": "https://esm.sh/v120/langchain@0.0.73/dist/chains/constitutional_ai/constitutional_chain.d.ts",
+  "now": {
+    "secs_since_epoch": 1683866388,
+    "nanos_since_epoch": 407319000
+  }
+}

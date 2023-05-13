@@ -1,0 +1,20 @@
+{
+  "headers": {
+    "cf-ray": "7c559633ecf92aa6-LAX",
+    "date": "Wed, 10 May 2023 22:23:27 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-type": "application/javascript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=BnY%2BF4%2B6gAsq3XgF0EbrMtSwIQUMWB0RRhyM4NRC4oMNDHduUUkPK1oSQfiLYTLo6geMmBAqH58UH3oGtouu4F37EaIWPGfG929sqXVIpeF%2FjcpaAcCw33eQ4RvhcXr9LexyAOM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v120/ml-matrix@6.10.4/deno/ml-matrix.mjs",
+  "now": {
+    "secs_since_epoch": 1683757405,
+    "nanos_since_epoch": 331964000
+  }
+}

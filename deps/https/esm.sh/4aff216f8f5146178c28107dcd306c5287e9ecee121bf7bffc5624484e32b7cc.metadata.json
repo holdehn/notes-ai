@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "accept-ranges": "bytes",
+    "last-modified": "Wed, 10 May 2023 13:10:05 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "4213",
+    "cf-ray": "7c55561bec2308cc-LAX",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=66YFd%2F8PkGEvIP%2BtXorN%2Fu2qAXaQb5m227E6WfL0PoLU83nQE4Jp%2FsAV5geOhB1iMfCfbYxutIWnsRSQjRaq%2FvEU9LpKFmyZP98tpngxWlcu5OqUEApuIbJSxqmwdq5I1KnQNUM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Wed, 10 May 2023 21:39:42 GMT",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "cf-cache-status": "HIT",
+    "x-content-source": "r2",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "age": "30577",
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v120/@supabase/storage-js@2.5.1/dist/module/packages/StorageBucketApi.d.ts",
+  "now": {
+    "secs_since_epoch": 1683754779,
+    "nanos_since_epoch": 668027000
+  }
+}

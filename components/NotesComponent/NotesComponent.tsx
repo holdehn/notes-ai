@@ -15,7 +15,7 @@ import {
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
 import { Session, useUser } from '@supabase/auth-helpers-react';
-import GenerateNotesModal from '../GenerateNotesModal';
+import GenerateNotesModal from '../Modals/GenerateNotesModal';
 import { useSession } from '@supabase/auth-helpers-react';
 import router from 'next/router';
 import formatDateTime from '@/utils/formatDateTime';

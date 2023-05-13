@@ -1,0 +1,2 @@
+/* esm.sh - langchain@0.0.67/document */
+export * from "https://esm.sh/v119/langchain@0.0.67/deno/document.js";

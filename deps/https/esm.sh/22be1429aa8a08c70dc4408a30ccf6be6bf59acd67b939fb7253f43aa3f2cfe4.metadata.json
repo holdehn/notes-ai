@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "cf-ray": "7c555610df3408cc-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Rv3jRaUKXSI5NJR92pHpj5Sp8q8eY%2B8yfliC%2BXuXtaRC31NKRwJpUk6xFMrJLJfGhdRITqJMWh%2FGlrWmpu9wWwJ0xdnAL2Aw2iWtLk4pXl%2Ffq0lSpl4vOG%2Fjxeib5Y6jlLqYykM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "4489",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Wed, 10 May 2023 21:39:42 GMT",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v120/langchain@0.0.67/dist/vectorstores/prisma.d.ts",
+  "now": {
+    "secs_since_epoch": 1683754779,
+    "nanos_since_epoch": 887470000
+  }
+}

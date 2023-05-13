@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c555620e9b008cc-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "r2",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=FPpWiL3v1sjIj8XCS9takTzJdxnJodAKBrap8%2BxddysQk0P%2FPinGJev7g70fviU9OrWpPpPnRio9PtT%2BGJRALiFB3Ju08Otkoeg8s3UqkVjByRNI8maHlzOc0GOac25bpZ1IGa8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "2674",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Wed, 10 May 2023 21:39:43 GMT"
+  },
+  "url": "https://esm.sh/v120/chromadb@1.4.1/dist/main/generated/configuration.d.ts",
+  "now": {
+    "secs_since_epoch": 1683754780,
+    "nanos_since_epoch": 807786000
+  }
+}

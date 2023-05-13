@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=gseqBzPWdyrK5mS54%2FEaKwnvUpS%2BWnaDmBpLbz3VoUFdfABMWyKgSKC2Or%2BwfjgsPtCUhAtNjBTd%2BelcqW9SBQG5%2B7HujAJnsz7FswSJ%2FhHFCffCdmSkcAku7FLPkWF0vERt220%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Wed, 10 May 2023 21:39:43 GMT",
+    "cf-ray": "7c5556237c7608cc-LAX",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "697",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "x-content-source": "r2",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v120/chromadb@1.4.1/dist/main/generated/models/update-collection.d.ts",
+  "now": {
+    "secs_since_epoch": 1683754781,
+    "nanos_since_epoch": 330798000
+  }
+}

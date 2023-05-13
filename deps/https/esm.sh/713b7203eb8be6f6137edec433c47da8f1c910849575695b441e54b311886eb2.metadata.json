@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "1345",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "date": "Wed, 10 May 2023 21:39:43 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7c5556248dc208cc-LAX",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=sgjJKQgYuSWu0fmvujsg5c77rAhkbXNQqf762euZdc56Ia1wlGRmXX8Hn1wnpDIPBD6mjvy6k4YEmZW6nf0%2Be8HjtuCBNfyYbkntu9O3y3f3FTe%2BFbGOUONEBs07dCe1lHtvO5E%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-source": "r2",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v120/@pinecone-database/pinecone@0.1.5/dist/pinecone-generated-ts-fetch/models/SparseValues.d.ts",
+  "now": {
+    "secs_since_epoch": 1683754781,
+    "nanos_since_epoch": 451774000
+  }
+}

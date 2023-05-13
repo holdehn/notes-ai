@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "age": "3766",
+    "cf-ray": "7c5ffae91e002a89-LAX",
+    "content-length": "8675",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Fri, 12 May 2023 04:39:49 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "r2",
+    "accept-ranges": "bytes",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=3%2FkiyYY9k9u%2BzGt8XC%2Bo%2BboUht5HpmWVVrwOQZOyd3aWN2rpDPgFYojNB8RCgVonv4wRE7Ru26%2F02w08FnerEHIqoln4GsWnUa53XbiYzdXlVkKki%2BBKKHj958BfmvEyXopqYNc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "last-modified": "Fri, 12 May 2023 03:37:03 GMT",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cf-cache-status": "HIT"
+  },
+  "url": "https://esm.sh/v120/@types/node@18.16.0/buffer.d.ts",
+  "now": {
+    "secs_since_epoch": 1683866390,
+    "nanos_since_epoch": 44427000
+  }
+}

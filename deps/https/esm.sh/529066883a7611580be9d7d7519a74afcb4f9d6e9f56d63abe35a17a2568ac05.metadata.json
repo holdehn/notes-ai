@@ -1,0 +1,20 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "cf-ray": "7c559637b97f2aa6-LAX",
+    "content-type": "application/javascript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Wed, 10 May 2023 22:23:28 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=nXZgVOUxHopICdkBO%2BsZbfzFOvfOhULJMjBOmFh9Q8jzW3qWZmUa4AzrpSzgwjYtzl%2FDMgIOHl8gXKrPmVLIBm9%2Fx984PAhSAYILff7J4VIjSEg125pacY%2Bayia719tGmO8NNoQ%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v120/ml-xsadd@2.0.0/deno/ml-xsadd.mjs",
+  "now": {
+    "secs_since_epoch": 1683757405,
+    "nanos_since_epoch": 970308000
+  }
+}

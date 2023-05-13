@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "date": "Thu, 11 May 2023 01:01:59 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=IP1mNqR7%2BM3eAY%2Bdj%2FI187uOWpxppo5Y2dKg34M%2BKP%2BDEnmuWzaXmQgq6Xk0eIuUED5g0nhSUqAvlS%2BJajn4k%2FgLe7Srwyp2XC6b1T%2B7cEMh6rquxUih879l4BANUMSzdOGC8go%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "workers-kv",
+    "cf-ray": "7c567e6b383f9846-SJC",
+    "content-type": "application/javascript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v119/@fortaine/fetch-event-source@3.0.6/deno/fetch-event-source.mjs",
+  "now": {
+    "secs_since_epoch": 1683766917,
+    "nanos_since_epoch": 402780000
+  }
+}

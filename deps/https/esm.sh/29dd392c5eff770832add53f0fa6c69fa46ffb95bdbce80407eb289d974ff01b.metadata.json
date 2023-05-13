@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Ae%2FhJluqCcvntpi0NUFjOlbOTbcXXRGWGMDXfg2Eu8vy5jjYEiQo4sZ8CxvBN4Pk1QiqzAzlGSzcJztDu4r%2Fh1JA8ZzHFEBSBw4FRDi7tzoe0Yd3SveRIXLe1%2F7B2kgyj0rW5s0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "server": "cloudflare",
+    "date": "Wed, 10 May 2023 21:39:41 GMT",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "1574",
+    "cf-ray": "7c555610df2d08cc-LAX",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v120/langchain@0.0.67/dist/vectorstores/chroma.d.ts",
+  "now": {
+    "secs_since_epoch": 1683754779,
+    "nanos_since_epoch": 380217000
+  }
+}

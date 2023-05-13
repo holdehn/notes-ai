@@ -1,0 +1,20 @@
+{
+  "headers": {
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=6ivvn1pjz3CFH6GMkii%2B81ZpnNWr1BR8gMQYoF1uxbSb%2B%2FWpU1JYD1cPq3I7arO5rdwZrIrTKrERF%2BZFZMOw%2BfCFhjSf6PkfJXzj3FclqPbff8Ni8DT23BLJI%2FyPmXowstndO4w%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7c55963789472aa6-LAX",
+    "content-type": "application/javascript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "date": "Wed, 10 May 2023 22:23:28 GMT",
+    "access-control-allow-origin": "*"
+  },
+  "url": "https://esm.sh/v120/is-any-array@2.0.1/deno/is-any-array.mjs",
+  "now": {
+    "secs_since_epoch": 1683757405,
+    "nanos_since_epoch": 883104000
+  }
+}

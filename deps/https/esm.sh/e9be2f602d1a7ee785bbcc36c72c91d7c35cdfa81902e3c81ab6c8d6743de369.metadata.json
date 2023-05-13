@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7c5ffae71b5b2a89-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "902",
+    "accept-ranges": "bytes",
+    "access-control-allow-origin": "*",
+    "last-modified": "Fri, 12 May 2023 03:37:02 GMT",
+    "cf-cache-status": "HIT",
+    "x-content-source": "r2",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=UnZowdg0USQz0NvAdexqwyp27ThcG%2FRr7IuQWdezjW2huC%2B8vtqHG4w0Y6t6N2DH%2BtVIYtPIYqta8cQGuxEfqEZGMncf380Ntjvccj0P3KYGsRIp9N06Elvc%2Fd7FwFsXuBEH%2BWM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "age": "3767",
+    "date": "Fri, 12 May 2023 04:39:49 GMT"
+  },
+  "url": "https://esm.sh/v120/typeorm@0.3.16/driver/sap/SapConnectionCredentialsOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1683866389,
+    "nanos_since_epoch": 916979000
+  }
+}

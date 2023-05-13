@@ -1,0 +1,3 @@
+export { Document } from "../document.d.ts";
+export { Docstore } from "./base.d.ts";
+export { InMemoryDocstore } from "./in_memory.d.ts";

@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=HDHatsBtf6vUOU0a8yIirmeD6cJxJ44abf2m0a1QVMI6TQi3LFDg3X6Dpmch3BuDpa42uI%2F9hkHZyY%2Fi%2FAV4DSSV1DZvgmBQRgGyN%2F39OdSjmf096cas38lgeIVqTcCxh7%2FerN8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7c5ffae6dae12a89-LAX",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "x-content-source": "r2",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "accept-ranges": "bytes",
+    "age": "3766",
+    "cf-cache-status": "HIT",
+    "date": "Fri, 12 May 2023 04:39:49 GMT",
+    "access-control-allow-origin": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "282",
+    "last-modified": "Fri, 12 May 2023 03:37:03 GMT"
+  },
+  "url": "https://esm.sh/v120/typeorm@0.3.16/error/NamingStrategyNotFoundError.d.ts",
+  "now": {
+    "secs_since_epoch": 1683866389,
+    "nanos_since_epoch": 735181000
+  }
+}

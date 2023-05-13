@@ -1,0 +1,2 @@
+/* esm.sh - langchain@0.0.73/prompts */
+export * from "https://esm.sh/v120/langchain@0.0.73/deno/prompts.js";

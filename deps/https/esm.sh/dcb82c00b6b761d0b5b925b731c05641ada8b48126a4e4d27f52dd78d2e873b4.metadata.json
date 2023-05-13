@@ -1,0 +1,20 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=skZzaJnnsPiC8RW8QpodJp83KIenLr%2FJaX1916x8RV%2F81k5BiaHrtj6wlIJrQ6X%2B41NMv8eZcOT1hj3H6%2BD8naXMLRQnLFUP%2FRWtWbbM%2B64Lh6sPXHbZsxMxjbwVt8Xfm79vjoo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7c559633ecf72aa6-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "date": "Wed, 10 May 2023 22:23:27 GMT",
+    "access-control-allow-methods": "*",
+    "content-type": "application/javascript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v120/ml-distance-euclidean@2.0.0/deno/ml-distance-euclidean.mjs",
+  "now": {
+    "secs_since_epoch": 1683757405,
+    "nanos_since_epoch": 280909000
+  }
+}

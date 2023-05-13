@@ -96,6 +96,7 @@ export default function NoteDetailsComponent() {
         setSummaryStatus('completed');
       } else {
         setSummaryStatus('inProgress');
+
         createNotesSummary(
           {
             transcription: data.transcription,
@@ -104,6 +105,7 @@ export default function NoteDetailsComponent() {
             existingSummary: data.summary,
             name: name,
             topic: data.topic,
+            type: data.type,
           },
           (summaryData) => {
             setSummaryText(summaryData);
@@ -132,6 +134,7 @@ export default function NoteDetailsComponent() {
             existingNotes: data.notes,
             name: name,
             topic: data.topic,
+            type: data.type,
           },
           (formattedBulletPoints: string[]) => {
             setBulletPoints(JSON.stringify(formattedBulletPoints));

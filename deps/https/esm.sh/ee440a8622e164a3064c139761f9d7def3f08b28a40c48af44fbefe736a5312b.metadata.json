@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "accept-ranges": "bytes",
+    "cf-ray": "7c5ffae91e0c2a89-LAX",
+    "last-modified": "Fri, 12 May 2023 03:37:03 GMT",
+    "cf-cache-status": "HIT",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Fri, 12 May 2023 04:39:49 GMT",
+    "age": "3766",
+    "x-content-source": "r2",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=yGIAKMKyoAWtLqdfD53YGsjY%2F5LMcu6xnExVpjT%2B9J6s7Iu5pmtK82YUUJi5dj8l7J3sjHWkPl%2BfXISF0pQJLBgIWVp4elNd7iX75a5N5tH4OIMgnDaWAwCLHr0O2j4QdI6Oq3s%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "297",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v120/typeorm@0.3.16/driver/sqlserver/authentication/AzureActiveDirectoryAccessTokenAuthentication.d.ts",
+  "now": {
+    "secs_since_epoch": 1683866389,
+    "nanos_since_epoch": 982184000
+  }
+}

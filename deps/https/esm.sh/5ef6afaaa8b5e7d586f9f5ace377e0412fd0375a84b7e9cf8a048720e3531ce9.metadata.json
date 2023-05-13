@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "x-typescript-types": "https://esm.sh/v120/ml-kmeans@6.0.0/lib/kmeans.d.ts",
+    "date": "Wed, 10 May 2023 22:23:26 GMT",
+    "cache-control": "public, max-age=86400",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=o8KhhBtflBiESz5ClD6A%2FechQc36cQeinf0%2FXJxipLDWyyIXrlyIpZhLToxQmz%2BDuclK2DRgkDa2hGKWlVDgeIs9BRjvEHc7dR6U8HGGX1zJ7yapkkug9tquBRE17VI3oj%2B%2FR5A%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "content-type": "application/javascript; charset=utf-8",
+    "access-control-expose-headers": "X-TypeScript-Types",
+    "vary": "Origin, User-Agent, Accept-Encoding",
+    "cf-ray": "7c5596294ad52aa6-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/ml-kmeans@6.0.0/",
+  "now": {
+    "secs_since_epoch": 1683757404,
+    "nanos_since_epoch": 255111000
+  }
+}

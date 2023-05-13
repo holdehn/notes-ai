@@ -2,6 +2,8 @@
   "imports": {
     "http/": "https://deno.land/std@0.177.0/http/",
     "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.15.0",
-    "langchain/": "https://esm.sh/langchain@0.0.67/"
+    "langchain/": "https://esm.sh/langchain@0.0.73/",
+    "ml-kmeans": "https://esm.sh/ml-kmeans@6.0.0/",
+    "ml-pca": "https://esm.sh/ml-pca@4.1.1/"
   }
 }

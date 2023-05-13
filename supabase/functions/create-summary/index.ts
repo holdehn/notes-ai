@@ -50,7 +50,7 @@ serve(async (req) => {
       streaming: true,
     });
 
-    const chain = await loadSummarizationChain(llm, {
+    const chain = loadSummarizationChain(llm, {
       combineMapPrompt: prompt,
       type: 'map_reduce',
     });
@@ -71,9 +71,7 @@ serve(async (req) => {
             },
             handleLLMEnd: async () => {
               await writer.ready;
-
               await writer.write(encoder.encode(`data: END_OF_SUMMARY\n\n`));
-
               await writer.close();
             },
             handleLLMError: async (e) => {
