@@ -108,8 +108,6 @@ export default function GeneratePublicNotesModal(props: Props) {
       setConvertedText(transcription);
       return transcription;
     } catch (error: any) {
-      console.log(JSON.stringify(error));
-
       alert(`Error: ${error.message}`);
     }
   };
