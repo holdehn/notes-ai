@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "content-length": "0",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Sun, 14 May 2023 18:13:46 GMT",
+    "location": "https://esm.sh/v120/@types/pdf-parse@1.1.1/index~.d.ts",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=tM6bYgGYzfEiGjYeMaOV59Tx7uW1lr472oluP6jbdzxgAIg%2BD8tc%2BYf%2BC1NIgGard93b0Q1CULcvKfMMuTx3JHi1JAGUQcpgIrZOMxF3lkhhEBcb74DKyXPfNZgBo3kdS6GNP58%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7c751df4cef79e62-SJC",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v120/@types/pdf-parse@1.1.1/index",
+  "now": {
+    "secs_since_epoch": 1684088024,
+    "nanos_since_epoch": 417470000
+  }
+}

@@ -117,6 +117,29 @@ export default function GenerateNotesModal(props: Props) {
       alert(`Error: ${error.message}`);
     }
   };
+  // const loadPDF = async (file: File) => {
+  //   try {
+  //     if (!file) {
+  //       alert('Please upload a PDF file');
+  //       return;
+  //     }
+
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+
+  //     const response = await supabaseClient.functions.invoke('load-pdf', {
+  //       body: formData,
+  //     });
+
+  //     console.log(response);
+  //     setConvertedText(JSON.stringify(response));
+  //     return JSON.stringify(response);
+  //   } catch (error: any) {
+  //     console.log(JSON.stringify(error));
+
+  //     alert(`Error: ${error.message}`);
+  //   }
+  // };
 
   const sendAudio = async (file: File) => {
     try {

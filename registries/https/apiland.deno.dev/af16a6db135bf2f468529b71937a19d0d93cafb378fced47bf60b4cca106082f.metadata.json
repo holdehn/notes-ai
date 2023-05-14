@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "cache-control": "max-age=2628000, immutable",
+    "vary": "Accept-Encoding",
+    "content-type": "application/json",
+    "server": "deno/gcp-us-west2",
+    "date": "Sun, 14 May 2023 17:49:59 GMT",
+    "via": "http/2 edgeproxy"
+  },
+  "url": "https://apiland.deno.dev/completions/resolve/pdf_parser/v1.1.2/main.js",
+  "now": {
+    "secs_since_epoch": 1684086598,
+    "nanos_since_epoch": 422542000
+  }
+}

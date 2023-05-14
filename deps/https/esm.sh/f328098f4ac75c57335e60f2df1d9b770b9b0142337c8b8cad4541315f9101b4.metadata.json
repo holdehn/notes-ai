@@ -1,0 +1,19 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "content-length": "0",
+    "vary": "Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=jR8R2fqEGj3oN1rnQTNn6MnrkdOdEkZJL2MjIboBaoWTEop8N5ZT6uXwuis0n2Mog1Z76DH%2B6jIwLBU%2BQYM3XpeY4eYIIFPMfh0g39K10cw%2F%2Bn4S%2By0sd%2F7uPfW1igodfXNao2U%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Sun, 14 May 2023 18:09:47 GMT",
+    "cf-ray": "7c7518206bdf15f1-SJC",
+    "location": "https://esm.sh/v120/@types/pdf-parse@1.1.1/index.d.ts",
+    "cache-control": "public, max-age=600"
+  },
+  "url": "https://esm.sh/v120/@types/pdf-parse@~1.1/index.d.ts",
+  "now": {
+    "secs_since_epoch": 1684087786,
+    "nanos_since_epoch": 253693000
+  }
+}

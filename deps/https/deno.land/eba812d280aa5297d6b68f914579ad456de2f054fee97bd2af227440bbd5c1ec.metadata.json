@@ -1,0 +1,33 @@
+{
+  "headers": {
+    "last-modified": "Sat, 07 Aug 2021 05:48:51 GMT",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "server-timing": "attempt;val=1,cdn-cache-hit,cdn-pop;desc=\"LAX53-P1\",cdn-rid;desc=\"YUrHZSNlx-rg6oEV_TEuylYTb9ACastvmefHg0vllPd52q_rTQzdrA==\",cdn-hit-layer;desc=\"REC\",cdn-downstream-fbl;dur=31, fetchSource;dur=36",
+    "x-amz-cf-pop": "LAX53-P1",
+    "content-security-policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+    "server": "deno/gcp-us-west2",
+    "x-amz-version-id": "KzQbJSxZzk.1GOtwylO2kwaraZ9W3A1i",
+    "etag": "W/\"701280bdc5392cd2e780b6fedb1f7439\"",
+    "vary": "Accept-Encoding, Origin",
+    "x-content-type-options": "nosniff",
+    "access-control-allow-origin": "*",
+    "age": "60818",
+    "date": "Sun, 14 May 2023 00:56:26 GMT",
+    "cross-origin-embedder-policy": "same-origin",
+    "x-frame-options": "DENY",
+    "cache-control": "public, max-age=31536000, immutable",
+    "via": "http/2 edgeproxy-h",
+    "x-amz-cf-id": "YUrHZSNlx-rg6oEV_TEuylYTb9ACastvmefHg0vllPd52q_rTQzdrA==",
+    "x-amz-replication-status": "COMPLETED",
+    "cross-origin-opener-policy": "same-origin",
+    "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+    "cross-origin-resource-policy": "same-origin",
+    "content-type": "application/javascript",
+    "x-cache": "Hit from cloudfront"
+  },
+  "url": "https://deno.land/x/pdf_parser@v1.1.2/lib/inspectcol.js",
+  "now": {
+    "secs_since_epoch": 1684086601,
+    "nanos_since_epoch": 393126000
+  }
+}

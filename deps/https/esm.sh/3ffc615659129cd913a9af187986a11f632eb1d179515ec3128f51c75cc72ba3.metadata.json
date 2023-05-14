@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "183218",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "date": "Sun, 14 May 2023 18:11:19 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=S2gD%2Fy7kzV4XLTRmR0Mx0DZC2wccx4CFjF01EUz59c%2BWtoS2RyrpejVcdgFTusg0CKXFdjVE%2BzlYQsjQbu%2FXd4cwyPuQCL3Fx6dwTAaf5aDtGiac%2BqUB0hUmV3cd9hQTO%2BYmLnk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7c751a488b0c96db-SJC",
+    "access-control-allow-origin": "*",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v120/@types/node@18.16.9/crypto.d.ts",
+  "now": {
+    "secs_since_epoch": 1684087877,
+    "nanos_since_epoch": 295776000
+  }
+}

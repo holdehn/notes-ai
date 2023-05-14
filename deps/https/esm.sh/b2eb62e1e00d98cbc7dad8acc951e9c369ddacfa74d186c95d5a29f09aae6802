@@ -1,0 +1,3 @@
+/* esm.sh - pdf-parse@1.1.1 */
+export * from "https://esm.sh/v120/pdf-parse@1.1.1/deno/pdf-parse.mjs";
+export { default } from "https://esm.sh/v120/pdf-parse@1.1.1/deno/pdf-parse.mjs";
