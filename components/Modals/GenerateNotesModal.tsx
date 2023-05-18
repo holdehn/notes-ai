@@ -46,8 +46,6 @@ export default function GenerateNotesModal(props: Props) {
 
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-
-      // Check if the uploaded file is an audio, video, or PDF file
       const fileType = file.type.split('/')[0];
       const fileSubType = file.type.split('/')[1];
 
@@ -55,9 +53,12 @@ export default function GenerateNotesModal(props: Props) {
         (fileType !== 'audio' &&
           fileType !== 'video' &&
           fileType !== 'application') ||
-        (fileType === 'application' && fileSubType !== 'pdf')
+        (fileType === 'application' &&
+          fileSubType !== 'pdf' &&
+          fileSubType !==
+            'vnd.openxmlformats-officedocument.wordprocessingml.document') // Add check for docx file
       ) {
-        alert('Please upload an audio, video, or PDF file');
+        alert('Please upload an audio, video, PDF, or docx file');
         return;
       }
 
@@ -67,7 +68,6 @@ export default function GenerateNotesModal(props: Props) {
       };
       setFiles(fileDisplay);
       setFileObject(file);
-
       setNextId(nextId + 1);
     }
   };
@@ -165,6 +165,35 @@ export default function GenerateNotesModal(props: Props) {
     }
   };
 
+  const loadDocx = async (file: File) => {
+    try {
+      if (!file) {
+        alert('Please upload a docx file');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/load-docx', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const extractedText = data.text;
+      setConvertedText(extractedText);
+      return extractedText;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      alert(`Error: ${error.message}`);
+    }
+  };
+
   const convertVideoToMp3 = async (videoFile: string | Blob | Buffer) => {
     try {
       // Create an FFmpeg instance
@@ -229,10 +258,18 @@ export default function GenerateNotesModal(props: Props) {
     const noteID = uuidv4();
     const file = fileObject;
     const fileType = file.type.split('/')[0];
+    const fileSubType = file.type.split('/')[1]; // define fileSubType here
     let transcription;
 
     if (fileType === 'application') {
-      transcription = await loadPDF(file);
+      if (
+        fileSubType ===
+        'vnd.openxmlformats-officedocument.wordprocessingml.document'
+      ) {
+        transcription = await loadDocx(file);
+      } else if (fileSubType === 'pdf') {
+        transcription = await loadPDF(file);
+      }
     } else if (fileType === 'video') {
       // If the file is a video, convert it to audio and then send it to sendAudio
       const audioFile = await convertVideoToMp3(file);

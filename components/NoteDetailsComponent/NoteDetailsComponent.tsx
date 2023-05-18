@@ -75,82 +75,76 @@ export default function NoteDetailsComponent() {
   const avatar_url = session?.user?.user_metadata?.avatar_url;
 
   const proxyUrl = '/api/proxy?imageUrl=';
-
   const finalImageUrl = proxyUrl + encodeURIComponent(avatar_url);
 
-  const fetcher = (url: RequestInfo | URL) =>
-    fetch(url).then((res) => res.json());
-  const { data, error } = useSWR(
-    noteId ? `/api/get-note?noteId=${noteId}&userId=${user_id}` : null,
-    fetcher,
-  );
+  const fetcher = async (url: RequestInfo | URL) => {
+    const res = await fetch(url);
+    const data = await res.json();
 
-  const [summaryStatus, setSummaryStatus] = useState('idle'); // Add this state variable
+    const tasks = [];
 
-  useMemo(() => {
-    // Only run the function if data is not null and summary is not yet created
-    if (!user_id || !noteId || summaryStatus !== 'idle') return;
-    if (data) {
-      if (data.summary) {
-        setSummaryText(data.summary);
-        setSummaryStatus('completed');
-      } else {
-        setSummaryStatus('inProgress');
-
+    if (!data.note?.[0].summary) {
+      tasks.push(
         createNotesSummary(
           {
-            transcription: data.transcription,
-            userId: user_id,
+            transcription: data.note?.[0].transcription,
+            userId: user_id as unknown as string,
             noteId: noteId as unknown as string,
-            existingSummary: data.summary,
-            name: name,
-            topic: data.topic,
-            type: data.type,
+            name: data.note?.[0].name,
+            topic: data.note?.[0].topic,
+            type: data.note?.[0].type,
           },
-          (summaryData) => {
-            setSummaryText(summaryData);
-          },
-        );
-      }
+          (summary) => setSummaryText(summary),
+        ),
+      );
+    } else {
+      setSummaryText(data.note?.[0].summary);
     }
-  }, [data, user_id, noteId, summaryStatus]);
 
-  const [bulletPointStatus, setBulletPointStatus] = useState('idle');
-
-  useMemo(() => {
-    // Only run the function if data is not null and summary is not yet created
-    if (!user_id || !noteId || bulletPointStatus !== 'idle') return;
-    if (data) {
-      if (data.notes) {
-        setBulletPoints(data.notes);
-        setBulletPointStatus('completed');
-      } else {
-        setBulletPointStatus('inProgress');
+    if (!data.note?.[0].notes) {
+      tasks.push(
         createNotesFacts(
           {
-            transcription: data.transcription,
-            userId: user_id,
+            transcription: data.note?.[0].transcription,
+            userId: user_id as unknown as string,
             noteId: noteId as unknown as string,
-            existingNotes: data.notes,
-            name: name,
-            topic: data.topic,
-            type: data.type,
+            name: data.note?.[0].name,
+            topic: data.note?.[0].topic,
+            type: data.note?.[0].type,
           },
-          (formattedBulletPoints: string[]) => {
-            setBulletPoints(JSON.stringify(formattedBulletPoints));
-          },
-        );
-      }
+          (notes) => setBulletPoints(notes.join('\n')),
+        ),
+      );
+    } else {
+      setBulletPoints(data.note?.[0].notes);
     }
-  }, [data, user_id, noteId, bulletPointStatus]);
 
-  if (error) {
-    return <div>Error fetching note data</div>;
-  }
-  if (!data) {
+    if (tasks.length > 0) {
+      await Promise.all(tasks);
+    }
+
+    return data;
+  };
+
+  const {
+    data: noteData,
+    error: noteError,
+    mutate,
+  } = useSWR(
+    user_id && noteId
+      ? `/api/get-note?noteId=${noteId}&userId=${user_id}`
+      : null,
+    fetcher,
+    {
+      refreshInterval: 0,
+    },
+  );
+
+  if (!noteData) {
     return <div>Loading...</div>;
   }
-  const { note } = data;
+  const { note } = noteData;
+  console.log('note data', note);
 
   const handleLogout = async () => {
     await fetch('/api/logout', {

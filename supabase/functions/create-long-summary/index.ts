@@ -10,6 +10,7 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'langchain/chains';
 import { OpenAIEmbeddings } from 'langchain/embeddings';
 import { kmeans } from 'ml-kmeans';
+import { supabase } from '../_shared/supabase.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -18,8 +19,12 @@ serve(async (req) => {
 
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
   try {
-    const { transcription, name, topic } = await req.json();
-    console.log('transcription', transcription, 'name', name, 'topic', topic);
+    const { transcription, name, topic, user_id, noteId } = await req.json();
+    console.log('transcription', transcription, 'name', name, 'topic', topic),
+      'user_id',
+      user_id,
+      'noteId',
+      noteId;
     const cleanTranscription = transcription
       .replace('\t', ' ')
       .replace('\n', ' ');
@@ -91,6 +96,7 @@ serve(async (req) => {
       type: 'map_reduce',
       combinePrompt: combineSummaryPrompt,
     });
+    let fullSummary = '';
 
     chain
       .call(
@@ -102,13 +108,10 @@ serve(async (req) => {
           {
             handleLLMNewToken: async (token) => {
               try {
-                console.log('before writer', writer);
-                console.log('before writer.ready', writer.ready);
-                console.log('before writer. token', token);
                 await writer.ready;
-                console.log('writer', writer);
+
                 await writer.write(encoder.encode(`data: ${token}\n\n`));
-                console.log('token', token);
+                fullSummary += token;
               } catch (e) {
                 console.error(e);
               }

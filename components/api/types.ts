@@ -26,17 +26,8 @@ export interface CreateNotesSummaryParams {
   userId: string;
   noteId: string;
   topic: string;
-  existingSummary: string | null;
-  name: string;
-}
-
-export interface CreateNotesSummaryParams {
-  transcription: string;
-  noteId: string;
-  topic: string;
-  existingSummary: string | null;
-  name: string;
   type: string;
+  name: string;
 }
 
 export interface CreateNotesFactsParams {
@@ -44,7 +35,6 @@ export interface CreateNotesFactsParams {
   userId: string;
   noteId: string;
   topic: string;
-  existingNotes: string[] | null;
   name: string;
   type: string;
 }

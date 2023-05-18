@@ -1,3 +1,4 @@
+import { KeyedMutator } from 'swr';
 import {
   CreateNoteParams,
   CreateNoteResponse,
@@ -120,22 +121,18 @@ const createNotesSummary = async (
     transcription,
     userId,
     noteId,
-    existingSummary,
     name,
     topic,
     type,
   }: CreateNotesSummaryParams,
   messageCallback: (message: string) => void,
 ): Promise<void> => {
-  if (existingSummary) {
-    console.log('Summary already exists, not generating a new one.');
-    return;
-  }
-
   let fullSummary = '';
 
+  const wordCount = transcription.split(/\s+/).length; // Get word count
+
   const summaryUrl =
-    type === 'application'
+    wordCount > 1000 // If word count is over 1500 use long-summary
       ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-summary`
       : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-summary`;
 
@@ -149,6 +146,8 @@ const createNotesSummary = async (
       transcription,
       name,
       topic,
+      user_id: userId,
+      noteId,
     }),
     onmessage(ev) {
       const summaryChunk = ev.data;
@@ -158,6 +157,7 @@ const createNotesSummary = async (
           noteId: noteId,
           userId: userId,
         });
+        // mutate(`/api/get-note-summary?noteId=${noteId}&userId=${userId}`);
       } else {
         fullSummary += summaryChunk;
         messageCallback(fullSummary);
@@ -171,26 +171,16 @@ const createNotesSummary = async (
 };
 
 const createNotesFacts = async (
-  {
-    transcription,
-    userId,
-    noteId,
-    existingNotes,
-    name,
-    topic,
-    type,
-  }: CreateNotesFactsParams,
+  { transcription, userId, noteId, name, topic, type }: CreateNotesFactsParams,
   messageCallback: (messages: string[]) => void,
 ): Promise<void> => {
-  if (existingNotes) {
-    console.log('Notes already exists, not generating a new one.');
-    return;
-  }
-
   let entireString = '';
   let bulletPoints: string[] = [];
+  const wordCount = transcription.split(/\s+/).length; // Get word count
+  console.log('wordCount', wordCount);
+
   const factsUrl =
-    type === 'application'
+    wordCount > 1000 // If word count is over 1500 use create-long-notes
       ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-notes`
       : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-facts`;
 
@@ -204,6 +194,8 @@ const createNotesFacts = async (
       transcription,
       name,
       topic,
+      user_id: userId,
+      noteId,
     }),
     onmessage(ev) {
       const chunk = ev.data;
@@ -212,7 +204,6 @@ const createNotesFacts = async (
         bulletPoints = entireString
           .split('\\n')
           .filter((line) => line.length > 0);
-
         sendNotesToSupabase({
           notes: bulletPoints,
           noteId: noteId,

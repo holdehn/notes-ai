@@ -8,6 +8,7 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { OpenAIChat } from 'langchain/llms/openai';
 import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'langchain/chains';
+import { supabase } from '../_shared/supabase.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -19,7 +20,7 @@ serve(async (req) => {
   const writer = stream.writable.getWriter();
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
   try {
-    const { transcription, name, topic } = await req.json();
+    const { transcription, name, topic, user_id, noteId } = await req.json();
 
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 2000,
@@ -38,7 +39,7 @@ serve(async (req) => {
     const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
       `You are a helpful assistant for {name}. Summarize information from the transcript with bullet points.
       Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
-      Do not respond with anything outside of the call transcript. If you don't know, say, "I don't know"
+      Do not respond with anything outside of the text. If you don't know, say, "I don't know"
       Do not repeat {name}'s name in your output.
   `,
     );

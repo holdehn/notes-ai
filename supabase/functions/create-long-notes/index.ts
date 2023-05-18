@@ -108,7 +108,6 @@ serve(async (req) => {
       modelName: 'gpt-3.5-turbo',
       temperature: 0,
       streaming: true,
-      timeout: 120000,
     });
     console.log('llm', llm);
     const encoder = new TextEncoder();
@@ -179,12 +178,10 @@ function euclideanDistance(vecA: number[], vecB: number[]): number {
 }
 
 const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
-  `You will be given a single passage of a document. This section will be enclosed in triple backticks (\`\\\`\\\`).
-  Your goal is to give a concise summary of this section so that a reader will have a full understanding of the excerpt.
-  Your response should be at least three paragraphs and fully encompass what was said in the passage.
-  
-  \\\`\\\`\\\`{text}\\\`\\\`\\\`
-  FULL SUMMARY:
+  `You are a helpful assistant for {name}. Summarize information from the following text.
+  Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
+  Do not respond with anything outside of the text. If you don't know, say, "I don't know"
+  Do not repeat {name}'s name in your output.
 `,
 );
 
@@ -199,7 +196,7 @@ const humanCombinedPrompt = HumanMessagePromptTemplate.fromTemplate(`{text}`);
 
 const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
   `
-  You are a helpful teacher assistant for {name}.  Summarize information from the transcript with bullet points.
+  You are a helpful teacher assistant for {name}. Summarize and expand upon information from the transcript of a lecture.
   Your goal is to write informative notes from the perspective of {name} that will highlight key points that will be relevant to learning the material.
   Do not respond with anything outside of the text. If you don't know, say, "I don't know"
   Do not repeat {name}'s name in your output.

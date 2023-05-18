@@ -5,10 +5,10 @@ import {
   HumanMessagePromptTemplate,
 } from 'langchain/prompts';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-
 import { OpenAIChat } from 'langchain/llms/openai';
 import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'langchain/chains';
+import { supabase } from '../_shared/supabase.ts';
 
 const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
   `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from the transcript of a lecture.
@@ -34,7 +34,7 @@ serve(async (req) => {
   const writer = stream.writable.getWriter();
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
   try {
-    const { transcription, name, topic } = await req.json();
+    const { transcription, name, topic, user_id, noteId } = await req.json();
 
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 2000,
@@ -54,6 +54,7 @@ serve(async (req) => {
       combineMapPrompt: prompt,
       type: 'map_reduce',
     });
+    let summary = '';
 
     chain
       .call(
@@ -68,11 +69,28 @@ serve(async (req) => {
             handleLLMNewToken: async (token) => {
               await writer.ready;
               await writer.write(encoder.encode(`data: ${token}\n\n`));
+              summary += token;
+              console.log('token add', summary);
             },
             handleLLMEnd: async () => {
               await writer.ready;
               await writer.write(encoder.encode(`data: END_OF_SUMMARY\n\n`));
               await writer.close();
+              // try {
+              //   console.log('fullSummary', summary);
+              //   const { data, error } = await supabase
+              //     .from('notes')
+              //     .update({ summary })
+              //     .match({ id: noteId, user_id: user_id });
+              //   if (error) {
+              //     console.error(error);
+              //   }
+              //   if (data) {
+              //     console.log('data', data);
+              //   }
+              // } catch (e) {
+              //   console.error(e);
+              // }
             },
             handleLLMError: async (e) => {
               await writer.ready;
