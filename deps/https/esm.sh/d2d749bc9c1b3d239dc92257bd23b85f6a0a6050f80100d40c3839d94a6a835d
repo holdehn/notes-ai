@@ -1,0 +1,3 @@
+/* esm.sh - compromise@14.9.0 */
+export * from "https://esm.sh/v122/compromise@14.9.0/deno/compromise.mjs";
+export { default } from "https://esm.sh/v122/compromise@14.9.0/deno/compromise.mjs";

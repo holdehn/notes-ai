@@ -131,12 +131,12 @@ const createNotesSummary = async (
 
   const wordCount = transcription.split(/\s+/).length; // Get word count
 
-  // const summaryUrl =
-  //   wordCount > 1000 // If word count is over 1500 use long-summary
-  //     ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-summary`
-  //     : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-summary`;
+  const summaryUrl =
+    wordCount > 1000 // If word count is over 1500 use long-summary
+      ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-summary`
+      : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-summary`;
 
-  const summaryUrl = `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-summary`;
+  // const summaryUrl = `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-summary`;
 
   await fetchEventSource(summaryUrl, {
     method: 'POST',
@@ -186,7 +186,7 @@ const createNotesFacts = async (
       ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-notes`
       : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-facts`;
 
-  // const factsUrl = `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-notes`;
+  // const factsUrl = `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-facts`;
   await fetchEventSource(factsUrl, {
     method: 'POST',
     headers: {
@@ -382,11 +382,29 @@ const createPublicNotesSummary = async (
   );
 };
 
+const getYoutubeTranscript = async (videoId: string) => {
+  try {
+    const response = await fetch('/api/get-youtube-transcript', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ videoId }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching transcript:', error);
+  }
+};
+
 export {
   insertNote,
   createNotesSummary,
   createNotesFacts,
   insertPublicNote,
   createPublicNotesFacts,
+  getYoutubeTranscript,
   createPublicNotesSummary,
 };

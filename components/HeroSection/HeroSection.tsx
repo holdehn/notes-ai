@@ -8,8 +8,8 @@ import { Link } from 'react-scroll';
 
 import { getURL } from '@/pages/api/helpers';
 import GeneratePublicNotesModal from '../GeneratePublicNotesModal';
-import PublicNotesTable from '../ui/PublicNotesTable';
-
+import GenerateYoutubeNotesModal from '../GenerateYoutubeNotesModal';
+import { set } from 'date-fns';
 const navigation = [
   { name: 'Home', href: 'home' },
   { name: 'Features', href: 'features' },
@@ -21,6 +21,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const supabase = useSupabaseClient();
   const [openPublicNoteModal, setOpenPublicNoteModal] = useState(false);
+  const [openYoutubeNoteModal, setOpenYoutubeNoteModal] = useState(false);
 
   const rootUrl = getURL();
 
@@ -134,7 +135,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
                 className="relative bg-purple-600 hover:bg-purple-800 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white font-semibold cursor-pointer"
               >
                 <span className="absolutes inset-0" aria-hidden="true" />
-                Click here to try yourself!
+                Create Notes
                 <span aria-hidden="true" />
               </button>
             </div>
@@ -143,6 +144,19 @@ export default function HeroSection({ noteData }: { noteData: any }) {
               open={openPublicNoteModal}
               setOpen={setOpenPublicNoteModal}
             />
+            {/* <button
+              onClick={() => setOpenYoutubeNoteModal(true)}
+              className="relative bg-red-600 hover:bg-red-800 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white font-semibold cursor-pointer"
+            >
+              <span className="absolutes inset-0" aria-hidden="true" />
+              Create Youtube Notes
+              <span aria-hidden="true" />
+            </button>
+
+            <GenerateYoutubeNotesModal
+              open={openYoutubeNoteModal}
+              setOpen={setOpenYoutubeNoteModal}
+            /> */}
           </div>
         </div>
 

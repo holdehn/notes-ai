@@ -19,10 +19,12 @@ import GenerateNotesModal from '../Modals/GenerateNotesModal';
 import { useSession } from '@supabase/auth-helpers-react';
 import router from 'next/router';
 import formatDateTime from '@/utils/formatDateTime';
+import GenerateYoutubeNotesModal from '../GenerateYoutubeNotesModal';
 
 const NotesComponent = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openNotesModal, setOpenNotesModal] = useState(false);
+  const [openYoutubeNoteModal, setOpenYoutubeNoteModal] = useState(false);
   const session: Session | null = useSession();
   const userID = session?.user?.id;
 
@@ -126,13 +128,6 @@ const NotesComponent = () => {
                       </button>
                     </div>
                   </Transition.Child>
-                  {/* <div className="flex flex-shrink-0 items-center px-4">
-                    <img
-                      className="h-8 w-auto"
-                      src="https://slswakzyytknqjdgbdra.supabase.co/storage/v1/object/public/avatars/logo%20copy.png"
-                      alt="Musiklink Logo"
-                    />
-                  </div> */}
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
                     <nav className="px-2">
                       <div className="space-y-1">
@@ -500,17 +495,30 @@ const NotesComponent = () => {
                   Generate high quality lecture notes instantly!
                 </p>
               </div>
-              <div className="mt-4 sm:mt-0">
+              <div className="mt-4 flex gap-4 sm:mt-0">
                 <button
                   type="button"
                   onClick={() => setOpenNotesModal(true)}
-                  className="relative inline-flex items-center space-x-2 rounded-md bg-indigo-600 px-4 py-2 text-base font-semibold text-white shadow-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 transition duration-150 ease-in-out"
+                  className="relative inline-flex items-center space-x-2 rounded-md bg-indigo-600 px-4 py-2 text-base font-semibold text-white shadow-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
                 >
                   Generate Notes
                 </button>
                 <GenerateNotesModal
                   open={openNotesModal}
                   setOpen={setOpenNotesModal}
+                />
+                <button
+                  onClick={() => setOpenYoutubeNoteModal(true)}
+                  className="relative inline-flex items-center space-x-2 rounded-md bg-red-600 px-4 py-2 text-base font-semibold text-white shadow-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
+                >
+                  <span className="absolutes inset-0" aria-hidden="true" />
+                  Youtube Notes
+                  <span aria-hidden="true" />
+                </button>
+
+                <GenerateYoutubeNotesModal
+                  open={openYoutubeNoteModal}
+                  setOpen={setOpenYoutubeNoteModal}
                 />
               </div>
             </div>

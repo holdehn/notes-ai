@@ -30,7 +30,7 @@ serve(async (req) => {
 
     const llm = new OpenAIChat({
       openAIApiKey: OPENAI_API_KEY,
-      maxTokens: 1500,
+      maxTokens: 2000,
       modelName: 'gpt-4',
       temperature: 0,
       streaming: true,
@@ -74,9 +74,9 @@ serve(async (req) => {
       humanCombinedPrompt,
     ]);
     const chain = loadSummarizationChain(llm, {
-      combinePrompt: chatbotCombinedPrompt,
-      type: 'map_reduce',
-      combineMapPrompt: chatPromptMap,
+      prompt: chatbotCombinedPrompt,
+      type: 'stuff',
+      // combineMapPrompt: chatPromptMap,
     });
 
     chain

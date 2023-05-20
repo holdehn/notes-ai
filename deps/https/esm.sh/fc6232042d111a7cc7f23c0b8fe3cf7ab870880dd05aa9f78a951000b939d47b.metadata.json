@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=HeOfTtXbSipx6ut7wR%2BMbrjPBYz5EtnnCBO%2FbV6cU9WcA1nj1MPr0JQ3p3uS4587M8OBIcUr8%2BLpCEexzemtErQP5hJESUyxV3TsnTgbfkPbdqkiUqHCYitwJgMNBL3%2Bs9m29Bg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=600",
+    "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "location": "https://esm.sh/density-clustering@1.3.0",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7ca27ac02dd6983d-SJC",
+    "content-length": "0",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Sat, 20 May 2023 06:21:26 GMT",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/density-clustering",
+  "now": {
+    "secs_since_epoch": 1684563685,
+    "nanos_since_epoch": 909373000
+  }
+}

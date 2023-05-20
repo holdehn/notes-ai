@@ -19,11 +19,7 @@ serve(async (req) => {
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
   try {
     const { transcription, name, topic, user_id, noteId } = await req.json();
-    console.log('transcription', transcription, 'name', name, 'topic', topic),
-      'user_id',
-      user_id,
-      'noteId',
-      noteId;
+
     const cleanTranscription = transcription
       .replace('\t', ' ')
       .replace('\n', ' ');
@@ -45,8 +41,8 @@ serve(async (req) => {
     }
 
     // Choose the number of clusters based on the length of the document.
-    let numClusters = Math.ceil(cleanTranscription.length / 10000);
-    numClusters = Math.min(Math.max(numClusters, 1), 10); // Ensure numClusters is between 1 and 10.
+    let numClusters = Math.ceil(cleanTranscription.length / 5000); // Decrease the denominator
+    numClusters = Math.min(Math.max(numClusters, 1), 20); // Increase the maximum limit
 
     const kmeansResult = kmeans(vectors, numClusters, {
       initialization: 'kmeans++',
@@ -79,11 +75,11 @@ serve(async (req) => {
 
     const llm = new OpenAIChat({
       openAIApiKey: OPENAI_API_KEY,
-      maxTokens: 1500,
-      modelName: 'gpt-3.5-turbo',
-      temperature: 0.1,
+      maxTokens: 2000,
+      modelName: 'gpt-4',
+      temperature: 0,
       streaming: true,
-      timeout: 150000,
+      timeout: 120000,
     });
     console.log('llm', llm);
     const encoder = new TextEncoder();
@@ -91,9 +87,9 @@ serve(async (req) => {
     const writer = stream.writable.getWriter();
 
     const chain = loadSummarizationChain(llm, {
-      combineMapPrompt: chatPromptMap,
-      type: 'map_reduce',
-      combinePrompt: chatbotCombinedPrompt,
+      // combineMapPrompt: chatPromptMap,
+      type: 'stuff',
+      prompt: chatbotCombinedPrompt,
     });
 
     chain
@@ -108,13 +104,8 @@ serve(async (req) => {
           {
             handleLLMNewToken: async (token) => {
               try {
-                console.log('before writer', writer);
-                console.log('before writer.ready', writer.ready);
-                console.log('before writer. token', token);
                 await writer.ready;
-                console.log('writer', writer);
                 await writer.write(encoder.encode(`data: ${token}\n\n`));
-                console.log('token', token);
               } catch (e) {
                 console.error(e);
               }
@@ -154,10 +145,17 @@ function euclideanDistance(vecA: number[], vecB: number[]): number {
 }
 
 const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
-  `You are a helpful assistant for {name}. Summarize information from the following text.
-  Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
-  Do not respond with anything outside of the text. If you don't know, say, "I don't know"
-  Do not repeat {name}'s name in your output.
+  `
+  You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from the transcript of a lecture.
+Your goal is to write a summary from the perspective of {name} that will highlight key points relevant to learning the material. 
+Do not respond with anything outside of the transcript. If you don't know, say, "I don't know".
+Do not repeat {name}'s name in your output.
+  
+  Respond with the following format.
+  - Bullet point format 
+  - Separate each bullet point with a new line
+  - Each bullet point should be informative to the user
+  - Each bullet point should be a complete sentence and informative to the user
 `,
 );
 
@@ -172,11 +170,10 @@ const humanCombinedPrompt = HumanMessagePromptTemplate.fromTemplate(`{text}`);
 
 const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
   `
-  You are a helpful teacher assistant for {name}. Summarize and expand upon information from the transcript of a lecture.
-  Your goal is to write informative notes from the perspective of {name} that will highlight key points that will be relevant to learning the material.
-  Do not respond with anything outside of the text. If you don't know, say, "I don't know"
-  Do not repeat {name}'s name in your output.
-  Respond with bullet point format
+  You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from the transcript of a lecture.
+Your goal is to write a summary from the perspective of {name} that will highlight key points relevant to learning the material. 
+Do not respond with anything outside of the transcript. If you don't know, say, "I don't know".
+Do not repeat {name}'s name in your output.
   
   Respond with the following format.
   - Bullet point format 

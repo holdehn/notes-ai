@@ -46,8 +46,8 @@ serve(async (req) => {
     }
 
     // Choose the number of clusters based on the length of the document.
-    let numClusters = Math.ceil(cleanTranscription.length / 10000);
-    numClusters = Math.min(Math.max(numClusters, 1), 10); // Ensure numClusters is between 1 and 10.
+    let numClusters = Math.ceil(cleanTranscription.length / 5000); // Decrease the denominator
+    numClusters = Math.min(Math.max(numClusters, 1), 20); // Increase the maximum limit
 
     const kmeansResult = kmeans(vectors, numClusters, {
       initialization: 'kmeans++',
@@ -86,7 +86,6 @@ serve(async (req) => {
       streaming: true,
       timeout: 120000,
     });
-    console.log('llm', llm);
     const encoder = new TextEncoder();
     const stream = new TransformStream();
     const writer = stream.writable.getWriter();
