@@ -41,7 +41,7 @@ serve(async (req) => {
     }
 
     // Choose the number of clusters based on the length of the document.
-    let numClusters = Math.ceil(cleanTranscription.length / 5000); // Decrease the denominator
+    let numClusters = Math.ceil(cleanTranscription.length / 2500); // Decrease the denominator
     numClusters = Math.min(Math.max(numClusters, 1), 20); // Increase the maximum limit
 
     const kmeansResult = kmeans(vectors, numClusters, {
@@ -75,8 +75,8 @@ serve(async (req) => {
 
     const llm = new OpenAIChat({
       openAIApiKey: OPENAI_API_KEY,
-      maxTokens: 2000,
-      modelName: 'gpt-4',
+      maxTokens: 1500,
+      modelName: 'gpt-3.5-turbo',
       temperature: 0,
       streaming: true,
       timeout: 120000,

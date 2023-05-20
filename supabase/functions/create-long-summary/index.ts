@@ -80,8 +80,8 @@ serve(async (req) => {
 
     const llm = new OpenAIChat({
       openAIApiKey: OPENAI_API_KEY,
-      maxTokens: 1000,
-      modelName: 'gpt-4',
+      maxTokens: 1200,
+      modelName: 'gpt-3.5-turbo',
       temperature: 0,
       streaming: true,
       timeout: 120000,
