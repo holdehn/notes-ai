@@ -30,16 +30,16 @@ serve(async (req) => {
 
     const llm = new OpenAIChat({
       openAIApiKey: OPENAI_API_KEY,
-      maxTokens: 250,
-      modelName: 'gpt-3.5-turbo',
+      maxTokens: 1500,
+      modelName: 'gpt-4',
       temperature: 0,
       streaming: true,
     });
 
     const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
-      `You are a helpful assistant for {name}. Summarize information from the transcript with bullet points.
-      Your goal is to write a summary from the perspective of {name} that will highlight key points that will be relevant to learning the material.
-      Do not respond with anything outside of the text. If you don't know, say, "I don't know"
+      `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from the transcript of a lecture.
+      Your goal is to write a summary from the perspective of {name} that will highlight key points relevant to learning the material. 
+      Do not respond with anything outside of the transcript. If you don't know, say, "I don't know".
       Do not repeat {name}'s name in your output.
   `,
     );
@@ -56,10 +56,10 @@ serve(async (req) => {
 
     const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
       `
-      You are a helpful teacher assistant for {name}. Summarize and expand upon information from the transcript of a lecture.
-      Your goal is to write informative notes from the perspective of {name} that will highlight key points that will be relevant to learning the material.
-      Do not respond with anything outside of the text. If you don't know, say, "I don't know"
-      Do not repeat {name}'s name in your output.
+      You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from the transcript of a lecture.
+  Your goal is to write a summary from the perspective of {name} that will highlight key points relevant to learning the material. 
+  Do not respond with anything outside of the transcript. If you don't know, say, "I don't know".
+  Do not repeat {name}'s name in your output.
       
       Respond with the following format.
       - Bullet point format 

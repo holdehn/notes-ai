@@ -131,10 +131,12 @@ const createNotesSummary = async (
 
   const wordCount = transcription.split(/\s+/).length; // Get word count
 
-  const summaryUrl =
-    wordCount > 1000 // If word count is over 1500 use long-summary
-      ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-summary`
-      : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-summary`;
+  // const summaryUrl =
+  //   wordCount > 1000 // If word count is over 1500 use long-summary
+  //     ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-summary`
+  //     : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-summary`;
+
+  const summaryUrl = `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-summary`;
 
   await fetchEventSource(summaryUrl, {
     method: 'POST',
@@ -179,11 +181,12 @@ const createNotesFacts = async (
   const wordCount = transcription.split(/\s+/).length; // Get word count
   console.log('wordCount', wordCount);
 
-  const factsUrl =
-    wordCount > 1000 // If word count is over 1500 use create-long-notes
-      ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-notes`
-      : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-facts`;
+  // const factsUrl =
+  //   wordCount > 1000 // If word count is over 1500 use create-long-notes
+  //     ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-notes`
+  //     : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-facts`;
 
+  const factsUrl = `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-notes`;
   await fetchEventSource(factsUrl, {
     method: 'POST',
     headers: {

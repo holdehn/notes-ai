@@ -18,14 +18,18 @@ serve(async (req) => {
 
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
   try {
-    const { transcription, name, topic } = await req.json();
-    console.log('transcription', transcription, 'name', name, 'topic', topic);
+    const { transcription, name, topic, user_id, noteId } = await req.json();
+    console.log('transcription', transcription, 'name', name, 'topic', topic),
+      'user_id',
+      user_id,
+      'noteId',
+      noteId;
     const cleanTranscription = transcription
       .replace('\t', ' ')
       .replace('\n', ' ');
 
     const textSplitter = new RecursiveCharacterTextSplitter({
-      separators: ['\n\n', '\n', '\t'],
+      // separators: ['\n\n', '\n', '\t'],
       chunkSize: 3000,
       chunkOverlap: 1000,
     });
@@ -73,41 +77,13 @@ serve(async (req) => {
 
     const selectedDocs = closestIndices.map((index) => docs[index]);
 
-    // const map_llm = new OpenAIChat({
-    //   openAIApiKey: OPENAI_API_KEY,
-    //   maxTokens: 500,
-    //   modelName: 'gpt-3.5-turbo',
-    //   temperature: 0,
-    //   streaming: true,
-    // });
-
-    // const summaryChain = loadSummarizationChain(map_llm, {
-    //   prompt: summaryPrompt,
-    //   type: 'stuff',
-    // });
-    // console.log('summaryChain', summaryChain);
-
-    // let summaryPromises = selectedDocs.map((doc) =>
-    //   summaryChain.call({ input_documents: [doc] }),
-    // );
-
-    // let summaryList = await Promise.all(summaryPromises);
-
-    // summaryList = summaryList.map((summary) => summary.text); // assuming 'text' holds the actual summary
-
-    // const summaries = summaryList.join('\n\n');
-    // console.log('summaries', summaries);
-    // const final_docs = new Document({
-    //   pageContent: summaries,
-    // });
-    // console.log('final_docs', final_docs.pageContent);
-
     const llm = new OpenAIChat({
       openAIApiKey: OPENAI_API_KEY,
       maxTokens: 1500,
       modelName: 'gpt-3.5-turbo',
-      temperature: 0,
+      temperature: 0.1,
       streaming: true,
+      timeout: 150000,
     });
     console.log('llm', llm);
     const encoder = new TextEncoder();
@@ -115,9 +91,9 @@ serve(async (req) => {
     const writer = stream.writable.getWriter();
 
     const chain = loadSummarizationChain(llm, {
-      combinePrompt: chatbotCombinedPrompt,
-      type: 'map_reduce',
       combineMapPrompt: chatPromptMap,
+      type: 'map_reduce',
+      combinePrompt: chatbotCombinedPrompt,
     });
 
     chain
@@ -200,6 +176,7 @@ const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
   Your goal is to write informative notes from the perspective of {name} that will highlight key points that will be relevant to learning the material.
   Do not respond with anything outside of the text. If you don't know, say, "I don't know"
   Do not repeat {name}'s name in your output.
+  Respond with bullet point format
   
   Respond with the following format.
   - Bullet point format 

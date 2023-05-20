@@ -30,7 +30,7 @@ serve(async (req) => {
       .replace('\n', ' ');
 
     const textSplitter = new RecursiveCharacterTextSplitter({
-      separators: ['\n\n', '\n', '\t'],
+      // separators: ['\n\n', '\n', '\t'],
       chunkSize: 3000,
       chunkOverlap: 1000,
     });
@@ -80,8 +80,8 @@ serve(async (req) => {
 
     const llm = new OpenAIChat({
       openAIApiKey: OPENAI_API_KEY,
-      maxTokens: 1500,
-      modelName: 'gpt-3.5-turbo',
+      maxTokens: 1000,
+      modelName: 'gpt-4',
       temperature: 0,
       streaming: true,
       timeout: 120000,
