@@ -12,6 +12,7 @@ export interface CreatePublicNoteParams {
   formikValues: {
     title: string;
     topic?: string;
+    link?: string;
   };
   noteID: string;
   transcription: string;
@@ -60,3 +61,8 @@ export type Result<TData, TError> =
       error: TError;
       data?: undefined;
     };
+
+export interface InsertExtractedTextParams {
+  extractedText: string;
+  userId: string;
+}

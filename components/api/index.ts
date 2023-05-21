@@ -8,6 +8,7 @@ import {
   Result,
   CreatePublicNoteParams,
   CreatePublicNotesParams,
+  InsertExtractedTextParams,
 } from './types';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 
@@ -42,6 +43,7 @@ const insertPublicNote = async (
 
   return data;
 };
+
 /**
  * Updates the summary of a note.
  *
@@ -399,6 +401,27 @@ const getYoutubeTranscript = async (videoId: string) => {
   }
 };
 
+const insertExtractedText = async (
+  params: InsertExtractedTextParams,
+): Promise<any> => {
+  const response = await fetch('/api/insert-extracted-text', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error);
+  }
+
+  const data = await response.json();
+
+  return data;
+};
+
 export {
   insertNote,
   createNotesSummary,
@@ -407,4 +430,5 @@ export {
   createPublicNotesFacts,
   getYoutubeTranscript,
   createPublicNotesSummary,
+  insertExtractedText,
 };

@@ -19,13 +19,12 @@ import GenerateNotesModal from '../Modals/GenerateNotesModal';
 import { useSession } from '@supabase/auth-helpers-react';
 import router from 'next/router';
 import formatDateTime from '@/utils/formatDateTime';
-import GenerateYoutubeNotesModal from '../GenerateYoutubeNotesModal';
+import PDFGrid from './PDFGrid'; // Import the PDFGrid component. You need to adjust the path according to your project structure
+import UploadPDFModal from '../Modals/UploadPDFModal';
 
-const NotesComponent = () => {
+const PDFChatPageComponent = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [openNotesModal, setOpenNotesModal] = useState(false);
-  const [openYoutubeNoteModal, setOpenYoutubeNoteModal] = useState(false);
-  const [openLiveModal, setOpenLiveModal] = useState(false);
+  const [openUploadModal, setOpenUploadModal] = useState(false);
   const session: Session | null = useSession();
   const userID = session?.user?.id;
 
@@ -92,7 +91,7 @@ const NotesComponent = () => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-gray-600 bg-opacity-75 " />
+              <div className="fixed inset-0 bg-gray-800 bg-opacity-75 " />
             </Transition.Child>
 
             <div className="fixed inset-0 z-40 flex">
@@ -485,50 +484,30 @@ const NotesComponent = () => {
               </div>
             </div>
           </div>
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-6 bg-gray-800">
             {/* Page title & actions */}
             <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gray-200">
               <div className="min-w-0 flex-1">
                 <h1 className="text-xl font-bold leading-6 text-black sm:truncate">
-                  NotesAI
+                  Chat with your PDF
                 </h1>
                 <p className="mt-1 text-sm text-gray-900">
-                  Generate high quality lecture notes instantly!
+                  Talk to your textbook!
                 </p>
               </div>
               <div className="mt-4 flex sm:mt-0 space-x-3">
                 <button
-                  type="button"
-                  onClick={() => setOpenNotesModal(true)}
-                  className="inline-flex items-center px-4 py-2 text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Generate
-                </button>
-                <GenerateNotesModal
-                  open={openNotesModal}
-                  setOpen={setOpenNotesModal}
-                />
-
-                <button
-                  onClick={() => setOpenYoutubeNoteModal(true)}
-                  className="inline-flex items-center px-4 py-2 text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                >
-                  Youtube
-                </button>
-                <GenerateYoutubeNotesModal
-                  open={openYoutubeNoteModal}
-                  setOpen={setOpenYoutubeNoteModal}
-                />
-
-                <button
-                  onClick={() => setOpenLiveModal(true)}
+                  onClick={() => setOpenUploadModal(true)}
                   className="inline-flex items-center px-4 py-2 text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
-                  Live
+                  Upload PDF
                 </button>
+                <UploadPDFModal
+                  open={openUploadModal}
+                  setOpen={setOpenUploadModal}
+                />
               </div>
             </div>
-
             {/* Projects list (only on smallest breakpoint) */}
             <div className="sm:hidden">
               <ul role="list">
@@ -565,15 +544,15 @@ const NotesComponent = () => {
             <div className="fixed bottom-4 right-4 z-50 sm:hidden">
               <button
                 type="button"
-                onClick={() => setOpenNotesModal(true)}
+                onClick={() => setOpenUploadModal(true)}
                 className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <span className="sr-only">Generate Notes</span>
                 <PlusIcon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-            {/* Projects table (small breakpoint and up) */}
 
+            {/* Projects table (small breakpoint and up) */}
             <div className="hidden sm:block">
               <div className="hidden sm:block">
                 <div className="inline-block min-w-full border-b align-middle">
@@ -599,60 +578,15 @@ const NotesComponent = () => {
                         />
                       </tr>
                     </thead>
-
-                    <tbody
-                      className={`divide-y divide-gray-600 ${
-                        notes?.length > 0 ? 'bg-purple-100' : ''
-                      }`}
-                    >
-                      {notes?.map((note: any, index: number) => (
-                        <tr
-                          key={note.index}
-                          className={`group cursor-pointer hover:bg-purple-400 ${
-                            index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-100'
-                          }`}
-                          onClick={() =>
-                            router.push(`/my-notes/${note.note_id}`)
-                          }
-                        >
-                          <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-black">
-                            <div className="flex items-center space-x-3 lg:pl-2">
-                              <div
-                                className={classNames(
-                                  note.bgColorClass,
-                                  'h-2.5 w-2.5 flex-shrink-0 rounded-full ',
-                                )}
-                                aria-hidden="true"
-                              />
-                              <a
-                                href={`/my-notes/${note.note_id}`}
-                                className="truncate "
-                              >
-                                <span>{note.title}</span>
-                              </a>
-                            </div>
-                          </td>
-
-                          <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-black md:table-cell">
-                            {note.created_at}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
-                            <a
-                              href={`/my-notes/${note.note_id}`}
-                              className="text-indigo-600 group-hover:text-indigo-800"
-                            >
-                              View
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
                   </table>
+                  <div className="p-4 bg-gray-600">
+                    <PDFGrid file={notes} />
+                  </div>
                   {notes?.length === 0 && (
                     <div className="flex justify-center items-center h-36 bg-indigo-950">
-                      <button onClick={() => setOpenNotesModal(true)}>
+                      <button onClick={() => setOpenUploadModal(true)}>
                         <div className="text-white font-medium text-xl">
-                          Create a note to get started!
+                          Upload a PDF to get started!
                         </div>
                       </button>
                     </div>
@@ -667,15 +601,15 @@ const NotesComponent = () => {
   );
 };
 
-export default NotesComponent;
+export default PDFChatPageComponent;
 
 const navigation = [
-  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
+  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: false },
   {
     name: 'PDF Chat',
     href: '/pdf-chat',
     icon: SmartToyIcon,
-    current: false,
+    current: true,
   },
   {
     name: 'Research',
@@ -695,3 +629,12 @@ const navigation = [
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
+
+const notes = [
+  {
+    title: 'Sample.pdf',
+    size: '3.9 MB',
+    source: 'https://www.example.com/sample.pdf',
+  },
+  // More notes...
+];

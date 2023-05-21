@@ -20,11 +20,7 @@ serve(async (req) => {
   const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
   try {
     const { transcription, name, topic, user_id, noteId } = await req.json();
-    console.log('transcription', transcription, 'name', name, 'topic', topic),
-      'user_id',
-      user_id,
-      'noteId',
-      noteId;
+
     const cleanTranscription = transcription
       .replace('\t', ' ')
       .replace('\n', ' ');

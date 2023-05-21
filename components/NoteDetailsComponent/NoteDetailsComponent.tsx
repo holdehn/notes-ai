@@ -854,8 +854,8 @@ const timeline = [
 const navigation = [
   { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
   {
-    name: 'Live Notes',
-    href: '#live-notes',
+    name: 'PDF Chat',
+    href: '/pdf-chat',
     icon: SmartToyIcon,
     current: false,
   },

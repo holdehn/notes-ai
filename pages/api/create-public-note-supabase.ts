@@ -14,6 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         topic: formikValues.topic,
         color_theme: getRandomColor(),
         transcription: transcription,
+        link: formikValues.link,
       },
     ]);
 

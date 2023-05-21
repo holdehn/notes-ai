@@ -8,7 +8,7 @@ import { Link } from 'react-scroll';
 
 import { getURL } from '@/pages/api/helpers';
 import GeneratePublicNotesModal from '../GeneratePublicNotesModal';
-import GenerateYoutubeNotesModal from '../GenerateYoutubeNotesModal';
+import GeneratePublicYoutubeNotesModal from 'components/GeneratePublicYoutubeNotes';
 import { set } from 'date-fns';
 const navigation = [
   { name: 'Home', href: 'home' },
@@ -144,7 +144,7 @@ export default function HeroSection({ noteData }: { noteData: any }) {
               open={openPublicNoteModal}
               setOpen={setOpenPublicNoteModal}
             />
-            {/* <button
+            <button
               onClick={() => setOpenYoutubeNoteModal(true)}
               className="relative bg-red-600 hover:bg-red-800 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white font-semibold cursor-pointer"
             >
@@ -153,10 +153,10 @@ export default function HeroSection({ noteData }: { noteData: any }) {
               <span aria-hidden="true" />
             </button>
 
-            <GenerateYoutubeNotesModal
+            <GeneratePublicYoutubeNotesModal
               open={openYoutubeNoteModal}
               setOpen={setOpenYoutubeNoteModal}
-            /> */}
+            />
           </div>
         </div>
 

@@ -41,7 +41,7 @@ serve(async (req) => {
     }
 
     // Choose the number of clusters based on the length of the document.
-    let numClusters = Math.ceil(cleanTranscription.length / 2500); // Decrease the denominator
+    let numClusters = Math.ceil(cleanTranscription.length / 3000); // Decrease the denominator
     numClusters = Math.min(Math.max(numClusters, 1), 20); // Increase the maximum limit
 
     const kmeansResult = kmeans(vectors, numClusters, {
@@ -87,9 +87,9 @@ serve(async (req) => {
     const writer = stream.writable.getWriter();
 
     const chain = loadSummarizationChain(llm, {
-      // combineMapPrompt: chatPromptMap,
-      type: 'stuff',
-      prompt: chatbotCombinedPrompt,
+      combineMapPrompt: chatPromptMap,
+      type: 'map_reduce',
+      combinePrompt: chatbotCombinedPrompt,
     });
 
     chain
@@ -145,18 +145,13 @@ function euclideanDistance(vecA: number[], vecB: number[]): number {
 }
 
 const systemPromptMap = SystemMessagePromptTemplate.fromTemplate(
-  `
-  You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from the transcript of a lecture.
-Your goal is to write a summary from the perspective of {name} that will highlight key points relevant to learning the material. 
-Do not respond with anything outside of the transcript. If you don't know, say, "I don't know".
-Do not repeat {name}'s name in your output.
+  `You will receive a distinct segment from a document, enclosed in triple backticks (\`\\\`\\\`). This selected passage, while a part of a larger narrative, has its unique message or theme.
+  Your mission is to generate extensive notes on this section, providing a thorough and nuanced understanding of the presented content. 
+  Your notes should be laid out in bullet points, each one detailing an aspect or sub-topic from the passage.
   
-  Respond with the following format.
-  - Bullet point format 
-  - Separate each bullet point with a new line
-  - Each bullet point should be informative to the user
-  - Each bullet point should be a complete sentence and informative to the user
-`,
+  \\\`\\\`\\\`{text}\\\`\\\`\\\`
+  DETAILED NOTES:
+  `,
 );
 
 const humanPromptMap = HumanMessagePromptTemplate.fromTemplate(`{text}`);
@@ -170,17 +165,12 @@ const humanCombinedPrompt = HumanMessagePromptTemplate.fromTemplate(`{text}`);
 
 const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
   `
-  You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from the transcript of a lecture.
-Your goal is to write a summary from the perspective of {name} that will highlight key points relevant to learning the material. 
-Do not respond with anything outside of the transcript. If you don't know, say, "I don't know".
-Do not repeat {name}'s name in your output.
+  You will be presented with an assortment of notes derived from a text. These notes, encased in triple backticks (\`\\\`\\\`), represent individual facets of the same larger narrative.
+  Your task is to build upon these existing notes, creating a detailed and comprehensive set of your own, exploring the entire text. These should be in bullet point format.
+  Your extended notes should provide the reader with a complete and intricate understanding of the overarching theme and sub-points of the text.
   
-  Respond with the following format.
-  - Bullet point format 
-  - Separate each bullet point with a new line
-  - Each bullet point should be informative to the user
-  - Each bullet point should be a complete sentence and informative to the user
-
+  \\\`\\\`\\\`{text}\\\`\\\`\\\`
+  EXTENSIVE NOTES:
   `,
 );
 const chatbotCombinedPrompt = ChatPromptTemplate.fromPromptMessages([
