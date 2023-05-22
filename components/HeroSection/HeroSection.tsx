@@ -26,7 +26,7 @@ import { getURL } from '@/pages/api/helpers';
 import GeneratePublicNotesModal from '../Modals/GeneratePublicNotesModal';
 import GeneratePublicYoutubeNotesModal from '@/components/Modals/GeneratePublicYoutubeNotes';
 import { HomeIcon, NewspaperIcon } from '@heroicons/react/20/solid';
-import GeneratePublicWebsiteNotes from '../Modals/GeneratePublicWebsiteNotes';
+import GeneratePublicLiveNotes from '../Modals/GeneratePublicLiveNotes';
 
 export default function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -50,8 +50,8 @@ export default function HeroSection() {
         setOpenModal('AudioPDF');
         break;
       // Add more cases as needed
-      case 'Website Url':
-        setOpenModal('Website');
+      case 'Live Notes':
+        setOpenModal('LiveNotes');
         break;
       default:
         setOpenModal(null);
@@ -323,8 +323,8 @@ export default function HeroSection() {
             open={openModal === 'AudioPDF'}
             setOpen={() => setOpenModal(null)}
           />
-          <GeneratePublicWebsiteNotes
-            open={openModal === 'Website'}
+          <GeneratePublicLiveNotes
+            open={openModal === 'LiveNotes'}
             setOpen={() => setOpenModal(null)}
           />
 
@@ -334,16 +334,10 @@ export default function HeroSection() {
                 <h1 className="text-lg font-bold leading-6 text-gray-100 sm:truncate mb-2 sm:mb-0">
                   SummaryIO
                 </h1>
-                <button
-                  className="bg-gradient-to-r from-[#0070f3] to-[#135a83] text-white font-semibold py-2 px-4 rounded sm:ml-4"
-                  onClick={() => setOpenSignUp(true)}
-                >
-                  Sign Up
-                </button>
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-[#1c0232] via-[#291957] to-[#480f50] relative">
+            <div className="bg-gradient-to-r from-[#1c0232] via-[#291957] to-[#480f50] relative min-h-screen">
               <div className="p-12 sm:pb-32">
                 <div className=" max-w-full">
                   <div className="mx-auto max-w-2xl lg:text-center">
@@ -456,8 +450,8 @@ const features = [
     icon: SpeakerXMarkIcon,
   },
   {
-    name: 'Website Url',
-    description: 'Get summaries of your favorite books.',
+    name: 'Live Notes',
+    description: 'Record audio and recieve high quality notes.',
     icon: BookOpenIcon,
   },
 ];
