@@ -27,6 +27,7 @@ import GeneratePublicNotesModal from '../Modals/GeneratePublicNotesModal';
 import GeneratePublicYoutubeNotesModal from '@/components/Modals/GeneratePublicYoutubeNotes';
 import { HomeIcon, NewspaperIcon } from '@heroicons/react/20/solid';
 import GeneratePublicLiveNotes from '../Modals/GeneratePublicLiveNotes';
+import GeneratePublicLectureNotes from '../Modals/GeneratePublicLectureNotes';
 
 export default function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -52,6 +53,9 @@ export default function HeroSection() {
       // Add more cases as needed
       case 'Live Notes':
         setOpenModal('LiveNotes');
+        break;
+      case 'Lecture Notes':
+        setOpenModal('LectureNotes');
         break;
       default:
         setOpenModal(null);
@@ -327,6 +331,10 @@ export default function HeroSection() {
             open={openModal === 'LiveNotes'}
             setOpen={() => setOpenModal(null)}
           />
+          <GeneratePublicLectureNotes
+            open={openModal === 'LectureNotes'}
+            setOpen={() => setOpenModal(null)}
+          />
 
           <main>
             <div className="bg-gradient-to-r from-[#1c0232] via-[#291957] to-[#480f50] relative min-h-screen">
@@ -445,6 +453,11 @@ const features = [
     name: 'Live Notes',
     description: 'Record audio and recieve high quality notes.',
     icon: BookOpenIcon,
+  },
+  {
+    name: 'Lecture Notes',
+    description: 'Summarize your lecture notes.',
+    icon: DocumentTextIcon,
   },
 ];
 

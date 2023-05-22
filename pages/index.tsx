@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <main>
       <Head>
-        <title>NotesAI- Summarize Anything</title>
+        <title>NotesAI- Instant Notes</title>
         <meta
           name="description"
           content="Organize and manage different subjects while getting personalized AI tutoring."
