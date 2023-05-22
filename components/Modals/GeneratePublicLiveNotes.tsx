@@ -127,6 +127,48 @@ export default function GeneratePublicLiveNotes(props: Props) {
     };
   }, [startTime]);
 
+  const convertToMp3 = async (file: string | Blob | Buffer) => {
+    try {
+      // Create an FFmpeg instance
+      const ffmpeg = createFFmpeg({ log: true });
+
+      // Load the FFmpeg instance
+      await ffmpeg.load();
+
+      // Write the video file to FFmpeg's file system
+      const inputFileName =
+        audioFile?.type.split('/')[1] === 'webm' ? 'input.webm' : 'input.mp4';
+      ffmpeg.FS('writeFile', inputFileName, await fetchFile(file));
+
+      // Run the FFmpeg command to convert the video to MP3
+      await ffmpeg.run(
+        '-i',
+        inputFileName,
+        '-vn',
+        '-b:a',
+        '128k',
+        'output.mp3',
+      );
+
+      // Read the output MP3 file from FFmpeg's file system
+      const audioData = ffmpeg.FS('readFile', 'output.mp3');
+
+      // Create a Blob from the output MP3 data
+      const audioBlob = new Blob([audioData.buffer], { type: 'audio/mp3' });
+
+      // Convert the Blob to a File
+      const mp3 = new File([audioBlob], 'audio.mp3', {
+        type: 'audio/mp3',
+      });
+
+      // Return the audio file
+      return mp3;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
@@ -150,7 +192,8 @@ export default function GeneratePublicLiveNotes(props: Props) {
       type: fileType,
     });
 
-    const transcription = await sendAudio(webmFile);
+    const mp3File = await convertToMp3(webmFile);
+    const transcription = await sendAudio(mp3File);
 
     await insertPublicNote({
       formikValues: values,
