@@ -2,8 +2,7 @@ import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import EmptyUpload3 from './EmptyUpload3';
-import { useSession } from '@supabase/auth-helpers-react';
-import { useSWRConfig } from 'swr';
+
 import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';

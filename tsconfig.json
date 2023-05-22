@@ -31,6 +31,6 @@
     ".next/types/**/*.ts", "components/Modals/GenerateNotesPDFModal",
 
   ],
-  "exclude": ["node_modules", "supabase/functions/generate-transcription/index.ts","supabase/functions/upload-audio/index.ts","supabase/functions/create-summary/index.ts", "supabase/functions/_shared/supabase.ts", "supabase/functions/create-facts/index.ts", "supabase/functions/create-long-summary/index.ts", "supabase/functions/create-long-notes/index.ts"
+  "exclude": ["node_modules", "supabase/functions/generate-transcription/index.ts","supabase/functions/upload-audio/index.ts","supabase/functions/create-summary/index.ts", "supabase/functions/_shared/supabase.ts", "supabase/functions/create-facts/index.ts", "supabase/functions/create-long-summary/index.ts", "supabase/functions/create-long-notes/index.ts", "supabase/functions/latex-image/index.ts"
 ]
 }

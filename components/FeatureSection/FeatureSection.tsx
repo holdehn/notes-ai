@@ -11,7 +11,7 @@ import {
 
 const features = [
   {
-    name: 'Youtube video summarization',
+    name: 'Youtube video Notes',
     description: 'Summarize Youtube videos with ease.',
     icon: TvIcon,
   },

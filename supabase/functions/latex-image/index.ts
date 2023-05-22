@@ -49,6 +49,7 @@ serve(async (req: Request) => {
     console.log(rawData);
     const data = parseMathpixData(rawData);
     console.log(data);
+
     return new Response(JSON.stringify({ success: true, data }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,

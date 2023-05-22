@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
-import EmptyUpload from '@/components/EmptyUpload';
 import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
@@ -11,12 +10,18 @@ import { v4 as uuidv4 } from 'uuid';
 import useMediaRecorder from '@wmik/use-media-recorder';
 import { FaMicrophone, FaStopCircle } from 'react-icons/fa';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+import EmptyUpload3 from './EmptyUpload3';
+import { set } from 'date-fns';
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
 }
 
+interface FileDisplay {
+  file: File;
+  id: number;
+}
 export default function GeneratePublicLiveNotes(props: Props) {
   const { open, setOpen } = props;
   const cancelButtonRef = useRef(null);
@@ -26,6 +31,50 @@ export default function GeneratePublicLiveNotes(props: Props) {
   const [finalAudioDuration, setFinalAudioDuration] = useState<string>('00:00');
   const [stopTime, setStopTime] = useState<Date | null>(null);
   const [audioFile, setAudioFile] = useState<Blob | null>(null);
+  const [files, setFiles] = useState<FileDisplay | null>(null);
+  const [fileObject, setFileObject] = useState<File | null>(null);
+  const [nextId, setNextId] = useState<number>(1);
+  const [name, setName] = useState<string>('');
+
+  const handleFile = (e: any) => {
+    if (fileObject) {
+      setFiles(null);
+      setFileObject(null);
+    }
+
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const fileType = file.type.split('/')[0];
+      const fileSubType = file.type.split('/')[1];
+
+      if (
+        (fileType !== 'audio' &&
+          fileType !== 'video' &&
+          fileType !== 'application' &&
+          fileType !== 'image') || // Add image type check
+        (fileType === 'application' &&
+          fileSubType !== 'pdf' &&
+          fileSubType !==
+            'vnd.openxmlformats-officedocument.wordprocessingml.document') // Add check for docx file
+      ) {
+        alert('Please upload an audio, video, PDF, docx, or image file');
+        return;
+      }
+
+      const fileDisplay: FileDisplay = {
+        file: file,
+        id: nextId,
+      };
+      setFiles(fileDisplay);
+      setFileObject(file);
+      setNextId(nextId + 1);
+    }
+  };
+
+  const removeFile = () => {
+    setFiles(null);
+    setFileObject(null);
+  };
 
   const [loading, setLoading] = useState(false);
 
@@ -38,6 +87,11 @@ export default function GeneratePublicLiveNotes(props: Props) {
     setAudioFile(null);
     setAudioRecorded(false);
     setAudioDuration('00:00');
+    setFiles(null);
+    setName('');
+    setFileObject(null);
+    setFinalAudioDuration('00:00');
+    setStopTime(null);
 
     setOpen(false);
     setLoading(false);
@@ -126,7 +180,24 @@ export default function GeneratePublicLiveNotes(props: Props) {
       }
     };
   }, [startTime]);
-
+  const sendImage = async (file: File) => {
+    try {
+      if (!file) {
+        alert('Please upload an image file');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', file);
+      const response = await supabaseClient.functions.invoke('latex-image', {
+        body: formData,
+      });
+      console.log(JSON.stringify(response));
+      const latex = 'response';
+      return response.data.data;
+    } catch (error: any) {
+      alert(`Error: ${error.message}`);
+    }
+  };
   const convertToMp3 = async (file: string | Blob | Buffer) => {
     try {
       // Create an FFmpeg instance
@@ -168,6 +239,103 @@ export default function GeneratePublicLiveNotes(props: Props) {
       throw error;
     }
   };
+  const convertVideoToMp3 = async (videoFile: string | Blob | Buffer) => {
+    try {
+      // Create an FFmpeg instance
+      const ffmpeg = createFFmpeg({ log: true });
+
+      // Load the FFmpeg instance
+      await ffmpeg.load();
+
+      // Write the video file to FFmpeg's file system
+      const inputFileName =
+        fileObject?.type.split('/')[1] === 'webm' ? 'input.webm' : 'input.mp4';
+      ffmpeg.FS('writeFile', inputFileName, await fetchFile(videoFile));
+
+      // Run the FFmpeg command to convert the video to MP3
+      await ffmpeg.run(
+        '-i',
+        inputFileName,
+        '-vn',
+        '-b:a',
+        '128k',
+        'output.mp3',
+      );
+
+      // Read the output MP3 file from FFmpeg's file system
+      const audioData = ffmpeg.FS('readFile', 'output.mp3');
+
+      // Create a Blob from the output MP3 data
+      const audioBlob = new Blob([audioData.buffer], { type: 'audio/mp3' });
+
+      // Convert the Blob to a File
+      const audioFile = new File([audioBlob], 'audio.mp3', {
+        type: 'audio/mp3',
+      });
+
+      // Return the audio file
+      return audioFile;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+  const loadPDF = async (file: File) => {
+    try {
+      if (!file) {
+        alert('Please upload a PDF file');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/load-pdf', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const extractedText = data.text;
+      return extractedText;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+
+      alert(`Error: ${error.message}`);
+    }
+  };
+
+  const loadDocx = async (file: File) => {
+    try {
+      if (!file) {
+        alert('Please upload a docx file');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/load-docx', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const extractedText = data.text;
+      return extractedText;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      alert(`Error: ${error.message}`);
+    }
+  };
 
   //formik validation
   const validationSchema = Yup.object({
@@ -186,14 +354,42 @@ export default function GeneratePublicLiveNotes(props: Props) {
       return;
     }
     const fileType = audioFile.type;
-    console.log(fileType);
+    const fileSubType = audioFile.type.split('/')[1];
 
     const webmFile = new File([audioFile], fileType, {
       type: fileType,
     });
-
+    let transcription = '';
     const mp3File = await convertToMp3(webmFile);
-    const transcription = await sendAudio(mp3File);
+    transcription = await sendAudio(mp3File);
+
+    if (fileObject) {
+      if (fileType === 'image') {
+        const latex = await sendImage(fileObject);
+        console.log(latex);
+        transcription =
+          transcription +
+          'The Following is snippets of latex parsed from the lecture' +
+          latex;
+      } else if (fileType === 'application') {
+        if (
+          fileSubType ===
+          'vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ) {
+          transcription =
+            transcription +
+            'and the context file:' +
+            (await loadDocx(fileObject));
+        } else if (fileSubType === 'pdf') {
+          transcription =
+            +'and the context file:' + (await loadPDF(fileObject));
+        }
+      }
+    } else if (fileType === 'video') {
+      alert('Please upload a context file');
+    }
+
+    console.log(transcription);
 
     await insertPublicNote({
       formikValues: values,
@@ -290,6 +486,7 @@ export default function GeneratePublicLiveNotes(props: Props) {
                       )}
                     </div>
                   </div>
+
                   {audioRecorded && (
                     <div className="col-span-6 sm:col-span-4 mt-4">
                       <label
@@ -328,6 +525,7 @@ export default function GeneratePublicLiveNotes(props: Props) {
                       </li>
                     )}
                   </ul>
+
                   <ul className="mt-4">
                     {audioDuration && audioRecorded && (
                       <li className="flex items-center space-x-2 mb-2">
@@ -337,7 +535,31 @@ export default function GeneratePublicLiveNotes(props: Props) {
                       </li>
                     )}
                   </ul>
-
+                  {audioRecorded && !loading && (
+                    <ul className="p-4">
+                      <p className="text-sm text-gray-200 font-bold">
+                        Upload more context:
+                      </p>
+                      <EmptyUpload3 onFileChange={handleFile} />
+                    </ul>
+                  )}
+                  <ul className="mt-4">
+                    {files?.file?.name && (
+                      <li className="flex items-center space-x-2 mb-2">
+                        <span className="text-sm text-gray-200 font-bold bg-gray-800 p-2 rounded-md">
+                          {files?.file?.name}
+                        </span>
+                        {!loading && (
+                          <button
+                            className="text-red-500 hover:text-red-700"
+                            onClick={() => removeFile()}
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </li>
+                    )}
+                  </ul>
                   {!loading ? (
                     <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                       <button

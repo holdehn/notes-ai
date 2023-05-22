@@ -43,11 +43,11 @@ export default function HeroSection() {
 
   const handleCardClick = (featureName: any) => {
     switch (featureName) {
-      case 'Youtube video':
+      case 'Create Youtube Notes':
         setOpenModal('Youtube');
         break;
-      case 'PDF':
-      case 'Audio Recording':
+      case 'Create PDF Notes':
+      case 'Audio Video Notes':
         setOpenModal('AudioPDF');
         break;
       // Add more cases as needed
@@ -435,17 +435,17 @@ export default function HeroSection() {
 
 const features = [
   {
-    name: 'Youtube video',
+    name: 'Create Youtube Notes',
     description: 'Summarize Youtube videos with ease.',
     icon: TvIcon,
   },
   {
-    name: 'PDF',
+    name: 'Create PDF Notes',
     description: 'Summarize lengthy PDFs into concise notes.',
     icon: DocumentMagnifyingGlassIcon,
   },
   {
-    name: 'Audio Recording',
+    name: 'Audio Video Notes',
     description: 'Transcribe and summarize audio recordings.',
     icon: SpeakerXMarkIcon,
   },
