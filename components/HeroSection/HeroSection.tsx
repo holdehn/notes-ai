@@ -355,6 +355,45 @@ export default function HeroSection() {
                       easily digestible summaries.
                     </p>
                   </div>
+                  <div className="mx-auto mt-4">
+                    <Auth
+                      view="sign_in"
+                      magicLink={false}
+                      dark={false}
+                      showLinks={false}
+                      redirectTo={`${rootUrl}/my-notes`}
+                      onlyThirdPartyProviders={true}
+                      providers={['google', 'discord']}
+                      supabaseClient={supabase}
+                      socialLayout="horizontal"
+                      theme="dark"
+                      appearance={{
+                        theme: ThemeSupa,
+                        style: {
+                          message: {
+                            color: '#ffffff',
+                            fontWeight: 650,
+                          },
+                        },
+                        variables: {
+                          default: {
+                            colors: {
+                              inputLabelText: '#ffffff',
+                              brand: '#7c3aed',
+                              messageText: 'white',
+                              brandAccent: '#c084fc',
+                              anchorTextHoverColor: 'ffffff',
+                              anchorTextColor: '#ffffff',
+                            },
+                            fonts: {
+                              bodyFontFamily: 'Montserrat',
+                              inputFontFamily: 'Montserrat',
+                            },
+                          },
+                        },
+                      }}
+                    />
+                  </div>
                   <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12">
                     {features.map((feature, index) => {
                       const gradientColors = [

@@ -273,46 +273,50 @@ const createPublicNotesFacts = async (
   let entireString = '';
   let bulletPoints: string[] = [];
 
-  await fetchEventSource(
-    `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-facts`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-      },
-      body: JSON.stringify({
-        transcription,
-        name,
-        topic,
-      }),
-      onmessage(ev) {
-        const chunk = ev.data;
-        if (chunk === 'END_OF_SUMMARY') {
-          // Separate the entire string into bullet points
-          bulletPoints = entireString
-            .split('\\n')
-            .filter((line) => line.length > 0);
+  const wordCount = transcription.split(/\s+/).length; // Get word count
+  console.log('wordCount', wordCount);
 
-          sendPublicNotesToSupabase({
-            notes: bulletPoints,
-            noteId: noteId,
-          });
-        } else {
-          entireString += chunk;
-          const currentBulletPoints = entireString
-            .split(/(?: - )|(?:\\n)/)
-            .filter((line) => line.trim().length > 0)
-            .map((line) => line.trim());
-          messageCallback(currentBulletPoints);
-        }
-      },
-
-      onerror(error) {
-        console.error('Error in fetchEventSource:', error);
-      },
+  const factsUrl =
+    wordCount > 1000 // If word count is over 1500 use create-long-notes
+      ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-notes`
+      : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-facts`;
+  await fetchEventSource(factsUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
     },
-  );
+    body: JSON.stringify({
+      transcription,
+      name,
+      topic,
+    }),
+    onmessage(ev) {
+      const chunk = ev.data;
+      if (chunk === 'END_OF_SUMMARY') {
+        // Separate the entire string into bullet points
+        bulletPoints = entireString
+          .split('\\n')
+          .filter((line) => line.length > 0);
+
+        sendPublicNotesToSupabase({
+          notes: bulletPoints,
+          noteId: noteId,
+        });
+      } else {
+        entireString += chunk;
+        const currentBulletPoints = entireString
+          .split(/(?: - )|(?:\\n)/)
+          .filter((line) => line.trim().length > 0)
+          .map((line) => line.trim());
+        messageCallback(currentBulletPoints);
+      }
+    },
+
+    onerror(error) {
+      console.error('Error in fetchEventSource:', error);
+    },
+  });
 };
 
 const sendPublicSummaryToSupabase = async ({
@@ -351,37 +355,41 @@ const createPublicNotesSummary = async (
 ): Promise<void> => {
   let fullSummary = '';
 
-  await fetchEventSource(
-    `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-summary`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-      },
-      body: JSON.stringify({
-        transcription,
-        name,
-        topic,
-      }),
-      onmessage(ev) {
-        const summaryChunk = ev.data;
-        if (summaryChunk === 'END_OF_SUMMARY') {
-          sendPublicSummaryToSupabase({
-            summary: fullSummary,
-            noteId: noteId,
-          });
-        } else {
-          fullSummary += summaryChunk;
-          messageCallback(fullSummary);
-        }
-      },
+  const wordCount = transcription.split(/\s+/).length; // Get word count
 
-      onerror(error) {
-        console.error('Error in fetchEventSource:', error);
-      },
+  const summaryUrl =
+    wordCount > 1000 // If word count is over 1500 use long-summary
+      ? `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-long-summary`
+      : `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL}/create-summary`;
+
+  await fetchEventSource(summaryUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
     },
-  );
+    body: JSON.stringify({
+      transcription,
+      name,
+      topic,
+    }),
+    onmessage(ev) {
+      const summaryChunk = ev.data;
+      if (summaryChunk === 'END_OF_SUMMARY') {
+        sendPublicSummaryToSupabase({
+          summary: fullSummary,
+          noteId: noteId,
+        });
+      } else {
+        fullSummary += summaryChunk;
+        messageCallback(fullSummary);
+      }
+    },
+
+    onerror(error) {
+      console.error('Error in fetchEventSource:', error);
+    },
+  });
 };
 
 const getYoutubeTranscript = async (videoId: string) => {

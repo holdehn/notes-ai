@@ -41,74 +41,68 @@ export default function NoteDetailsPublic() {
   const router = useRouter();
   const noteId = router.query.notePublicID;
 
-  const fetcher = (url: RequestInfo | URL) =>
-    fetch(url).then((res) => res.json());
-  const { data, error } = useSWR(
-    noteId ? `/api/get-public-note?noteId=${noteId}` : null,
-    fetcher,
-  );
-
-  const [summaryStatus, setSummaryStatus] = useState('idle'); // Add this state variable
-
   const name = 'Demo Student';
 
-  useMemo(() => {
-    // Only run the function if data is not null and summary is not yet created
-    if (!noteId || summaryStatus !== 'idle') return;
-    if (data) {
-      if (data.summary) {
-        setSummaryText(data.summary);
-        setSummaryStatus('completed');
-      } else {
-        setSummaryStatus('inProgress');
+  const fetcher = async (url: RequestInfo | URL) => {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const tasks = [];
+
+    if (!data.note?.[0].summary) {
+      tasks.push(
         createPublicNotesSummary(
           {
-            transcription: data.transcription,
+            transcription: data.note?.[0].transcription,
             noteId: noteId as unknown as string,
             name: name,
-            topic: data.topic,
+            topic: data.note?.[0].topic,
           },
-          (summaryData) => {
-            setSummaryText(summaryData);
-          },
-        );
-      }
+          (summary) => setSummaryText(summary),
+        ),
+      );
+    } else {
+      setSummaryText(data.note?.[0].summary);
     }
-  }, [data, noteId, summaryStatus]);
 
-  const [bulletPointStatus, setBulletPointStatus] = useState('idle');
-
-  useMemo(() => {
-    // Only run the function if data is not null and summary is not yet created
-    if (!noteId || bulletPointStatus !== 'idle') return;
-    if (data) {
-      if (data.notes) {
-        setBulletPoints(data.notes);
-        setBulletPointStatus('completed');
-      } else {
-        setBulletPointStatus('inProgress');
+    if (!data.note?.[0].notes) {
+      tasks.push(
         createPublicNotesFacts(
           {
-            transcription: data.transcription,
+            transcription: data.note?.[0].transcription,
             noteId: noteId as unknown as string,
             name: name,
-            topic: data.topic,
+            topic: data.note?.[0].topic,
           },
-          (formattedBulletPoints: string[]) => {
-            setBulletPoints(JSON.stringify(formattedBulletPoints));
-          },
-        );
-      }
+          (notes) => setBulletPoints(notes.join('\n')),
+        ),
+      );
+    } else {
+      setBulletPoints(data.note?.[0].notes);
     }
-  }, [data, noteId, bulletPointStatus]);
 
-  if (error) {
+    if (tasks.length > 0) {
+      await Promise.all(tasks);
+    }
+
+    return data;
+  };
+
+  const {
+    data: noteData,
+    error: noteError,
+    mutate,
+  } = useSWR(noteId ? `/api/get-public-note?noteId=${noteId}` : null, fetcher, {
+    refreshInterval: 0,
+  });
+
+  if (noteError) {
     return <div>Error fetching note data</div>;
   }
-  if (!data) {
+  if (!noteData) {
     return <div>Loading...</div>;
   }
-  const { note } = data;
+  const { note } = noteData;
 
   const exportToDocx = async () => {
     // Extract the title, summary, and bullet points from the HTML
