@@ -386,7 +386,11 @@ export default function GeneratePublicLiveNotes(props: Props) {
         }
       }
     } else if (fileType === 'video') {
-      alert('Please upload a context file');
+      alert('Please upload a context file for video files');
+    } else if (fileType === 'audio') {
+      alert('Please upload a context file for audio files');
+    } else {
+      transcription = transcription + 'No extra context file was uploaded';
     }
 
     console.log(transcription);
