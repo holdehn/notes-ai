@@ -329,24 +329,16 @@ export default function HeroSection() {
           />
 
           <main>
-            <div className="border-b bg-black border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full">
-                <h1 className="text-lg font-bold leading-6 text-gray-100 sm:truncate mb-2 sm:mb-0">
-                  SummaryIO
-                </h1>
-              </div>
-            </div>
-
             <div className="bg-gradient-to-r from-[#1c0232] via-[#291957] to-[#480f50] relative min-h-screen">
               <div className="p-12 sm:pb-32">
                 <div className=" max-w-full">
                   <div className="mx-auto max-w-2xl lg:text-center">
                     <h2 className="mt-3 text-3xl font-extrabold leading-9 text-white">
-                      Simplify Your Content Consumption
+                      Summarize Anything
                     </h2>
                     <p className="mt-4 text-lg leading-7 text-gray-300">
-                      Summary.com uses AI to transform complex content into
-                      easily digestible summaries.
+                      Summary.io uses AI to transform complex content into
+                      easily digestible notes.
                     </p>
                   </div>
                   <div className="mx-auto mt-4">
