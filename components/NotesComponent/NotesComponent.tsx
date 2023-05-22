@@ -672,7 +672,7 @@ const NotesComponent = () => {
 export default NotesComponent;
 
 const navigation = [
-  { name: 'Home', href: '/', icon: HomeIcon, current: false },
+  { name: 'Home', href: '/my-notes', icon: HomeIcon, current: false },
   {
     name: 'My Notes',
     href: '/created-notes',
