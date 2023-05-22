@@ -54,9 +54,9 @@ export default function HeroSection() {
       case 'Live Notes':
         setOpenModal('LiveNotes');
         break;
-      case 'Lecture Notes':
-        setOpenModal('LectureNotes');
-        break;
+      // case 'Lecture Notes':
+      //   setOpenModal('LectureNotes');
+      //   break;
       default:
         setOpenModal(null);
     }
@@ -331,10 +331,10 @@ export default function HeroSection() {
             open={openModal === 'LiveNotes'}
             setOpen={() => setOpenModal(null)}
           />
-          <GeneratePublicLectureNotes
+          {/* <GeneratePublicLectureNotes
             open={openModal === 'LectureNotes'}
             setOpen={() => setOpenModal(null)}
-          />
+          /> */}
 
           <main>
             <div className="bg-gradient-to-r from-[#1c0232] via-[#291957] to-[#480f50] relative min-h-screen">
@@ -454,11 +454,11 @@ const features = [
     description: 'Record audio and recieve high quality notes.',
     icon: BookOpenIcon,
   },
-  {
-    name: 'Lecture Notes',
-    description: 'Summarize your lecture notes.',
-    icon: DocumentTextIcon,
-  },
+  // {
+  //   name: 'Lecture Notes',
+  //   description: 'Summarize your lecture notes.',
+  //   icon: DocumentTextIcon,
+  // },
 ];
 
 const navigation = [
