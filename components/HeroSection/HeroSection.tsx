@@ -179,7 +179,7 @@ export default function HeroSection() {
                 showLinks={false}
                 redirectTo={`${rootUrl}/my-notes`}
                 onlyThirdPartyProviders={true}
-                providers={['google', 'discord']}
+                providers={['google']}
                 supabaseClient={supabase}
                 socialLayout="horizontal"
                 theme="dark"
