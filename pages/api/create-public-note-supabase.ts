@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { formikValues, transcription, noteID } = req.body;
+  const { formikValues, transcription, noteID, userID } = req.body;
   const supabase = createServerSupabaseClient({ req, res });
 
   const { data: noteData, error: noteError } = await supabase
@@ -15,6 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         color_theme: getRandomColor(),
         transcription: transcription,
         link: formikValues.link,
+        user_id: userID,
       },
     ]);
 

@@ -1,9 +1,14 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
+import {
+  Session,
+  useSession,
+  useSupabaseClient,
+} from '@supabase/auth-helpers-react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
+import useSWR from 'swr';
 import {
   TvIcon,
   DocumentMagnifyingGlassIcon,
@@ -12,17 +17,20 @@ import {
   GlobeAltIcon,
 } from '@heroicons/react/24/outline';
 import { getURL } from '@/pages/api/helpers';
-import GeneratePublicNotesModal from '../Modals/GeneratePublicNotesModal';
-import GeneratePublicYoutubeNotesModal from '@/components/Modals/GeneratePublicYoutubeNotes';
-import { HomeIcon, NewspaperIcon } from '@heroicons/react/20/solid';
+import {
+  ChevronUpDownIcon,
+  HomeIcon,
+  NewspaperIcon,
+  UserIcon,
+} from '@heroicons/react/20/solid';
 import GeneratePublicLiveNotes from '../Modals/GeneratePublicLiveNotes';
+import formatDateTime from '@/utils/formatDateTime';
+import router from 'next/router';
+import GenerateYoutubeNotesModal from '../Modals/GenerateYoutubeNotesModal';
+import GenerateNotesModal from '../Modals/GenerateNotesModal';
 
-export default function HeroSection() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function HomeComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [openYoutube, setOpenYoutube] = useState(false);
-  const [openSignUp, setOpenSignUp] = useState(false);
-  const [openAudioPDF, setOpenAudioPDF] = useState(false);
   const [openModal, setOpenModal] = useState<string | null>(null);
 
   const supabase = useSupabaseClient();
@@ -42,13 +50,58 @@ export default function HeroSection() {
       case 'Live Notes':
         setOpenModal('LiveNotes');
         break;
-      // case 'Lecture Notes':
-      //   setOpenModal('LectureNotes');
-      //   break;
       default:
         setOpenModal(null);
     }
   };
+
+  const session: Session | null = useSession();
+  const userID = session?.user?.id;
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+  const { data, error } = useSWR(
+    userID ? `/api/notes-page-data?userID=${userID}` : null,
+    fetcher,
+  );
+
+  const handleLogout = async () => {
+    await fetch('/api/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+    });
+
+    if (error) return alert(error.message);
+
+    router.push('/');
+  };
+  const notes = data?.notes?.map(
+    (
+      note: {
+        color_theme: any;
+        created_at: any;
+        id: any;
+        title: any[];
+        topic: any;
+      },
+      i: number,
+    ) => ({
+      index: i + 1,
+      note_id: note.id,
+      title: note.title,
+      created_at: formatDateTime(note.created_at),
+      bgColorClass: note.color_theme,
+      topic: note.topic,
+    }),
+  );
+
+  const name = session?.user?.user_metadata?.full_name;
+  const avatar_url = session?.user?.user_metadata?.avatar_url;
+
+  const proxyUrl = '/api/proxy?imageUrl=';
+
+  const finalImageUrl = proxyUrl + encodeURIComponent(avatar_url);
 
   return (
     <>
@@ -163,45 +216,143 @@ export default function HeroSection() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
             {/* User account dropdown */}
-            <div className="max-w-xs mx-auto mt-4">
-              <Auth
-                view="sign_in"
-                magicLink={false}
-                dark={false}
-                showLinks={false}
-                redirectTo={`${rootUrl}/my-notes`}
-                onlyThirdPartyProviders={true}
-                providers={['google']}
-                supabaseClient={supabase}
-                socialLayout="horizontal"
-                theme="dark"
-                appearance={{
-                  theme: ThemeSupa,
-                  style: {
-                    message: {
-                      color: '#ffffff',
-                      fontWeight: 650,
-                    },
-                  },
-                  variables: {
-                    default: {
-                      colors: {
-                        inputLabelText: '#ffffff',
-                        brand: '#7c3aed',
-                        messageText: 'white',
-                        brandAccent: '#c084fc',
-                        anchorTextHoverColor: 'ffffff',
-                        anchorTextColor: '#ffffff',
-                      },
-                      fonts: {
-                        bodyFontFamily: 'Montserrat',
-                        inputFontFamily: 'Montserrat',
-                      },
-                    },
-                  },
-                }}
-              />
-            </div>
+            <Menu as="div" className="relative inline-block px-3 text-left">
+              <div>
+                <Menu.Button className="group w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                  <span className="flex w-full items-center justify-between">
+                    <span className="flex min-w-0 items-center justify-between space-x-3">
+                      {finalImageUrl ? (
+                        <img
+                          src={finalImageUrl}
+                          className="flex-shrink-0 h-10 w-10 rounded-full"
+                          alt={name}
+                        />
+                      ) : (
+                        <UserIcon
+                          className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <span className="truncate text-sm font-medium text-gray-900">
+                        {name}
+                      </span>
+                    </span>
+                    <ChevronUpDownIcon
+                      className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </Menu.Button>
+              </div>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute left-0 right-0 z-10 mx-3 mt-1 origin-top divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="py-1">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-sm',
+                          )}
+                        >
+                          View profile
+                        </a>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-sm',
+                          )}
+                        >
+                          Settings
+                        </a>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-sm',
+                          )}
+                        >
+                          Notifications
+                        </a>
+                      )}
+                    </Menu.Item>
+                  </div>
+                  <div className="py-1">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-sm',
+                          )}
+                        >
+                          Get desktop app
+                        </a>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-sm',
+                          )}
+                        >
+                          Support
+                        </a>
+                      )}
+                    </Menu.Item>
+                  </div>
+                  <div className="py-1">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          onClick={handleLogout}
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-sm',
+                          )}
+                        >
+                          Logout
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
 
             {/* Navigation */}
             <nav className="mt-6 px-3">
@@ -307,18 +458,18 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <GeneratePublicYoutubeNotesModal
+          <GenerateYoutubeNotesModal
             open={openModal === 'Youtube'}
             setOpen={() => setOpenModal(null)}
           />
-          <GeneratePublicNotesModal
+          <GenerateNotesModal
             open={openModal === 'AudioPDF'}
             setOpen={() => setOpenModal(null)}
           />
           <GeneratePublicLiveNotes
             open={openModal === 'LiveNotes'}
             setOpen={() => setOpenModal(null)}
-            userID={undefined}
+            userID={userID}
           />
           {/* <GeneratePublicLectureNotes
             open={openModal === 'LectureNotes'}
@@ -338,45 +489,7 @@ export default function HeroSection() {
                       easily digestible notes.
                     </p>
                   </div>
-                  <div className="mx-auto mt-4">
-                    <Auth
-                      view="sign_in"
-                      magicLink={false}
-                      dark={false}
-                      showLinks={false}
-                      redirectTo={`${rootUrl}/my-notes`}
-                      onlyThirdPartyProviders={true}
-                      providers={['google', 'discord']}
-                      supabaseClient={supabase}
-                      socialLayout="horizontal"
-                      theme="dark"
-                      appearance={{
-                        theme: ThemeSupa,
-                        style: {
-                          message: {
-                            color: '#ffffff',
-                            fontWeight: 650,
-                          },
-                        },
-                        variables: {
-                          default: {
-                            colors: {
-                              inputLabelText: '#ffffff',
-                              brand: '#7c3aed',
-                              messageText: 'white',
-                              brandAccent: '#c084fc',
-                              anchorTextHoverColor: 'ffffff',
-                              anchorTextColor: '#ffffff',
-                            },
-                            fonts: {
-                              bodyFontFamily: 'Montserrat',
-                              inputFontFamily: 'Montserrat',
-                            },
-                          },
-                        },
-                      }}
-                    />
-                  </div>
+
                   <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12">
                     {features.map((feature, index) => {
                       const gradientColors = [
@@ -453,8 +566,8 @@ const features = [
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon, current: true },
   {
-    name: 'Summaries',
-    href: '/',
+    name: 'My Notes',
+    href: '/created-notes',
     icon: NewspaperIcon,
     current: false,
   },

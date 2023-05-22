@@ -9,6 +9,7 @@ export interface CreateNoteParams {
   type: string;
 }
 export interface CreatePublicNoteParams {
+  userID?: string | null;
   formikValues: {
     title: string;
     topic?: string;

@@ -16,6 +16,7 @@ import { set } from 'date-fns';
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
+  userID: string | undefined;
 }
 
 interface FileDisplay {
@@ -356,10 +357,16 @@ export default function GeneratePublicLiveNotes(props: Props) {
 
     console.log(transcription);
 
+    if (!transcription) {
+      alert('Please upload an audio file');
+      return;
+    }
+
     await insertPublicNote({
       formikValues: values,
       transcription: transcription,
       noteID: noteID,
+      userID: props.userID,
     });
 
     router.push(`/${noteID}`);

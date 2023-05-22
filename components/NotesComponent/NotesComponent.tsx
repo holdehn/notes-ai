@@ -3,6 +3,7 @@ import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
   XMarkIcon,
+  GlobeAltIcon,
   NewspaperIcon,
 } from '@heroicons/react/24/outline';
 import {
@@ -11,6 +12,7 @@ import {
   MagnifyingGlassIcon,
   UserIcon,
   PlusIcon,
+  HomeIcon,
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
@@ -520,12 +522,12 @@ const NotesComponent = () => {
                   setOpen={setOpenYoutubeNoteModal}
                 />
 
-                <button
+                {/* <button
                   onClick={() => setOpenLiveModal(true)}
                   className="inline-flex items-center px-4 py-2 text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   Live
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -670,24 +672,17 @@ const NotesComponent = () => {
 export default NotesComponent;
 
 const navigation = [
-  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
+  { name: 'Home', href: '/', icon: HomeIcon, current: false },
   {
-    name: 'PDF Chat',
-    href: '/pdf-chat',
-    icon: SmartToyIcon,
-    current: false,
+    name: 'My Notes',
+    href: '/created-notes',
+    icon: NewspaperIcon,
+    current: true,
   },
   {
-    name: 'Research',
-    href: '#not-implemented-yet',
-    icon: MagnifyingGlassIcon,
-    current: false,
-  },
-
-  {
-    name: 'Settings',
-    href: '#not-implemented-yet',
-    icon: Bars3CenterLeftIcon,
+    name: 'Browse',
+    href: '/',
+    icon: GlobeAltIcon,
     current: false,
   },
 ];
