@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { ChevronRightIcon, PlusIcon } from '@heroicons/react/20/solid';
-import GeneratePublicNotesModal from '@/components/GeneratePublicNotesModal';
+import GeneratePublicNotesModal from '@/components/Modals/GeneratePublicNotesModal';
 import { useState } from 'react';
 
 interface publicNotesTableProps {

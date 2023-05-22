@@ -1,102 +1,183 @@
-import { useEffect, useState } from 'react';
-import { Dialog } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Fragment, useEffect, useState } from 'react';
+import { Dialog, Menu, Transition } from '@headlessui/react';
+import {
+  Bars3CenterLeftIcon,
+  Bars3Icon,
+  MagnifyingGlassIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { Link } from 'react-scroll';
-
+import {
+  TvIcon,
+  DocumentMagnifyingGlassIcon,
+  ChatBubbleOvalLeftIcon,
+  BookOpenIcon,
+  FilmIcon,
+  DocumentTextIcon,
+  SpeakerWaveIcon,
+  SpeakerXMarkIcon,
+  DocumentIcon,
+  GlobeAltIcon,
+} from '@heroicons/react/24/outline';
 import { getURL } from '@/pages/api/helpers';
-import GeneratePublicNotesModal from '../GeneratePublicNotesModal';
-import GeneratePublicYoutubeNotesModal from 'components/GeneratePublicYoutubeNotes';
-import { set } from 'date-fns';
-const navigation = [
-  { name: 'Home', href: 'home' },
-  { name: 'Features', href: 'features' },
-  { name: 'Pricing', href: 'pricing' },
-  { name: 'Blog', href: 'blog' },
-];
+import GeneratePublicNotesModal from '../Modals/GeneratePublicNotesModal';
+import GeneratePublicYoutubeNotesModal from '@/components/Modals/GeneratePublicYoutubeNotes';
+import { HomeIcon, NewspaperIcon } from '@heroicons/react/20/solid';
+import GeneratePublicWebsiteNotes from '../Modals/GeneratePublicWebsiteNotes';
 
-export default function HeroSection({ noteData }: { noteData: any }) {
+export default function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [openYoutube, setOpenYoutube] = useState(false);
+  const [openSignUp, setOpenSignUp] = useState(false);
+  const [openAudioPDF, setOpenAudioPDF] = useState(false);
+  const [openModal, setOpenModal] = useState<string | null>(null);
+
   const supabase = useSupabaseClient();
-  const [openPublicNoteModal, setOpenPublicNoteModal] = useState(false);
-  const [openYoutubeNoteModal, setOpenYoutubeNoteModal] = useState(false);
 
   const rootUrl = getURL();
 
-  return (
-    <div className="bg-gradient-to-r from-[#1c0232] via-[#000592] to-[#94295f]">
-      <header className="absolute inset-x-0 top-0 z-50">
-        <nav
-          className="flex items-center justify-between p-6 lg:px-8 bg-gradient-to-r from-[#000000] via-[#020320] to-[#210a15] opacity-90"
-          aria-label="Global"
-        >
-          <div className="flex lg:flex-1"></div>
-          <div className="flex lg:hidden">
-            <button
-              type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                smooth={true}
-                className="text-sm font-semibold leading-6 text-white hover:text-gray-50 cursor-pointer"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end"></div>
-        </nav>
-      </header>
+  const handleCardClick = (featureName: any) => {
+    switch (featureName) {
+      case 'Youtube video':
+        setOpenModal('Youtube');
+        break;
+      case 'PDF':
+      case 'Audio Recording':
+        setOpenModal('AudioPDF');
+        break;
+      // Add more cases as needed
+      case 'Website Url':
+        setOpenModal('Website');
+        break;
+      default:
+        setOpenModal(null);
+    }
+  };
 
-      <div className=" h-3/4 pt-16 pb-12 relative isolate px-6 lg:px-8 flex flex-col items-center">
-        <div
-          className="absolute inset-x-0 -top-32 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-64"
-          aria-hidden="true"
-        >
-          <div
-            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-            style={{
-              clipPath:
-                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-            }}
-          />
-        </div>
-        <div className="mx-auto max-w-2xl pt-12 p-12 xs:pt-12 sm:pt-24 lg:pt-16 my-auto">
-          {' '}
-          {/* Change padding values */}
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-4xl">
-              Generate Lecture Notes Instantly.{' '}
-            </h1>
-            <div className="relative rounded-full px-3 py-6 text-md font-medium leading-6 text-indigo-100">
-              Upload an audio, video, or PDF file to get started! <br />
-              <a
-                href="https://youtu.be/R6eTRUpeLYs?t=18"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-purple-300 underline hover:text-indigo-200 transition-colors duration-200"
+  return (
+    <>
+      <div className="min-h-screen">
+        <Transition.Root show={sidebarOpen} as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative z-40 lg:hidden"
+            onClose={setSidebarOpen}
+          >
+            <Transition.Child
+              as={Fragment}
+              enter="transition-opacity ease-linear duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity ease-linear duration-300"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 z-40 flex">
+              <Transition.Child
+                as={Fragment}
+                enter="transition ease-in-out duration-300 transform"
+                enterFrom="-translate-x-full"
+                enterTo="translate-x-0"
+                leave="transition ease-in-out duration-300 transform"
+                leaveFrom="translate-x-0"
+                leaveTo="-translate-x-full"
               >
-                Youtube Demo
-              </a>
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white pb-4 pt-5">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-in-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in-out duration-300"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <div className="absolute right-0 top-0 -mr-12 pt-2">
+                      <button
+                        type="button"
+                        className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        onClick={() => setSidebarOpen(false)}
+                      >
+                        <span className="sr-only">Close sidebar</span>
+                        <XMarkIcon
+                          className="h-6 w-6 text-white"
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </div>
+                  </Transition.Child>
+                  {/* <div className="flex flex-shrink-0 items-center px-4">
+                    <img
+                      className="h-8 w-auto"
+                      src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
+                      alt="NotesAI Logo"
+                    />
+                  </div> */}
+                  <div className="mt-5 h-0 flex-1 overflow-y-auto">
+                    <nav className="px-2">
+                      <div className="space-y-1">
+                        {navigation.map((item) => (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className={classNames(
+                              item.current
+                                ? 'bg-gray-100 text-gray-900'
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                              'group flex items-center rounded-md px-2 py-2 text-base font-medium leading-5',
+                            )}
+                            aria-current={item.current ? 'page' : undefined}
+                          >
+                            <item.icon
+                              className={classNames(
+                                item.current
+                                  ? 'text-gray-500'
+                                  : 'text-gray-400 group-hover:text-gray-500',
+                                'mr-3 h-6 w-6 flex-shrink-0',
+                              )}
+                              aria-hidden="true"
+                            />
+                            {item.name}
+                          </a>
+                        ))}
+                      </div>
+                    </nav>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+              <div className="w-14 flex-shrink-0" aria-hidden="true">
+                {/* Dummy element to force sidebar to shrink to fit close icon */}
+              </div>
             </div>
+          </Dialog>
+        </Transition.Root>
+
+        {/* Static sidebar for desktop */}
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 bg-gradient-to-r from-indigo-950 to-indigo-900 lg:pb-4 lg:pt-5">
+          {/* <div className="flex flex-shrink-0 items-center px-6">
+              <img
+                className="h-8 w-auto"
+                src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
+                alt="NotesAI"
+              />
+            </div> */}
+          {/* Sidebar component, swap this element with another sidebar if you like */}
+          <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
+            {/* User account dropdown */}
             <div className="max-w-xs mx-auto mt-4">
               <Auth
                 view="sign_in"
                 magicLink={false}
                 dark={false}
                 showLinks={false}
-                redirectTo={`${rootUrl}/my-notes/`}
+                redirectTo={`${rootUrl}/my-notes`}
                 onlyThirdPartyProviders={true}
                 providers={['google', 'discord']}
                 supabaseClient={supabase}
@@ -129,64 +210,235 @@ export default function HeroSection({ noteData }: { noteData: any }) {
                 }}
               />
             </div>
-            <div className="flex justify-center mt-4 mb-4 p-4">
-              <button
-                onClick={() => setOpenPublicNoteModal(true)}
-                className="relative bg-purple-600 hover:bg-purple-800 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white font-semibold cursor-pointer"
-              >
-                <span className="absolutes inset-0" aria-hidden="true" />
-                Create Notes
-                <span aria-hidden="true" />
-              </button>
-            </div>
 
-            <GeneratePublicNotesModal
-              open={openPublicNoteModal}
-              setOpen={setOpenPublicNoteModal}
-            />
-            <button
-              onClick={() => setOpenYoutubeNoteModal(true)}
-              className="relative bg-red-600 hover:bg-red-800 min-w-[150px] rounded-full px-3 py-2 text-sm leading-6 text-white font-semibold cursor-pointer"
-            >
-              <span className="absolutes inset-0" aria-hidden="true" />
-              Create Youtube Notes
-              <span aria-hidden="true" />
-            </button>
-
-            <GeneratePublicYoutubeNotesModal
-              open={openYoutubeNoteModal}
-              setOpen={setOpenYoutubeNoteModal}
-            />
+            {/* Navigation */}
+            <nav className="mt-6 px-3">
+              <div className="space-y-1">
+                {navigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={classNames(
+                      item.current
+                        ? 'bg-indigo-700 text-white'
+                        : 'text-white hover:bg-indigo-700 hover:text-white',
+                      'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
+                    )}
+                    aria-current={item.current ? 'page' : undefined}
+                  >
+                    <item.icon
+                      className={classNames(
+                        item.current
+                          ? 'text-white'
+                          : 'text-indigo-300 group-hover:text-white',
+                        'mr-3 h-6 w-6 flex-shrink-0',
+                      )}
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </nav>
           </div>
         </div>
+        {/* Main column */}
+        <div className="flex flex-col lg:pl-64">
+          {/* Search header */}
+          <div className="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center">
+              {/* Profile dropdown */}
+              <Menu as="div" className="relative ml-3">
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(
+                              active
+                                ? 'bg-gray-100 text-gray-900'
+                                : 'text-gray-700',
+                              'block px-4 py-2 text-sm',
+                            )}
+                          >
+                            View profile
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(
+                              active
+                                ? 'bg-gray-100 text-gray-900'
+                                : 'text-gray-700',
+                              'block px-4 py-2 text-sm',
+                            )}
+                          >
+                            Settings
+                          </a>
+                        )}
+                      </Menu.Item>
+                    </div>
 
-        <div
-          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-          aria-hidden="true"
-        >
-          <div
-            className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#48011f] to-[#2f26af] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-            style={{
-              clipPath:
-                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-            }}
+                    <div className="py-1">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(
+                              active
+                                ? 'bg-gray-100 text-gray-900'
+                                : 'text-gray-700',
+                              'block px-4 py-2 text-sm',
+                            )}
+                          >
+                            Logout
+                          </a>
+                        )}
+                      </Menu.Item>
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+            </div>
+          </div>
+
+          <GeneratePublicYoutubeNotesModal
+            open={openModal === 'Youtube'}
+            setOpen={() => setOpenModal(null)}
           />
+          <GeneratePublicNotesModal
+            open={openModal === 'AudioPDF'}
+            setOpen={() => setOpenModal(null)}
+          />
+          <GeneratePublicWebsiteNotes
+            open={openModal === 'Website'}
+            setOpen={() => setOpenModal(null)}
+          />
+
+          <main>
+            <div className="border-b bg-black border-gray-400 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full">
+                <h1 className="text-lg font-bold leading-6 text-gray-100 sm:truncate mb-2 sm:mb-0">
+                  SummaryIO
+                </h1>
+                <button
+                  className="bg-gradient-to-r from-[#0070f3] to-[#135a83] text-white font-semibold py-2 px-4 rounded sm:ml-4"
+                  onClick={() => setOpenSignUp(true)}
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-[#1c0232] via-[#291957] to-[#480f50] relative">
+              <div className="p-12 sm:pb-32">
+                <div className=" max-w-full">
+                  <div className="mx-auto max-w-2xl lg:text-center">
+                    <h2 className="mt-3 text-3xl font-extrabold leading-9 text-white">
+                      Simplify Your Content Consumption
+                    </h2>
+                    <p className="mt-4 text-lg leading-7 text-gray-300">
+                      Summary.com uses AI to transform complex content into
+                      easily digestible summaries.
+                    </p>
+                  </div>
+                  <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12">
+                    {features.map((feature, index) => {
+                      const gradientColors = [
+                        'from-[#ff9a9e] to-[#fad0c4]',
+                        'from-[#a1c4fd] to-[#c2e9fb]',
+                        'from-[#d4fc79] to-[#96e6a1]',
+                        'from-[#84fab0] to-[#8fd3f4]',
+                        'from-[#FDC830] to-[#F37335]',
+                        'from-[#C33764] to-[#1D2671]',
+                        'from-[#FF416C] to-[#FF4B2B]',
+                        'from-[#56CCF2] to-[#2F80ED]',
+                      ];
+
+                      const gradientColor =
+                        gradientColors[index % gradientColors.length];
+
+                      return (
+                        <div
+                          key={feature.name}
+                          className={`space-y-4 p-8 rounded-lg bg-gradient-to-tr ${gradientColor} transform transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer`}
+                          onClick={() => handleCardClick(feature.name)}
+                        >
+                          <div className="mx-auto h-12 w-12 p-2 rounded-full bg-gradient-to-tr from-[#FFD6A5] to-[#FFC371]">
+                            <feature.icon className="h-full w-full text-gray-800" />
+                          </div>
+                          <h3 className="text-lg font-semibold leading-7 text-black">
+                            {feature.name}
+                          </h3>
+                          <p className="text-base leading-6 text-white0">
+                            {feature.description}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
         </div>
       </div>
-      {/* <div className="relative rounded-full py-1 text-sm  text-gray-400">
-        <PublicNotesTable notes={noteData} />
-        <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-400">
-          Demo by holden.{' '}
-          <a
-            href="https://twitter.com/holdehnj"
-            target="_blank"
-            className="font-semibold text-indigo-400"
-          >
-            <span className="absolute inset-0" aria-hidden="true" />
-            Twitter <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-      </div> */}
-    </div>
+    </>
   );
+}
+
+const features = [
+  {
+    name: 'Youtube video',
+    description: 'Summarize Youtube videos with ease.',
+    icon: TvIcon,
+  },
+  {
+    name: 'PDF',
+    description: 'Summarize lengthy PDFs into concise notes.',
+    icon: DocumentMagnifyingGlassIcon,
+  },
+  {
+    name: 'Audio Recording',
+    description: 'Transcribe and summarize audio recordings.',
+    icon: SpeakerXMarkIcon,
+  },
+  {
+    name: 'Website Url',
+    description: 'Get summaries of your favorite books.',
+    icon: BookOpenIcon,
+  },
+];
+
+const navigation = [
+  { name: 'Home', href: '/', icon: HomeIcon, current: true },
+  {
+    name: 'Summaries',
+    href: '/',
+    icon: NewspaperIcon,
+    current: false,
+  },
+  {
+    name: 'Browse',
+    href: '/',
+    icon: GlobeAltIcon,
+    current: false,
+  },
+];
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
 }

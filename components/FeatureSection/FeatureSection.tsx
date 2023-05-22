@@ -1,34 +1,54 @@
 import {
-  LightBulbIcon,
+  TvIcon,
+  DocumentMagnifyingGlassIcon,
+  ChatBubbleOvalLeftIcon,
+  BookOpenIcon,
+  FilmIcon,
   DocumentTextIcon,
-  CloudIcon,
-  MicrophoneIcon,
+  SpeakerWaveIcon,
+  SpeakerXMarkIcon,
 } from '@heroicons/react/24/outline';
 
 const features = [
   {
-    name: 'AI Assistance',
-    description:
-      'Leverage the power of AI to help you understand complex topics and generate high-quality notes.',
-    icon: LightBulbIcon,
+    name: 'Youtube video summarization',
+    description: 'Summarize Youtube videos with ease.',
+    icon: TvIcon,
   },
   {
-    name: 'Lecture Notes',
-    description:
-      'Stay organized and on top of your studies with our easy-to-use platform for managing lecture notes.',
+    name: 'PDF summarization',
+    description: 'Summarize lengthy PDFs into concise notes.',
+    icon: DocumentMagnifyingGlassIcon,
+  },
+  {
+    name: 'Audio Recording summarization',
+    description: 'Transcribe and summarize audio recordings.',
+    icon: SpeakerXMarkIcon,
+  },
+  {
+    name: 'Book summarization',
+    description: 'Get summaries of your favorite books.',
+    icon: BookOpenIcon,
+  },
+  {
+    name: 'Movie summarization',
+    description: 'Summarize the plot of any movie.',
+    icon: FilmIcon,
+  },
+  {
+    name: 'Article/Blog Post summarization',
+    description: 'Summarize lengthy articles and blog posts.',
     icon: DocumentTextIcon,
   },
   {
-    name: 'Upload Recordings',
-    description:
-      'Upload your recordings and receive premium high-quality notes for better understanding and retention.',
-    icon: CloudIcon,
+    name: 'Conference talk/ Lecture summarization',
+    description: 'Capture the key points from lectures and conference talks.',
+    icon: SpeakerWaveIcon,
   },
   {
-    name: 'Audio to Text',
-    description:
-      'Effortlessly convert your lecture recordings into text format for easier review and organization.',
-    icon: MicrophoneIcon,
+    name: 'Podcast summarization',
+    description: 'Turn lengthy podcasts into brief summaries.',
+    icon: ChatBubbleOvalLeftIcon,
   },
 ];
 

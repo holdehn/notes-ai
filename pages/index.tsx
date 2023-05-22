@@ -89,7 +89,7 @@ export default function Home({ notes }: { notes: any }) {
   return (
     <main>
       <Head>
-        <title>NotesAI- Work Smarter, Not Harder</title>
+        <title>NotesAI- Summarize Anything</title>
         <meta
           name="description"
           content="Organize and manage different subjects while getting personalized AI tutoring."
@@ -97,12 +97,6 @@ export default function Home({ notes }: { notes: any }) {
       </Head>
       <Element name="home">
         <HeroSection noteData={noteData} />
-      </Element>
-      <Element name="features">
-        <Features />
-      </Element>
-      <Element name="pricing">
-        <PricingSection />
       </Element>
     </main>
   );

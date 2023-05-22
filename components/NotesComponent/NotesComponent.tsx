@@ -19,7 +19,7 @@ import GenerateNotesModal from '../Modals/GenerateNotesModal';
 import { useSession } from '@supabase/auth-helpers-react';
 import router from 'next/router';
 import formatDateTime from '@/utils/formatDateTime';
-import GenerateYoutubeNotesModal from '../GenerateYoutubeNotesModal';
+import GenerateYoutubeNotesModal from '../Modals/GenerateYoutubeNotesModal';
 
 const NotesComponent = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
