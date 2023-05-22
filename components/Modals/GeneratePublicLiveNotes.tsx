@@ -239,47 +239,7 @@ export default function GeneratePublicLiveNotes(props: Props) {
       throw error;
     }
   };
-  const convertVideoToMp3 = async (videoFile: string | Blob | Buffer) => {
-    try {
-      // Create an FFmpeg instance
-      const ffmpeg = createFFmpeg({ log: true });
 
-      // Load the FFmpeg instance
-      await ffmpeg.load();
-
-      // Write the video file to FFmpeg's file system
-      const inputFileName =
-        fileObject?.type.split('/')[1] === 'webm' ? 'input.webm' : 'input.mp4';
-      ffmpeg.FS('writeFile', inputFileName, await fetchFile(videoFile));
-
-      // Run the FFmpeg command to convert the video to MP3
-      await ffmpeg.run(
-        '-i',
-        inputFileName,
-        '-vn',
-        '-b:a',
-        '128k',
-        'output.mp3',
-      );
-
-      // Read the output MP3 file from FFmpeg's file system
-      const audioData = ffmpeg.FS('readFile', 'output.mp3');
-
-      // Create a Blob from the output MP3 data
-      const audioBlob = new Blob([audioData.buffer], { type: 'audio/mp3' });
-
-      // Convert the Blob to a File
-      const audioFile = new File([audioBlob], 'audio.mp3', {
-        type: 'audio/mp3',
-      });
-
-      // Return the audio file
-      return audioFile;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
   const loadPDF = async (file: File) => {
     try {
       if (!file) {
@@ -362,18 +322,19 @@ export default function GeneratePublicLiveNotes(props: Props) {
     let transcription = '';
     const mp3File = await convertToMp3(webmFile);
     transcription = await sendAudio(mp3File);
-
+    const fileObjectType = files?.file?.type.split('/')[0];
+    const fileObjectSubType = files?.file?.type.split('/')[1];
     if (fileObject) {
-      if (fileType === 'image') {
+      if (fileObjectType === 'image') {
         const latex = await sendImage(fileObject);
         console.log(latex);
         transcription =
           transcription +
           'The Following is snippets of latex parsed from the lecture' +
           latex;
-      } else if (fileType === 'application') {
+      } else if (fileObjectType === 'application') {
         if (
-          fileSubType ===
+          fileObjectSubType ===
           'vnd.openxmlformats-officedocument.wordprocessingml.document'
         ) {
           transcription =
@@ -385,9 +346,9 @@ export default function GeneratePublicLiveNotes(props: Props) {
             +'and the context file:' + (await loadPDF(fileObject));
         }
       }
-    } else if (fileType === 'video') {
+    } else if (fileObjectType === 'video') {
       alert('Please upload a context file for video files');
-    } else if (fileType === 'audio') {
+    } else if (fileObjectType === 'audio') {
       alert('Please upload a context file for audio files');
     } else {
       transcription = transcription + 'No extra context file was uploaded';
