@@ -57,15 +57,15 @@ export const getServerSideProps = async (
   };
 };
 
-export default function ({ fallback }: { fallback: ProvidedProps }) {
-  // const router = useRouter();
-  // const session = useSession();
+export default function () {
+  const router = useRouter();
+  const session = useSession();
 
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push('/');
-  //   }
-  // }, [session]);
+  useEffect(() => {
+    if (!session) {
+      router.push('/');
+    }
+  }, [session]);
 
   return (
     <>
@@ -73,9 +73,7 @@ export default function ({ fallback }: { fallback: ProvidedProps }) {
         <title>NotesAI - My Notes</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
-      <SWRConfig value={{ fallback }}>
-        <NotesComponent />
-      </SWRConfig>
+      <HomeComponent />
     </>
   );
 }

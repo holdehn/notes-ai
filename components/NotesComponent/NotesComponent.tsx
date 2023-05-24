@@ -521,13 +521,6 @@ const NotesComponent = () => {
                   open={openYoutubeNoteModal}
                   setOpen={setOpenYoutubeNoteModal}
                 />
-
-                {/* <button
-                  onClick={() => setOpenLiveModal(true)}
-                  className="inline-flex items-center px-4 py-2 text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                >
-                  Live
-                </button> */}
               </div>
             </div>
 
