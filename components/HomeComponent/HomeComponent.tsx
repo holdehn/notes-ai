@@ -531,7 +531,7 @@ export default function HomeComponent() {
               </div>
 
               {/* Projects list (only on smallest breakpoint) */}
-              <div className="sm:hidden">
+              {/* <div className="sm:hidden">
                 <ul role="list">
                   {notes?.map((note: any, index: number) => (
                     <li key={note.index}>
@@ -561,9 +561,9 @@ export default function HomeComponent() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
 
-              <div className="fixed bottom-4 right-4 z-50 sm:hidden">
+              {/* <div className="fixed bottom-4 right-4 z-50 sm:hidden">
                 <button
                   type="button"
                   onClick={() => setOpenModal('LiveNotes')}
@@ -572,10 +572,10 @@ export default function HomeComponent() {
                   <span className="sr-only">Generate Notes</span>
                   <PlusIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
-              </div>
+              </div> */}
               {/* Projects table (small breakpoint and up) */}
 
-              <div className="hidden sm:block">
+              {/* <div className="hidden sm:block">
                 <div className="hidden sm:block">
                   <div className="inline-block min-w-full border-b align-middle">
                     <table className="min-w-full">
@@ -662,7 +662,7 @@ export default function HomeComponent() {
                     )}
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </main>
         </div>
