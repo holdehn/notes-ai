@@ -6,7 +6,7 @@ import NotesComponent from '@/components/NotesComponent/NotesComponent';
 import { useEffect } from 'react';
 import { useSession } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
-import HomeComponent from '@/components/HomeComponent/HomeComponent';
+import AutomaticGradingComponent from '@/components/AutomaticGradingComponent/AutomaticGradingComponent';
 
 export interface ProvidedProps {
   fallback: Record<string, unknown>;
@@ -32,8 +32,8 @@ export const getServerSideProps = async (
   // Check if there is an active user
   if (session && session.user?.id) {
     const userId = session.user?.id;
-    const { data: notesData, error: notesError } = await supabase
-      .from('notes')
+    const { data: assignmentData, error: assignmentError } = await supabase
+      .from('assignments')
       .select('*')
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
@@ -42,7 +42,7 @@ export const getServerSideProps = async (
     return {
       props: {
         fallback: {
-          [`/api/notes-page-data?userID=${userId}`]: notesData,
+          [`/api/automatic-grading-data?userID=${userId}`]: assignmentData,
         },
       },
     };
@@ -57,23 +57,25 @@ export const getServerSideProps = async (
   };
 };
 
-export default function () {
+export default function ({ fallback }: { fallback: ProvidedProps }) {
   const router = useRouter();
-  const session = useSession();
+  // const session = useSession();
 
-  useEffect(() => {
-    if (!session) {
-      router.push('/');
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push('/');
+  //   }
+  // }, [session]);
 
   return (
     <>
       <Head>
-        <title>NotesAI - My Notes</title>
+        <title>GradeBoost - Automated Grading</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
-      <HomeComponent />
+      <SWRConfig value={{ fallback }}>
+        <AutomaticGradingComponent />
+      </SWRConfig>
     </>
   );
 }

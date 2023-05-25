@@ -6,29 +6,27 @@ import {
   useSession,
   useSupabaseClient,
 } from '@supabase/auth-helpers-react';
-import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa } from '@supabase/auth-ui-shared';
+
 import useSWR from 'swr';
-import {
-  TvIcon,
-  DocumentMagnifyingGlassIcon,
-  BookOpenIcon,
-  SpeakerXMarkIcon,
-  GlobeAltIcon,
-  PencilSquareIcon,
-} from '@heroicons/react/24/outline';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { getURL } from '@/pages/api/helpers';
 import {
   ChevronUpDownIcon,
-  HomeIcon,
+  DocumentTextIcon,
+  AcademicCapIcon,
   NewspaperIcon,
+  PencilIcon,
   UserIcon,
+  DocumentCheckIcon,
+  CloudArrowUpIcon,
+  ChevronRightIcon,
+  PlusIcon,
 } from '@heroicons/react/20/solid';
 import GeneratePublicLiveNotes from '../Modals/GeneratePublicLiveNotes';
-import formatDateTime from '@/utils/formatDateTime';
 import router from 'next/router';
 import GenerateYoutubeNotesModal from '../Modals/GenerateYoutubeNotesModal';
 import GenerateNotesModal from '../Modals/GenerateNotesModal';
+import formatDateTime from '@/utils/formatDateTime';
 
 export default function HomeComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -62,7 +60,7 @@ export default function HomeComponent() {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
   const { data, error } = useSWR(
-    userID ? `/api/notes-page-data?userID=${userID}` : null,
+    userID ? `/api/automatic-grading-data?userID=${userID}` : null,
     fetcher,
   );
 
@@ -77,25 +75,30 @@ export default function HomeComponent() {
 
     router.push('/');
   };
-  const notes = data?.notes?.map(
+  const assignments = data?.assignments?.map(
     (
-      note: {
-        color_theme: any;
+      assignment: {
         created_at: any;
         id: any;
         title: any[];
-        topic: any;
+        description: any;
+        course_id: any;
+        file_id: any;
+        content: any;
       },
       i: number,
     ) => ({
       index: i + 1,
-      note_id: note.id,
-      title: note.title,
-      created_at: formatDateTime(note.created_at),
-      bgColorClass: note.color_theme,
-      topic: note.topic,
+      assignment_id: assignment.id,
+      title: assignment.title,
+      description: assignment.description,
+      created_at: formatDateTime(assignment.created_at),
+      course_id: assignment.course_id,
+      file_id: assignment.file_id,
+      content: assignment.content,
     }),
   );
+  console.log('assignments', assignments);
 
   const name = session?.user?.user_metadata?.full_name;
   const avatar_url = session?.user?.user_metadata?.avatar_url;
@@ -483,11 +486,11 @@ export default function HomeComponent() {
                 <div className=" max-w-full">
                   <div className="mx-auto max-w-2xl lg:text-center">
                     <h2 className="mt-3 text-3xl font-extrabold leading-9 text-white">
-                      Summarize Anything
+                      Automated Grading
                     </h2>
                     <p className="mt-4 text-lg leading-7 text-gray-300">
-                      Summary.io uses AI to transform complex content into
-                      easily digestible notes.
+                      Create an assignment to automatically grade your students'
+                      work and provide personalized feedback.
                     </p>
                   </div>
 
@@ -528,6 +531,122 @@ export default function HomeComponent() {
                   </div>
                 </div>
               </div>
+              {/* Projects list (only on smallest breakpoint) */}
+              <div className="sm:hidden">
+                <ul role="list">
+                  {assignments?.map((assignment: any, index: number) => (
+                    <li key={assignment.index}>
+                      <a
+                        href={`/my-assignments/${assignment.assignment_id}`}
+                        className={`group flex items-center justify-between px-4 py-4 sm:px-6 ${
+                          index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-100'
+                        } hover:bg-purple-400`}
+                      >
+                        <span className="flex items-center space-x-3 truncate">
+                          <span className="truncate text-sm font-medium leading-6 text-black">
+                            {assignment.title}{' '}
+                          </span>
+                        </span>
+                        <ChevronRightIcon
+                          className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <div className="fixed bottom-4 right-4 z-50 sm:hidden">
+                  <button
+                    type="button"
+                    onClick={() => setOpenModal('NewAssignment')}
+                    className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    <span className="sr-only">Generate Assignment</span>
+                    <PlusIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                </div>
+
+                <div className="hidden sm:block">
+                  <div className="inline-block min-w-full border-b align-middle">
+                    <table className="min-w-full">
+                      <thead>
+                        <tr className="border-t border-gray-600 bg-black">
+                          <th
+                            className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
+                            scope="col"
+                          >
+                            <span className="lg:pl-2">My Assignments</span>
+                          </th>
+                          <th
+                            className="hidden border-b border-gray-600 bg-black px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
+                            scope="col"
+                          >
+                            Last updated
+                          </th>
+                          <th
+                            className="border-b border-gray-600 bg-black py-3 pr-6 text-right text-sm font-semibold text-gray-200"
+                            scope="col"
+                          />
+                        </tr>
+                      </thead>
+
+                      <tbody
+                        className={`divide-y divide-gray-600 ${
+                          assignments?.length > 0 ? 'bg-purple-100' : ''
+                        }`}
+                      >
+                        {assignments?.map((assignment: any, index: number) => (
+                          <tr
+                            key={assignment.index}
+                            className={`group cursor-pointer hover:bg-purple-400 ${
+                              index % 2 === 0
+                                ? 'bg-purple-100'
+                                : 'bg-indigo-100'
+                            }`}
+                            onClick={() =>
+                              router.push(
+                                `/my-assignments/${assignment.assignment_id}`,
+                              )
+                            }
+                          >
+                            <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-black">
+                              <div className="flex items-center space-x-3 lg:pl-2">
+                                <a
+                                  href={`/my-assignments/${assignment.assignment_id}`}
+                                  className="truncate "
+                                >
+                                  <span>{assignment.title}</span>
+                                </a>
+                              </div>
+                            </td>
+
+                            <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-black md:table-cell">
+                              {assignment.created_at}
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
+                              <a
+                                href={`/my-assignments/${assignment.assignment_id}`}
+                                className="text-indigo-600 group-hover:text-indigo-800"
+                              >
+                                View
+                              </a>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    {assignments?.length === 0 && (
+                      <div className="flex justify-center items-center h-36 bg-indigo-950">
+                        <button onClick={() => setOpenModal('NewAssignment')}>
+                          <div className="text-white font-medium text-xl">
+                            Create an assignment to get started!
+                          </div>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </main>
         </div>
@@ -538,37 +657,34 @@ export default function HomeComponent() {
 
 const features = [
   {
-    name: 'Create Youtube Notes',
-    description: 'Summarize Youtube videos with ease.',
-    icon: TvIcon,
+    name: 'Upload Assignment',
+    description:
+      'Upload your rubric and give ideal feedback to all your students at once.',
+    icon: PencilIcon,
   },
   {
-    name: 'Create PDF Notes',
-    description: 'Summarize lengthy PDFs into concise notes.',
-    icon: DocumentMagnifyingGlassIcon,
+    name: 'Upload Responses',
+    description:
+      'Upload student responses to and receive instantly graded work.',
+    icon: CloudArrowUpIcon,
   },
   {
-    name: 'Audio Video Notes',
-    description: 'Transcribe and summarize audio recordings.',
-    icon: SpeakerXMarkIcon,
+    name: 'View Grades',
+    description: "View your students' grades and feedback.",
+    icon: DocumentTextIcon,
   },
   {
-    name: 'Live Notes',
-    description: 'Record audio and recieve high quality notes.',
-    icon: BookOpenIcon,
+    name: 'Integrate with LMS',
+    description:
+      'Integrate with your LMS to automatically upload assignments and grades.',
+    icon: AcademicCapIcon,
   },
-  // {
-  //   name: 'Lecture Notes',
-  //   description: 'Summarize your lecture notes.',
-  //   icon: DocumentTextIcon,
-  // },
 ];
 
 const navigation = [
-  { name: 'Home', href: '/', icon: HomeIcon, current: true },
   {
     name: 'My Notes',
-    href: '/created-notes',
+    href: '/my-notes',
     icon: NewspaperIcon,
     current: false,
   },
@@ -576,7 +692,7 @@ const navigation = [
     name: 'Automated Grading',
     href: '/automatic-grading',
     icon: PencilSquareIcon,
-    current: false,
+    current: true,
   },
 ];
 
