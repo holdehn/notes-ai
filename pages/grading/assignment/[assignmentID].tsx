@@ -2,11 +2,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
-import { useEffect } from 'react';
-import { useSession } from '@supabase/auth-helpers-react';
-import { useRouter } from 'next/router';
-
-import NotesComponent from '@/components/NotesComponent/NotesComponent';
+import AssignmentDetailsComponent from '@/components/AssignmentDetailsComponent/AssignmentDetailsComponent';
 
 export interface ProvidedProps {
   fallback: Record<string, unknown>;
@@ -20,13 +16,20 @@ export const getServerSideProps = async (
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
-  let userId = session?.user?.id;
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
   // Check if there is an active user
   if (session && session.user?.id) {
-    const { data: notesData, error: notesError } = await supabase
-      .from('notes')
+    const userId = session.user?.id;
+    const { data: assignmentData, error: assignmentError } = await supabase
+      .from('assignments')
       .select('*')
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
@@ -35,47 +38,30 @@ export const getServerSideProps = async (
     return {
       props: {
         fallback: {
-          [`/api/notes-page-data?userID=${userId}`]: notesData,
-        },
-      },
-    };
-  } else {
-    return {
-      props: {
-        fallback: {
-          [`/api/notes-page-data?userID=${userId}`]: [],
+          [`/api/automatic-grading-data?userID=${userId}`]: assignmentData,
         },
       },
     };
   }
 
-  // // If there is no active user, redirect to the homepage
-  // return {
-  //   redirect: {
-  //     destination: '/',
-  //     permanent: false,
-  //   },
-  // };
+  // If there is no active user, redirect to the homepage
+  return {
+    redirect: {
+      destination: '/',
+      permanent: false,
+    },
+  };
 };
 
-export default function ({ fallback }: { fallback: any }) {
-  const router = useRouter();
-  const session = useSession();
-
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push('/');
-  //   }
-  // }, [session]);
-
+export default function ({ fallback }: { fallback: ProvidedProps }) {
   return (
     <>
       <Head>
-        <title>GradeBoost - My Notes</title>
+        <title>GradeBoost - Automated Grading</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <SWRConfig value={{ fallback }}>
-        <NotesComponent />
+        <AssignmentDetailsComponent />
       </SWRConfig>
     </>
   );

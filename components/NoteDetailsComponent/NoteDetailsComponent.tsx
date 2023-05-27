@@ -11,6 +11,7 @@ import {
   ChevronRightIcon,
   ChevronUpDownIcon,
   MagnifyingGlassIcon,
+  HomeIcon,
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
@@ -852,24 +853,16 @@ const timeline = [
 ];
 
 const navigation = [
-  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: true },
   {
-    name: 'PDF Chat',
-    href: '/pdf-chat',
-    icon: SmartToyIcon,
-    current: false,
+    name: 'Home',
+    href: '/home',
+    icon: HomeIcon,
+    current: true,
   },
   {
-    name: 'Research',
-    href: '#research',
-    icon: MagnifyingGlassIcon,
-    current: false,
-  },
-
-  {
-    name: 'Settings',
-    href: '#settings',
-    icon: Bars3CenterLeftIcon,
+    name: 'My Notes',
+    href: '/my-notes',
+    icon: NewspaperIcon,
     current: false,
   },
 ];

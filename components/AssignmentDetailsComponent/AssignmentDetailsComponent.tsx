@@ -1,39 +1,101 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
   XMarkIcon,
   NewspaperIcon,
+  PencilSquareIcon,
 } from '@heroicons/react/24/outline';
+import { useSession } from '@supabase/auth-helpers-react';
 import {
+  HomeIcon,
   ChevronRightIcon,
   ChevronUpDownIcon,
   MagnifyingGlassIcon,
-  UserIcon,
-  PlusIcon,
 } from '@heroicons/react/20/solid';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
-import { Session, useUser } from '@supabase/auth-helpers-react';
-import GenerateNotesModal from '../Modals/GenerateNotesModal';
-import { useSession } from '@supabase/auth-helpers-react';
-import router from 'next/router';
-import formatDateTime from '@/utils/formatDateTime';
-import PDFGrid from './PDFGrid'; // Import the PDFGrid component. You need to adjust the path according to your project structure
-import UploadPDFModal from '../Modals/UploadPDFModal';
 
-const PDFChatPageComponent = () => {
+import Link from 'next/link';
+
+import {
+  CheckIcon,
+  HandThumbUpIcon,
+  UserIcon,
+} from '@heroicons/react/20/solid';
+import { useRouter } from 'next/router';
+import { createNotesFacts, createNotesSummary } from '../api';
+import { Document, Packer, Paragraph, TextRun } from 'docx';
+import { saveAs } from 'file-saver';
+
+async function saveChanges(noteId: any, userId: any, summary: any, notes: any) {
+  // Save the summary
+  const summaryResponse = await fetch('/api/update-note-summary', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ noteId, userId, summary }),
+  });
+
+  const summaryData = await summaryResponse.json();
+  if (!summaryResponse.ok) {
+    console.error('Error updating summary', summaryData);
+    return;
+  }
+
+  // Save the notes
+  const notesResponse = await fetch('/api/update-note-facts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ noteId, userId, notes }),
+  });
+
+  const notesData = await notesResponse.json();
+  if (!notesResponse.ok) {
+    console.error('Error updating notes', notesData);
+    return;
+  }
+
+  console.log('Summary and Notes updated successfully');
+}
+
+export default function AssignmentDetailsComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [openUploadModal, setOpenUploadModal] = useState(false);
-  const session: Session | null = useSession();
-  const userID = session?.user?.id;
+  const [summaryText, setSummaryText] = useState('');
+  const [bulletPoints, setBulletPoints] = useState<string>('');
+  const [showSaveButton, setShowSaveButton] = useState(false);
+  const session = useSession();
+  const user_id = session?.user?.id;
+  const router = useRouter();
+  const assignmentID = router.query.assignmentID;
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const name = session?.user?.user_metadata?.full_name;
+  const avatar_url = session?.user?.user_metadata?.avatar_url;
 
-  const { data, error } = useSWR(
-    userID ? `/api/notes-page-data?userID=${userID}` : null,
+  const proxyUrl = '/api/proxy?imageUrl=';
+  const finalImageUrl = proxyUrl + encodeURIComponent(avatar_url);
+
+  const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+  const {
+    data: assignmentData,
+    error: assignmentError,
+    mutate,
+  } = useSWR(
+    user_id && assignmentID
+      ? `/api/get-assignment-data?assignmentID=${assignmentID}&userId=${user_id}`
+      : null,
     fetcher,
   );
+
+  if (!assignmentData) {
+    return <div>Loading...</div>;
+  }
+  const { assignment } = assignmentData;
+  console.log('note data', assignment);
 
   const handleLogout = async () => {
     await fetch('/api/logout', {
@@ -42,40 +104,12 @@ const PDFChatPageComponent = () => {
       credentials: 'same-origin',
     });
 
-    if (error) return alert(error.message);
-
     router.push('/');
   };
-  const notes = data?.notes?.map(
-    (
-      note: {
-        color_theme: any;
-        created_at: any;
-        id: any;
-        title: any[];
-        topic: any;
-      },
-      i: number,
-    ) => ({
-      index: i + 1,
-      note_id: note.id,
-      title: note.title,
-      created_at: formatDateTime(note.created_at),
-      bgColorClass: note.color_theme,
-      topic: note.topic,
-    }),
-  );
-
-  const name = session?.user?.user_metadata?.full_name;
-  const avatar_url = session?.user?.user_metadata?.avatar_url;
-
-  const proxyUrl = '/api/proxy?imageUrl=';
-
-  const finalImageUrl = proxyUrl + encodeURIComponent(avatar_url);
 
   return (
     <>
-      <div className="min-h-full">
+      <div className="min-h-screen">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -91,7 +125,7 @@ const PDFChatPageComponent = () => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-gray-800 bg-opacity-75 " />
+              <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
             </Transition.Child>
 
             <div className="fixed inset-0 z-40 flex">
@@ -104,7 +138,7 @@ const PDFChatPageComponent = () => {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col pb-4 pt-5">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white pb-4 pt-5">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -128,6 +162,13 @@ const PDFChatPageComponent = () => {
                       </button>
                     </div>
                   </Transition.Child>
+                  {/* <div className="flex flex-shrink-0 items-center px-4">
+                    <img
+                      className="h-8 w-auto"
+                      src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
+                      alt="NotesAI Logo"
+                    />
+                  </div> */}
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
                     <nav className="px-2">
                       <div className="space-y-1">
@@ -168,7 +209,7 @@ const PDFChatPageComponent = () => {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-600 bg-gradient-to-r from-indigo-950 to-indigo-900 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 bg-black lg:pb-4 lg:pt-5">
           {/* <div className="flex flex-shrink-0 items-center px-6">
             <img
               className="h-8 w-auto"
@@ -181,7 +222,7 @@ const PDFChatPageComponent = () => {
             {/* User account dropdown */}
             <Menu as="div" className="relative inline-block px-3 text-left">
               <div>
-                <Menu.Button className="group w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                <Menu.Button className="group w-full rounded-md from-indigo-950 to-indigo-900 px-3.5 py-2 text-left text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-indigo-800">
                   <span className="flex w-full items-center justify-between">
                     <span className="flex min-w-0 items-center justify-between space-x-3">
                       {finalImageUrl ? (
@@ -196,12 +237,15 @@ const PDFChatPageComponent = () => {
                           aria-hidden="true"
                         />
                       )}
-                      <span className="truncate text-sm font-medium text-gray-900">
-                        {name}
+
+                      <span className="flex min-w-0 flex-1 flex-col">
+                        <span className="truncate text-sm font-medium text-white">
+                          {name}
+                        </span>
                       </span>
                     </span>
                     <ChevronUpDownIcon
-                      className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      className="h-5 w-5 flex-shrink-0 text-white group-hover:text-indigo-200"
                       aria-hidden="true"
                     />
                   </span>
@@ -341,7 +385,6 @@ const PDFChatPageComponent = () => {
               </div>
             </div>
             {/* Navigation */}
-
             <nav className="mt-6 px-3">
               <div className="space-y-1">
                 {navigation.map((item) => (
@@ -375,7 +418,7 @@ const PDFChatPageComponent = () => {
         {/* Main column */}
         <div className="flex flex-col lg:pl-64">
           {/* Search header */}
-          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 lg:hidden">
+          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:hidden">
             <button
               type="button"
               className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500 lg:hidden"
@@ -385,37 +428,39 @@ const PDFChatPageComponent = () => {
               <Bars3CenterLeftIcon className="h-6 w-6" aria-hidden="true" />
             </button>
             <div className="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-1">
+                <form className="flex w-full md:ml-0" action="#" method="GET">
+                  <label htmlFor="search-field" className="sr-only">
+                    Search
+                  </label>
+                  <div className="relative w-full text-gray-400 focus-within:text-gray-600">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
+                      <MagnifyingGlassIcon
+                        className="h-5 w-5"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <input
+                      id="search-field"
+                      name="search-field"
+                      className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 focus:border-transparent focus:outline-none focus:ring-0 focus:placeholder:text-gray-400 sm:text-sm"
+                      placeholder="Search"
+                      type="search"
+                    />
+                  </div>
+                </form>
+              </div>
               <div className="flex items-center">
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative inline-block px-3 text-left">
+                <Menu as="div" className="relative ml-3">
                   <div>
-                    <Menu.Button className="group w-full rounded-md bg-indigo-800 px-3.5 py-2 text-left text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-indigo-800">
-                      <span className="flex w-full items-center justify-between">
-                        <span className="flex min-w-0 items-center justify-between space-x-3">
-                          {finalImageUrl ? (
-                            <img
-                              src={finalImageUrl}
-                              className="flex-shrink-0 h-10 w-10 rounded-full"
-                              alt={name}
-                            />
-                          ) : (
-                            <UserIcon
-                              className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
-                              aria-hidden="true"
-                            />
-                          )}
-
-                          <span className="flex min-w-0 flex-1 flex-col">
-                            <span className="truncate text-sm font-medium text-white">
-                              {name}
-                            </span>
-                          </span>
-                        </span>
-                        <ChevronUpDownIcon
-                          className="h-5 w-5 flex-shrink-0 text-white group-hover:text-indigo-200"
-                          aria-hidden="true"
-                        />
-                      </span>
+                    <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                      <span className="sr-only">Open user menu</span>
+                      <img
+                        className="h-8 w-8 rounded-full"
+                        src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                      />
                     </Menu.Button>
                   </div>
                   <Transition
@@ -427,7 +472,7 @@ const PDFChatPageComponent = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <div className="py-1">
                         <Menu.Item>
                           {({ active }) => (
@@ -484,157 +529,239 @@ const PDFChatPageComponent = () => {
               </div>
             </div>
           </div>
-          <main className="flex-1 p-6 bg-gray-800">
-            {/* Page title & actions */}
-            <div className="px-4 py-8 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 bg-gray-200">
-              <div className="min-w-0 flex-1">
-                <h1 className="text-xl font-bold leading-6 text-black sm:truncate">
-                  Chat with your PDF
-                </h1>
-                <p className="mt-1 text-sm text-gray-900">
-                  Talk to your textbook!
-                </p>
-              </div>
-              <div className="mt-4 flex sm:mt-0 space-x-3">
-                <button
-                  onClick={() => setOpenUploadModal(true)}
-                  className="inline-flex items-center px-4 py-2 text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+
+          <main className="lg:pr-96 bg-gradient-to-r from-indigo-950 to-indigo-900 relative min-w-screen">
+            <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+              <h1 className="text-base font-semibold leading-7 text-white">
+                Deployments
+              </h1>
+
+              {/* Sort dropdown */}
+              <Menu as="div" className="relative">
+                <Menu.Button className="flex items-center gap-x-1 text-sm font-medium leading-6 text-white">
+                  Sort by
+                  <ChevronUpDownIcon
+                    className="h-5 w-5 text-gray-500"
+                    aria-hidden="true"
+                  />
+                </Menu.Button>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
                 >
-                  Upload PDF
-                </button>
-                <UploadPDFModal
-                  open={openUploadModal}
-                  setOpen={setOpenUploadModal}
-                />
-              </div>
-            </div>
-            {/* Projects list (only on smallest breakpoint) */}
-            <div className="sm:hidden">
-              <ul role="list">
-                {notes?.map((note: any, index: number) => (
-                  <li key={note.index}>
-                    <a
-                      href={`/my-notes/${note.note_id}`}
-                      className={`group flex items-center justify-between px-4 py-4 sm:px-6 ${
-                        index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-100'
-                      } hover:bg-purple-400`}
-                    >
-                      <span className="flex items-center space-x-3 truncate">
-                        <span
+                  <Menu.Items className="absolute right-0 z-10 mt-2.5 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
                           className={classNames(
-                            note.bgColorClass,
-                            'h-2.5 w-2.5 flex-shrink-0 rounded-full',
+                            active ? 'bg-gray-50' : '',
+                            'block px-3 py-1 text-sm leading-6 text-gray-900',
                           )}
-                          aria-hidden="true"
-                        />
-                        <span className="truncate text-sm font-medium leading-6 text-black">
-                          {note.title}{' '}
-                        </span>
-                      </span>
-                      <ChevronRightIcon
-                        className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="fixed bottom-4 right-4 z-50 sm:hidden">
-              <button
-                type="button"
-                onClick={() => setOpenUploadModal(true)}
-                className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <span className="sr-only">Generate Notes</span>
-                <PlusIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-
-            {/* Projects table (small breakpoint and up) */}
-            <div className="hidden sm:block">
-              <div className="hidden sm:block">
-                <div className="inline-block min-w-full border-b align-middle">
-                  <table className="min-w-full">
-                    <thead>
-                      <tr className="border-t border-gray-600 bg-black">
-                        <th
-                          className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
-                          scope="col"
                         >
-                          <span className="lg:pl-2">My Notes</span>
-                        </th>
-
-                        <th
-                          className="hidden border-b border-gray-600 bg-black px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
-                          scope="col"
+                          Name
+                        </a>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active ? 'bg-gray-50' : '',
+                            'block px-3 py-1 text-sm leading-6 text-gray-900',
+                          )}
                         >
-                          Last updated
-                        </th>
-                        <th
-                          className="border-b border-gray-600 bg-black py-3 pr-6 text-right text-sm font-semibold text-gray-200"
-                          scope="col"
-                        />
-                      </tr>
-                    </thead>
-                  </table>
-                  <div className="p-4 bg-gray-600">
-                    <PDFGrid file={notes} />
-                  </div>
-                  {notes?.length === 0 && (
-                    <div className="flex justify-center items-center h-36 bg-indigo-950">
-                      <button onClick={() => setOpenUploadModal(true)}>
-                        <div className="text-white font-medium text-xl">
-                          Upload a PDF to get started!
-                        </div>
-                      </button>
+                          Date updated
+                        </a>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active ? 'bg-gray-50' : '',
+                            'block px-3 py-1 text-sm leading-6 text-gray-900',
+                          )}
+                        >
+                          Environment
+                        </a>
+                      )}
+                    </Menu.Item>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+            </header>
+
+            {/* Deployment list */}
+            <ul role="list" className="divide-y divide-white/5">
+              {deployments.map((deployment) => (
+                <li
+                  key={deployment.id}
+                  className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
+                >
+                  <div className="min-w-0 flex-auto">
+                    <div className="flex items-center gap-x-3">
+                      <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
+                        <a href={deployment.href} className="flex gap-x-2">
+                          <span className="truncate">
+                            {deployment.teamName}
+                          </span>
+                          <span className="text-gray-400">/</span>
+                          <span className="whitespace-nowrap">
+                            {deployment.projectName}
+                          </span>
+                          <span className="absolute inset-0" />
+                        </a>
+                      </h2>
                     </div>
-                  )}
-                </div>
-              </div>
-            </div>
+                    <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
+                      <p className="truncate">{deployment.description}</p>
+                      <svg
+                        viewBox="0 0 2 2"
+                        className="h-0.5 w-0.5 flex-none fill-gray-300"
+                      >
+                        <circle cx={1} cy={1} r={1} />
+                      </svg>
+                      <p className="whitespace-nowrap">
+                        {deployment.statusText}
+                      </p>
+                    </div>
+                  </div>
+
+                  <ChevronRightIcon
+                    className="h-5 w-5 flex-none text-gray-400"
+                    aria-hidden="true"
+                  />
+                </li>
+              ))}
+            </ul>
           </main>
+
+          {/* Activity feed */}
+          <aside className="bg-black/10 lg:fixed lg:bottom-0 lg:right-0 lg:top-16 lg:w-96 lg:overflow-y-auto lg:border-l lg:border-white/5">
+            <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+              <h2 className="text-base font-semibold leading-7 text-white">
+                Activity feed
+              </h2>
+              <a
+                href="#"
+                className="text-sm font-semibold leading-6 text-indigo-400"
+              >
+                View all
+              </a>
+            </header>
+            <ul role="list" className="divide-y divide-white/5">
+              {activityItems.map((item) => (
+                <li key={item.commit} className="px-4 py-4 sm:px-6 lg:px-8">
+                  <div className="flex items-center gap-x-3">
+                    <img
+                      src={item.user.imageUrl}
+                      alt=""
+                      className="h-6 w-6 flex-none rounded-full bg-gray-800"
+                    />
+                    <h3 className="flex-auto truncate text-sm font-semibold leading-6 text-white">
+                      {item.user.name}
+                    </h3>
+                    <time
+                      dateTime={item.dateTime}
+                      className="flex-none text-xs text-gray-600"
+                    >
+                      {item.date}
+                    </time>
+                  </div>
+                  <p className="mt-3 truncate text-sm text-gray-500">
+                    Pushed to{' '}
+                    <span className="text-gray-400">{item.projectName}</span> (
+                    <span className="font-mono text-gray-400">
+                      {item.commit}
+                    </span>{' '}
+                    on <span className="text-gray-400">{item.branch}</span>)
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </aside>
         </div>
       </div>
     </>
   );
+}
+
+const eventTypes = {
+  applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
+  advanced: { icon: HandThumbUpIcon, bgColorClass: 'bg-blue-500' },
+  completed: { icon: CheckIcon, bgColorClass: 'bg-green-500' },
 };
-
-export default PDFChatPageComponent;
-
 const navigation = [
-  { name: 'NotesAI', href: '/my-notes', icon: NewspaperIcon, current: false },
   {
-    name: 'PDF Chat',
-    href: '/pdf-chat',
-    icon: SmartToyIcon,
+    name: 'Home',
+    href: '/home',
+    icon: HomeIcon,
+    current: false,
+  },
+  {
+    name: 'Automated Grading',
+    href: '/grading',
+    icon: PencilSquareIcon,
     current: true,
   },
   {
-    name: 'Research',
-    href: '#not-implemented-yet',
-    icon: MagnifyingGlassIcon,
-    current: false,
-  },
-
-  {
-    name: 'Settings',
-    href: '#not-implemented-yet',
-    icon: Bars3CenterLeftIcon,
-    current: false,
+    name: 'My Notes',
+    href: '/my-notes',
+    icon: NewspaperIcon,
+    current: true,
   },
 ];
-
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const notes = [
+const teams = [
+  { id: 1, name: 'Planetaria', href: '#', initial: 'P', current: false },
+  { id: 2, name: 'Protocol', href: '#', initial: 'P', current: false },
+  { id: 3, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
+];
+const statuses = {
+  offline: 'text-gray-500 bg-gray-100/10',
+  online: 'text-green-400 bg-green-400/10',
+  error: 'text-rose-400 bg-rose-400/10',
+};
+const environments = {
+  Preview: 'text-gray-400 bg-gray-400/10 ring-gray-400/20',
+  Production: 'text-indigo-400 bg-indigo-400/10 ring-indigo-400/30',
+};
+const deployments = [
   {
-    title: 'Sample.pdf',
-    size: '3.9 MB',
-    source: 'https://www.example.com/sample.pdf',
+    id: 1,
+    href: '#',
+    projectName: 'ios-app',
+    teamName: 'Planetaria',
+    status: 'offline',
+    statusText: 'Initiated 1m 32s ago',
+    description: 'Deploys from GitHub',
+    environment: 'Preview',
   },
-  // More notes...
+  // More deployments...
+];
+const activityItems = [
+  {
+    user: {
+      name: 'Michael Foster',
+      imageUrl:
+        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    },
+    projectName: 'ios-app',
+    commit: '2d89f0c8',
+    branch: 'main',
+    date: '1h',
+    dateTime: '2023-01-23T11:00',
+  },
+  // More items...
 ];

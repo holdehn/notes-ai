@@ -9,13 +9,46 @@ import {
   CreatePublicNoteParams,
   CreatePublicNotesParams,
   InsertExtractedTextParams,
+  CreateAssignmentParams,
+  insertAssignmentFileParams,
+  CreateQuizParams,
 } from './types';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
+import { supabaseClient } from '@/supabase-client';
 
 const insertNote = async (
   params: CreateNoteParams,
 ): Promise<CreateNoteResponse> => {
   const response = await fetch('/api/create-note-supabase', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+
+  const data = await response.json();
+
+  return data;
+};
+const insertAssignment = async (
+  params: CreateAssignmentParams,
+): Promise<any> => {
+  const response = await fetch('/api/create-assignment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+
+  const data = await response.json();
+
+  return data;
+};
+
+const insertQuiz = async (params: CreateQuizParams): Promise<any> => {
+  const response = await fetch('/api/create-quiz', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -439,4 +472,6 @@ export {
   getYoutubeTranscript,
   createPublicNotesSummary,
   insertExtractedText,
+  insertAssignment,
+  insertQuiz,
 };

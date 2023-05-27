@@ -1,22 +1,22 @@
 {
   "headers": {
-    "server": "deno/gcp-us-west2",
-    "cache-control": "max-age=86400",
+    "cross-origin-embedder-policy": "same-origin",
+    "x-frame-options": "DENY",
     "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "server": "deno/gcp-us-west2",
+    "content-type": "application/vnd.deno.reg.v2+json",
     "cross-origin-opener-policy": "same-origin",
     "cross-origin-resource-policy": "same-origin",
-    "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
-    "cross-origin-embedder-policy": "same-origin",
     "vary": "Accept-Encoding",
-    "date": "Wed, 24 May 2023 19:49:39 GMT",
-    "content-type": "application/vnd.deno.reg.v2+json",
-    "referrer-policy": "strict-origin-when-cross-origin",
-    "x-frame-options": "DENY",
-    "via": "http/2 edgeproxy"
+    "date": "Sat, 27 May 2023 00:29:27 GMT",
+    "via": "http/2 edgeproxy-h",
+    "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+    "cache-control": "max-age=86400"
   },
   "url": "https://deno.land/.well-known/deno-import-intellisense.json",
   "now": {
-    "secs_since_epoch": 1684957779,
-    "nanos_since_epoch": 543789000
+    "secs_since_epoch": 1685147365,
+    "nanos_since_epoch": 438304000
   }
 }

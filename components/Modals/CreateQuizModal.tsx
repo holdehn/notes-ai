@@ -1,16 +1,15 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
-import EmptyUpload from '@/components/EmptyUpload';
+import EmptyUpload3 from './EmptyUpload3';
 import { useSession } from '@supabase/auth-helpers-react';
-import { useSWRConfig } from 'swr';
 import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-import { insertNote } from '@/components/api';
 import { v4 as uuidv4 } from 'uuid';
+import { insertQuiz } from '../api';
 
 interface Props {
   open: boolean;
@@ -22,7 +21,7 @@ interface FileDisplay {
   id: number;
 }
 
-export default function GenerateNotesModal(props: Props) {
+export default function CreateQuizModal(props: Props) {
   const { open, setOpen } = props;
   const session = useSession();
   const userID = session?.user?.id;
@@ -52,13 +51,14 @@ export default function GenerateNotesModal(props: Props) {
       if (
         (fileType !== 'audio' &&
           fileType !== 'video' &&
-          fileType !== 'application') ||
+          fileType !== 'application' &&
+          fileType !== 'image') || // Add image type check
         (fileType === 'application' &&
           fileSubType !== 'pdf' &&
           fileSubType !==
             'vnd.openxmlformats-officedocument.wordprocessingml.document') // Add check for docx file
       ) {
-        alert('Please upload an audio, video, PDF, or docx file');
+        alert('Please upload an audio, video, PDF, docx, or image file');
         return;
       }
 
@@ -213,15 +213,35 @@ export default function GenerateNotesModal(props: Props) {
     }
   };
 
+  const sendImage = async (file: File) => {
+    try {
+      if (!file) {
+        alert('Please upload an image file');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', file);
+      const response = await supabaseClient.functions.invoke('latex-image', {
+        body: formData,
+      });
+      console.log(JSON.stringify(response));
+      const latex = 'response';
+      setConvertedText(latex);
+      return latex;
+    } catch (error: any) {
+      alert(`Error: ${error.message}`);
+    }
+  };
+
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
-    topic: Yup.string().required('Required'),
+    instructions: Yup.string().required('Required'),
   });
 
   const intialValues = {
     title: '',
-    topic: '',
+    instructions: '',
   };
 
   const onSubmit = async (values: any, { resetForm }: any) => {
@@ -232,38 +252,43 @@ export default function GenerateNotesModal(props: Props) {
     if (!userID) return;
     setLoading(true);
     setSubmitted(true);
-    const noteID = uuidv4();
+    const quizID = uuidv4();
     const file = fileObject;
     const fileType = file.type.split('/')[0];
     const fileSubType = file.type.split('/')[1]; // define fileSubType here
-    let transcription;
+    let content;
 
     if (fileType === 'application') {
       if (
         fileSubType ===
         'vnd.openxmlformats-officedocument.wordprocessingml.document'
       ) {
-        transcription = await loadDocx(file);
+        content = await loadDocx(file);
       } else if (fileSubType === 'pdf') {
-        transcription = await loadPDF(file);
+        content = await loadPDF(file);
+        console.log(content);
       }
     } else if (fileType === 'video') {
       // If the file is a video, convert it to audio and then send it to sendAudio
       const audioFile = await convertVideoToMp3(file);
-      transcription = await sendAudio(audioFile);
+      content = await sendAudio(audioFile);
+    } else if (fileType === 'image') {
+      content = await sendImage(file);
     } else {
-      transcription = await sendAudio(file);
+      content = await sendAudio(file);
     }
+    console.log(content);
+    let fileID = uuidv4();
 
-    await insertNote({
+    const { error: insertError } = await insertQuiz({
       userID: userID,
       formikValues: values,
-      transcription: transcription,
-      noteID: noteID,
-      type: fileType,
+      quizID: quizID,
+      content: content,
+      fileID: fileID,
     });
-
-    router.push(`/my-notes/${noteID}`);
+    console.log('insertError' + insertError);
+    router.push(`/home/generated-quiz/${quizID}`);
     setFiles(null);
     setName('');
     setFileObject(null);
@@ -313,7 +338,7 @@ export default function GenerateNotesModal(props: Props) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-purple-950 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-4">
                 {' '}
                 <form onSubmit={formik.handleSubmit}>
                   <div>
@@ -328,12 +353,11 @@ export default function GenerateNotesModal(props: Props) {
                         as="h2"
                         className="text-xl font-bold leading-6 text-gray-50"
                       >
-                        Generate Notes
+                        Generate Quiz
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-200">
-                          Upload recordings that will be transcribed and created
-                          into notes.
+                          Upload document to instnatly generate quiz questions.
                         </p>
                       </div>
                       <div className="col-span-6 sm:col-span-4 mt-4">
@@ -353,7 +377,7 @@ export default function GenerateNotesModal(props: Props) {
                             onBlur={formik.handleBlur}
                             disabled={submitted}
                             className="block w-full bg-gray-800 rounded-md border-0 pl-1.5 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. Linear Regression Notes"
+                            placeholder="e.g. Linear Regression Quiz"
                           />
                           {formik.touched.title && formik.errors.title ? (
                             <div className="mt-2 text-red-500 text-sm">
@@ -365,31 +389,26 @@ export default function GenerateNotesModal(props: Props) {
                       <div className="col-span-6 sm:col-span-4 mt-4">
                         <label
                           htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-200 text-left items-center"
+                          className="block text-sm font-medium leading-6 text-gray-200 text-left"
                         >
-                          Topic:
-                          <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
-                            <i
-                              className="fas fa-question-circle"
-                              title="Provide a brief description of the main function of the tool."
-                            ></i>
-                          </span>
+                          Instructions:
                         </label>
                         <div className="mt-2">
                           <input
                             type="text"
-                            name="topic"
-                            id="topic"
-                            value={formik.values.topic}
+                            name="instructions"
+                            id="instructions"
+                            value={formik.values.instructions}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             disabled={submitted}
-                            className="block w-full bg-gray-800 pl-1.5 rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. Lecture recording for Linear Regression"
+                            className="block w-full row-span-4 bg-gray-800 pl-1.5 rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="e.g. Demo Instructions"
                           />
-                          {formik.touched.topic && formik.errors.topic ? (
+                          {formik.touched.instructions &&
+                          formik.errors.instructions ? (
                             <div className="mt-2 text-red-500 text-sm">
-                              {formik.errors.topic}
+                              {formik.errors.instructions}
                             </div>
                           ) : null}
                         </div>
@@ -397,7 +416,7 @@ export default function GenerateNotesModal(props: Props) {
 
                       <div className="mt-2">
                         <p className="text-sm text-gray-200 font-medium text-left mt-8 block items-center">
-                          Upload Context:
+                          Upload Document:
                           <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
                             <i
                               className="fas fa-question-circle"
@@ -408,7 +427,7 @@ export default function GenerateNotesModal(props: Props) {
                       </div>
                     </div>
                   </div>
-                  {!loading && <EmptyUpload onFileChange={handleFile} />}
+                  {!loading && <EmptyUpload3 onFileChange={handleFile} />}
                   <p className="text-xs mt-2 italic text-gray-400">
                     * File Size is limited to 25 MB.
                   </p>
@@ -440,7 +459,7 @@ export default function GenerateNotesModal(props: Props) {
                         disabled={loading}
                         className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
                       >
-                        Create Notes
+                        Generate Quiz
                       </button>
                       <button
                         type="button"

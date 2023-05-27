@@ -8,6 +8,28 @@ export interface CreateNoteParams {
   transcription: string;
   type: string;
 }
+export interface CreateAssignmentParams {
+  userID: string;
+  formikValues: {
+    title: string;
+    question: string;
+    solution: string;
+  };
+  content: string;
+  assignmentID: string;
+  fileID: string;
+}
+export interface CreateQuizParams {
+  userID: string;
+  formikValues: {
+    title: string;
+    instructions: string;
+  };
+  content: string;
+  quizID: string;
+  fileID: string;
+  quizType?: string | null;
+}
 export interface CreatePublicNoteParams {
   userID?: string | null;
   formikValues: {
@@ -17,6 +39,11 @@ export interface CreatePublicNoteParams {
   };
   noteID: string;
   transcription: string;
+}
+export interface insertAssignmentFileParams {
+  fileID: string;
+  userID: string;
+  file: File;
 }
 
 export type CreateNoteResponse =

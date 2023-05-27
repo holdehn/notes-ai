@@ -2,11 +2,8 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
-import NotesComponent from '@/components/NotesComponent/NotesComponent';
-import { useEffect } from 'react';
-import { useSession } from '@supabase/auth-helpers-react';
-import { useRouter } from 'next/router';
-import AutomaticGradingComponent from '@/components/AutomaticGradingComponent/AutomaticGradingComponent';
+
+import Home from '@/components/Home/Home';
 
 export interface ProvidedProps {
   fallback: Record<string, unknown>;
@@ -58,15 +55,6 @@ export const getServerSideProps = async (
 };
 
 export default function ({ fallback }: { fallback: ProvidedProps }) {
-  const router = useRouter();
-  // const session = useSession();
-
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push('/');
-  //   }
-  // }, [session]);
-
   return (
     <>
       <Head>
@@ -74,7 +62,7 @@ export default function ({ fallback }: { fallback: ProvidedProps }) {
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <SWRConfig value={{ fallback }}>
-        <AutomaticGradingComponent />
+        <Home />
       </SWRConfig>
     </>
   );

@@ -1,4 +1,4 @@
-import { serve } from 'https://deno.land/std@0.160.0/http/server.ts'; //@ts-ignore
+import { serve } from 'http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts'; //@ts-ignore
 import FormData from 'https://cdn.skypack.dev/form-data'; //@ts-ignore
 
@@ -7,8 +7,11 @@ serve(async (req: Request) => {
     return new Response('ok', { headers: corsHeaders });
   }
   try {
+    console.log('step1');
     const form = await req.formData();
     const file = form.get('file') as File;
+    console.log(file);
+    console.log('step2');
 
     if (!file) {
       return new Response(
@@ -35,6 +38,7 @@ serve(async (req: Request) => {
       },
       body: newFormData,
     });
+    console.log(response);
     if (!response.ok) {
       return new Response(
         JSON.stringify({ success: false, error: 'Mathpix API request failed' }),
@@ -49,7 +53,7 @@ serve(async (req: Request) => {
     console.log(rawData);
     const data = parseMathpixData(rawData);
     console.log(data);
-
+    console.log('step5');
     return new Response(JSON.stringify({ success: true, data }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,

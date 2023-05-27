@@ -1,4 +1,4 @@
-import { serve } from 'https://deno.land/std@0.160.0/http/server.ts'; //@ts-ignore
+import { serve } from 'http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts'; //@ts-ignore
 import FormData from 'https://cdn.skypack.dev/form-data'; //@ts-ignore
 

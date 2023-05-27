@@ -8,7 +8,7 @@ export default function Document() {
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet"
       />
-      <body className="bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f]">
+      <body className="bg-white">
         <Main />
         <NextScript />
       </body>

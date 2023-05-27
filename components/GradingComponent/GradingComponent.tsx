@@ -6,53 +6,39 @@ import {
   useSession,
   useSupabaseClient,
 } from '@supabase/auth-helpers-react';
-
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
 import useSWR from 'swr';
-import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import {
+  TvIcon,
+  DocumentMagnifyingGlassIcon,
+  BookOpenIcon,
+  SpeakerXMarkIcon,
+  PencilSquareIcon,
+} from '@heroicons/react/24/outline';
 import { getURL } from '@/pages/api/helpers';
 import {
-  ChevronUpDownIcon,
-  DocumentTextIcon,
-  AcademicCapIcon,
-  NewspaperIcon,
-  PencilIcon,
-  UserIcon,
-  DocumentCheckIcon,
-  CloudArrowUpIcon,
   ChevronRightIcon,
+  ChevronUpDownIcon,
+  HomeIcon,
+  NewspaperIcon,
   PlusIcon,
+  UserIcon,
 } from '@heroicons/react/20/solid';
 import GeneratePublicLiveNotes from '../Modals/GeneratePublicLiveNotes';
+import formatDateTime from '@/utils/formatDateTime';
 import router from 'next/router';
 import GenerateYoutubeNotesModal from '../Modals/GenerateYoutubeNotesModal';
 import GenerateNotesModal from '../Modals/GenerateNotesModal';
-import formatDateTime from '@/utils/formatDateTime';
+import CreateAssignmentModal from '../Modals/CreateAssignmentModal';
 
-export default function HomeComponent() {
+export default function GradingComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [openModal, setOpenModal] = useState<string | null>(null);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const supabase = useSupabaseClient();
 
   const rootUrl = getURL();
-
-  const handleCardClick = (featureName: any) => {
-    switch (featureName) {
-      case 'Create Youtube Notes':
-        setOpenModal('Youtube');
-        break;
-      case 'Create PDF Notes':
-      case 'Audio Video Notes':
-        setOpenModal('AudioPDF');
-        break;
-      // Add more cases as needed
-      case 'Live Notes':
-        setOpenModal('LiveNotes');
-        break;
-      default:
-        setOpenModal(null);
-    }
-  };
 
   const session: Session | null = useSession();
   const userID = session?.user?.id;
@@ -60,7 +46,7 @@ export default function HomeComponent() {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
   const { data, error } = useSWR(
-    userID ? `/api/automatic-grading-data?userID=${userID}` : null,
+    userID ? `/api/get-all-assignments?userID=${userID}` : null,
     fetcher,
   );
 
@@ -78,27 +64,20 @@ export default function HomeComponent() {
   const assignments = data?.assignments?.map(
     (
       assignment: {
+        color_theme: any;
         created_at: any;
         id: any;
         title: any[];
-        description: any;
-        course_id: any;
-        file_id: any;
-        content: any;
       },
       i: number,
     ) => ({
       index: i + 1,
       assignment_id: assignment.id,
       title: assignment.title,
-      description: assignment.description,
       created_at: formatDateTime(assignment.created_at),
-      course_id: assignment.course_id,
-      file_id: assignment.file_id,
-      content: assignment.content,
+      bgColorClass: assignment.color_theme,
     }),
   );
-  console.log('assignments', assignments);
 
   const name = session?.user?.user_metadata?.full_name;
   const avatar_url = session?.user?.user_metadata?.avatar_url;
@@ -209,7 +188,7 @@ export default function HomeComponent() {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 bg-gradient-to-r from-indigo-950 to-indigo-900 lg:pb-4 lg:pt-5">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 bg-black lg:pb-4 lg:pt-5">
           {/* <div className="flex flex-shrink-0 items-center px-6">
               <img
                 className="h-8 w-auto"
@@ -462,87 +441,51 @@ export default function HomeComponent() {
             </div>
           </div>
 
-          <GenerateYoutubeNotesModal
-            open={openModal === 'Youtube'}
-            setOpen={() => setOpenModal(null)}
-          />
-          <GenerateNotesModal
-            open={openModal === 'AudioPDF'}
-            setOpen={() => setOpenModal(null)}
-          />
-          <GeneratePublicLiveNotes
-            open={openModal === 'LiveNotes'}
-            setOpen={() => setOpenModal(null)}
-            userID={userID}
-          />
-          {/* <GeneratePublicLectureNotes
-            open={openModal === 'LectureNotes'}
-            setOpen={() => setOpenModal(null)}
-          /> */}
+          <CreateAssignmentModal open={openModal} setOpen={setOpenModal} />
 
           <main>
-            <div className="bg-gradient-to-r from-[#1c0232] via-[#291957] to-[#480f50] relative min-h-screen">
-              <div className="p-12 sm:pb-32">
-                <div className=" max-w-full">
-                  <div className="mx-auto max-w-2xl lg:text-center">
-                    <h2 className="mt-3 text-3xl font-extrabold leading-9 text-white">
-                      Automated Grading
-                    </h2>
-                    <p className="mt-4 text-lg leading-7 text-gray-300">
-                      Create an assignment to automatically grade your students'
-                      work and provide personalized feedback.
-                    </p>
-                  </div>
+            <div className="bg-gradient-to-r from-indigo-950 to-indigo-900 relative min-h-screen">
+              <div className="p-12 sm:pb-12">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-3xl font-extrabold leading-9 text-white">
+                    Automated Grading
+                  </h2>
 
-                  <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12">
-                    {features.map((feature, index) => {
-                      const gradientColors = [
-                        'from-[#ff9a9e] to-[#fad0c4]',
-                        'from-[#a1c4fd] to-[#c2e9fb]',
-                        'from-[#d4fc79] to-[#96e6a1]',
-                        'from-[#84fab0] to-[#8fd3f4]',
-                        'from-[#FDC830] to-[#F37335]',
-                        'from-[#C33764] to-[#1D2671]',
-                        'from-[#FF416C] to-[#FF4B2B]',
-                        'from-[#56CCF2] to-[#2F80ED]',
-                      ];
-
-                      const gradientColor =
-                        gradientColors[index % gradientColors.length];
-
-                      return (
-                        <div
-                          key={feature.name}
-                          className={`space-y-4 p-8 rounded-lg bg-gradient-to-tr ${gradientColor} transform transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer`}
-                          onClick={() => handleCardClick(feature.name)}
-                        >
-                          <div className="mx-auto h-12 w-12 p-2 rounded-full bg-gradient-to-tr from-[#FFD6A5] to-[#FFC371]">
-                            <feature.icon className="h-full w-full text-gray-800" />
-                          </div>
-                          <h3 className="text-lg font-semibold leading-7 text-black">
-                            {feature.name}
-                          </h3>
-                          <p className="text-base leading-6 text-white0">
-                            {feature.description}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setOpenModal(true)}
+                    className="inline-flex items-center gap-x-1.5 rounded-md bg-blue-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    aria-label="Upload"
+                  >
+                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                    Create Assignment
+                  </button>
                 </div>
+                <p className="text-md mt-2 font-medium leading-6 text-white">
+                  Upload assignments and instantly grade and provide feedback to
+                  students.
+                </p>
               </div>
+
               {/* Projects list (only on smallest breakpoint) */}
               <div className="sm:hidden">
                 <ul role="list">
                   {assignments?.map((assignment: any, index: number) => (
                     <li key={assignment.index}>
                       <a
-                        href={`/my-assignments/${assignment.assignment_id}`}
+                        href={`/grading/assignment/${assignment.assignment_id}`}
                         className={`group flex items-center justify-between px-4 py-4 sm:px-6 ${
                           index % 2 === 0 ? 'bg-purple-100' : 'bg-indigo-100'
                         } hover:bg-purple-400`}
                       >
                         <span className="flex items-center space-x-3 truncate">
+                          <span
+                            className={classNames(
+                              assignment.bgColorClass,
+                              'h-2.5 w-2.5 flex-shrink-0 rounded-full',
+                            )}
+                            aria-hidden="true"
+                          />
                           <span className="truncate text-sm font-medium leading-6 text-black">
                             {assignment.title}{' '}
                           </span>
@@ -555,17 +498,21 @@ export default function HomeComponent() {
                     </li>
                   ))}
                 </ul>
-                <div className="fixed bottom-4 right-4 z-50 sm:hidden">
-                  <button
-                    type="button"
-                    onClick={() => setOpenModal('NewAssignment')}
-                    className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    <span className="sr-only">Generate Assignment</span>
-                    <PlusIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
+              </div>
 
+              <div className="fixed bottom-4 right-4 z-50 sm:hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenModal(true)}
+                  className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  <span className="sr-only">Generate Notes</span>
+                  <PlusIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
+              </div>
+              {/* Projects table (small breakpoint and up) */}
+
+              <div className="hidden sm:block">
                 <div className="hidden sm:block">
                   <div className="inline-block min-w-full border-b align-middle">
                     <table className="min-w-full">
@@ -575,8 +522,9 @@ export default function HomeComponent() {
                             className="border-b border-gray-600 bg-black px-6 py-3 text-left text-sm font-semibold text-gray-200"
                             scope="col"
                           >
-                            <span className="lg:pl-2">My Assignments</span>
+                            <span className="lg:pl-2">Assignments</span>
                           </th>
+
                           <th
                             className="hidden border-b border-gray-600 bg-black px-6 py-3 text-right text-sm font-semibold text-gray-200 md:table-cell"
                             scope="col"
@@ -605,14 +553,21 @@ export default function HomeComponent() {
                             }`}
                             onClick={() =>
                               router.push(
-                                `/my-assignments/${assignment.assignment_id}`,
+                                `/grading/assignment/${assignment.assignment_id}`,
                               )
                             }
                           >
                             <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-black">
                               <div className="flex items-center space-x-3 lg:pl-2">
+                                <div
+                                  className={classNames(
+                                    assignment.bgColorClass,
+                                    'h-2.5 w-2.5 flex-shrink-0 rounded-full ',
+                                  )}
+                                  aria-hidden="true"
+                                />
                                 <a
-                                  href={`/my-assignments/${assignment.assignment_id}`}
+                                  href={`/grading/assignment/${assignment.assignment_id}`}
                                   className="truncate "
                                 >
                                   <span>{assignment.title}</span>
@@ -625,7 +580,7 @@ export default function HomeComponent() {
                             </td>
                             <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                               <a
-                                href={`/my-assignments/${assignment.assignment_id}`}
+                                href={`/my-assignment/${assignment.assignment_id}`}
                                 className="text-indigo-600 group-hover:text-indigo-800"
                               >
                                 View
@@ -637,7 +592,7 @@ export default function HomeComponent() {
                     </table>
                     {assignments?.length === 0 && (
                       <div className="flex justify-center items-center h-36 bg-indigo-950">
-                        <button onClick={() => setOpenModal('NewAssignment')}>
+                        <button onClick={() => setOpenModal(true)}>
                           <div className="text-white font-medium text-xl">
                             Create an assignment to get started!
                           </div>
@@ -655,44 +610,24 @@ export default function HomeComponent() {
   );
 }
 
-const features = [
-  {
-    name: 'Upload Assignment',
-    description:
-      'Upload your rubric and give ideal feedback to all your students at once.',
-    icon: PencilIcon,
-  },
-  {
-    name: 'Upload Responses',
-    description:
-      'Upload student responses to and receive instantly graded work.',
-    icon: CloudArrowUpIcon,
-  },
-  {
-    name: 'View Grades',
-    description: "View your students' grades and feedback.",
-    icon: DocumentTextIcon,
-  },
-  {
-    name: 'Integrate with LMS',
-    description:
-      'Integrate with your LMS to automatically upload assignments and grades.',
-    icon: AcademicCapIcon,
-  },
-];
-
 const navigation = [
+  {
+    name: 'Home',
+    href: '/home',
+    icon: HomeIcon,
+    current: false,
+  },
+  {
+    name: 'Automated Grading',
+    href: '/grading',
+    icon: PencilSquareIcon,
+    current: true,
+  },
   {
     name: 'My Notes',
     href: '/my-notes',
     icon: NewspaperIcon,
     current: false,
-  },
-  {
-    name: 'Automated Grading',
-    href: '/automatic-grading',
-    icon: PencilSquareIcon,
-    current: true,
   },
 ];
 
