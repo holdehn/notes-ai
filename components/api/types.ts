@@ -12,13 +12,16 @@ export interface CreateAssignmentParams {
   userID: string;
   formikValues: {
     title: string;
-    question: string;
-    solution: string;
+    description: string;
   };
   content: string;
   assignmentID: string;
+  courseID?: string;
   fileID: string;
+  question?: string;
+  solution?: string;
 }
+
 export interface CreateQuizParams {
   userID: string;
   formikValues: {
@@ -93,4 +96,19 @@ export type Result<TData, TError> =
 export interface InsertExtractedTextParams {
   extractedText: string;
   userId: string;
+}
+
+export interface upsertAssignmentDataParams {
+  userID: string;
+  text: string;
+  type: string;
+  assignmentID: string;
+}
+
+export interface updateAssignmentDataParams {
+  userID: string;
+  text: string;
+  type: string;
+  assignmentID: string;
+  questionNumber: number;
 }

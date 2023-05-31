@@ -12,6 +12,7 @@ export const getServerSideProps = async (
   ctx: GetServerSidePropsContext,
 ): Promise<GetServerSidePropsResult<ProvidedProps>> => {
   const supabase = createServerSupabaseClient(ctx);
+  const assignmentID = ctx.query.assignmentID;
 
   const {
     data: { session },
@@ -38,7 +39,8 @@ export const getServerSideProps = async (
     return {
       props: {
         fallback: {
-          [`/api/automatic-grading-data?userID=${userId}`]: assignmentData,
+          [`/api/get-assignment-data?userID=${userId}?assignmentID=${assignmentID}`]:
+            assignmentData,
         },
       },
     };

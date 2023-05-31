@@ -338,7 +338,7 @@ export default function HeroSection() {
                       easily digestible notes.
                     </p>
                   </div>
-                  {/* <div className="mx-auto mt-4">
+                  <div className="mx-auto mt-4">
                     <Auth
                       view="sign_in"
                       magicLink={false}
@@ -346,7 +346,7 @@ export default function HeroSection() {
                       showLinks={false}
                       redirectTo={`${rootUrl}/my-notes`}
                       onlyThirdPartyProviders={true}
-                      providers={['google', 'discord']}
+                      providers={['google']}
                       supabaseClient={supabase}
                       socialLayout="horizontal"
                       theme="dark"
@@ -376,7 +376,7 @@ export default function HeroSection() {
                         },
                       }}
                     />
-                  </div> */}
+                  </div>
                   <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12">
                     {features.map((feature, index) => {
                       const gradientColors = [

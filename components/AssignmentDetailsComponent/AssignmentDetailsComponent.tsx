@@ -1,4 +1,14 @@
-import { Fragment, useMemo, useState } from 'react';
+import {
+  Fragment,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  Key,
+  JSXElementConstructor,
+  ReactElement,
+  ReactFragment,
+} from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
@@ -13,89 +23,117 @@ import {
   ChevronUpDownIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
 import useSWR from 'swr';
-
-import Link from 'next/link';
-
-import {
-  CheckIcon,
-  HandThumbUpIcon,
-  UserIcon,
-} from '@heroicons/react/20/solid';
+import { ChevronLeftIcon, UserIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/router';
-import { createNotesFacts, createNotesSummary } from '../api';
-import { Document, Packer, Paragraph, TextRun } from 'docx';
-import { saveAs } from 'file-saver';
-
-async function saveChanges(noteId: any, userId: any, summary: any, notes: any) {
-  // Save the summary
-  const summaryResponse = await fetch('/api/update-note-summary', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ noteId, userId, summary }),
-  });
-
-  const summaryData = await summaryResponse.json();
-  if (!summaryResponse.ok) {
-    console.error('Error updating summary', summaryData);
-    return;
-  }
-
-  // Save the notes
-  const notesResponse = await fetch('/api/update-note-facts', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ noteId, userId, notes }),
-  });
-
-  const notesData = await notesResponse.json();
-  if (!notesResponse.ok) {
-    console.error('Error updating notes', notesData);
-    return;
-  }
-
-  console.log('Summary and Notes updated successfully');
-}
+import SelectionModal from '../Modals/SelectionModal';
+import PdfViewer from '../PdfViewer';
+import { updateAssignmentData, upsertAssignmentData } from '../api';
+import SuccessModal from '../ui/SuccessModal';
 
 export default function AssignmentDetailsComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [summaryText, setSummaryText] = useState('');
-  const [bulletPoints, setBulletPoints] = useState<string>('');
-  const [showSaveButton, setShowSaveButton] = useState(false);
+  const [selectedText, setSelectedText] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
   const session = useSession();
   const user_id = session?.user?.id;
   const router = useRouter();
-  const assignmentID = router.query.assignmentID;
+  const assignmentID = router.query.assignmentID as unknown as string;
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [modalType, setModalType] = useState<string>('question');
+  const [showQuestionDetails, setShowQuestionDetails] =
+    useState<boolean>(false);
+  const [selectedQuestionDetails, setSelectedQuestionDetails] = useState<{
+    questionNumber: number;
+    question: string;
+    solution: string;
+    feedback?: string;
+  } | null>({ questionNumber: 1, question: '', solution: '' });
+
+  // Initializing new states for editing control
+  const [isEditingSolution, setIsEditingSolution] = useState<boolean>(false);
+  const [isEditingFeedback, setIsEditingFeedback] = useState<boolean>(false);
+
+  // Do the same for feedback
+  const saveFeedbackChanges = async () => {
+    // Get the new feedback text from the contentEditable div
+    const newFeedback =
+      document.getElementById('feedback-text')?.innerText || '';
+    if (selectedQuestionDetails && selectedQuestionDetails.question) {
+      setSelectedQuestionDetails({
+        question: selectedQuestionDetails.question,
+        questionNumber: selectedQuestionDetails.questionNumber,
+        solution: selectedQuestionDetails.solution,
+        feedback: newFeedback,
+      });
+      setIsEditingFeedback(false);
+      const data = {
+        userID: user_id || '',
+        text: newFeedback,
+        type: 'feedback',
+        assignmentID: assignmentID,
+        questionNumber: selectedQuestionDetails.questionNumber,
+      };
+      await updateAssignmentData(data);
+    }
+  };
+
+  const [isTextSelected, setIsTextSelected] = useState(false);
+
+  // Handler for mouse up event
+  const handleMouseUp = () => {
+    const selection = window.getSelection();
+    if (selection) {
+      const selectedText = selection.toString().trim();
+      setIsTextSelected(!!selectedText);
+      setSelectedText(selectedText);
+    }
+  };
+
+  // Handler for closing the modal
+  const closeModal = () => {
+    // Clear selected text when the modal is closed
+    setSelectedText('');
+    setIsTextSelected(false);
+  };
 
   const name = session?.user?.user_metadata?.full_name;
   const avatar_url = session?.user?.user_metadata?.avatar_url;
-
   const proxyUrl = '/api/proxy?imageUrl=';
   const finalImageUrl = proxyUrl + encodeURIComponent(avatar_url);
 
-  const fetcher = (url: string) => fetch(url).then((r) => r.json());
+  const fetcher = async (url: string) => {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.assignment) {
+      return { ...data, ...data.assignment };
+    }
+    return data;
+  };
 
   const {
     data: assignmentData,
     error: assignmentError,
-    mutate,
+    mutate: mutateAssignmentData,
   } = useSWR(
     user_id && assignmentID
-      ? `/api/get-assignment-data?assignmentID=${assignmentID}&userId=${user_id}`
+      ? `/api/get-assignment-data?assignmentID=${assignmentID}&userID=${user_id}`
       : null,
     fetcher,
+    {
+      revalidateOnReconnect: false,
+      revalidateOnFocus: false,
+      shouldRetryOnError: false,
+    },
   );
 
   if (!assignmentData) {
     return <div>Loading...</div>;
   }
-  const { assignment } = assignmentData;
-  console.log('note data', assignment);
+  console.log('assignmentData', assignmentData);
+
+  const { assignment, signedUrl, questions, solutions } = assignmentData;
 
   const handleLogout = async () => {
     await fetch('/api/logout', {
@@ -106,6 +144,105 @@ export default function AssignmentDetailsComponent() {
 
     router.push('/');
   };
+  const title = assignment?.title;
+  const proxyPdfUrl = '/api/proxy?pdfUrl=';
+  const finalPdfUrl =
+    proxyPdfUrl +
+    encodeURIComponent(signedUrl) +
+    '&title=' +
+    encodeURIComponent(title);
+
+  const addQuestionOrSolution = async (type: string) => {
+    const data = {
+      assignmentID: assignmentID,
+      userID: user_id || '',
+      type: type,
+      text: selectedText || '',
+    };
+    setIsTextSelected(false);
+    const updatedData = await upsertAssignmentData(data);
+
+    // After a successful update, mutate the SWR cache
+    // After a successful update, mutate the SWR cache
+    if (updatedData) {
+      const newData = { ...assignmentData };
+
+      // Check the type and add the new entry to the appropriate array
+      if (type === 'question') {
+        if (newData.questions === null) {
+          newData.questions = [];
+        }
+        newData.questions.push(selectedText);
+      } else if (type === 'solution') {
+        if (newData.solutions === null) {
+          newData.solutions = [];
+        }
+        newData.solutions.push(selectedText);
+      }
+      setModalType(type);
+      setShowSuccessModal(true);
+      mutateAssignmentData(newData, false);
+    }
+  };
+
+  const openQuestionDetails = (selectedQuestion: {
+    questionNumber: number;
+    question: string;
+    solution: string;
+  }) => {
+    setSelectedQuestionDetails(selectedQuestion);
+    setShowQuestionDetails(true);
+  };
+
+  const closeQuestionDetails = () => {
+    setShowQuestionDetails(false);
+  };
+  const saveSolutionChanges = async () => {
+    // Get the new solution text from the contentEditable div
+    const newSolution =
+      document.getElementById('solution-text')?.innerText || '';
+    if (selectedQuestionDetails && selectedQuestionDetails.question) {
+      setSelectedQuestionDetails({
+        question: selectedQuestionDetails.question,
+        questionNumber: selectedQuestionDetails.questionNumber,
+        solution: newSolution,
+        feedback: selectedQuestionDetails.feedback,
+      });
+      const data = {
+        userID: user_id || '',
+        text: newSolution,
+        type: 'solutions',
+        assignmentID: assignmentID,
+        questionNumber: selectedQuestionDetails.questionNumber,
+      };
+      const response = await updateAssignmentData(data); // This is now a Response object
+      const updatedData = await response.json(); // This is now the data from the response
+
+      console.log('updatedData:', updatedData); // Add this line
+
+      // After a successful update, mutate the SWR cache
+      // After a successful update, mutate the SWR cache
+      if (updatedData && updatedData[0]) {
+        const newData = { ...assignmentData };
+
+        // Check if solutions exist in the response
+        if (updatedData[0].solutions) {
+          newData.solutions = [...updatedData[0].solutions]; // Spread to create a new array
+        } else {
+          // If solutions do not exist in the response, create an empty array or add a default solution
+          newData.solutions = [];
+          // Or add the newSolution as the first solution
+          newData.solutions.push(newSolution);
+        }
+
+        console.log('newData after update:', newData); // Add this line
+        mutateAssignmentData(newData, false);
+
+        // Now we set the editing state to false
+        setIsEditingSolution(false);
+      }
+    }
+  };
 
   return (
     <>
@@ -113,7 +250,7 @@ export default function AssignmentDetailsComponent() {
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
-            className="relative z-40 lg:hidden"
+            className="relative z-40 md:hidden"
             onClose={setSidebarOpen}
           >
             <Transition.Child
@@ -210,13 +347,6 @@ export default function AssignmentDetailsComponent() {
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-400 bg-black lg:pb-4 lg:pt-5">
-          {/* <div className="flex flex-shrink-0 items-center px-6">
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
-              alt="NotesAI"
-            />
-          </div> */}
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
             {/* User account dropdown */}
@@ -454,14 +584,7 @@ export default function AssignmentDetailsComponent() {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                    </Menu.Button>
+                    <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"></Menu.Button>
                   </div>
                   <Transition
                     as={Fragment}
@@ -529,176 +652,191 @@ export default function AssignmentDetailsComponent() {
               </div>
             </div>
           </div>
+          <main className="lg:pr-96 bg-indigo-950 relative min-w-screen">
+            <PdfViewer url={finalPdfUrl} onMouseUp={handleMouseUp} />
 
-          <main className="lg:pr-96 bg-gradient-to-r from-indigo-950 to-indigo-900 relative min-w-screen">
-            <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
-              <h1 className="text-base font-semibold leading-7 text-white">
-                Deployments
-              </h1>
-
-              {/* Sort dropdown */}
-              <Menu as="div" className="relative">
-                <Menu.Button className="flex items-center gap-x-1 text-sm font-medium leading-6 text-white">
-                  Sort by
-                  <ChevronUpDownIcon
-                    className="h-5 w-5 text-gray-500"
-                    aria-hidden="true"
-                  />
-                </Menu.Button>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-10 mt-2.5 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active ? 'bg-gray-50' : '',
-                            'block px-3 py-1 text-sm leading-6 text-gray-900',
-                          )}
-                        >
-                          Name
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active ? 'bg-gray-50' : '',
-                            'block px-3 py-1 text-sm leading-6 text-gray-900',
-                          )}
-                        >
-                          Date updated
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active ? 'bg-gray-50' : '',
-                            'block px-3 py-1 text-sm leading-6 text-gray-900',
-                          )}
-                        >
-                          Environment
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
-            </header>
-
-            {/* Deployment list */}
-            <ul role="list" className="divide-y divide-white/5">
-              {deployments.map((deployment) => (
-                <li
-                  key={deployment.id}
-                  className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
-                >
-                  <div className="min-w-0 flex-auto">
-                    <div className="flex items-center gap-x-3">
-                      <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
-                        <a href={deployment.href} className="flex gap-x-2">
-                          <span className="truncate">
-                            {deployment.teamName}
-                          </span>
-                          <span className="text-gray-400">/</span>
-                          <span className="whitespace-nowrap">
-                            {deployment.projectName}
-                          </span>
-                          <span className="absolute inset-0" />
-                        </a>
-                      </h2>
-                    </div>
-                    <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
-                      <p className="truncate">{deployment.description}</p>
-                      <svg
-                        viewBox="0 0 2 2"
-                        className="h-0.5 w-0.5 flex-none fill-gray-300"
-                      >
-                        <circle cx={1} cy={1} r={1} />
-                      </svg>
-                      <p className="whitespace-nowrap">
-                        {deployment.statusText}
-                      </p>
-                    </div>
-                  </div>
-
-                  <ChevronRightIcon
-                    className="h-5 w-5 flex-none text-gray-400"
-                    aria-hidden="true"
-                  />
-                </li>
-              ))}
-            </ul>
+            <SelectionModal
+              open={isTextSelected}
+              setOpen={setIsTextSelected}
+              assignmentID={assignmentID}
+              selectedText={selectedText}
+              setSelectedText={setSelectedText}
+              userID={user_id}
+              closeModal={closeModal}
+              addQuestionOrSolution={addQuestionOrSolution}
+            />
+            {showSuccessModal && <SuccessModal type={modalType} />}
           </main>
 
-          {/* Activity feed */}
-          <aside className="bg-black/10 lg:fixed lg:bottom-0 lg:right-0 lg:top-16 lg:w-96 lg:overflow-y-auto lg:border-l lg:border-white/5">
-            <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
-              <h2 className="text-base font-semibold leading-7 text-white">
-                Activity feed
-              </h2>
-              <a
-                href="#"
-                className="text-sm font-semibold leading-6 text-indigo-400"
-              >
-                View all
-              </a>
-            </header>
-            <ul role="list" className="divide-y divide-white/5">
-              {activityItems.map((item) => (
-                <li key={item.commit} className="px-4 py-4 sm:px-6 lg:px-8">
-                  <div className="flex items-center gap-x-3">
-                    <img
-                      src={item.user.imageUrl}
-                      alt=""
-                      className="h-6 w-6 flex-none rounded-full bg-gray-800"
+          <>
+            {!showQuestionDetails ? (
+              // Question List Sidebar
+              <aside className="fixed top-0 right-0 w-96 overflow-y-auto border-l border-white/5 h-full bg-indigo-950">
+                <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 bg-black">
+                  <h2 className="text-base font-semibold leading-7 text-white">
+                    {title}
+                  </h2>
+                  <a
+                    href="#"
+                    className="text-sm font-semibold leading-6 text-indigo-400"
+                  >
+                    Add
+                  </a>
+                </header>
+                <ul className="divide-y divide-white/10 overflow-y-auto">
+                  {questions && questions.length > 0 ? (
+                    questions.map((item: string, index: number) => (
+                      <li key={index}>
+                        <div
+                          className="group relative flex items-center px-4 py-4 sm:px-6 bg-indigo-700 hover:bg-indigo-800 hover:cursor-pointer hover:text-white justify-between"
+                          onClick={() =>
+                            openQuestionDetails({
+                              questionNumber: index + 1,
+                              question: item,
+                              solution:
+                                solutions && solutions.length > index
+                                  ? solutions[index]
+                                  : null,
+                            })
+                          }
+                        >
+                          <div className="flex items-center">
+                            <div className="flex-shrink-0">
+                              <span className="inline-flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500">
+                                <span className="text-sm font-medium leading-none text-white">
+                                  Q{index + 1}
+                                </span>
+                              </span>
+                            </div>
+                            <p className="text-sm font-bold ml-4 text-white truncate-multiline">
+                              Question:
+                              <br />
+                              <span className="text-sm font-medium text-white truncate-multiline">
+                                {item}
+                              </span>
+                            </p>
+                          </div>
+                          <div className="flex-shrink-0">
+                            <ChevronRightIcon
+                              className="h-5 w-5 text-white"
+                              aria-hidden="true"
+                            />
+                          </div>
+                        </div>
+                      </li>
+                    ))
+                  ) : (
+                    <div className="px-4 py-6 sm:px-6">
+                      <p className="text-md text-center font-medium truncate text-white">
+                        <em>No questions found</em>
+                      </p>
+                    </div>
+                  )}
+                </ul>
+              </aside>
+            ) : (
+              // Question Details Sidebar
+              <aside className="fixed top-0 right-0 w-96 overflow-y-auto border-l border-white/5 h-full bg-indigo-950">
+                <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 bg-black">
+                  <button
+                    onClick={() => {
+                      closeQuestionDetails();
+                      setIsEditingSolution(false);
+                      setIsEditingFeedback(false);
+                    }}
+                  >
+                    <ChevronLeftIcon
+                      className="h-5 w-5 bg-white rounded-full hover:bg-gray-200"
+                      aria-hidden="true"
                     />
-                    <h3 className="flex-auto truncate text-sm font-semibold leading-6 text-white">
-                      {item.user.name}
-                    </h3>
-                    <time
-                      dateTime={item.dateTime}
-                      className="flex-none text-xs text-gray-600"
-                    >
-                      {item.date}
-                    </time>
+                  </button>
+                  <h2 className="text-base font-semibold leading-7 text-white">
+                    Question {selectedQuestionDetails?.questionNumber}
+                  </h2>
+                </header>
+                <div className="px-4 py-4">
+                  <h3 className="text-lg font-semibold text-white">Question</h3>
+                  <div className="box bg-white text-black mt-2 p-4 rounded-lg">
+                    <p className="text-sm">
+                      {selectedQuestionDetails?.question}
+                    </p>
                   </div>
-                  <p className="mt-3 truncate text-sm text-gray-500">
-                    Pushed to{' '}
-                    <span className="text-gray-400">{item.projectName}</span> (
-                    <span className="font-mono text-gray-400">
-                      {item.commit}
-                    </span>{' '}
-                    on <span className="text-gray-400">{item.branch}</span>)
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </aside>
+                  <h3 className="text-lg font-semibold text-white mt-4">
+                    Solution
+                  </h3>
+                  <div className="box bg-gray-200 text-black mt-2 p-4 rounded-lg">
+                    {isEditingSolution ? (
+                      <div
+                        id="solution-text"
+                        contentEditable={true}
+                        suppressContentEditableWarning={true}
+                        onBlur={saveSolutionChanges}
+                      >
+                        {selectedQuestionDetails?.solution}
+                      </div>
+                    ) : (
+                      <p className="text-sm">
+                        {selectedQuestionDetails?.solution}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => {
+                      if (isEditingSolution) {
+                        saveSolutionChanges();
+                      }
+                      setIsEditingSolution(!isEditingSolution);
+                    }}
+                    className={`mt-2 py-1 px-2 rounded text-white ${
+                      isEditingSolution
+                        ? 'bg-green-500 hover:bg-green-700'
+                        : 'bg-indigo-500 hover:bg-indigo-700'
+                    }`}
+                  >
+                    {isEditingSolution ? 'Save' : 'Edit'}
+                  </button>
+
+                  {/* Add Feedback Section */}
+                  <h3 className="text-lg font-semibold text-white mt-4">
+                    Feedback
+                  </h3>
+                  <div className="box bg-gray-200 text-black mt-2 p-4 rounded-lg">
+                    {isEditingFeedback ? (
+                      <div
+                        id="feedback-text"
+                        contentEditable={true}
+                        suppressContentEditableWarning={true}
+                        onBlur={saveFeedbackChanges}
+                      >
+                        {selectedQuestionDetails?.feedback}
+                      </div>
+                    ) : (
+                      <p className="text-sm">
+                        {selectedQuestionDetails?.feedback}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => {
+                      if (isEditingFeedback) {
+                        saveFeedbackChanges();
+                      }
+                      setIsEditingFeedback(!isEditingFeedback);
+                    }}
+                    className="mt-2 py-1 px-2 rounded bg-indigo-500 text-white hover:bg-indigo-700"
+                  >
+                    {isEditingFeedback ? 'Save' : 'Edit'}
+                  </button>
+                </div>
+              </aside>
+            )}
+          </>
         </div>
       </div>
     </>
   );
 }
 
-const eventTypes = {
-  applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
-  advanced: { icon: HandThumbUpIcon, bgColorClass: 'bg-blue-500' },
-  completed: { icon: CheckIcon, bgColorClass: 'bg-green-500' },
-};
 const navigation = [
   {
     name: 'Home',
@@ -716,52 +854,9 @@ const navigation = [
     name: 'My Notes',
     href: '/my-notes',
     icon: NewspaperIcon,
-    current: true,
+    current: false,
   },
 ];
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
-
-const teams = [
-  { id: 1, name: 'Planetaria', href: '#', initial: 'P', current: false },
-  { id: 2, name: 'Protocol', href: '#', initial: 'P', current: false },
-  { id: 3, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-];
-const statuses = {
-  offline: 'text-gray-500 bg-gray-100/10',
-  online: 'text-green-400 bg-green-400/10',
-  error: 'text-rose-400 bg-rose-400/10',
-};
-const environments = {
-  Preview: 'text-gray-400 bg-gray-400/10 ring-gray-400/20',
-  Production: 'text-indigo-400 bg-indigo-400/10 ring-indigo-400/30',
-};
-const deployments = [
-  {
-    id: 1,
-    href: '#',
-    projectName: 'ios-app',
-    teamName: 'Planetaria',
-    status: 'offline',
-    statusText: 'Initiated 1m 32s ago',
-    description: 'Deploys from GitHub',
-    environment: 'Preview',
-  },
-  // More deployments...
-];
-const activityItems = [
-  {
-    user: {
-      name: 'Michael Foster',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    projectName: 'ios-app',
-    commit: '2d89f0c8',
-    branch: 'main',
-    date: '1h',
-    dateTime: '2023-01-23T11:00',
-  },
-  // More items...
-];

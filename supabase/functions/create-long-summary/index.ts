@@ -10,7 +10,6 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'langchain/chains';
 import { OpenAIEmbeddings } from 'langchain/embeddings';
 import { kmeans } from 'ml-kmeans';
-import { supabase } from '../_shared/supabase.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {

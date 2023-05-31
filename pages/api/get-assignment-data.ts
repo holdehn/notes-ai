@@ -5,25 +5,37 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { assignmentID, userId } = req.query;
+  const { assignmentID, userID } = req.query;
 
-  if (!assignmentID || !userId) {
+  if (!assignmentID || !userID) {
     return res.status(400).json({ error: 'Note ID and User ID are required' });
   }
 
   const supabase = createServerSupabaseClient({ req, res });
 
-  const { data: noteData, error: noteError } = await supabase
+  const { data: assignmentData, error: assignmentError } = await supabase
     .from('assignments')
     .select('*')
-    .match({ id: assignmentID, user_id: userId })
+    .match({ id: assignmentID, user_id: userID })
     .single();
 
-  if (noteError) {
-    return res.status(500).json({ error: noteError.message });
+  const fileID = assignmentData?.file_id;
+
+  const { data: signedUrlData, error: signedUrlError } = await supabase.storage
+    .from('documents')
+    .createSignedUrl(fileID, 60);
+
+  if (assignmentError) {
+    return res.status(500).json({ error: assignmentError.message });
   }
 
-  return res.status(200).json({ note: noteData });
+  if (signedUrlError) {
+    return res.status(500).json({ error: signedUrlError.message });
+  }
+
+  return res
+    .status(200)
+    .json({ assignment: assignmentData, signedUrl: signedUrlData.signedUrl });
 };
 
 export default handler;

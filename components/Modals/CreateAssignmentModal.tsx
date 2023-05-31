@@ -7,9 +7,8 @@ import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
-import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import { v4 as uuidv4 } from 'uuid';
-import { insertAssignment } from '../api';
+import { insertAssignment, sendImage, loadDocx, loadPDF } from '../api';
 
 interface Props {
   open: boolean;
@@ -49,16 +48,10 @@ export default function CreateAssignmentModal(props: Props) {
       const fileSubType = file.type.split('/')[1];
 
       if (
-        (fileType !== 'audio' &&
-          fileType !== 'video' &&
-          fileType !== 'application' &&
-          fileType !== 'image') || // Add image type check
-        (fileType === 'application' &&
-          fileSubType !== 'pdf' &&
-          fileSubType !==
-            'vnd.openxmlformats-officedocument.wordprocessingml.document') // Add check for docx file
+        fileType !== 'application' ||
+        (fileType === 'application' && fileSubType !== 'pdf')
       ) {
-        alert('Please upload an audio, video, PDF, docx, or image file');
+        alert('Please upload a PDF file');
         return;
       }
 
@@ -88,162 +81,15 @@ export default function CreateAssignmentModal(props: Props) {
     formik.resetForm();
   };
 
-  const loadPDF = async (file: File) => {
-    try {
-      if (!file) {
-        alert('Please upload a PDF file');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const response = await fetch('/api/load-pdf', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const extractedText = data.text;
-      setConvertedText(extractedText);
-      return extractedText;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-
-      alert(`Error: ${error.message}`);
-    }
-  };
-
-  const sendAudio = async (file: File) => {
-    try {
-      if (!file) {
-        alert('Please upload an audio file');
-        return;
-      }
-      const formData = new FormData();
-      formData.append('file', file);
-      const data = await supabaseClient.functions.invoke(
-        'generate-transcription',
-        {
-          body: formData,
-        },
-      );
-      const transcription = data.data.transcript.text;
-      setConvertedText(transcription);
-      return transcription;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-
-      alert(`Error: ${error.message}`);
-    }
-  };
-
-  const loadDocx = async (file: File) => {
-    try {
-      if (!file) {
-        alert('Please upload a docx file');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const response = await fetch('/api/load-docx', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const extractedText = data.text;
-      setConvertedText(extractedText);
-      return extractedText;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-      alert(`Error: ${error.message}`);
-    }
-  };
-
-  const convertVideoToMp3 = async (videoFile: string | Blob | Buffer) => {
-    try {
-      // Create an FFmpeg instance
-      const ffmpeg = createFFmpeg({ log: true });
-
-      // Load the FFmpeg instance
-      await ffmpeg.load();
-
-      // Write the video file to FFmpeg's file system
-      const inputFileName =
-        fileObject?.type.split('/')[1] === 'webm' ? 'input.webm' : 'input.mp4';
-      ffmpeg.FS('writeFile', inputFileName, await fetchFile(videoFile));
-
-      // Run the FFmpeg command to convert the video to MP3
-      await ffmpeg.run(
-        '-i',
-        inputFileName,
-        '-vn',
-        '-b:a',
-        '128k',
-        'output.mp3',
-      );
-
-      // Read the output MP3 file from FFmpeg's file system
-      const audioData = ffmpeg.FS('readFile', 'output.mp3');
-
-      // Create a Blob from the output MP3 data
-      const audioBlob = new Blob([audioData.buffer], { type: 'audio/mp3' });
-
-      // Convert the Blob to a File
-      const audioFile = new File([audioBlob], 'audio.mp3', {
-        type: 'audio/mp3',
-      });
-
-      // Return the audio file
-      return audioFile;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  const sendImage = async (file: File) => {
-    try {
-      if (!file) {
-        alert('Please upload an image file');
-        return;
-      }
-      const formData = new FormData();
-      formData.append('file', file);
-      const response = await supabaseClient.functions.invoke('latex-image', {
-        body: formData,
-      });
-      console.log(JSON.stringify(response));
-      const latex = 'response';
-      setConvertedText(latex);
-      return latex;
-    } catch (error: any) {
-      alert(`Error: ${error.message}`);
-    }
-  };
-
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
-    question: Yup.string().required('Required'),
-    solution: Yup.string().required('Required'),
+    description: Yup.string().required('Required'),
   });
 
   const intialValues = {
     title: '',
-    question: '',
-    solution: '',
+    description: '',
   };
 
   const onSubmit = async (values: any, { resetForm }: any) => {
@@ -272,12 +118,13 @@ export default function CreateAssignmentModal(props: Props) {
       }
     } else if (fileType === 'video') {
       // If the file is a video, convert it to audio and then send it to sendAudio
-      const audioFile = await convertVideoToMp3(file);
-      content = await sendAudio(audioFile);
+      alert('Please upload a PDF file');
+      return;
     } else if (fileType === 'image') {
       content = await sendImage(file);
     } else {
-      content = await sendAudio(file);
+      alert('Please upload a PDF file');
+      return;
     }
     let fileID = uuidv4();
 
@@ -299,7 +146,7 @@ export default function CreateAssignmentModal(props: Props) {
       },
     );
 
-    router.push(`/grading/assignments/${assignmentID}`);
+    router.push(`/grading/assignment/${assignmentID}`);
     setFiles(null);
     setName('');
     setFileObject(null);
@@ -349,7 +196,7 @@ export default function CreateAssignmentModal(props: Props) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-black px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-4">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-blue-950 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-4">
                 {' '}
                 <form onSubmit={formik.handleSubmit}>
                   <div>
@@ -403,56 +250,24 @@ export default function CreateAssignmentModal(props: Props) {
                           htmlFor="input-name"
                           className="block text-sm font-medium leading-6 text-gray-200 text-left"
                         >
-                          Question:
+                          Description:
                         </label>
                         <div className="mt-2">
                           <input
                             type="text"
-                            name="question"
-                            id="question"
-                            value={formik.values.question}
+                            name="description"
+                            id="description"
+                            value={formik.values.description}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             disabled={submitted}
                             className="block w-full row-span-4 bg-gray-800 pl-1.5 rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. Demo Question"
+                            placeholder="e.g. Assignment Description"
                           />
-                          {formik.touched.question && formik.errors.question ? (
+                          {formik.touched.description &&
+                          formik.errors.description ? (
                             <div className="mt-2 text-red-500 text-sm">
-                              {formik.errors.question}
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-
-                      <div className="col-span-6 sm:col-span-4 mt-4">
-                        <label
-                          htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-200 text-left items-center"
-                        >
-                          Solution:
-                          <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
-                            <i
-                              className="fas fa-question-circle"
-                              title="Provide a brief description of the main function of the tool."
-                            ></i>
-                          </span>
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="solution"
-                            id="solution"
-                            value={formik.values.solution}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            disabled={submitted}
-                            className="block w-full row-span-3 bg-gray-800 pl-1.5 rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. Demo Solution"
-                          />
-                          {formik.touched.solution && formik.errors.solution ? (
-                            <div className="mt-2 text-red-500 text-sm">
-                              {formik.errors.solution}
+                              {formik.errors.description}
                             </div>
                           ) : null}
                         </div>
@@ -503,7 +318,7 @@ export default function CreateAssignmentModal(props: Props) {
                         disabled={loading}
                         className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
                       >
-                        Create Quiz
+                        Create Assignment
                       </button>
                       <button
                         type="button"

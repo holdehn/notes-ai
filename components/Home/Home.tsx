@@ -21,30 +21,25 @@ import {
   ChevronRightIcon,
   PlusIcon,
 } from '@heroicons/react/20/solid';
-import router from 'next/router';
-import formatDateTime from '@/utils/formatDateTime';
+import router, { useRouter } from 'next/router';
 import CreateAssignmentModal from '../Modals/CreateAssignmentModal';
-import CreateQuizModal from '../Modals/CreateQuizModal';
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openModal, setOpenModal] = useState<string | null>(null);
-
-  const supabase = useSupabaseClient();
-
-  const rootUrl = getURL();
+  const router = useRouter();
+  const navigateToGrading = () => {
+    router.push('/grading');
+  };
 
   const handleCardClick = (featureName: any) => {
     switch (featureName) {
-      case 'Create Assignment':
+      case 'Upload Assignment Rubric':
         setOpenModal('UploadAssignment');
         break;
-      case 'Generate Quiz':
-        setOpenModal('CreateQuiz');
-        break;
       // Add more cases as needed
-      case 'Live Notes':
-        setOpenModal('LiveNotes');
+      case 'Upload Response':
+        setOpenModal('GenerateNotes');
         break;
       default:
         setOpenModal(null);
@@ -431,57 +426,47 @@ export default function Home() {
             open={openModal === 'UploadAssignment'}
             setOpen={() => setOpenModal(null)}
           />
-          <CreateQuizModal
-            open={openModal === 'CreateQuiz'}
-            setOpen={() => setOpenModal(null)}
-          />
-
           <main>
             <div className="bg-gradient-to-r from-[#1c0232] via-[#291957] to-[#2b0830] relative min-h-screen">
               <div className="p-12 sm:pb-32">
                 <div className=" max-w-full">
                   <div className="mx-auto max-w-2xl lg:text-center">
                     <h2 className="mt-3 text-3xl font-extrabold leading-9 text-white">
-                      Automated Grading
+                      Automate Grading Assignments
                     </h2>
-                    <p className="mt-4 text-lg leading-7 text-gray-300">
-                      Create an assignment to automatically grade your students'
-                      work and provide personalized feedback.
+                    <p className="mt-4 text-md leading-6 text-gray-300">
+                      Upload your assignment rubric and student responses to
+                      generate grades and feedback instantly.
                     </p>
+
+                    <button
+                      className="mb-4 mt-4 bg-blue-600 hover:bg-gray-400 text-gray-100 font-bold py-2 px-4 rounded"
+                      onClick={navigateToGrading}
+                    >
+                      View All
+                    </button>
                   </div>
 
-                  <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12">
+                  <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-2 lg:gap-x-12">
                     {features.map((feature, index) => {
-                      const gradientColors = [
-                        'from-[#ff9a9e] to-[#fad0c4]',
-                        'from-[#a1c4fd] to-[#c2e9fb]',
-                        'from-[#d4fc79] to-[#96e6a1]',
-                        'from-[#84fab0] to-[#8fd3f4]',
-                        'from-[#FDC830] to-[#F37335]',
-                        'from-[#C33764] to-[#1D2671]',
-                        'from-[#FF416C] to-[#FF4B2B]',
-                        'from-[#56CCF2] to-[#2F80ED]',
-                      ];
-
-                      const gradientColor =
-                        gradientColors[index % gradientColors.length];
-
+                      let boxClass =
+                        index % 2 === 0
+                          ? 'bg-blue-200 hover:bg-blue-300 cursor-pointer'
+                          : 'bg-green-200 hover:bg-green-300 cursor-pointer';
                       return (
-                        <div
+                        <button
                           key={feature.name}
-                          className={`space-y-4 p-4 rounded-lg bg-gradient-to-tr ${gradientColor} transform transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer`}
                           onClick={() => handleCardClick(feature.name)}
+                          className={`relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${boxClass}`}
                         >
-                          <div className="mx-auto h-12 w-12 p-2 rounded-full bg-gradient-to-tr from-[#FFD6A5] to-[#FFC371]">
-                            <feature.icon className="h-full w-full text-gray-800" />
-                          </div>
-                          <h3 className="text-lg font-semibold leading-7 text-black">
+                          <feature.icon className="mx-auto h-12 w-12 text-gray-400" />
+                          <span className="mt-2 block text-sm font-semibold text-gray-900">
                             {feature.name}
-                          </h3>
-                          <p className="text-base leading-6 text-white0">
+                          </span>
+                          <p className="mt-2 text-base leading-6 text-white0">
                             {feature.description}
                           </p>
-                        </div>
+                        </button>
                       );
                     })}
                   </div>
@@ -497,25 +482,14 @@ export default function Home() {
 
 const features = [
   {
-    name: 'Create Assignment',
+    name: 'Upload Assignment Rubric',
     description: 'Upload rubric to grade and provide feedback instantly.',
     icon: PencilIcon,
   },
   {
-    name: 'Upload Course Content',
-    description: 'Upload course content.',
+    name: 'Upload Response',
+    description: 'Upload student responses.',
     icon: CloudArrowUpIcon,
-  },
-  {
-    name: 'Generate Quiz',
-    description: 'Instantly Generate quiz questions.',
-    icon: DocumentTextIcon,
-  },
-  {
-    name: 'Create Course Tutor',
-    description:
-      'Upload course content to train an AI tutor on your specific course.',
-    icon: AcademicCapIcon,
   },
 ];
 

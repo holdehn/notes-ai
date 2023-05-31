@@ -48,26 +48,13 @@ export const getServerSideProps = async (
       },
     };
   }
-
-  // // If there is no active user, redirect to the homepage
-  // return {
-  //   redirect: {
-  //     destination: '/',
-  //     permanent: false,
-  //   },
-  // };
 };
 
 export default function ({ fallback }: { fallback: any }) {
   const router = useRouter();
   const session = useSession();
 
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push('/');
-  //   }
-  // }, [session]);
-
+  console.log(';hello');
   return (
     <>
       <Head>

@@ -168,6 +168,7 @@ const systemCombinedPrompt = SystemMessagePromptTemplate.fromTemplate(
   You will be presented with an assortment of notes derived from a text. These notes, encased in triple backticks (\`\\\`\\\`), represent individual facets of the same larger narrative.
   Your task is to build upon these existing notes, creating a detailed and comprehensive set of your own, exploring the entire text. These should be in bullet point format.
   Your extended notes should provide the reader with a complete and intricate understanding of the overarching theme and sub-points of the text.
+  Each bullet point should be a complete sentence.
   
   \\\`\\\`\\\`{text}\\\`\\\`\\\`
   EXTENSIVE NOTES:

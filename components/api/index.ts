@@ -12,6 +12,8 @@ import {
   CreateAssignmentParams,
   insertAssignmentFileParams,
   CreateQuizParams,
+  upsertAssignmentDataParams,
+  updateAssignmentDataParams,
 } from './types';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { supabaseClient } from '@/supabase-client';
@@ -31,6 +33,7 @@ const insertNote = async (
 
   return data;
 };
+
 const insertAssignment = async (
   params: CreateAssignmentParams,
 ): Promise<any> => {
@@ -463,6 +466,133 @@ const insertExtractedText = async (
   return data;
 };
 
+const sendImage = async (file: File) => {
+  try {
+    if (!file) {
+      alert('Please upload an image file');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await supabaseClient.functions.invoke('latex-image', {
+      body: formData,
+    });
+    console.log(JSON.stringify(response));
+    const latex = 'response';
+    return latex;
+  } catch (error: any) {
+    alert(`Error: ${error.message}`);
+  }
+};
+
+const sendAudio = async (file: File) => {
+  try {
+    if (!file) {
+      alert('Please upload an audio file');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', file);
+    const data = await supabaseClient.functions.invoke(
+      'generate-transcription',
+      {
+        body: formData,
+      },
+    );
+    const transcription = data.data.transcript.text;
+
+    return transcription;
+  } catch (error: any) {
+    console.log(JSON.stringify(error));
+
+    alert(`Error: ${error.message}`);
+  }
+};
+
+const loadDocx = async (file: File) => {
+  try {
+    if (!file) {
+      alert('Please upload a docx file');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('/api/load-docx', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    const extractedText = data.text;
+
+    return extractedText;
+  } catch (error: any) {
+    console.log(JSON.stringify(error));
+    alert(`Error: ${error.message}`);
+  }
+};
+
+const loadPDF = async (file: File) => {
+  try {
+    if (!file) {
+      alert('Please upload a PDF file');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('/api/load-pdf', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    const extractedText = data.text;
+    return extractedText;
+  } catch (error: any) {
+    console.log(JSON.stringify(error));
+
+    alert(`Error: ${error.message}`);
+  }
+};
+
+const upsertAssignmentData = async (
+  params: upsertAssignmentDataParams,
+): Promise<any> => {
+  const response = await fetch('/api/upsert-assignment-data', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+  return response;
+};
+
+const updateAssignmentData = async (
+  params: updateAssignmentDataParams,
+): Promise<any> => {
+  const response = await fetch('/api/update-assignment-data', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+  return response;
+};
+
 export {
   insertNote,
   createNotesSummary,
@@ -474,4 +604,10 @@ export {
   insertExtractedText,
   insertAssignment,
   insertQuiz,
+  sendImage,
+  sendAudio,
+  loadDocx,
+  loadPDF,
+  upsertAssignmentData,
+  updateAssignmentData,
 };

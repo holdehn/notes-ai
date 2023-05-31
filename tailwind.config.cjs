@@ -20,5 +20,17 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.truncate-multiline': {
+          display: '-webkit-box',
+          overflow: 'hidden',
+          '-webkit-line-clamp': '2', // You can control the number of lines
+          '-webkit-box-orient': 'vertical',
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
 };

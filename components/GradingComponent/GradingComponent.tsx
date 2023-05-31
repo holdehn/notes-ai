@@ -9,13 +9,7 @@ import {
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import useSWR from 'swr';
-import {
-  TvIcon,
-  DocumentMagnifyingGlassIcon,
-  BookOpenIcon,
-  SpeakerXMarkIcon,
-  PencilSquareIcon,
-} from '@heroicons/react/24/outline';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { getURL } from '@/pages/api/helpers';
 import {
   ChevronRightIcon,
@@ -35,10 +29,6 @@ import CreateAssignmentModal from '../Modals/CreateAssignmentModal';
 export default function GradingComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
-
-  const supabase = useSupabaseClient();
-
-  const rootUrl = getURL();
 
   const session: Session | null = useSession();
   const userID = session?.user?.id;
@@ -441,8 +431,6 @@ export default function GradingComponent() {
             </div>
           </div>
 
-          <CreateAssignmentModal open={openModal} setOpen={setOpenModal} />
-
           <main>
             <div className="bg-gradient-to-r from-indigo-950 to-indigo-900 relative min-h-screen">
               <div className="p-12 sm:pb-12">
@@ -606,6 +594,7 @@ export default function GradingComponent() {
           </main>
         </div>
       </div>
+      <CreateAssignmentModal open={openModal} setOpen={setOpenModal} />
     </>
   );
 }
