@@ -1,14 +1,4 @@
-import {
-  Fragment,
-  useMemo,
-  useState,
-  useEffect,
-  useCallback,
-  Key,
-  JSXElementConstructor,
-  ReactElement,
-  ReactFragment,
-} from 'react';
+import { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3CenterLeftIcon,
@@ -30,6 +20,7 @@ import SelectionModal from '../Modals/SelectionModal';
 import PdfViewer from '../PdfViewer';
 import { updateAssignmentData, upsertAssignmentData } from '../api';
 import SuccessModal from '../ui/SuccessModal';
+import { set } from 'date-fns';
 
 export default function AssignmentDetailsComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -102,6 +93,7 @@ export default function AssignmentDetailsComponent() {
   const proxyUrl = '/api/proxy?imageUrl=';
   const finalImageUrl = proxyUrl + encodeURIComponent(avatar_url);
 
+  // Your existing fetcher function
   const fetcher = async (url: string) => {
     const response = await fetch(url);
     const data = await response.json();
@@ -112,6 +104,7 @@ export default function AssignmentDetailsComponent() {
     return data;
   };
 
+  // Your existing SWR hook
   const {
     data: assignmentData,
     error: assignmentError,
@@ -182,6 +175,7 @@ export default function AssignmentDetailsComponent() {
       setModalType(type);
       setShowSuccessModal(true);
       mutateAssignmentData(newData, false);
+      setSelectedText('');
     }
   };
 
@@ -217,8 +211,6 @@ export default function AssignmentDetailsComponent() {
       };
       const response = await updateAssignmentData(data); // This is now a Response object
       const updatedData = await response.json(); // This is now the data from the response
-
-      console.log('updatedData:', updatedData); // Add this line
 
       // After a successful update, mutate the SWR cache
       // After a successful update, mutate the SWR cache
@@ -680,7 +672,7 @@ export default function AssignmentDetailsComponent() {
                     href="#"
                     className="text-sm font-semibold leading-6 text-indigo-400"
                   >
-                    Add
+                    Solution
                   </a>
                 </header>
                 <ul className="divide-y divide-white/10 overflow-y-auto">
