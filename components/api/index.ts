@@ -14,6 +14,8 @@ import {
   CreateQuizParams,
   upsertAssignmentDataParams,
   updateAssignmentDataParams,
+  insertResponseSectionParams,
+  CreateCourseParams,
 } from './types';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { supabaseClient } from '@/supabase-client';
@@ -22,6 +24,20 @@ const insertNote = async (
   params: CreateNoteParams,
 ): Promise<CreateNoteResponse> => {
   const response = await fetch('/api/create-note-supabase', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+
+  const data = await response.json();
+
+  return data;
+};
+
+const insertCourse = async (params: CreateCourseParams): Promise<any> => {
+  const response = await fetch('/api/create-course', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -593,6 +609,19 @@ const updateAssignmentData = async (
   return response;
 };
 
+const insertResponseSection = async (
+  params: insertResponseSectionParams,
+): Promise<any> => {
+  const response = await fetch('/api/insert-response-section', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+  return response;
+};
+
 export {
   insertNote,
   createNotesSummary,
@@ -610,4 +639,6 @@ export {
   loadPDF,
   upsertAssignmentData,
   updateAssignmentData,
+  insertResponseSection,
+  insertCourse,
 };

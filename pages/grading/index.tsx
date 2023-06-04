@@ -57,7 +57,7 @@ export default function ({ fallback }: { fallback: ProvidedProps }) {
   return (
     <>
       <Head>
-        <title>GradeBoost - Automated Grading</title>
+        <title>AutoMark - Automated Grading</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <SWRConfig value={{ fallback }}>

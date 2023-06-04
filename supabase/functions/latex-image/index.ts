@@ -23,20 +23,22 @@ serve(async (req: Request) => {
       );
     }
 
-    const newFormData = new FormData();
-    newFormData.set('file', file);
-    newFormData.set(
-      'options_json',
-      JSON.stringify({ conversion_formats: { mmd: true } }),
-    );
+    // Conversion formats to be used.
+    const conversionFormats = { docx: true, 'tex.zip': true };
 
-    const response = await fetch('https://api.mathpix.com/v3/text', {
+    const data = JSON.stringify({
+      file: file,
+      conversion_formats: conversionFormats,
+    });
+
+    const response = await fetch('https://api.mathpix.com/v3/pdf', {
       method: 'POST',
       headers: {
         app_id: Deno.env.get('MATHPIX_APP_ID') as unknown as string,
         app_key: Deno.env.get('MATHPIX_APP_KEY') as unknown as string,
+        'Content-Type': 'application/json',
       },
-      body: newFormData,
+      body: data,
     });
     console.log(response);
     if (!response.ok) {
@@ -51,10 +53,10 @@ serve(async (req: Request) => {
 
     const rawData = await response.json();
     console.log(rawData);
-    const data = parseMathpixData(rawData);
-    console.log(data);
+    const responseData = parseMathpixData(rawData);
+    console.log(responseData);
     console.log('step5');
-    return new Response(JSON.stringify({ success: true, data }), {
+    return new Response(JSON.stringify({ success: true, responseData }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
@@ -65,6 +67,7 @@ serve(async (req: Request) => {
     });
   }
 });
+
 function parseMathpixData(data: any) {
   const latexStyled = data.latex_styled;
   console.log(latexStyled);

@@ -13,6 +13,7 @@ export const getServerSideProps = async (
   ctx: GetServerSidePropsContext,
 ): Promise<GetServerSidePropsResult<ProvidedProps>> => {
   const supabase = createServerSupabaseClient(ctx);
+  const courseID = ctx.params?.courseID;
 
   const {
     data: { session },
@@ -29,17 +30,16 @@ export const getServerSideProps = async (
   // Check if there is an active user
   if (session && session.user?.id) {
     const userId = session.user?.id;
-    const { data: assignmentData, error: assignmentError } = await supabase
-      .from('assignments')
+    const { data: courseData, error: courseError } = await supabase
+      .from('courses')
       .select('*')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false });
+      .match({ user_id: userId, courseID: courseID });
 
     // Return the notes-page-data in the props
     return {
       props: {
         fallback: {
-          [`/api/automatic-grading-data?userID=${userId}`]: assignmentData,
+          [`/api/get-course?userID=${userId}&courseID=${courseID}`]: courseData,
         },
       },
     };
@@ -58,7 +58,7 @@ export default function ({ fallback }: { fallback: ProvidedProps }) {
   return (
     <>
       <Head>
-        <title>GradeBoost - Automated Grading</title>
+        <title>AutoMark - Automated Grading</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <SWRConfig value={{ fallback }}>

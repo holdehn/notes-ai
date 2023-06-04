@@ -1,14 +1,15 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
-import EmptyUpload from '@/components/EmptyUpload';
 import { useSession } from '@supabase/auth-helpers-react';
-import { useSWRConfig } from 'swr';
 import * as Yup from 'yup';
-import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
-import { getYoutubeTranscript, insertNote } from '@/components/api';
+import {
+  getYoutubeTranscript,
+  insertCourse,
+  insertNote,
+} from '@/components/api';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
@@ -16,7 +17,7 @@ interface Props {
   setOpen: (open: boolean) => void;
 }
 
-export default function GenerateYoutubeNotesModal(props: Props) {
+export default function CreateCourseModal(props: Props) {
   const { open, setOpen } = props;
   const cancelButtonRef = useRef(null);
   const session = useSession();
@@ -30,7 +31,6 @@ export default function GenerateYoutubeNotesModal(props: Props) {
 
   const handleClose = () => {
     if (loading) return;
-
     setOpen(false);
     setLoading(false);
     setSubmitted(false); // Add this line
@@ -40,35 +40,26 @@ export default function GenerateYoutubeNotesModal(props: Props) {
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
-    link: Yup.string().required('Required'),
+    subject: Yup.string().required('Required'),
   });
 
   const intialValues = {
     title: '',
-    link: '',
+    subject: '',
   };
+
   const onSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
-    const noteID = uuidv4();
+    const courseID = generateClassCode();
 
-    const youtubeId = getYoutubeId(values.link);
-    if (!youtubeId) {
-      alert('Invalid Youtube Link');
-      setLoading(false);
-      return;
-    }
-    const transcription = await getYoutubeTranscript(youtubeId);
-
-    await insertNote({
+    await insertCourse({
       userID: userID as unknown as string,
       formikValues: values,
-      transcription: transcription,
-      noteID: noteID,
-      type: 'youtube',
+      courseID: courseID,
     });
 
-    router.push(`/my-notes/${noteID}`);
-
+    // router.push(`/courses/${courseID}`);
+    router.push(`#TODO-not-implemented`);
     resetForm();
     setLoading(false);
     setSubmitted(true); // update this state variable after submission
@@ -86,12 +77,20 @@ export default function GenerateYoutubeNotesModal(props: Props) {
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={() => {
-          if (!loading) {
-            handleClose();
-          }
-        }}
+        onClose={handleClose}
       >
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
@@ -103,7 +102,7 @@ export default function GenerateYoutubeNotesModal(props: Props) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gradient-to-r from-[#000000] via-[#000592] to-[#94295f] px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-200 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 {' '}
                 <form onSubmit={formik.handleSubmit}>
                   <div>
@@ -116,20 +115,19 @@ export default function GenerateYoutubeNotesModal(props: Props) {
                     <div className="mt-3 text-center sm:mt-5">
                       <Dialog.Title
                         as="h2"
-                        className="text-xl font-bold leading-6 text-gray-50"
+                        className="text-xl font-bold leading-6 text-black"
                       >
-                        Generate Community Notes
+                        Create Course
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-200">
-                          Upload recordings that will be transcribed and created
-                          into notes.
+                        <p className="text-sm text-gray-700">
+                          Create a course to start automate your grading.
                         </p>
                       </div>
                       <div className="col-span-6 sm:col-span-4 mt-4">
                         <label
                           htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-200 text-left"
+                          className="block text-sm font-medium leading-6 text-gray-900 text-left"
                         >
                           Title:
                         </label>
@@ -142,8 +140,8 @@ export default function GenerateYoutubeNotesModal(props: Props) {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             disabled={submitted}
-                            className="block w-full bg-gray-800 rounded-md border-0 pl-1.5 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. Linear Regression Notes"
+                            className="block w-full bg-gray-100 rounded-md border-0 pl-1.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="e.g. Fall 2023 Calculus Course "
                           />
                           {formik.touched.title && formik.errors.title ? (
                             <div className="mt-2 text-red-500 text-sm">
@@ -155,25 +153,25 @@ export default function GenerateYoutubeNotesModal(props: Props) {
                       <div className="col-span-6 sm:col-span-4 mt-4">
                         <label
                           htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-200 text-left"
+                          className="block text-sm font-medium leading-6 text-gray-900 text-left"
                         >
-                          Youtube Link:
+                          Subject:
                         </label>
                         <div className="mt-2">
                           <input
                             type="text"
-                            name="link"
-                            id="link"
-                            value={formik.values.link}
+                            name="subject"
+                            id="subject"
+                            value={formik.values.subject}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             disabled={submitted}
-                            className="block w-full bg-gray-800 rounded-md border-0 pl-1.5 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                            className="block w-full bg-gray-100 rounded-md border-0 pl-1.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="e.g. Calculus"
                           />
-                          {formik.touched.link && formik.errors.link ? (
+                          {formik.touched.subject && formik.errors.subject ? (
                             <div className="mt-2 text-red-500 text-sm">
-                              {formik.errors.link}
+                              {formik.errors.subject}
                             </div>
                           ) : null}
                         </div>
@@ -188,7 +186,7 @@ export default function GenerateYoutubeNotesModal(props: Props) {
                         disabled={loading}
                         className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
                       >
-                        Create Notes
+                        Create Course
                       </button>
                       <button
                         type="button"
@@ -214,10 +212,7 @@ export default function GenerateYoutubeNotesModal(props: Props) {
   );
 }
 
-function getYoutubeId(url: string): string | null {
-  const regex =
-    /(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=)?([^&]+)/;
-  const matches = url.match(regex);
-
-  return matches ? matches[5] : null;
+function generateClassCode() {
+  const p = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  return [...Array(6)].reduce((a) => a + p[~~(Math.random() * p.length)], '');
 }

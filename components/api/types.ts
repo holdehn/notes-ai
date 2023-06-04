@@ -8,6 +8,16 @@ export interface CreateNoteParams {
   transcription: string;
   type: string;
 }
+
+export interface CreateCourseParams {
+  userID: string;
+  formikValues: {
+    title: string;
+    subject: string;
+  };
+  courseID: string;
+}
+
 export interface CreateAssignmentParams {
   userID: string;
   formikValues: {
@@ -47,6 +57,20 @@ export interface insertAssignmentFileParams {
   fileID: string;
   userID: string;
   file: File;
+}
+
+export interface insertResponseSectionParams {
+  sectionID: string;
+  userID: string;
+  formikValues: {
+    sectionTitle: string;
+  };
+  coordinates: {
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+  };
 }
 
 export type CreateNoteResponse =

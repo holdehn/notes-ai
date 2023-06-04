@@ -855,7 +855,7 @@ const timeline = [
 const navigation = [
   {
     name: 'Home',
-    href: '/home',
+    href: '/courses',
     icon: HomeIcon,
     current: true,
   },

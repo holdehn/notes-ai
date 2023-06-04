@@ -1,26 +1,26 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
-import EmptyUpload from '@/components/EmptyUpload';
-import { useSession } from '@supabase/auth-helpers-react';
-import { useSWRConfig } from 'swr';
 import * as Yup from 'yup';
 import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
-import { getYoutubeTranscript, insertNote } from '@/components/api';
+import { insertResponseSection } from '@/components/api';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
+  userID: string;
   open: boolean;
   setOpen: (open: boolean) => void;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
 }
 
-export default function GenerateYoutubeNotesModal(props: Props) {
-  const { open, setOpen } = props;
+export default function AddResponseSection(props: Props) {
+  const { open, setOpen, x1, x2, y1, y2, userID } = props;
   const cancelButtonRef = useRef(null);
-  const session = useSession();
-  const userID = session?.user?.id;
 
   const [loading, setLoading] = useState(false);
 
@@ -40,34 +40,28 @@ export default function GenerateYoutubeNotesModal(props: Props) {
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
-    link: Yup.string().required('Required'),
   });
 
   const intialValues = {
     title: '',
-    link: '',
   };
   const onSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
-    const noteID = uuidv4();
+    const sectionID = uuidv4();
 
-    const youtubeId = getYoutubeId(values.link);
-    if (!youtubeId) {
-      alert('Invalid Youtube Link');
-      setLoading(false);
-      return;
-    }
-    const transcription = await getYoutubeTranscript(youtubeId);
-
-    await insertNote({
-      userID: userID as unknown as string,
+    await insertResponseSection({
       formikValues: values,
-      transcription: transcription,
-      noteID: noteID,
-      type: 'youtube',
-    });
+      sectionID: sectionID,
+      userID: userID,
+      coordinates: {
+        x1: x1,
+        y1: y1,
+        x2: x2,
 
-    router.push(`/my-notes/${noteID}`);
+        y2: y2,
+      },
+    });
+    setOpen(false);
 
     resetForm();
     setLoading(false);
@@ -92,6 +86,18 @@ export default function GenerateYoutubeNotesModal(props: Props) {
           }
         }}
       >
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
@@ -118,7 +124,7 @@ export default function GenerateYoutubeNotesModal(props: Props) {
                         as="h2"
                         className="text-xl font-bold leading-6 text-gray-50"
                       >
-                        Generate Community Notes
+                        Add Response Section
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-200">
@@ -152,58 +158,26 @@ export default function GenerateYoutubeNotesModal(props: Props) {
                           ) : null}
                         </div>
                       </div>
-                      <div className="col-span-6 sm:col-span-4 mt-4">
-                        <label
-                          htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-200 text-left"
-                        >
-                          Youtube Link:
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="link"
-                            id="link"
-                            value={formik.values.link}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            disabled={submitted}
-                            className="block w-full bg-gray-800 rounded-md border-0 pl-1.5 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                          />
-                          {formik.touched.link && formik.errors.link ? (
-                            <div className="mt-2 text-red-500 text-sm">
-                              {formik.errors.link}
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
                     </div>
                   </div>
 
-                  {!loading ? (
-                    <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                      <button
-                        type="submit"
-                        disabled={loading}
-                        className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                      >
-                        Create Notes
-                      </button>
-                      <button
-                        type="button"
-                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 border-red-900 py-2 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                        onClick={handleClose}
-                        ref={cancelButtonRef}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="w-full text-center mt-3 text-sm font-bold text-gray-200">
-                      Extracting Text...this may take a moment.
-                    </div>
-                  )}
+                  <div className="mt-8 sm:mt-8 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
+                    >
+                      Add Section
+                    </button>
+                    <button
+                      type="button"
+                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 border-red-900 py-2 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                      onClick={handleClose}
+                      ref={cancelButtonRef}
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </form>
               </Dialog.Panel>
             </Transition.Child>
@@ -212,12 +186,4 @@ export default function GenerateYoutubeNotesModal(props: Props) {
       </Dialog>
     </Transition.Root>
   );
-}
-
-function getYoutubeId(url: string): string | null {
-  const regex =
-    /(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=)?([^&]+)/;
-  const matches = url.match(regex);
-
-  return matches ? matches[5] : null;
 }
