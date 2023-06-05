@@ -16,6 +16,7 @@ import {
   updateAssignmentDataParams,
   insertResponseSectionParams,
   CreateCourseParams,
+  loadLatexParams,
 } from './types';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { supabaseClient } from '@/supabase-client';
@@ -583,6 +584,27 @@ const loadPDF = async (file: File) => {
   }
 };
 
+const loadLatex = async (params: loadLatexParams): Promise<any> => {
+  try {
+    const { fileID, file } = params;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('fileID', fileID);
+    const response = await supabaseClient.functions.invoke('generate-latex', {
+      body: formData,
+    });
+
+    console.log('data' + JSON.stringify(response));
+    const data = response.data;
+    return data;
+  } catch (error: any) {
+    console.log(JSON.stringify(error));
+
+    alert(`Error: ${error.message}`);
+  }
+};
+
 const upsertAssignmentData = async (
   params: upsertAssignmentDataParams,
 ): Promise<any> => {
@@ -641,4 +663,5 @@ export {
   updateAssignmentData,
   insertResponseSection,
   insertCourse,
+  loadLatex,
 };

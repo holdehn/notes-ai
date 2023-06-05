@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=KHDSo9Uxq5Z7Sh%2FCrdgbc4ldmfArF68Qr9l6jnAmtDbtO94XQ2mxSQCKgcRUmQLp9ZSA7yWgJ5eXVqNOM2FNFxLzRWkwa1RIjVDWTNsPbShOr7rh%2B1FxVzleAlp9cvYm%2FkIkReM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2a5cf6fff617dc-SJC",
+    "date": "Mon, 05 Jun 2023 18:08:49 GMT",
+    "x-content-source": "esm-worker",
+    "content-type": "application/javascript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v124/color-name@1.1.4/deno/color-name.mjs",
+  "now": {
+    "secs_since_epoch": 1685988526,
+    "nanos_since_epoch": 221955000
+  }
+}

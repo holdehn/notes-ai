@@ -7,8 +7,9 @@
     "ml-pca": "https://esm.sh/ml-pca@4.1.1/",
     "pdf-parse": "https://esm.sh/pdf-parse@1.1.1/",
     "busboy": "https://esm.sh/busboy@1.6.0",
-        "ml-kmeans": "https://esm.sh/ml-kmeans@6.0.0/",
-        "compromise": "https://esm.sh/compromise@14.9.0"
+    "ml-kmeans": "https://esm.sh/ml-kmeans@6.0.0/",
+    "compromise": "https://esm.sh/compromise@14.9.0",
+    "sharp": "https://esm.sh/sharp@0.32.1"
 
   }
 }

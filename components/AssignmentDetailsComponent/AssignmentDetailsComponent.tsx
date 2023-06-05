@@ -126,7 +126,6 @@ export default function AssignmentDetailsComponent() {
   if (!assignmentData) {
     return <div>Loading...</div>;
   }
-  console.log('assignmentData', assignmentData);
 
   const { assignment, signedUrl, questions, solutions } = assignmentData;
 
@@ -229,7 +228,6 @@ export default function AssignmentDetailsComponent() {
           newData.solutions.push(newSolution);
         }
 
-        console.log('newData after update:', newData); // Add this line
         mutateAssignmentData(newData, false);
 
         // Now we set the editing state to false

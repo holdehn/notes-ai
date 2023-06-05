@@ -57,8 +57,7 @@ const PDFViewer = ({
     // }
     if (dragging && startPoint) {
       const boundingRect = (e.target as Element).getBoundingClientRect();
-      console.log('Mouse move:', e.target);
-      console.log('Bounding rect:', boundingRect);
+
       setEndPoint({
         x: e.pageX - boundingRect.left,
         y: e.pageY - boundingRect.top,
@@ -72,7 +71,6 @@ const PDFViewer = ({
     // }
     setDragging(false);
     if (startPoint && endPoint) {
-      console.log('Box coordinates:', startPoint, endPoint);
       onMouseUp(startPoint, endPoint);
     }
   }

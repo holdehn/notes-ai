@@ -138,3 +138,8 @@ export interface updateAssignmentDataParams {
   assignmentID: string;
   questionNumber: number;
 }
+
+export interface loadLatexParams {
+  fileID: string;
+  file: File;
+}

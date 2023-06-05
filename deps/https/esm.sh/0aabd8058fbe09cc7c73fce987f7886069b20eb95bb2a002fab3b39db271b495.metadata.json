@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "content-type": "application/javascript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=8UOAIPD345ERL31qlsnqxH7sRY5jDFE%2BNOB7XrBmDN9Ouc7qvnV2ZV%2BP0j4jJmUBV4PC3rfbyDQvJ4twF%2FpqIOEkxbhr4ruBboiJwVK9KfSMj6tJsXltl4plfgyQnMTrcYcYUAI%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Mon, 05 Jun 2023 18:08:50 GMT",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7d2a5cf96b3517dc-SJC",
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "x-content-source": "esm-worker"
+  },
+  "url": "https://esm.sh/v124/is-arrayish@0.3.2/deno/is-arrayish.mjs",
+  "now": {
+    "secs_since_epoch": 1685988526,
+    "nanos_since_epoch": 663987000
+  }
+}

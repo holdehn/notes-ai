@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=PqkudwTTHshDmmTYHUqQhZ8TBeL4w6j7cuJcXQX4hiSc9PJcjgxsnFfJ%2BFOyr1lR%2FshGbEZ%2BmJ%2Bj4Mrw9H8bw3UoiK9eCqELqnJsMCrigzBXFlwdPFv53SYHClKEyyjd9zQU2is%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "date": "Mon, 05 Jun 2023 18:08:50 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/javascript; charset=utf-8",
+    "cf-ray": "7d2a5cf788c817dc-SJC"
+  },
+  "url": "https://esm.sh/v124/simple-swizzle@0.2.2/deno/simple-swizzle.mjs",
+  "now": {
+    "secs_since_epoch": 1685988526,
+    "nanos_since_epoch": 351973000
+  }
+}

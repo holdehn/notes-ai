@@ -8,7 +8,7 @@ import { supabaseClient } from '@/supabase-client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
-import { insertAssignment, sendImage, loadDocx, loadPDF } from '../api';
+import { insertAssignment, loadLatex } from '../api';
 import DueDatePicker from '../ui/components/DatePicker';
 import { DateValueType } from 'react-tailwindcss-datepicker/dist/types';
 
@@ -28,14 +28,11 @@ export default function CreateAssignmentModal(props: Props) {
   const session = useSession();
   const userID = session?.user?.id;
   const cancelButtonRef = useRef(null);
-  const [notesText, setNotesText] = useState(''); // Add this line
-  const [convertedText, setConvertedText] = useState('');
   const [files, setFiles] = useState<FileDisplay | null>(null);
   const [fileObject, setFileObject] = useState<File | null>(null);
   const [nextId, setNextId] = useState<number>(1);
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState(false);
-  const [agentName, setAgentName] = useState<string>('Summary');
   const [submitted, setSubmitted] = useState(false);
   const [value, setValue] = useState<DateValueType>({
     startDate: new Date(),
@@ -54,11 +51,9 @@ export default function CreateAssignmentModal(props: Props) {
       const fileType = file.type.split('/')[0];
       const fileSubType = file.type.split('/')[1];
 
-      if (
-        fileType !== 'application' ||
-        (fileType === 'application' && fileSubType !== 'pdf')
-      ) {
-        alert('Please upload a PDF file');
+      // Check if the file is not an image or PDF
+      if (fileType !== 'image' && fileType !== 'application') {
+        alert('File type not supported');
         return;
       }
 
@@ -106,6 +101,7 @@ export default function CreateAssignmentModal(props: Props) {
 
   const onSubmit = async (values: any, { resetForm }: any) => {
     // If no file and no YouTube return
+
     if (!fileObject) {
       return;
     }
@@ -115,31 +111,10 @@ export default function CreateAssignmentModal(props: Props) {
     setSubmitted(true);
     const assignmentID = uuidv4();
     const file = fileObject;
-    const fileType = file.type.split('/')[0];
-    const fileSubType = file.type.split('/')[1]; // define fileSubType here
-    let content;
-
-    if (fileType === 'application') {
-      if (
-        fileSubType ===
-        'vnd.openxmlformats-officedocument.wordprocessingml.document'
-      ) {
-        content = await loadDocx(file);
-      } else if (fileSubType === 'pdf') {
-        content = await loadPDF(file);
-        console.log(content);
-      }
-    } else if (fileType === 'video') {
-      // If the file is a video, convert it to audio and then send it to sendAudio
-      alert('Please upload a PDF file');
-      return;
-    } else if (fileType === 'image') {
-      content = await sendImage(file);
-    } else {
-      alert('Please upload a PDF file');
-      return;
-    }
-    let fileID = uuidv4();
+    const fileID = uuidv4();
+    const response = await loadLatex({ file, fileID });
+    const content = response.data;
+    console.log(content);
 
     const { error: insertError } = await insertAssignment({
       userID: userID,
@@ -150,24 +125,15 @@ export default function CreateAssignmentModal(props: Props) {
       courseID: courseID as string,
     });
     console.log(insertError);
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('fileID', fileID);
-    formData.append('userID', userID);
-    const { data, error: uploadError } = await supabaseClient.functions.invoke(
-      'upload-assignment-file',
-      {
-        body: formData,
-      },
-    );
 
     router.push(`/courses/${courseID as string}/assignment/${assignmentID}`);
     setFiles(null);
     setName('');
     setFileObject(null);
-
     resetForm();
     setLoading(false);
+    setOpen(false);
+    setSubmitted(false);
   };
 
   const formik = useFormik({
@@ -176,10 +142,7 @@ export default function CreateAssignmentModal(props: Props) {
     onSubmit,
   });
 
-  const date = new Date();
-
   const onDateChange = (value: DateValueType) => {
-    console.log(value);
     if (!value) return;
     setValue(value);
     formik.setFieldValue('dueDate', value?.endDate);
@@ -314,7 +277,7 @@ export default function CreateAssignmentModal(props: Props) {
 
                       <div className="mt-2">
                         <p className="text-sm text-gray-800 font-medium text-left mt-8 block items-center">
-                          Upload Context:
+                          Upload Model Answers:
                           <span className="ml-2 text-gray-800 hover:text-gray-800 cursor-pointer">
                             <i
                               className="fas fa-question-circle"

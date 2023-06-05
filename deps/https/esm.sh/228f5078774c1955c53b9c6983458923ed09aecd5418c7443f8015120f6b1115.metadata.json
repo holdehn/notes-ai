@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "x-content-source": "esm-worker",
+    "cf-ray": "7d2a5cf3bbce17dc-SJC",
+    "date": "Mon, 05 Jun 2023 18:08:49 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=3mnI9se%2B9LIVXh1wl%2FmzzhqVpluZydRnCGW0hXL9LQn%2FIYCIabfVUH%2FJvTNXrpqbR33zejYrFbQruhHOj3PL2O3Ei29uq2sl8foEviRO95gv0fyDtBkIRC7UjTzQtqJL09iqU6g%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/javascript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v124/semver@7.5.1/deno/functions/gte.js",
+  "now": {
+    "secs_since_epoch": 1685988525,
+    "nanos_since_epoch": 735124000
+  }
+}

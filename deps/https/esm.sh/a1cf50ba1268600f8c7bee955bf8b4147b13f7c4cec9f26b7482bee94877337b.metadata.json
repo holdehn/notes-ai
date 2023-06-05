@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Mon, 05 Jun 2023 18:08:49 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2a5cf56dd417dc-SJC",
+    "x-content-source": "esm-worker",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=XLqLFUwL81dxg0FId9mL9hNwZZ%2BdIX%2BJ0fYHzoezk6TukHwJqdnoFzv8v5jde%2FhIjAJCDgkUMIqRGQeRJTCNeL9muxSrmxyXwlncu4FBH8lklU%2Fq%2Fl5%2BJ24J03JKXjXMheGu5qg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "text/javascript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v124/color-convert@2.0.1/deno/color-convert.mjs",
+  "now": {
+    "secs_since_epoch": 1685988525,
+    "nanos_since_epoch": 950722000
+  }
+}

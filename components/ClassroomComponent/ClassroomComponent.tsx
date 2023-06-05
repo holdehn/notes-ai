@@ -183,13 +183,15 @@ export default function ClassroomComponent() {
                             index % 2 === 0 ? 'bg-gray-50' : 'bg-blue-50'
                           }`}
                           onClick={() =>
-                            router.push(`/grading/assignment/${assignment.id}`)
+                            router.push(
+                              `/courses/${courseID}/assignment/${assignment.id}`,
+                            )
                           }
                         >
                           <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-black">
                             <div className="flex items-center space-x-3 lg:pl-2">
                               <a
-                                href={`/grading/assignment/${assignment.id}`}
+                                href={`/courses/${courseID}/assignment/${assignment.id}`}
                                 className="truncate "
                               >
                                 <span>{assignment.title}</span>
@@ -199,7 +201,7 @@ export default function ClassroomComponent() {
                           <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-black">
                             <div className="flex items-center space-x-3 lg:pl-2">
                               <a
-                                href={`/grading/assignment/${assignment.id}`}
+                                href={`/courses/${courseID}/assignment/${assignment.id}`}
                                 className="truncate "
                               >
                                 <span>0/1</span>
@@ -212,7 +214,7 @@ export default function ClassroomComponent() {
                           </td>
                           <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                             <a
-                              href={`/my-assignment/${assignment.id}`}
+                              href={`/courses/${courseID}/assignment/${assignment.id}`}
                               className="text-indigo-600 group-hover:text-indigo-800"
                             >
                               {assignment.is_published === 'true' ? (

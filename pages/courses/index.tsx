@@ -33,7 +33,7 @@ export const getServerSideProps = async (
     const { data: courseData, error: courseError } = await supabase
       .from('courses')
       .select('*')
-      .match({ user_id: userId, courseID: courseID });
+      .match({ user_id: userId, courseID: ctx.params?.courseID });
 
     // Return the notes-page-data in the props
     return {

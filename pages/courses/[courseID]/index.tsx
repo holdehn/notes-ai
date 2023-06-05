@@ -57,7 +57,7 @@ export default function ({ fallback }: { fallback: ProvidedProps }) {
   return (
     <>
       <Head>
-        <title>AutoMark - 'classID'</title>
+        <title>AutoMark - Assignment Details</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <SWRConfig value={{ fallback }}>

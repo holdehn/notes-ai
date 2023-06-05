@@ -1,0 +1,3 @@
+/* esm.sh - sharp@0.32.1 */
+export * from "https://esm.sh/v124/sharp@0.32.1/deno/sharp.mjs";
+export { default } from "https://esm.sh/v124/sharp@0.32.1/deno/sharp.mjs";
