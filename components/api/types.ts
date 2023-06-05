@@ -23,6 +23,8 @@ export interface CreateAssignmentParams {
   formikValues: {
     title: string;
     description: string;
+    startDate: string;
+    dueDate: string;
   };
   content: string;
   assignmentID: string;

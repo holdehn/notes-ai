@@ -21,7 +21,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ error: courseError.message });
   }
 
-  return res.status(200).json({ courseData });
+  const { data: assignmentData, error: assignmentError } = await supabase
+    .from('assignments')
+    .select('*')
+    .match({ user_id: userID, course_id: courseID })
+    .order('created_at', { ascending: false });
+
+  if (assignmentError) {
+    return res.status(500).json({ error: assignmentError.message });
+  }
+
+  return res.status(200).json({ courseData, assignments: assignmentData });
 };
 
 export default handler;

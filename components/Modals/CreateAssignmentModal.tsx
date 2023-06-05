@@ -9,10 +9,13 @@ import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import { insertAssignment, sendImage, loadDocx, loadPDF } from '../api';
+import DueDatePicker from '../ui/components/DatePicker';
+import { DateValueType } from 'react-tailwindcss-datepicker/dist/types';
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
+  courseID: string;
 }
 
 interface FileDisplay {
@@ -21,7 +24,7 @@ interface FileDisplay {
 }
 
 export default function CreateAssignmentModal(props: Props) {
-  const { open, setOpen } = props;
+  const { open, setOpen, courseID } = props;
   const session = useSession();
   const userID = session?.user?.id;
   const cancelButtonRef = useRef(null);
@@ -34,6 +37,10 @@ export default function CreateAssignmentModal(props: Props) {
   const [loading, setLoading] = useState(false);
   const [agentName, setAgentName] = useState<string>('Summary');
   const [submitted, setSubmitted] = useState(false);
+  const [value, setValue] = useState<DateValueType>({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
   const router = useRouter();
 
   const handleFile = (e: any) => {
@@ -79,17 +86,22 @@ export default function CreateAssignmentModal(props: Props) {
     setLoading(false);
     setSubmitted(false); // Add this line
     formik.resetForm();
+    setValue(null);
   };
 
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
     description: Yup.string().required('Required'),
+    startDate: Yup.date().required('Required'),
+    dueDate: Yup.date().required('Required'),
   });
 
   const intialValues = {
     title: '',
     description: '',
+    dueDate: '',
+    startDate: '',
   };
 
   const onSubmit = async (values: any, { resetForm }: any) => {
@@ -97,6 +109,7 @@ export default function CreateAssignmentModal(props: Props) {
     if (!fileObject) {
       return;
     }
+
     if (!userID) return;
     setLoading(true);
     setSubmitted(true);
@@ -134,7 +147,9 @@ export default function CreateAssignmentModal(props: Props) {
       assignmentID: assignmentID,
       content: content,
       fileID: fileID,
+      courseID: courseID as string,
     });
+    console.log(insertError);
     const formData = new FormData();
     formData.append('file', file);
     formData.append('fileID', fileID);
@@ -146,7 +161,7 @@ export default function CreateAssignmentModal(props: Props) {
       },
     );
 
-    router.push(`/grading/assignment/${assignmentID}`);
+    router.push(`/courses/${courseID as string}/assignment/${assignmentID}`);
     setFiles(null);
     setName('');
     setFileObject(null);
@@ -160,6 +175,16 @@ export default function CreateAssignmentModal(props: Props) {
     validationSchema: validationSchema,
     onSubmit,
   });
+
+  const date = new Date();
+
+  const onDateChange = (value: DateValueType) => {
+    console.log(value);
+    if (!value) return;
+    setValue(value);
+    formik.setFieldValue('dueDate', value?.endDate);
+    formik.setFieldValue('startDate', value?.startDate);
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -196,7 +221,7 @@ export default function CreateAssignmentModal(props: Props) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-blue-950 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-4">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg  bg-gray-200 px-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 {' '}
                 <form onSubmit={formik.handleSubmit}>
                   <div>
@@ -209,20 +234,20 @@ export default function CreateAssignmentModal(props: Props) {
                     <div className="mt-3 text-center sm:mt-5">
                       <Dialog.Title
                         as="h2"
-                        className="text-xl font-bold leading-6 text-gray-50"
+                        className="text-xl font-bold leading-6 text-gray-950"
                       >
-                        Create Grading Template
+                        Create Assignment
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-200">
-                          Upload rubric template to provide students with
-                          instant feedback.
+                        <p className="text-sm text-gray-800">
+                          Upload rubric template to provide instantly grade work
+                          and provide feedback.
                         </p>
                       </div>
                       <div className="col-span-6 sm:col-span-4 mt-4">
                         <label
                           htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-200 text-left"
+                          className="block text-sm font-medium leading-6 text-gray-900 text-left"
                         >
                           Title:
                         </label>
@@ -235,8 +260,8 @@ export default function CreateAssignmentModal(props: Props) {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             disabled={submitted}
-                            className="block w-full bg-gray-800 rounded-md border-0 pl-1.5 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="e.g. Linear Regression Assignment"
+                            className="block w-full bg-gray-200 rounded-md border-0 pl-1.5 py-1.5 text-gray-800 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="e.g. Linear Regression Worksheet"
                           />
                           {formik.touched.title && formik.errors.title ? (
                             <div className="mt-2 text-red-500 text-sm">
@@ -248,7 +273,7 @@ export default function CreateAssignmentModal(props: Props) {
                       <div className="col-span-6 sm:col-span-4 mt-4">
                         <label
                           htmlFor="input-name"
-                          className="block text-sm font-medium leading-6 text-gray-200 text-left"
+                          className="block text-sm font-medium leading-6 text-gray-900 text-left"
                         >
                           Description:
                         </label>
@@ -261,7 +286,7 @@ export default function CreateAssignmentModal(props: Props) {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             disabled={submitted}
-                            className="block w-full row-span-4 bg-gray-800 pl-1.5 rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full row-span-4 bg-gray-200 pl-1.5 rounded-md border-0 py-1.5 text-gray-800 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder="e.g. Assignment Description"
                           />
                           {formik.touched.description &&
@@ -272,11 +297,25 @@ export default function CreateAssignmentModal(props: Props) {
                           ) : null}
                         </div>
                       </div>
+                      <div className="flex justify-between mt-4">
+                        <div className="w-1/2 pr-2">
+                          <label
+                            htmlFor="input-name"
+                            className="block text-sm font-medium leading-6 text-gray-900 text-left"
+                          >
+                            Due Date:
+                          </label>
+                          <DueDatePicker
+                            onDueDateChange={onDateChange}
+                            date={value}
+                          />
+                        </div>
+                      </div>
 
                       <div className="mt-2">
-                        <p className="text-sm text-gray-200 font-medium text-left mt-8 block items-center">
+                        <p className="text-sm text-gray-800 font-medium text-left mt-8 block items-center">
                           Upload Context:
-                          <span className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
+                          <span className="ml-2 text-gray-800 hover:text-gray-800 cursor-pointer">
                             <i
                               className="fas fa-question-circle"
                               title="Upload any relevant documents that will help the tool perform its function."

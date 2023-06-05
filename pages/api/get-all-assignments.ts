@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { userID } = req.query;
+  const { userID, courseID } = req.query;
 
   if (!userID) {
     return res.status(400).json({ error: 'User ID is required' });
@@ -15,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { data: assignmentData, error: assignmentError } = await supabase
     .from('assignments')
     .select('*')
-    .eq('user_id', userID)
+    .match({ user_id: userID, course_id: courseID })
     .order('created_at', { ascending: false });
 
   if (assignmentError) {

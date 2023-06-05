@@ -82,7 +82,7 @@ export default function ClassroomSidebar({
   return (
     <>
       <div>
-        <div className="fixed inset-0 flex w-72">
+        <div className="fixed inset-0 flex w-64">
           <div className="relative flex w-full max-w-xs flex-1">
             <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-2 ring-1 ring-white/10">
               <div>
@@ -294,9 +294,9 @@ export default function ClassroomSidebar({
             </div>
           </div>
         </div>
-        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-black px-4 py-4 shadow-sm sm:px-6 lg:ml-72">
+        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-blue-950 px-4 py-4 shadow-sm sm:px-6 lg:ml-64">
           <div className="flex-1 text-sm font-semibold leading-6 text-white">
-            {courseID}
+            Dashboard
           </div>
           <button onClick={handleNavigate}>
             <img className="h-8 w-auto rounded-full" src={avatar} alt="Yname" />

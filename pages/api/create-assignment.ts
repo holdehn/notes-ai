@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { userID, formikValues, content, assignmentID, solution, fileID } =
+  const { userID, formikValues, content, assignmentID, courseID, fileID } =
     req.body;
 
   if (!userID) {
@@ -22,6 +22,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         content: content,
         file_id: fileID,
         color_theme: getRandomColor(),
+        course_id: courseID,
+        start_date: formikValues.startDate,
+        due_date: formikValues.dueDate,
       },
     ]);
   console.log(assignmentData);

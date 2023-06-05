@@ -2,7 +2,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
-import GradingComponent from '@/components/GradingComponent/GradingComponent';
+import ClassroomComponent from '@/components/ClassroomComponent/ClassroomComponent';
 
 export interface ProvidedProps {
   fallback: Record<string, unknown>;
@@ -57,11 +57,11 @@ export default function ({ fallback }: { fallback: ProvidedProps }) {
   return (
     <>
       <Head>
-        <title>AutoMark - Automated Grading</title>
+        <title>AutoMark - 'classID'</title>
         <meta name="description" content="Generate notes from your lectures" />
       </Head>
       <SWRConfig value={{ fallback }}>
-        <GradingComponent />
+        <ClassroomComponent />
       </SWRConfig>
     </>
   );

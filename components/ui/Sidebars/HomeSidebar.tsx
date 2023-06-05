@@ -20,7 +20,7 @@ export default function HomeSidebar(props: Props) {
   const { avatar, name, handleLogout } = props;
   const [openCourseModal, setOpenCourseModal] = useState(false);
   return (
-    <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col lg:border-r lg:border-white bg-gray-900 lg:pb-4 lg:pt-5 lg:px-4">
+    <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-white bg-gray-900 lg:pb-4 lg:pt-5 lg:px-4">
       <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
         <div className="mx-auto lg:text-left">
           <h2 className="mt-3 text-2xl font-extrabold leading-9 text-white text-center">

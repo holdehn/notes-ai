@@ -171,7 +171,7 @@ export default function Home() {
           handleLogout={handleLogout}
         />
         {/* Main column */}
-        <div className="flex flex-col lg:pl-72">
+        <div className="flex flex-col lg:pl-64">
           {/* Search header */}
           <div className="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
             <div className="flex items-center">
@@ -244,7 +244,7 @@ export default function Home() {
           </div>
 
           <main>
-            <div className="bg-gray-100 relative min-h-screen">
+            <div className="bg-gray-200 relative min-h-screen">
               <div className="p-12 sm:pb-32">
                 <div className=" max-w-full">
                   <div className="mx-auto lg:text-left">
