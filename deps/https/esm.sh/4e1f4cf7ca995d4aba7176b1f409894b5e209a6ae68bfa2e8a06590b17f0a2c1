@@ -1,0 +1,3 @@
+/* esm.sh - esbuild bundle(@supabase/realtime-js@2.7.2/dist/module/lib/serializer) deno production */
+var c=class{constructor(){this.HEADER_LENGTH=1}decode(e,n){return e.constructor===ArrayBuffer?n(this._binaryDecode(e)):n(typeof e=="string"?JSON.parse(e):{})}_binaryDecode(e){let n=new DataView(e),o=new TextDecoder;return this._decodeBroadcast(e,n,o)}_decodeBroadcast(e,n,o){let s=n.getUint8(1),i=n.getUint8(2),t=this.HEADER_LENGTH+2,r=o.decode(e.slice(t,t+s));t=t+s;let d=o.decode(e.slice(t,t+i));t=t+i;let p=JSON.parse(o.decode(e.slice(t,e.byteLength)));return{ref:null,topic:r,event:d,payload:p}}};export{c as default};
+//# sourceMappingURL=serializer.js.map

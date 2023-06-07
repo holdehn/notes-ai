@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "date": "Tue, 06 Jun 2023 03:29:15 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "esm-worker",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=I7FFImip0XHyG8Y3MbAhzlzXLwixuuLuCQU2WoK%2BTzbfb3RrqWTYc6wIqqt8mlRxu%2BrSvVlNmBXn4mr%2FgEF53cDUelm6zGW%2Fs8obqKW9RRHfbjEuqeeicYoCD2XaBtasNkjpFM0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "content-length": "343",
+    "cf-ray": "7d2d91e069b47c7a-LAX",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/error/UsingJoinTableIsNotAllowedError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 243040000
+  }
+}

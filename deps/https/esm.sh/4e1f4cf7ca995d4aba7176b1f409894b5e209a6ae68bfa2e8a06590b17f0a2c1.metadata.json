@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "age": "1185611",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "last-modified": "Tue, 23 May 2023 09:25:34 GMT",
+    "date": "Tue, 06 Jun 2023 02:45:45 GMT",
+    "cf-cache-status": "HIT",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7d2d522f0ac02b5f-LAX",
+    "server": "cloudflare",
+    "content-type": "application/javascript; charset=utf-8",
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=irLmXt0P2AfL4TqpiH4omGEaR8xQFX91I2Vd%2Ba5zM6JTU9H8zqQdTSb9QsxIN%2BQwmox3PiyaGMu0beaxVRv6ReON%2BxdQeI73K68E%2BTX8X2%2Bf03u8%2FHfqfhkPLepOpPIKxstUblE%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v124/@supabase/realtime-js@2.7.2/deno/dist/module/lib/serializer.js",
+  "now": {
+    "secs_since_epoch": 1686019544,
+    "nanos_since_epoch": 206397000
+  }
+}

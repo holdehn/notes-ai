@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "esm-worker",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=FARA9hVO4RgRYuZGTlyRn%2B9MAyoVCVySPMPLS6ni06h5QlSX1wL4V9G%2By%2FTc7rU3Le%2FiljiiOlGPdJDz2U5d5uMczxXV9HvMt%2BnxyLHBTMhDWKkcT1xU2M1%2BkrmvAQ2sfTNMXh0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "230",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "server": "cloudflare",
+    "cf-ray": "7d2d91e069677c7a-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/error/ConnectionNotFoundError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 115997000
+  }
+}

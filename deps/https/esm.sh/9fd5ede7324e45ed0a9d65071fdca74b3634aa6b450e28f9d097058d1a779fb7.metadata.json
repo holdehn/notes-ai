@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "x-content-source": "https://esmbuild.com",
+    "cf-ray": "7d2d520c2ff02b5f-LAX",
+    "date": "Tue, 06 Jun 2023 02:45:40 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=jS4hPtR1BrYZs%2BPd%2F5w6qtGjM92zyUhbQyuObL6R%2BbEJ1G41KPZRMH9E%2BWI7mq8Z4vmtbD41eoANTbaJNd06XazQsjgJdhNhUcFizG%2BgTIwa0WQjkwvYE8xjYFYkja93tTw1BRs%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "content-type": "application/javascript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v124/langchain@0.0.73/deno/vectorstores.js",
+  "now": {
+    "secs_since_epoch": 1686019539,
+    "nanos_since_epoch": 513292000
+  }
+}

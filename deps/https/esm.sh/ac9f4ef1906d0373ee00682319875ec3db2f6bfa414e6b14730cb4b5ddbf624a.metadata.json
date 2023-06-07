@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "1001",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "cf-ray": "7d2d91dacb2e7c7a-LAX",
+    "server": "cloudflare",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "x-content-source": "esm-worker",
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Y8%2FtZ74bQf2W1rYiztGKumJ0DJaEe2325QpAljoq3hbScYOC9WlZNMYZurFCdH9F%2BPUHR03l5f1IhHL4CYa%2Bhn%2Fm4yQcAZjP6JUHoLt25dt8XUHWaf0pty9jE8OQ1AQEoc7ILbU%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/decorator/relations/JoinTable.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022152,
+    "nanos_since_epoch": 864614000
+  }
+}

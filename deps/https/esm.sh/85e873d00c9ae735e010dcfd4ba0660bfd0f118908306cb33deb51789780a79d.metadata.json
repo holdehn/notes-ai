@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "content-length": "1213",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=OulTo0ZR26qPFOPEXFBtUx80agdI20UETJlkwJkVxYGQFQsBxz%2Blp2fCA24tCbgDgphd%2B28cv3bnN%2FIQdOJKUZN8%2BzIuHBE12LfdraHY62R3vwbI7NC%2FgpfvLZwMgvKtREIxD%2Bs%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2d91e069447c7a-LAX",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "esm-worker",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/driver/aurora-postgres/AuroraPostgresConnectionOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022153,
+    "nanos_since_epoch": 941030000
+  }
+}

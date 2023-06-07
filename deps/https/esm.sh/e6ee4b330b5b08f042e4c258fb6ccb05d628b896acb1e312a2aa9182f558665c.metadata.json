@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Uwjz%2BjnT8Sibtzbo%2FaABcpARGQl2mMfgR4NnjiiNT9%2Fhn7thrm968u9z7X0tDfnLU952TXobFjAzCaWoUeHN2Ld0s8VNXKezEebgH04GkkpsKtj2FZPi%2F228k9Csi91vvqlyxLM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2d91e069637c7a-LAX",
+    "x-content-source": "esm-worker",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "content-length": "231",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/error/CircularRelationsError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022153,
+    "nanos_since_epoch": 864451000
+  }
+}

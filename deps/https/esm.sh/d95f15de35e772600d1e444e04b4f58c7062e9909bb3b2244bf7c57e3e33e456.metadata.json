@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=tQ9D88SCoz99ussKaRBrg6lJDuLHaCMrbeBq600WwuwlIkbvgkM8CmRXoO1uv7JlAMb7fN41AoQbOJkzpX6fhp8uSwiCihKOpUP1NeECa1hZD8Qfw5iUNBB984GJN0wPY4w3PFc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "esm-worker",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-length": "834",
+    "server": "cloudflare",
+    "date": "Tue, 06 Jun 2023 03:29:15 GMT",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7d2d91e7f9337c7a-LAX",
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/driver/mysql/MysqlConnectionCredentialsOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 641172000
+  }
+}

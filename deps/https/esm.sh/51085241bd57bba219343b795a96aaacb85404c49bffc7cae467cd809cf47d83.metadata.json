@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7d2d91e069837c7a-LAX",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=0oAoViXy67CY1Zn3n0k6ZHr%2FNWAReeojeNJKyzFKG4C9ACnhsScpriQ6Cr2w%2BFqYc1VplG80T8Eg7oMCg0R3EGJ3mGm%2BU0A4qjwLeEqRh7Pjts3M9Cfbrp1MgwKeRzZ%2BB20bgmA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "esm-worker",
+    "content-length": "242",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/error/MissingDeleteDateColumnError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 44190000
+  }
+}

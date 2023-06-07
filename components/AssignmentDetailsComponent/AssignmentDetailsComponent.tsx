@@ -24,9 +24,7 @@ import { set } from 'date-fns';
 import AssignmentDetailSidebar from '../ui/Sidebars/AssignmentDetailSidebar';
 
 export default function AssignmentDetailsComponent() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedText, setSelectedText] = useState<string>('');
-  const [open, setOpen] = useState<boolean>(false);
   const session = useSession();
   const user_id = session?.user?.id;
   const router = useRouter();
@@ -45,7 +43,6 @@ export default function AssignmentDetailsComponent() {
   // Initializing new states for editing control
   const [isEditingSolution, setIsEditingSolution] = useState<boolean>(false);
   const [isEditingFeedback, setIsEditingFeedback] = useState<boolean>(false);
-  const [canDrawBox, setCanDrawBox] = useState(false); // Added line
 
   // Do the same for feedback
   const saveFeedbackChanges = async () => {
@@ -72,16 +69,6 @@ export default function AssignmentDetailsComponent() {
   };
 
   const [isTextSelected, setIsTextSelected] = useState(false);
-
-  // Handler for mouse up event
-  const onMouseUp = () => {
-    const selection = window.getSelection();
-    if (selection) {
-      const selectedText = selection.toString().trim();
-      setIsTextSelected(!!selectedText);
-      setSelectedText(selectedText);
-    }
-  };
 
   // Handler for closing the modal
   const closeModal = () => {
@@ -242,11 +229,7 @@ export default function AssignmentDetailsComponent() {
         <AssignmentDetailSidebar avatar={finalAvatarUrl} />
         <div className="flex flex-col lg:pl-20">
           <main className="lg:pr-100 bg-indigo-950">
-            <PdfViewer
-              url={finalPdfUrl}
-              onMouseUp={onMouseUp}
-              canDrawBox={canDrawBox}
-            />
+            <PdfViewer url={finalPdfUrl} />
 
             <SelectionModal
               open={isTextSelected}
@@ -424,28 +407,4 @@ export default function AssignmentDetailsComponent() {
       </div>
     </>
   );
-}
-
-const navigation = [
-  {
-    name: 'Home',
-    href: '/courses',
-    icon: HomeIcon,
-    current: false,
-  },
-  {
-    name: 'Automated Grading',
-    href: '/grading',
-    icon: PencilSquareIcon,
-    current: true,
-  },
-  {
-    name: 'My Notes',
-    href: '/my-notes',
-    icon: NewspaperIcon,
-    current: false,
-  },
-];
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
 }

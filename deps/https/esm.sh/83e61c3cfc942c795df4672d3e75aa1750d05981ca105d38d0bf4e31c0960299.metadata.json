@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "last-modified": "Tue, 23 May 2023 09:25:34 GMT",
+    "age": "1185611",
+    "cf-cache-status": "HIT",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "esm-worker",
+    "date": "Tue, 06 Jun 2023 02:45:45 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/javascript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=9903GL2VEh6sF%2FfENfDlPDpVzCz6%2BMMnPykZti5seizjSzwcKnSv5h3N66zAj1Cxsef8oJbdq5ycWUNI67BWb0qOGl2cex%2BE6eyDQcU981sObu1PNVDtb47ayKxXcaljL9WZXFA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "cf-ray": "7d2d522efa9c2b5f-LAX"
+  },
+  "url": "https://esm.sh/v124/@supabase/realtime-js@2.7.2/deno/dist/module/lib/constants.js",
+  "now": {
+    "secs_since_epoch": 1686019544,
+    "nanos_since_epoch": 196321000
+  }
+}

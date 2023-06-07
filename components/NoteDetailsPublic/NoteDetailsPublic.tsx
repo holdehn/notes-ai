@@ -265,7 +265,7 @@ export default function NoteDetailsPublic() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
             {/* User account dropdown */}
-            <div className="max-w-xs mx-auto mt-4">
+            {/* <div className="max-w-xs mx-auto mt-4">
               <Auth
                 view="sign_in"
                 magicLink={false}
@@ -303,7 +303,7 @@ export default function NoteDetailsPublic() {
                   },
                 }}
               />
-            </div>
+            </div> */}
             {/* Sidebar Search */}
             <div className="mt-5 px-3">
               <label htmlFor="search" className="sr-only">

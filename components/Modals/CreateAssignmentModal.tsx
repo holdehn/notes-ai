@@ -266,7 +266,7 @@ export default function CreateAssignmentModal(props: Props) {
                             htmlFor="input-name"
                             className="block text-sm font-medium leading-6 text-gray-900 text-left"
                           >
-                            Due Date:
+                            Available From:
                           </label>
                           <DueDatePicker
                             onDueDateChange={onDateChange}

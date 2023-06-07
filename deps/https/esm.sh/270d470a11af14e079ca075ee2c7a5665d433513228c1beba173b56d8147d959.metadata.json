@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=7wW8S3Fr9mmpX1uAiUAMOT%2BizK%2F%2FOZ0K%2Fn79%2F6%2FUyDVYmXjPGnKFrLvRkGGwrC6dQU2inLIizCr6HoNm57XoidxTY9TZAIalWQ93D1jdy9rHogot5N%2FVpI8mFYh1HBchbriidPA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "499",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Tue, 06 Jun 2023 03:29:10 GMT",
+    "x-content-source": "https://esmbuild.com",
+    "server": "cloudflare",
+    "cf-ray": "7d2d91c2cb987c7a-LAX",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v124/langchain@0.0.73/dist/output_parsers/router.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022149,
+    "nanos_since_epoch": 324650000
+  }
+}

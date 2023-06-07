@@ -1,0 +1,33 @@
+import { VectorStore } from "./base.d.ts";
+import { Embeddings } from "../embeddings/base.d.ts";
+import { Document } from "../document.d.ts";
+type PineconeMetadata = Record<string, any>;
+type VectorOperationsApi = ReturnType<import("https://esm.sh/v124/@pinecone-database/pinecone@0.1.6/dist/index.d.ts").PineconeClient["Index"]>;
+export interface PineconeLibArgs {
+    pineconeIndex: VectorOperationsApi;
+    textKey?: string;
+    namespace?: string;
+    filter?: PineconeMetadata;
+}
+export declare class PineconeStore extends VectorStore {
+    FilterType: PineconeMetadata;
+    textKey: string;
+    namespace?: string;
+    pineconeIndex: VectorOperationsApi;
+    filter?: PineconeMetadata;
+    constructor(embeddings: Embeddings, args: PineconeLibArgs);
+    addDocuments(documents: Document[], ids?: string[]): Promise<void>;
+    addVectors(vectors: number[][], documents: Document[], ids?: string[]): Promise<void>;
+    similaritySearchVectorWithScore(query: number[], k: number, filter?: PineconeMetadata): Promise<[Document, number][]>;
+    static fromTexts(texts: string[], metadatas: object[] | object, embeddings: Embeddings, dbConfig: {
+        /**
+         * @deprecated Use pineconeIndex instead
+         */
+        pineconeClient: VectorOperationsApi;
+        textKey?: string;
+        namespace?: string | undefined;
+    } | PineconeLibArgs): Promise<PineconeStore>;
+    static fromDocuments(docs: Document[], embeddings: Embeddings, dbConfig: PineconeLibArgs): Promise<PineconeStore>;
+    static fromExistingIndex(embeddings: Embeddings, dbConfig: PineconeLibArgs): Promise<PineconeStore>;
+}
+export {};

@@ -89,7 +89,7 @@ export default function ClassroomComponent() {
                           aria-hidden="true"
                         />
                         <span className="truncate text-sm font-medium leading-6 text-black">
-                          {assignment.title}{' '}
+                          Active Assignments
                         </span>
                       </span>
                       <ChevronRightIcon
@@ -116,7 +116,7 @@ export default function ClassroomComponent() {
             <div className="hidden sm:block md:flex md:items-center md:justify-between border-b border-gray-800 pb-4">
               <div className="min-w-0 flex-1">
                 <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                  {title}
+                  Dashboard
                 </h2>
                 <p className="mt-2 text-gray-600">
                   <span className="text-gray-500 font-semibold">
@@ -138,14 +138,14 @@ export default function ClassroomComponent() {
               </div>
             </div>
 
-            <div className="hidden sm:block pt-8">
+            <div className="hidden sm:block">
               <div className="hidden sm:block">
                 <div className="inline-block min-w-full border-b align-middle shadow-xl">
                   <table className="min-w-full">
                     <thead>
-                      <tr className="border-t border-gray-600 bg-gray-950">
+                      <tr className="border-t border-gray-600 bg-blue-950">
                         <th
-                          className="border-b border-gray-600 bg-gray-950 px-6 py-3 text-left text-md font-semibold text-gray-200"
+                          className="border-b border-gray-600 bg-blue-950 px-6 py-3 text-left text-md font-semibold text-gray-200"
                           scope="col"
                         >
                           <span className="lg:pl-2">Active Assignments</span>

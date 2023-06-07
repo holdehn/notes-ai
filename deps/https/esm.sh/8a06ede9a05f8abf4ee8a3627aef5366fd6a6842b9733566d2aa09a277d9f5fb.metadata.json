@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=HxDyUouNpr%2BHs6o8wpXDulp8yb0fD%2BzlV%2Fq%2FgkWyNoG4e9rtYIhAIacjZXJ0BkdQd%2BuUfbA2MniAvIBHIDe9VpgVzntB69AVP4%2F8R8y21e5b1OtEGWjtHtPMfcU%2FiboBhQpFZ3g%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7d2d91e7f9307c7a-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-length": "795",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "date": "Tue, 06 Jun 2023 03:29:15 GMT",
+    "access-control-allow-origin": "*"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/driver/postgres/PostgresConnectionCredentialsOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 584162000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "x-content-source": "esm-worker",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Tue, 06 Jun 2023 03:29:15 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "209",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2d91e069bd7c7a-LAX",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=rn3xydpK%2BB%2FUS2XAF8%2BODQJJaM8suK8Q2dG4RlYvEZ2ZlnmJ5PzhGIntRp7i9Ca%2FVzIqTaYNbJDg3oi71R8W5UU2ZqCn563u7auolGjrKmhwNwII31VDZ9M0SB52LRp5SG2XvsU%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/metadata/types/OnDeleteType.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 251683000
+  }
+}

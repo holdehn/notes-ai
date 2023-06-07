@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "cf-ray": "7d2d52317dc92b5f-LAX",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "cf-cache-status": "HIT",
+    "vary": "Origin, Accept-Encoding",
+    "accept-ranges": "bytes",
+    "age": "1185611",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-methods": "*",
+    "content-length": "521",
+    "date": "Tue, 06 Jun 2023 02:45:45 GMT",
+    "x-content-source": "esm-worker",
+    "last-modified": "Tue, 23 May 2023 09:25:34 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=ExkuJdCXlaEuC6Hebtk6D3YdM%2B99MIthgI4b%2FVt%2FNX%2BlUlN9WaOiR3j%2F1MbpyTsm4A6XJGjf1zpypOkM0hT3DCaZ%2BPROonZ%2Fwn37qhjI%2FEG%2FNIMj5HEfUEiflBUjWec%2FSohxodQ%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v124/@supabase/storage-js@2.5.1/dist/module/StorageClient.d.ts",
+  "now": {
+    "secs_since_epoch": 1686019544,
+    "nanos_since_epoch": 603731000
+  }
+}

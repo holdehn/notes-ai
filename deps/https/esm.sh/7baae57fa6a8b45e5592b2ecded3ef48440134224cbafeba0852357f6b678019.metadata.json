@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=TVZVmMePeGTTz0G0a%2B5QRQUNtqWwpnLHXFesDP8sX78YAstR1c7D0l3bJ%2BXePEmckBkgNFnvrlJd9oWnJ7f0ukr9U9G%2FKyB%2BWx8Yx9KaZyrx0blqd1msEG45QnHVQZ7VrukwlRw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "1285",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "esm-worker",
+    "server": "cloudflare",
+    "cf-ray": "7d2d5234c9922b5f-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "date": "Tue, 06 Jun 2023 02:45:46 GMT",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v124/@pinecone-database/pinecone@0.1.6/dist/pinecone-generated-ts-fetch/models/SingleQueryResults.d.ts",
+  "now": {
+    "secs_since_epoch": 1686019545,
+    "nanos_since_epoch": 333480000
+  }
+}

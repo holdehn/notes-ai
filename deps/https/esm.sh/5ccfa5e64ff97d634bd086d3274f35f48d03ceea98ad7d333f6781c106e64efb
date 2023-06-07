@@ -1,0 +1,3 @@
+/* esm.sh - @supabase/realtime-js@2.7.2/dist/module/RealtimePresence */
+export * from "https://esm.sh/v124/@supabase/realtime-js@2.7.2/deno/dist/module/RealtimePresence.js";
+export { default } from "https://esm.sh/v124/@supabase/realtime-js@2.7.2/deno/dist/module/RealtimePresence.js";

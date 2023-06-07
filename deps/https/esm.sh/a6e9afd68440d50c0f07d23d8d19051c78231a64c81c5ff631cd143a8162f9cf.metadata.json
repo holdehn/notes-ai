@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2d522e29892b5f-LAX",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "cf-cache-status": "HIT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=reND9bOAZjlBaO9NDxtgq9eAzX9CyhTSCXB%2BetkHkH%2BT%2BO1ym6UddnRGCWw5059mB1f4ciE6oE58gGXolHegrfWg4OOu02JQkIPukOody%2FkoLHbvOPDD6yhuwMwl6Iqu988X1jo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "last-modified": "Mon, 05 Jun 2023 02:37:41 GMT",
+    "date": "Tue, 06 Jun 2023 02:45:45 GMT",
+    "age": "86884",
+    "content-length": "3765",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "esm-worker",
+    "accept-ranges": "bytes"
+  },
+  "url": "https://esm.sh/v124/@supabase/gotrue-js@2.27.2/dist/module/GoTrueAdminApi.d.ts",
+  "now": {
+    "secs_since_epoch": 1686019544,
+    "nanos_since_epoch": 116071000
+  }
+}

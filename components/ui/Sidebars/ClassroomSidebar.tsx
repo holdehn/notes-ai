@@ -60,7 +60,7 @@ export default function ClassroomSidebar({
       current: false,
     },
     {
-      name: 'Notes',
+      name: 'Documents',
       href: `/courses/${courseID}/notes`,
       icon: PencilSquareIcon,
       current: false,
@@ -294,7 +294,7 @@ export default function ClassroomSidebar({
             </div>
           </div>
         </div>
-        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-blue-950 px-4 py-2 shadow-sm sm:px-6 lg:ml-64">
+        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-black px-4 py-2 shadow-sm sm:px-6 lg:ml-64">
           <div className="flex-1 text-sm font-semibold leading-6 text-white">
             Dashboard
           </div>

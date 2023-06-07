@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "access-control-expose-headers": "X-TypeScript-Types",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=BIktzl8XJ6xSTNfsLifoHw2zfF9tCeWYFM66JKJwtih4v19e3KG%2F%2Bs7bTTRRB35ZBA6VFEBSlJnFgB0cUjl2Z9p3ylpPf6lTtvmAAJ%2BwqwWUog7vH69%2BwsxY1XyAfepEXJNFA%2FI%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/javascript; charset=utf-8",
+    "date": "Tue, 06 Jun 2023 02:45:45 GMT",
+    "age": "1087564",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-typescript-types": "https://esm.sh/v124/@supabase/realtime-js@2.7.2/dist/module/RealtimePresence.d.ts",
+    "vary": "Origin, User-Agent, Accept-Encoding",
+    "last-modified": "Wed, 24 May 2023 12:39:41 GMT",
+    "cf-cache-status": "HIT",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cf-ray": "7d2d522e29882b5f-LAX",
+    "x-content-source": "esm-worker"
+  },
+  "url": "https://esm.sh/v124/@supabase/realtime-js@2.7.2/dist/module/RealtimePresence",
+  "now": {
+    "secs_since_epoch": 1686019544,
+    "nanos_since_epoch": 84900000
+  }
+}

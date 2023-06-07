@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=W0SvmayftBLH8IuE9x8D9tlXTqiFKwuvcSYl%2FKL%2FrOGRy1P0ZtNvroyRsNXOuOVPZRvLUVH4TwtpF1SbJlD60rHQRBbeeg3sOwexBkd8YTLhAmMWq62y38OF77ukWeTvGebgguA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "content-length": "4489",
+    "access-control-allow-methods": "*",
+    "x-content-source": "https://esmbuild.com",
+    "date": "Tue, 06 Jun 2023 02:45:45 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2d5228faa52b5f-LAX",
+    "content-type": "application/typescript; charset=utf-8",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v124/langchain@0.0.73/dist/vectorstores/prisma.d.ts",
+  "now": {
+    "secs_since_epoch": 1686019544,
+    "nanos_since_epoch": 254057000
+  }
+}

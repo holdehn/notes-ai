@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "211",
+    "access-control-allow-origin": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "esm-worker",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=sh9nk0myIBalGm8GJcRNnarP%2BQIhlZo68OcbQ4kKbbpfIKPEVSy5YWkttrJI9HvoRGplRRCYS%2F1BwSCBMGtzldgNM5QyejiusgH9KWPUektaBfeJwwbzSxYtH5Y2qqVN5%2FHh1w8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7d2d91e7f9187c7a-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "date": "Tue, 06 Jun 2023 03:29:16 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/driver/SqlInMemory.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022155,
+    "nanos_since_epoch": 350482000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "10109",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=QBx%2BI%2BixBYyAuJdg8okZG1%2BUQh%2BI3%2BQvfCidriF8O4OMaChUhp3uz4rutbDS%2BBR0VExE1o6ymSb1yxnwfqWNh7LpKMbAKDMyQTf6zBrKChvP0YIp5uE6GIwMmlgN8HB7CB1RjS8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "access-control-allow-origin": "*",
+    "cf-ray": "7d2d91dafba17c7a-LAX",
+    "server": "cloudflare",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/repository/MongoRepository.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022153,
+    "nanos_since_epoch": 188439000
+  }
+}

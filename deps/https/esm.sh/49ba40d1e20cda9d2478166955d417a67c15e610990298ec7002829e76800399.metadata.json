@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "content-length": "340",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=BO%2FxdF13uWbM1g7T6PU%2F7XyZw9YZwBGo8znZWzFaZkxvwo8VC3IUyoc5hzbzJPwVEnB6RSj5RU0K3h41XNpei7ZrwfO1Kd3lKCunMpfSvOjYuTjfy8hF%2Br9jGuCk3v%2FSrn0s0Ek%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "esm-worker",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2d91e2ec2a7c7a-LAX",
+    "date": "Tue, 06 Jun 2023 03:29:15 GMT"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/metadata/types/ClosureTreeOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 174508000
+  }
+}

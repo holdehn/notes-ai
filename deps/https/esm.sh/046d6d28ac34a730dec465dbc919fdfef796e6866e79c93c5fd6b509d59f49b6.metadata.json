@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "last-modified": "Tue, 23 May 2023 09:25:34 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "x-content-source": "esm-worker",
+    "date": "Tue, 06 Jun 2023 02:45:45 GMT",
+    "cf-cache-status": "HIT",
+    "cf-ray": "7d2d522efaa02b5f-LAX",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "age": "1185611",
+    "access-control-allow-methods": "*",
+    "content-type": "application/javascript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=hMA38l0yXWwBpAOnX0oNq2vfK5sTS4R8xlkMOtMwQ9ZsvkUkUwuD5TmZgr8X3HM0fxUcucOJcdyMPxA3Kqz1RYmS0PLuFRF4jQNItnLS4JAia5PvA5X85Y8dP0uNMIn0Il3KgfA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v124/@supabase/realtime-js@2.7.2/deno/dist/module/lib/timer.js",
+  "now": {
+    "secs_since_epoch": 1686019544,
+    "nanos_since_epoch": 195296000
+  }
+}

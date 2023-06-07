@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cf-ray": "7d2d91e069737c7a-LAX",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=ZaMv7OhGW1tRXgB1f5x%2FfcZCG4lrG2R3GMhwO%2FJRFQWJ2lGWwRdtawKLdqAMJwd1BOegbmTGuJGqk1GnaVr%2FWOxvuquWum3ryX%2F1vu%2BymQZVGWEglLuoT4BlsZyxd4x01tVz84M%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "esm-worker",
+    "server": "cloudflare",
+    "content-length": "380",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/error/ForbiddenTransactionModeOverrideError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 95426000
+  }
+}

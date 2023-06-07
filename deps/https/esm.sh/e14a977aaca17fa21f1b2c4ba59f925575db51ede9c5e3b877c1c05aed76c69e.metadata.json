@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "x-content-source": "esm-worker",
+    "cf-ray": "7d2d91e0694d7c7a-LAX",
+    "content-length": "9450",
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=o5T2VGFXoFskSWd86sV5OyL94B%2FUFA0D%2Ba6njU5SMmAI47nTrEY6RSxKr%2BPXgwWdt%2BlvvPI3EZwhqA6EYpfWIFz22RHVus%2FkQOf%2F7at8X5ihJqzrPfG8bBl884B2Q5rP%2B%2FmdEOQ%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/driver/mongodb/MongoConnectionOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 136312000
+  }
+}

@@ -1,0 +1,2 @@
+/* esm.sh - langchain@0.0.73/vectorstores */
+export * from "https://esm.sh/v124/langchain@0.0.73/deno/vectorstores.js";

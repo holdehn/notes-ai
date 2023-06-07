@@ -1,0 +1,19 @@
+import { IndexOperationsApi, VectorOperationsApi } from './pinecone-generated-ts-fetch/index.d.ts';
+import 'https://esm.sh/v124/cross-fetch@3.1.6/polyfill~.d.ts';
+type PineconeClientConfiguration = {
+    environment: string;
+    apiKey: string;
+};
+interface PineconeClient extends IndexOperationsApi {
+}
+declare class PineconeClient {
+    apiKey: string | null;
+    projectName: string | null;
+    environment: string | null;
+    private getProjectName;
+    init(configuration: PineconeClientConfiguration): Promise<void>;
+    Index(index: string): VectorOperationsApi;
+}
+export { PineconeClient };
+export { QueryRequest, CreateRequest, UpdateRequest, DeleteRequest, UpsertRequest, Vector, QueryVector, PatchRequest, IndexMeta, CreateCollectionRequest, ScoredVector } from './pinecone-generated-ts-fetch/index.d.ts';
+export { utils } from './utils.d.ts';

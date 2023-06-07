@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7d2d91df38187c7a-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=hJujHdiQhxnbeXOomq%2BKeLZxbUQeyMPWrzCoZkTWcFPftpxzoRC0Ah6Ix6vnpdj%2B1L1MoG4w%2BUYI3nhcL%2BpO7ZrOVpUMXYDiNBPOHcUcymn2e%2Bu5Yq9GxVQhAi6Lij1T2fmwLMk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "229",
+    "x-content-source": "esm-worker",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/repository/FindTreesOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022153,
+    "nanos_since_epoch": 727926000
+  }
+}

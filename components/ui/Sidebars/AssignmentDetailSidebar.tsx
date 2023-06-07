@@ -2,33 +2,14 @@ import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
-  HomeIcon,
   XMarkIcon,
   PencilSquareIcon,
   NewspaperIcon,
+  ChartBarSquareIcon,
+  Cog6ToothIcon,
+  UserGroupIcon,
 } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
-
-const navigation = [
-  {
-    name: 'Home',
-    href: '/courses',
-    icon: HomeIcon,
-    current: false,
-  },
-  {
-    name: 'Grading',
-    href: '/grading',
-    icon: NewspaperIcon,
-    current: true,
-  },
-  {
-    name: 'Notes',
-    href: '/my-notes',
-    icon: PencilSquareIcon,
-    current: false,
-  },
-];
 
 interface Props {
   avatar: string;
@@ -41,6 +22,41 @@ export default function AssignmentDetailSidebar({ avatar }: Props) {
   const handleNavigate = () => {
     router.push('/courses');
   };
+
+  const courseID = router.query.courseID;
+
+  const navigation = [
+    {
+      name: 'Dashboard',
+      href: `/courses/${courseID}`,
+      icon: ChartBarSquareIcon,
+      current: true,
+    },
+    {
+      name: 'Grading',
+      href: `/courses/${courseID}/grading`,
+      icon: NewspaperIcon,
+      current: false,
+    },
+    {
+      name: 'Notes',
+      href: `/courses/${courseID}/notes`,
+      icon: PencilSquareIcon,
+      current: false,
+    },
+    {
+      name: 'Roster',
+      href: `/courses/${courseID}/roster`,
+      icon: UserGroupIcon,
+      current: false,
+    },
+    {
+      name: 'Settings',
+      href: `/courses/${courseID}/settings`,
+      icon: Cog6ToothIcon,
+      current: false,
+    },
+  ];
 
   return (
     <>
@@ -173,7 +189,7 @@ export default function AssignmentDetailSidebar({ avatar }: Props) {
           </nav>
         </div>
 
-        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-blue-950 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
+        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-gray-950 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
           <button
             type="button"
             className="-m-2.5 p-2.5 text-gray-400 lg:hidden"

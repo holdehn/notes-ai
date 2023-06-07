@@ -8,7 +8,6 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { OpenAIChat } from 'langchain/llms/openai';
 import { corsHeaders } from '../_shared/cors.ts';
 import { loadSummarizationChain } from 'langchain/chains';
-import { supabase } from '../_shared/supabase.ts';
 
 const systemPromptTemplate = SystemMessagePromptTemplate.fromTemplate(
   `You are a helpful teacher assistant that helps a student named {name}. The topic of the lecture is {topic}. Summarize information from the transcript of a lecture.

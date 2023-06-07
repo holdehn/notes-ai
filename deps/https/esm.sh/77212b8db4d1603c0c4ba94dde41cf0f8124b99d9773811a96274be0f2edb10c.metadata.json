@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=9x3EGa8B9a9ThR8omk3FZp1dYJ2eJ6DOOlcUsR74PPiM3Ke9sm30%2B1tq6XMD8fga57TrY4BygeHJfz%2B9GL9xobmCfjA2CRM9v28EptOAr9eBW0nUZrQml5eDFYXvpv6uo9kXDtw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "cf-ray": "7d2d91dacaed7c7a-LAX",
+    "date": "Tue, 06 Jun 2023 03:29:13 GMT",
+    "access-control-allow-origin": "*",
+    "content-length": "374",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/common/DeepPartial.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022152,
+    "nanos_since_epoch": 451359000
+  }
+}

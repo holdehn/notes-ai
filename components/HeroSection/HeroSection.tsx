@@ -16,6 +16,7 @@ import GeneratePublicNotesModal from '../Modals/GeneratePublicNotesModal';
 import GeneratePublicYoutubeNotesModal from '@/components/Modals/GeneratePublicYoutubeNotes';
 import { HomeIcon, NewspaperIcon } from '@heroicons/react/20/solid';
 import GeneratePublicLiveNotes from '../Modals/GeneratePublicLiveNotes';
+import GeneratePublicEssayModal from '../Modals/GeneratePublicEssayModal';
 
 export default function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -34,9 +35,11 @@ export default function HeroSection() {
       case 'Create Youtube Notes':
         setOpenModal('Youtube');
         break;
-      case 'Create PDF Notes':
-      case 'Audio Video Notes':
+      case 'Create Document Notes':
         setOpenModal('AudioPDF');
+        break;
+      case 'Generate Essay':
+        setOpenModal('GenerateEssay');
         break;
       // Add more cases as needed
       case 'Live Notes':
@@ -163,7 +166,7 @@ export default function HeroSection() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
             {/* User account dropdown */}
-            <div className="max-w-xs mx-auto mt-4">
+            {/* <div className="max-w-xs mx-auto mt-4">
               <Auth
                 view="sign_in"
                 magicLink={false}
@@ -201,7 +204,7 @@ export default function HeroSection() {
                   },
                 }}
               />
-            </div>
+            </div> */}
 
             {/* Navigation */}
             <nav className="mt-6 px-3">
@@ -320,13 +323,13 @@ export default function HeroSection() {
             setOpen={() => setOpenModal(null)}
             userID={undefined}
           />
-          {/* <GeneratePublicLectureNotes
+          <GeneratePublicEssayModal
             open={openModal === 'LectureNotes'}
             setOpen={() => setOpenModal(null)}
-          /> */}
+          />
 
           <main>
-            <div className="bg-gradient-to-r from-[#1c0232] via-[#291957] to-[#480f50] relative min-h-screen">
+            <div className="bg-black">
               <div className="p-12 sm:pb-32">
                 <div className=" max-w-full">
                   <div className="mx-auto max-w-2xl lg:text-center">
@@ -338,65 +341,12 @@ export default function HeroSection() {
                       easily digestible notes.
                     </p>
                   </div>
-                  <div className="mx-auto mt-4">
-                    <Auth
-                      view="sign_in"
-                      magicLink={false}
-                      dark={false}
-                      showLinks={false}
-                      redirectTo={`${rootUrl}/my-notes`}
-                      onlyThirdPartyProviders={true}
-                      providers={['google']}
-                      supabaseClient={supabase}
-                      socialLayout="horizontal"
-                      theme="dark"
-                      appearance={{
-                        theme: ThemeSupa,
-                        style: {
-                          message: {
-                            color: '#ffffff',
-                            fontWeight: 650,
-                          },
-                        },
-                        variables: {
-                          default: {
-                            colors: {
-                              inputLabelText: '#ffffff',
-                              brand: '#7c3aed',
-                              messageText: 'white',
-                              brandAccent: '#c084fc',
-                              anchorTextHoverColor: 'ffffff',
-                              anchorTextColor: '#ffffff',
-                            },
-                            fonts: {
-                              bodyFontFamily: 'Montserrat',
-                              inputFontFamily: 'Montserrat',
-                            },
-                          },
-                        },
-                      }}
-                    />
-                  </div>
                   <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12">
                     {features.map((feature, index) => {
-                      const gradientColors = [
-                        'from-[#ff9a9e] to-[#fad0c4]',
-                        'from-[#a1c4fd] to-[#c2e9fb]',
-                        'from-[#d4fc79] to-[#96e6a1]',
-                        'from-[#84fab0] to-[#8fd3f4]',
-                        'from-[#FDC830] to-[#F37335]',
-                        'from-[#C33764] to-[#1D2671]',
-                        'from-[#FF416C] to-[#FF4B2B]',
-                        'from-[#56CCF2] to-[#2F80ED]',
-                      ];
-
-                      const gradientColor =
-                        gradientColors[index % gradientColors.length];
-
                       return (
                         <div
                           key={feature.name}
-                          className={`space-y-4 p-8 rounded-lg bg-gradient-to-tr ${gradientColor} transform transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer`}
+                          className={`space-y-4 p-8 rounded-lg bg-gradient-to-tr bg-blue-200 transform transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer`}
                           onClick={() => handleCardClick(feature.name)}
                         >
                           <div className="mx-auto h-12 w-12 p-2 rounded-full bg-gradient-to-tr from-[#FFD6A5] to-[#FFC371]">
@@ -429,13 +379,13 @@ const features = [
     icon: TvIcon,
   },
   {
-    name: 'Create PDF Notes',
+    name: 'Create Document Notes',
     description: 'Summarize lengthy PDFs into concise notes.',
     icon: DocumentMagnifyingGlassIcon,
   },
   {
-    name: 'Audio Video Notes',
-    description: 'Transcribe and summarize audio recordings.',
+    name: 'Generate Paper',
+    description: 'Generate an essay based on a document and a prompt.',
     icon: SpeakerXMarkIcon,
   },
   {

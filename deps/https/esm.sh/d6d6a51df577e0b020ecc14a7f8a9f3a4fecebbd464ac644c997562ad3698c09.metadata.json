@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Tue, 06 Jun 2023 03:29:17 GMT",
+    "x-content-source": "esm-worker",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "cf-ray": "7d2d91eef8427c7a-LAX",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "287",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=BsTSeC1Ebf4UZdO0jedHCHg6TEk3iA9SMOPLFgHzWTVNlgK5gQyyzS%2BIFMmhSuDXzlUjUI6RVV57RjPsQkUL23HcFWKlVWCjIDKn%2Fq2w03IVDcyMBRQ5wVnhHS1pnpvZBwaBPB4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/driver/sqlserver/authentication/DefaultAuthentication.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022155,
+    "nanos_since_epoch": 755449000
+  }
+}

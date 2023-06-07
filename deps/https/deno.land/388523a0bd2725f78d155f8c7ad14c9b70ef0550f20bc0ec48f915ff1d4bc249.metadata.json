@@ -1,0 +1,23 @@
+{
+  "headers": {
+    "x-deno-warning": "Implicitly using latest version (v3.21.4) for https://deno.land/x/zod/mod.ts",
+    "cross-origin-opener-policy": "same-origin",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "location": "/x/zod@v3.21.4/mod.ts",
+    "vary": "Accept-Encoding, accept",
+    "date": "Tue, 06 Jun 2023 03:37:53 GMT",
+    "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+    "cross-origin-embedder-policy": "same-origin",
+    "x-frame-options": "DENY",
+    "access-control-allow-origin": "*",
+    "x-content-type-options": "nosniff",
+    "via": "http/2 edgeproxy",
+    "server": "deno/gcp-us-west2",
+    "cross-origin-resource-policy": "same-origin"
+  },
+  "url": "https://deno.land/x/zod/mod.ts",
+  "now": {
+    "secs_since_epoch": 1686022672,
+    "nanos_since_epoch": 650665000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "cf-ray": "7d2d91dacb487c7a-LAX",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "server": "cloudflare",
+    "content-length": "15577",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=QDOnlznBr%2Frjmf0bEdJF7h6ZNmu3QrWzNXfyahRWzCcveQ0XZJxS%2Ft0e7O3aa5kpU%2FCEZD4MzG5JvidXFn06ATPT7M3lIQOBjdB660v4SxtzDzsFsV1ByWHG5mRpnwNcgwfPEGU%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/entity-manager/MongoEntityManager.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022153,
+    "nanos_since_epoch": 714491000
+  }
+}

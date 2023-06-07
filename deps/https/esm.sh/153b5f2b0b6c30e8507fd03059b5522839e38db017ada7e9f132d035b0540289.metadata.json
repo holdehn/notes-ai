@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "content-length": "920",
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=%2Fg6ej0qMtBQ8dL7MK3Ot4Pg6CDXg4hOMR5ZJHCViqjyi6jjqISt2TTY3q7BcHGpUSMlgzrrVK%2B9d%2FBOvUD%2FAvxHU7za4NGRNbyRvZ65PSobiD7caDjE7tm0aEvg4WW2Z8TZbl%2Bw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "cf-ray": "7d2d91e069467c7a-LAX"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/driver/capacitor/CapacitorConnectionOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 170305000
+  }
+}

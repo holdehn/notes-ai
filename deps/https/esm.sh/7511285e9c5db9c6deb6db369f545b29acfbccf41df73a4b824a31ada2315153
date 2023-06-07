@@ -1,0 +1,2 @@
+/* esm.sh - @supabase/supabase-js@2.21.0/dist/module */
+export * from "https://esm.sh/v117/@supabase/supabase-js@2.21.0/deno/dist/module.js";

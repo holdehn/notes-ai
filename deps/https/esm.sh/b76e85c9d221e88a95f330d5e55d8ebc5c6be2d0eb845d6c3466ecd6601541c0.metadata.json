@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=kbMEq1Q9ESUAqskOev2Hh%2FVf6pLHjn3uvLv3sFTqWhcxssvf%2BVTuOFto2RoW%2BLf%2FIs5E3AWHbQpx%2BiXleuat8sHCllQZjeWrjdhXFgcyRDc0TL4s%2F%2FJ78aten5BzC3Jg6KRMHu4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Tue, 06 Jun 2023 03:29:14 GMT",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "content-length": "255",
+    "access-control-allow-origin": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "cf-ray": "7d2d91dacb157c7a-LAX",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/decorator/entity/TableInheritance.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022153,
+    "nanos_since_epoch": 49670000
+  }
+}

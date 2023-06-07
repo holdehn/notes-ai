@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "esm-worker",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "date": "Tue, 06 Jun 2023 03:29:17 GMT",
+    "server": "cloudflare",
+    "cf-ray": "7d2d91eef83d7c7a-LAX",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=dxsQAvb2NFlq0f94rZacz6FNIWIvRYaiXgsZVDSA%2BS%2BsgidSt4F8n9QBpRYpAHSpxxC7QWpQlN%2FngCA5S6MdaQ5j8XTNHrPV3mVi6I0eRTBLUMKHK%2B4Cz06L4uIAsCfhcAh2vWg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "762"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/driver/sqlserver/authentication/AzureActiveDirectoryMsiAppServiceAuthentication.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022155,
+    "nanos_since_epoch": 955505000
+  }
+}

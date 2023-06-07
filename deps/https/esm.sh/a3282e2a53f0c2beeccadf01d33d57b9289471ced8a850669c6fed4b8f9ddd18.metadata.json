@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "1574",
+    "access-control-allow-methods": "*",
+    "date": "Tue, 06 Jun 2023 02:45:45 GMT",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2d5228faa12b5f-LAX",
+    "server": "cloudflare",
+    "x-content-source": "https://esmbuild.com",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=qVfPOppzIkVgq0o%2B4pCRAFHNlv5kbOah2XjE%2BmWGfpqTVWNOYh5CTmWn5IX%2BYhupqPQSJ4EivKq93%2Fzrbnx7aIMRIQTmMjCEbPxP%2BD3O59ccY9B8drKD4UBSyUqhL0ugVef2vI0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v124/langchain@0.0.73/dist/vectorstores/chroma.d.ts",
+  "now": {
+    "secs_since_epoch": 1686019544,
+    "nanos_since_epoch": 160066000
+  }
+}

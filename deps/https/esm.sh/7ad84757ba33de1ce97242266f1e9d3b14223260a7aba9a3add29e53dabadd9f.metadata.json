@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "date": "Tue, 06 Jun 2023 02:45:45 GMT",
+    "last-modified": "Tue, 23 May 2023 09:25:34 GMT",
+    "access-control-allow-methods": "*",
+    "accept-ranges": "bytes",
+    "access-control-allow-origin": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "age": "1185611",
+    "cf-ray": "7d2d522e8a102b5f-LAX",
+    "content-length": "1928",
+    "cf-cache-status": "HIT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=tq586ognLnl%2FKl%2B1aZF771EQtD5WKWOI10B9pS6w8jLMuU7Mgx2YgkmU2ACvlDNKJSLW5EE1yPOmnwR9gfzmC7QMaOBEomb%2FZiyVjWuhEFehUqTYcaw6%2FPr%2BDLGahLu7w%2BYz8Js%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "esm-worker"
+  },
+  "url": "https://esm.sh/v124/@supabase/realtime-js@2.7.2/dist/module/RealtimePresence.d.ts",
+  "now": {
+    "secs_since_epoch": 1686019544,
+    "nanos_since_epoch": 127182000
+  }
+}

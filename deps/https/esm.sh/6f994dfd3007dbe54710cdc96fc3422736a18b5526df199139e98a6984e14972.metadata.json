@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "date": "Tue, 06 Jun 2023 02:45:41 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "esm-worker",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=0YIPJDmXBIyMZAoXmpIbUDs%2Fc007qq%2FLDmsuFIC8G07gHB%2BIZdIcZemCp1ysrhaR14e7UQ98olbISS%2Fjo%2F1HqbkYuemPDdQ6C8ITFA4yr35F%2F8ul711eBzSzeCP2dd32LPizQEE%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/javascript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d2d52120eaa2b5f-LAX",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v124/flat@5.0.2/deno/flat.mjs",
+  "now": {
+    "secs_since_epoch": 1686019539,
+    "nanos_since_epoch": 876090000
+  }
+}

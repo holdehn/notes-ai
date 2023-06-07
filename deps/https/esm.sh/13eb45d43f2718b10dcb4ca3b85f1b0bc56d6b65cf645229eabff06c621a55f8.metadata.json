@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "date": "Tue, 06 Jun 2023 03:29:05 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "last-modified": "Tue, 06 Jun 2023 02:22:12 GMT",
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=%2Bkk5I%2Bnh5y%2FiNrNM4BBUET06%2Btx4mRVRL7AbaCkVVx9IIAoVg%2B3zUerj0%2BXZw8UgIXEN6ugU3o2xG2GoIuMPqtTOewiQn%2FK4iSBRlb26srOE0Ha1zA7iRbuUca3C5XHlrwY6aXQ%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/javascript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "age": "4013",
+    "cf-cache-status": "HIT",
+    "cf-ray": "7d2d91aa4afc7c7a-LAX"
+  },
+  "url": "https://esm.sh/v124/browser-or-node@2.1.1/deno/browser-or-node.mjs",
+  "now": {
+    "secs_since_epoch": 1686022144,
+    "nanos_since_epoch": 396003000
+  }
+}

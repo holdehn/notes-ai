@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=kH%2Bo9JbM5mJqgTsrqMm9GT0RIVhpFdN%2FwSAa%2Bh%2FAwEsIGsHZ0eWQG0LomRi4xVWAZ2ZliichyOVW8loFvExdZzjoGKPWHwVBNK9KelNBcVNHGkJ7LylzzYDZKCd%2B5HhuIHBujxA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7d2d91e069b37c7a-LAX",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Tue, 06 Jun 2023 03:29:15 GMT",
+    "content-length": "352",
+    "x-content-source": "esm-worker",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v124/typeorm@0.3.16/error/UsingJoinColumnOnlyOnOneSideAllowedError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686022154,
+    "nanos_since_epoch": 173278000
+  }
+}
