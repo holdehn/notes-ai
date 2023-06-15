@@ -166,7 +166,7 @@ export default function HeroSection() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
             {/* User account dropdown */}
-            {/* <div className="max-w-xs mx-auto mt-4">
+            <div className="max-w-xs mx-auto mt-4">
               <Auth
                 view="sign_in"
                 magicLink={false}
@@ -204,7 +204,7 @@ export default function HeroSection() {
                   },
                 }}
               />
-            </div> */}
+            </div>
 
             {/* Navigation */}
             <nav className="mt-6 px-3">
@@ -324,8 +324,8 @@ export default function HeroSection() {
             userID={undefined}
           />
           <GeneratePublicEssayModal
-            open={openModal === 'LectureNotes'}
             setOpen={() => setOpenModal(null)}
+            open={openModal === 'GenerateEssay'}
           />
 
           <main>
@@ -384,7 +384,7 @@ const features = [
     icon: DocumentMagnifyingGlassIcon,
   },
   {
-    name: 'Generate Paper',
+    name: 'Generate Essay',
     description: 'Generate an essay based on a document and a prompt.',
     icon: SpeakerXMarkIcon,
   },

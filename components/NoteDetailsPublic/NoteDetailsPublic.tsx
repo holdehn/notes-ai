@@ -65,21 +65,21 @@ export default function NoteDetailsPublic() {
       setSummaryText(data.note?.[0].summary);
     }
 
-    if (!data.note?.[0].notes) {
-      tasks.push(
-        createPublicNotesFacts(
-          {
-            transcription: data.note?.[0].transcription,
-            noteId: noteId as unknown as string,
-            name: name,
-            topic: data.note?.[0].topic,
-          },
-          (notes) => setBulletPoints(notes.join('\n')),
-        ),
-      );
-    } else {
-      setBulletPoints(data.note?.[0].notes);
-    }
+    // if (!data.note?.[0].notes) {
+    //   tasks.push(
+    //     createPublicNotesFacts(
+    //       {
+    //         transcription: data.note?.[0].transcription,
+    //         noteId: noteId as unknown as string,
+    //         name: name,
+    //         topic: data.note?.[0].topic,
+    //       },
+    //       (notes) => setBulletPoints(notes.join('\n')),
+    //     ),
+    //   );
+    // } else {
+    //   setBulletPoints(data.note?.[0].notes);
+    // }
 
     if (tasks.length > 0) {
       await Promise.all(tasks);
@@ -92,9 +92,7 @@ export default function NoteDetailsPublic() {
     data: noteData,
     error: noteError,
     mutate,
-  } = useSWR(noteId ? `/api/get-public-note?noteId=${noteId}` : null, fetcher, {
-    refreshInterval: 0,
-  });
+  } = useSWR(noteId ? `/api/get-public-note?noteId=${noteId}` : null, fetcher);
 
   if (noteError) {
     return <div>Error fetching note data</div>;

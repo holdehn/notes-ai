@@ -53,16 +53,8 @@ export default function GeneratePublicNotesModal(props: Props) {
       const fileType = file.type.split('/')[0];
       const fileSubType = file.type.split('/')[1];
 
-      if (
-        (fileType !== 'audio' &&
-          fileType !== 'video' &&
-          fileType !== 'application') ||
-        (fileType === 'application' &&
-          fileSubType !== 'pdf' &&
-          fileSubType !==
-            'vnd.openxmlformats-officedocument.wordprocessingml.document') // Add check for docx file
-      ) {
-        alert('Please upload an audio, video, PDF, or docx file');
+      if (fileType !== 'application') {
+        alert('Please upload a PDF file');
         return;
       }
 
@@ -92,129 +84,6 @@ export default function GeneratePublicNotesModal(props: Props) {
     formik.resetForm();
   };
 
-  const sendAudio = async (file: File) => {
-    try {
-      if (!file) {
-        alert('Please upload an audio file');
-        return;
-      }
-      const formData = new FormData();
-      formData.append('file', file);
-      const data = await supabaseClient.functions.invoke(
-        'generate-transcription',
-        {
-          body: formData,
-        },
-      );
-      const transcription = data.data.transcript.text;
-      setConvertedText(transcription);
-      return transcription;
-    } catch (error: any) {
-      alert(`Error: ${error.message}`);
-    }
-  };
-
-  const convertVideoToMp3 = async (videoFile: string | Blob | Buffer) => {
-    try {
-      // Create an FFmpeg instance
-      const ffmpeg = createFFmpeg({ log: true });
-
-      // Load the FFmpeg instance
-      await ffmpeg.load();
-
-      // Write the video file to FFmpeg's file system
-      const inputFileName =
-        fileObject?.type.split('/')[1] === 'webm' ? 'input.webm' : 'input.mp4';
-      ffmpeg.FS('writeFile', inputFileName, await fetchFile(videoFile));
-
-      // Run the FFmpeg command to convert the video to MP3
-      await ffmpeg.run(
-        '-i',
-        inputFileName,
-        '-vn',
-        '-b:a',
-        '128k',
-        'output.mp3',
-      );
-
-      // Read the output MP3 file from FFmpeg's file system
-      const audioData = ffmpeg.FS('readFile', 'output.mp3');
-
-      // Create a Blob from the output MP3 data
-      const audioBlob = new Blob([audioData.buffer], { type: 'audio/mp3' });
-
-      // Convert the Blob to a File
-      const audioFile = new File([audioBlob], 'audio.mp3', {
-        type: 'audio/mp3',
-      });
-
-      // Return the audio file
-      return audioFile;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  const loadPDF = async (file: File) => {
-    try {
-      if (!file) {
-        alert('Please upload a PDF file');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const response = await fetch('/api/load-pdf', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const extractedText = data.text;
-      setConvertedText(extractedText);
-      return extractedText;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-
-      alert(`Error: ${error.message}`);
-    }
-  };
-
-  const loadDocx = async (file: File) => {
-    try {
-      if (!file) {
-        alert('Please upload a docx file');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const response = await fetch('/api/load-docx', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const extractedText = data.text;
-      setConvertedText(extractedText);
-      return extractedText;
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-      alert(`Error: ${error.message}`);
-    }
-  };
-
   //formik validation
   const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
@@ -236,26 +105,13 @@ export default function GeneratePublicNotesModal(props: Props) {
     const noteID = uuidv4();
     const file = fileObject;
     const fileType = file.type.split('/')[0];
-    const fileSubType = file.type.split('/')[1]; // define fileSubType here
     let transcription;
 
-    if (fileType === 'application') {
-      if (
-        fileSubType ===
-        'vnd.openxmlformats-officedocument.wordprocessingml.document'
-      ) {
-        transcription = await loadDocx(file);
-      } else if (fileSubType === 'pdf') {
-        // transcription = await loadPDF(file);
-        transcription = await loadLatex({ file, fileID: noteID });
-      }
-    } else if (fileType === 'video') {
-      // If the file is a video, convert it to audio and then send it to sendAudio
-      const audioFile = await convertVideoToMp3(file);
-      transcription = await sendAudio(audioFile);
-    } else {
-      transcription = await sendAudio(file);
+    if (fileType !== 'application') {
+      alert('Please upload a PDF file');
+      return;
     }
+    transcription = await loadLatex({ file, fileID: noteID });
     await insertPublicNote({
       formikValues: values,
       transcription: transcription,
@@ -327,7 +183,7 @@ export default function GeneratePublicNotesModal(props: Props) {
                         as="h2"
                         className="text-xl font-bold leading-6 text-gray-50"
                       >
-                        Generate Community Notes
+                        Generate Essay
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-200">
