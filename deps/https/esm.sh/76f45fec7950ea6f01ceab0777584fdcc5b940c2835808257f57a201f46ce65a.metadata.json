@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "esm-worker",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=nElNzAYj091HJ0R5v63jih%2BYbr7j9iHwiBn983ljJ%2FKTza6PXm%2Fopd9ers5YVGeQCvFuy5FCs6EWEq4h%2B15vVR%2B3n67FmbZJ%2BbtqieE1Dsj7UZlhletWHQeNgkTg6MVwt94J9Zo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d7f5fe4ccdece88-SJC",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-length": "528",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/driver/sqlserver/authentication/AzureActiveDirectoryServicePrincipalSecret.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879937,
+    "nanos_since_epoch": 145745000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=HcJIWJ9iJIj4kmmEuNdTFguHjqI2P8HKgD5M%2BancqDrnpNgffsxC1pnsW%2Fo6FWWlQDVWo%2Bl1VbDX%2Fm%2BS5pATKB9E8Yu%2BygWUSq5IXo9jotP90Is4uM4RqKD3pO5jn9rvHPVtI%2Bg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Fri, 16 Jun 2023 01:45:38 GMT",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7d7f5fd978dfce88-SJC",
+    "x-content-source": "esm-worker",
+    "content-length": "2117"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/driver/types/GeoJsonTypes.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 76625000
+  }
+}

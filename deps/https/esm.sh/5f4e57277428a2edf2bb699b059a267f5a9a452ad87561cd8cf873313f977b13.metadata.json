@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "date": "Fri, 16 Jun 2023 01:46:24 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare",
+    "content-length": "363",
+    "cf-ray": "7d7f6100598dcef9-SJC",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=F4GlUtJttqwPSS1wGAekLjeM9OTujhrPsXCrqFI8EdPqAeRnCvUoPGJbEfRptLCVTP5wmeo%2F2t3vMMBuegjUpH%2BcbroMY9H9%2FZpTXMbzm2T18Ha12jHN41guAAYqit06cXZwpzc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v125/openai@3.3.0/dist/index.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879982,
+    "nanos_since_epoch": 330763000
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-cache-status": "HIT",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cf-ray": "7d7f5faee92ece88-SJC",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=FwuWohvZzT7yDy%2B%2BCpTmQS8k2yb362Ct%2Bg2slaeiaIyUJGlZ%2FfjPhOaxKrT7YYuxq0drTsen0LbwE9gWnSE%2BIhupoWKiCStB22vfQAL9IbI%2BV9zyZ6OnpwgCYHOSABBlFr7CPEo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/javascript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "last-modified": "Thu, 15 Jun 2023 17:24:05 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "age": "30085",
+    "x-content-source": "esm-worker",
+    "date": "Fri, 16 Jun 2023 01:45:30 GMT",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v126/js-tiktoken@1.0.6/deno/lite.js",
+  "now": {
+    "secs_since_epoch": 1686879928,
+    "nanos_since_epoch": 102300000
+  }
+}

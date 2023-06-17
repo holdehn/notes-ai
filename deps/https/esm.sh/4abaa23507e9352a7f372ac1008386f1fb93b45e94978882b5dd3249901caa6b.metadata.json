@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "902",
+    "x-content-source": "esm-worker",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7d7f5fe53d4cce88-SJC",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=azguq6Odp8l%2BljcR4FUjWK9HtR40NURcfqKAYTwtm1D3XSYDK2UIAW8b7HVMJR9EWouUI8cWjYfTfSVukXEym2SoElLFQFypWeuDoj%2FjfsQLyXNGiMJINFz%2BwI3xMBmWcpblIYg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/driver/sap/SapConnectionCredentialsOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 995370000
+  }
+}

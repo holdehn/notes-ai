@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Fri, 16 Jun 2023 01:45:38 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=oPEP0cNnaoRWRLFpg3mEQg02du2VJuJJAOcDafjR839nFhvn1YjtrzcLiGo5u4xRH0KTh8lMgh0ydG56%2Byi85dofcKyfSu1iLhR8Q8LvnsnltSevImW3mpf2cSDanM4a4ahoPbY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "content-length": "293",
+    "cf-ray": "7d7f5fd978a1ce88-SJC",
+    "content-type": "application/typescript; charset=utf-8",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/decorator/columns/DeleteDateColumn.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 72436000
+  }
+}

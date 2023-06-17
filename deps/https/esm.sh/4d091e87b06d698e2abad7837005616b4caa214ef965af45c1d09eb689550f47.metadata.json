@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "282",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "esm-worker",
+    "cf-ray": "7d7f5fe1f9edce88-SJC",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=1FUFqR%2F2TEF7Jhx6es2Qg1cUvDWhHVmlM5SB9d0w53yjf%2ByYgZsGd1jdVqRthdVS7o5POQJQxQgaNMsfYvlKZAmG6JofGtPm7sByCZ4PRVBxWeo0iQebjmBVgNO2OKnZ7rCvPI8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "content-type": "application/typescript; charset=utf-8"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/error/NamingStrategyNotFoundError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 740614000
+  }
+}

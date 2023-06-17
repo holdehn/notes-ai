@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "cf-ray": "7d7f5fd978d8ce88-SJC",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=atL818FV5Sf%2BYEOObVenBkf3agEe%2BiZXTdRPFOEcfDJoFa9mhhoEODFZRnucMaBocgUT2x5UG0RWRuiDvNpyqSKOaFtmuLmdaJMfJ5DoziN7lokuKGiSyBdm6I62GpJDwKnpdOc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "314",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Fri, 16 Jun 2023 01:45:38 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "esm-worker"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/decorator/tree/TreeParent.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879935,
+    "nanos_since_epoch": 834137000
+  }
+}

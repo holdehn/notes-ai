@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "content-length": "271",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=HT3HG6E9PjH24f0c3MIe0p8%2BGSIHDcqu1ExVbtCaBWKvkB5669yMXuYllu8WzI7sz8YiVgxagkaFkhDjJReUopjFSp5oeJ9tYFPtLfeZsKLPM8D7kxdDs48ITa71%2BUvCm%2FoCLt0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "esm-worker",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "cf-ray": "7d7f5fe1f9e4ce88-SJC"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/error/MissingDriverError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 904624000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d7f5fdfff9dce88-SJC",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "715",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Amgv%2FMghQcAYUgrUcXgHjAfNDIYXRxihjaBjL%2BJf2hQamXXGtwJMGeU2BIOKpBFWw3FWxEsrlOlEhH85JbPyKTDcmMqerfcHf7%2BsfNEmNIpQVK9Oz5Sfhygfe2Lh3VbvfLFVCxc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "esm-worker",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/repository/UpsertOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 949408000
+  }
+}

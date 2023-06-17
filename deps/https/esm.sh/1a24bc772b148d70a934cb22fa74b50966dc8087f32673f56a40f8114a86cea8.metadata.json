@@ -1,0 +1,24 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "last-modified": "Thu, 15 Jun 2023 17:24:05 GMT",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cf-ray": "7d7f5faf99c6ce88-SJC",
+    "cache-control": "public, max-age=31536000, immutable",
+    "age": "30085",
+    "date": "Fri, 16 Jun 2023 01:45:30 GMT",
+    "content-type": "application/javascript; charset=utf-8",
+    "cf-cache-status": "HIT",
+    "access-control-allow-origin": "*",
+    "x-content-source": "esm-worker",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=gNes1ITb%2BXhiJ9IQ7o4Wjjh8cTDI9xlrLc1tHOM%2BpHgvIAwTsKAV5VC1qYpkNrf%2B1bl8Np1jEl0soeNho%2FAV%2BKYHYqA4gTeU%2BF4jcc87JcutjmwUCnBFkW6YBc499lbgXGbYnnw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v126/eventemitter3@4.0.7/deno/eventemitter3.mjs",
+  "now": {
+    "secs_since_epoch": 1686879928,
+    "nanos_since_epoch": 157489000
+  }
+}

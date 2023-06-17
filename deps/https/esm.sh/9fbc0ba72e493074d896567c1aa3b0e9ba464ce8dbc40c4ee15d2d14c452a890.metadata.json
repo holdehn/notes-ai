@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cf-ray": "7d7f5fd978afce88-SJC",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=m5GZi5WDTIfTqKfuOcgAAv9YXpeRSKfy0sYwoFBmT4R7O2HD3QEy2LNxEtbIWV%2Bu9QcPeZLhKQvD9Ts7PjMNHTuVQEgWh5%2Fc85fOv0qJtL99Dvn14ganQM%2BWpVMA2VfxtwkUcb8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "148",
+    "content-type": "application/typescript; charset=utf-8",
+    "date": "Fri, 16 Jun 2023 01:45:38 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/decorator/listeners/AfterInsert.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 77923000
+  }
+}

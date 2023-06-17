@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "esm-worker",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-length": "297",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7d7f5fe4ccd9ce88-SJC",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=6wwXOD4g3qKyX0XwyZjgjANI%2BLx9ASezZdxGl1AQ8RCOl%2FqfXSR561pTtddw7M7FMGUyOvU8uOu20PzqdKcSaxdxleJzGzvXrh7n%2Bu3Lk75OsybsfHTJq1IDJQmZQI%2F2ANeJSsc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/driver/sqlserver/authentication/AzureActiveDirectoryAccessTokenAuthentication.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879937,
+    "nanos_since_epoch": 2594000
+  }
+}

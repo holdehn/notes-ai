@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "x-content-source": "esm-worker",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=1HwlmFsobNSICY5Y8Uiyqyxwp9AUTdoAjUdvWj8ImlTKbQLXo7d085A0wqo74SpcUWOm0wAC77NeGHVaT2JUFIlANkruvRDsMLJUfxcOdok9y6IzCxvazTyqxrjMNnmNHcvXGYc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "content-length": "178",
+    "date": "Fri, 16 Jun 2023 01:46:26 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "cf-ray": "7d7f610a3aa3cef9-SJC",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v125/langchainplus-sdk@0.0.11/dist/index.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879984,
+    "nanos_since_epoch": 19918000
+  }
+}

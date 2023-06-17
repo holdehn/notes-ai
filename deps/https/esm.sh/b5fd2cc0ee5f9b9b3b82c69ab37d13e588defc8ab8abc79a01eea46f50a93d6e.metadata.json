@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "content-length": "1555",
+    "server": "cloudflare",
+    "access-control-allow-origin": "*",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "age": "30087",
+    "cf-ray": "7d7f5fd5cd83ce88-SJC",
+    "access-control-allow-methods": "*",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Fri, 16 Jun 2023 01:45:36 GMT",
+    "last-modified": "Thu, 15 Jun 2023 17:24:09 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=UAMJE3W9giJu84H1EdmRww4Z18POg8Dpz7fxyMKKG%2B5yt3PHA7ab90y%2FDI3arKI59AyAEsOlNVw4hUwXRMGgnFhytkjtbcsjaX%2BtJTGft4XsVJChLI6RLalWi74tW8OjXoSD2lk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "accept-ranges": "bytes",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-cache-status": "HIT"
+  },
+  "url": "https://esm.sh/v126/js-tiktoken@1.0.6/dist/core-0e8c0717.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879934,
+    "nanos_since_epoch": 266501000
+  }
+}

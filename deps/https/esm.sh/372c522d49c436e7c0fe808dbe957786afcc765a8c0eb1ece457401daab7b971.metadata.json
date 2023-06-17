@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "esm-worker",
+    "cf-ray": "7d7f60fcbdcbcef9-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/javascript; charset=utf-8",
+    "date": "Fri, 16 Jun 2023 01:46:24 GMT",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=onQyfLv3Vzv%2ByzRjAownuhQH00Es0yQYY7RxWzhg34bTDa%2BrNhAZZeFpe%2B89tZt8Ujpr2%2BB99duXJ2CMRusneFvcKbuMw0n4UwYfIE10YIisAAMXBt0iX9EBtDG1ijsWEylyeLw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v125/form-data@4.0.0/deno/form-data.mjs",
+  "now": {
+    "secs_since_epoch": 1686879981,
+    "nanos_since_epoch": 717241000
+  }
+}

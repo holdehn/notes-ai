@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=I3t68IsQnccovnfxGevLTZWtbgw1fK6wzW1cMUBp1HuE6I9M2I2GDhrZfKsAWzYfOV9VzO6SN1%2F1IAHGzaBSBbLXL0hOf9y7Z%2Bb8medVZ%2BUmbuna9MPKrAmva9J4Wobd5hX8u2U%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d7f60f6e882cef9-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-methods": "*",
+    "content-type": "application/javascript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Fri, 16 Jun 2023 01:46:23 GMT"
+  },
+  "url": "https://esm.sh/v125/langchain@0.0.95/deno/embeddings.js",
+  "now": {
+    "secs_since_epoch": 1686879980,
+    "nanos_since_epoch": 793305000
+  }
+}

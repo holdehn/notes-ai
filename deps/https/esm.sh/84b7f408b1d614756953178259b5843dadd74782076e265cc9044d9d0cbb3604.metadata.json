@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=fma44h8B8Gh3ZmKEjsk3lwwmxiWVPEzY4uEnsBfeFCQvtggpMVqVIfM8Q6LSCpevQEGLL750iTGYrjbioSwZmapU0bWohlAOeSulKLMloECUmL5Zf8JlrM6Bja33A9UM0Tg1ZP8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "content-length": "588",
+    "cf-ray": "7d7f5fdd3d10ce88-SJC",
+    "access-control-allow-origin": "*",
+    "server": "cloudflare",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "vary": "Origin, Accept-Encoding"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/driver/react-native/ReactNativeConnectionOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 747970000
+  }
+}

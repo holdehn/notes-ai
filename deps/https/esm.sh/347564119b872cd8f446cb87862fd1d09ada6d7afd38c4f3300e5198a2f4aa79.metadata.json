@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Fri, 16 Jun 2023 01:45:36 GMT",
+    "cf-ray": "7d7f5fd2aabcce88-SJC",
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=iXmgeKM%2F%2FK1mZr%2Frk6aqwn2aU9wR4vC2WabGNdWPLFqoqGnmAIPFvT5yaHtkI0mJU9cq38vx8ROjW%2B46t%2FTtIFVLXQ5c9u5K37TJp9dPikNdFdnU5u%2B9TSjA%2BPjIZfW289pm6zo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-length": "2709",
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v126/langchain@0.0.95/dist/chains/serde.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879934,
+    "nanos_since_epoch": 131614000
+  }
+}

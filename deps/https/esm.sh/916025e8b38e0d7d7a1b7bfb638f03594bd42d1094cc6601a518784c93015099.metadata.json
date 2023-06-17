@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-methods": "*",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "x-content-source": "esm-worker",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "cf-ray": "7d7f5fe59d99ce88-SJC",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "609",
+    "content-type": "application/typescript; charset=utf-8",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=fCfJeaplrEChhJgruwkRO7BqJFteZeJqDaRUzb5Gyd0d8rMQCpvLHEV7pKNS02i3YeCcx8zdcUJsqqxpfvT2aEGtts1FqTeGJDfekJqzt1WXPVZ5jiyGtuSQ%2BBVIcjeWVp3WyWI%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-origin": "*"
+  },
+  "url": "https://esm.sh/v126/zod@3.21.4/lib/helpers/enumUtil.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879937,
+    "nanos_since_epoch": 281767000
+  }
+}

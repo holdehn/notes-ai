@@ -1,0 +1,23 @@
+{
+  "headers": {
+    "date": "Fri, 16 Jun 2023 01:48:10 GMT",
+    "x-typescript-types": "https://esm.sh/v126/langchain@0.0.95/chat_models/openai.d.ts",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-expose-headers": "X-TypeScript-Types",
+    "vary": "Origin, User-Agent, Accept-Encoding",
+    "cache-control": "public, max-age=86400",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "content-type": "application/javascript; charset=utf-8",
+    "server": "cloudflare",
+    "x-content-source": "https://esmbuild.com",
+    "cf-ray": "7d7f6393ba2f22c6-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=BpxKqT5VID%2BZjk5U20KiU%2Bb9Vj4lI8c2vH%2B6sEO3GBYxS0d66W58QL7f9IT%2Bvbzq46jiYxk2bbo5%2FIaSQf%2FoIyyU1EWSlMIPPocCAQxJGbdb%2F7ceMJtDRvvgeh1P%2Boaocj9J00c%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/langchain@0.0.95/chat_models/openai",
+  "now": {
+    "secs_since_epoch": 1686880087,
+    "nanos_since_epoch": 842003000
+  }
+}

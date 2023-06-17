@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=QK0XOfsk6z32xfN3UOYiWCov9qqC4X2J8LsS8f%2FxoRnQKtk6b5l%2BLHwu9ctVibyTAIlzoJvnOTrRu1UtnyFL6jlI8gmcsaNOXe0sG4VSbaPD7e7C%2FQr1%2ByCsGU72fvhvjXB%2F%2Bsk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "content-length": "265",
+    "x-content-source": "esm-worker",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7d7f5fe1f9fece88-SJC"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/error/QueryRunnerProviderAlreadyReleasedError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 792359000
+  }
+}

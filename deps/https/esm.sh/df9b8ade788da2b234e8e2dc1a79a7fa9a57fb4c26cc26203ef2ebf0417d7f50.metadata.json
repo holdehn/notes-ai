@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cf-ray": "7d7f5fe1f9efce88-SJC",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "content-length": "232",
+    "content-type": "application/typescript; charset=utf-8",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-origin": "*",
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=rOiJ083t0Vc9X4WV9VVPyivybRyRQ6z0c%2BoHhD8u2x9FdH6Gy9qsELX4eNoT62a7TVn51MqLvD87jdoy6OCLkWRMxZ%2BOFoIjCoaaGuKtlk9vmaO4lZf44ZreNaJTJg5f711Vr3A%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/error/NoConnectionOptionError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 940733000
+  }
+}

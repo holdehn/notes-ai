@@ -1,0 +1,26 @@
+{
+  "headers": {
+    "content-length": "183218",
+    "last-modified": "Thu, 15 Jun 2023 16:34:49 GMT",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "age": "33050",
+    "cf-cache-status": "HIT",
+    "cf-ray": "7d7f5fe4ccd3ce88-SJC",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=YHgfv87%2FjNqI3wj3L%2Fe14AftEl5oPpoiiOGUVYxiDOo1Y0DQOxq9LS%2Ba%2B5Sus%2FtSBn16jp5Lwr%2FSYzY%2B8ema7T%2BaCVwWUZ33irn6BrGG6k76vwZOpKrxTb42Ul3bo6pHkzQ0S64%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "accept-ranges": "bytes",
+    "x-content-source": "esm-worker",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v126/@types/node@18.16.9/crypto.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 926491000
+  }
+}

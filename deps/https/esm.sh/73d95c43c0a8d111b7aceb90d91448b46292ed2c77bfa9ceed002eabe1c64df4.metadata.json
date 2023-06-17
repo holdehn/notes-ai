@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-type": "application/typescript; charset=utf-8",
+    "x-content-source": "esm-worker",
+    "content-length": "407",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "server": "cloudflare",
+    "cf-ray": "7d7f5fe1f9cece88-SJC",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=qXLV1ohMUS%2BMHZ3yU0P5g4MNzeJfN%2FL0q1JfDrMdr2tg%2BxbwO3qT%2FvqdD%2FwtgL8LwUTaOrlePRE6ylZiCUxdKs0Jnaa%2BUBOCYx6aOBeeX6FmwgF7le%2BcfGq%2Fca0sCtbViurN6g0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/error/DataTypeNotSupportedError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 677346000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=CCxl13ZAEA9fJCRL3vrcnGwZ2cHz7XBOHVkiLqaLczg82%2BTrc0A3OamdJjaEypYav4xfB7fXB0cFHaFjSvbh0uSlRBGEZQN8gYBsL4t8cRLEzbOQzInEH3pWXexTbHD9iUIhYls%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d7f5fe1f9c0ce88-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "server": "cloudflare",
+    "content-type": "application/typescript; charset=utf-8",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "275",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/error/CannotDetermineEntityError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 786697000
+  }
+}

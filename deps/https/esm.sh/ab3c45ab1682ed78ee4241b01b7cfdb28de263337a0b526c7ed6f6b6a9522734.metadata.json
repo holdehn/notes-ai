@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "vary": "Origin, Accept-Encoding",
+    "x-content-source": "esm-worker",
+    "cf-ray": "7d7f5fe07821ce88-SJC",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=FGa6WctZq%2BScyh6mmh6MXQxyf49K0Cii0k6fIIdmuIxl9qpjyHO%2BMHz4AzEujQ7lGUB0MH3w%2BOqEJgUdyUgGPpYAUNiFVccu36ShCBCFFiOAN8sj2whs0dW7fccH8YgUQ%2FVtvQc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "5537",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "server": "cloudflare"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/query-builder/SoftDeleteQueryBuilder.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 998131000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "content-length": "210",
+    "server": "cloudflare",
+    "x-content-source": "esm-worker",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=D0LdjB9ZbKJtWfc%2F0Ygy2qHUoNxIc6l9MCloFXPjISY26ks%2Bq%2FIxb4PZDSkYbUfsjWZIFAHHJCpNr8TnTTMAkcr%2F2nUTFtYauec6khlv5psvi%2BuRG190QUjLCxpf8qaZ6j7fPfk%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-allow-methods": "*",
+    "cf-ray": "7d7f5fe1f9e0ce88-SJC",
+    "cache-control": "public, max-age=31536000, immutable",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/error/MetadataAlreadyExistsError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879937,
+    "nanos_since_epoch": 19011000
+  }
+}

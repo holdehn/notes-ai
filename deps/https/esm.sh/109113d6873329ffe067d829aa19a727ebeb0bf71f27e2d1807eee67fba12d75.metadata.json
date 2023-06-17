@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "x-content-source": "esm-worker",
+    "access-control-allow-origin": "*",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "content-length": "211",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=%2FRUoQaTKXJYGMuyYSbLpwHJbQ6qCUMH%2FJ61F2unou%2F%2B2XMCk9tcuk9gnOnB0nxObPUveZ9bMcnDXvHuR9%2B3SHYr1g2o5%2BbkEBKqavGx6fQ4YmLdVYsidlzwNMAjQ5oAOPxcdUus%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "cf-ray": "7d7f5fe0d865ce88-SJC"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/driver/SqlInMemory.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 991771000
+  }
+}

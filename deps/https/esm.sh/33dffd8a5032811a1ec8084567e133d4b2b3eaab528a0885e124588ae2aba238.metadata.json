@@ -1,0 +1,23 @@
+{
+  "headers": {
+    "content-type": "application/javascript; charset=utf-8",
+    "cache-control": "private, no-store, no-cache, must-revalidate",
+    "x-typescript-types": "https://esm.sh/v125/langchain@0.0.95/embeddings.d.ts",
+    "server": "cloudflare",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=XXhyeW8kvLHPHl8IrNGTinkRWjGlvB2IKAOVZPD16GkmiVeH01Rk%2Bm4F2pmapmGL%2FfL%2Bg7gNjA8n50gdVRZhxqxCda8Sy%2FEOmTV0ThH%2BhOXXaO5wnnji9vfKJdu%2F2mCk9Zk%2FBAw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d7f60f47e7ecef9-SJC",
+    "access-control-allow-origin": "*",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "access-control-expose-headers": "X-TypeScript-Types",
+    "date": "Fri, 16 Jun 2023 01:46:23 GMT",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "vary": "Origin, User-Agent, Accept-Encoding",
+    "access-control-allow-methods": "*",
+    "x-content-source": "https://esmbuild.com"
+  },
+  "url": "https://esm.sh/langchain@0.0.95/embeddings",
+  "now": {
+    "secs_since_epoch": 1686879980,
+    "nanos_since_epoch": 490998000
+  }
+}

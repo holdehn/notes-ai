@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "access-control-allow-origin": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=KsSQH3%2BvJp%2BkOIX6WkmPjesu8yU27aW%2BlRAionI%2BWxam7Z%2F0iD%2BMH16PyBvABI4xJppVXWKxiqQVXOoHUZdGyj0Qvod3bShv7aObuclEK3P%2BT3EyXikk4FYQLQNowOH%2Fz6mNUR0%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "1105",
+    "access-control-allow-methods": "*",
+    "server": "cloudflare",
+    "content-type": "application/typescript; charset=utf-8",
+    "cf-ray": "7d7f5fdd3d0cce88-SJC",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "vary": "Origin, Accept-Encoding",
+    "cache-control": "public, max-age=31536000, immutable",
+    "x-content-source": "esm-worker"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/driver/oracle/OracleConnectionOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 790472000
+  }
+}

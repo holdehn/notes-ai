@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "date": "Fri, 16 Jun 2023 01:45:39 GMT",
+    "content-length": "340",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=uzPXk3m%2Bq5%2BW0aK5xwKJ62NnXJue76PEALos1ys3TkYxQ63VMxvDc%2Bk%2BC5LQWagDYj2qMv1VfuSXoCSywljyFNKDU4GqaZ4FJ6bpE4aOynzU%2FMJ4Wd4RqbjXOis3j50Nba%2FItt4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "access-control-allow-origin": "*",
+    "cf-ray": "7d7f5fe1f9f6ce88-SJC",
+    "vary": "Origin, Accept-Encoding",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/error/OptimisticLockVersionMismatchError.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 744668000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "content-length": "17305",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=cM%2FBHG3q0k%2BGUgGLzDiMKzTD%2BudyWQ7ftcLGQOzjkE0X9Kjwzp611I%2BmIfrjNciRl2mTiHVJEgvc3mTXcW26IGuI99YkKpWPVCNAi28oxwtgy3B5aq8VbAXgb74X8ubEtVkUi%2BU%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "date": "Fri, 16 Jun 2023 01:46:25 GMT",
+    "cache-control": "public, max-age=31536000, immutable",
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d7f61029ba3cef9-SJC"
+  },
+  "url": "https://esm.sh/v125/axios@1.4.0/index.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879982,
+    "nanos_since_epoch": 838325000
+  }
+}

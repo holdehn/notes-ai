@@ -1,0 +1,21 @@
+{
+  "headers": {
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "7d7f5faee92dce88-SJC",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Fri, 16 Jun 2023 01:45:30 GMT",
+    "content-type": "application/javascript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=Vxk6txd5Ofi4mc2u7qa5nzZstyirufgZulc%2BjduPBMeU2yE%2BQgz6vs4QmSnaFbF4G3EMAQLIuu4Ku63HSNRZUfkKKblH1sidd28OuCHtw2rXVyW84ASnIJWJL1m29CaTvCNxeLA%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "access-control-allow-origin": "*",
+    "x-content-source": "esm-worker",
+    "cache-control": "public, max-age=31536000, immutable"
+  },
+  "url": "https://esm.sh/v126/decamelize@5.0.1/deno/decamelize.mjs",
+  "now": {
+    "secs_since_epoch": 1686879928,
+    "nanos_since_epoch": 286360000
+  }
+}

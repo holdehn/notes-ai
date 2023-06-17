@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "server": "cloudflare",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "content-length": "562",
+    "cf-ray": "7d7f5fdd3d04ce88-SJC",
+    "vary": "Origin, Accept-Encoding",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "date": "Fri, 16 Jun 2023 01:45:38 GMT",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=31536000, immutable",
+    "content-type": "application/typescript; charset=utf-8",
+    "access-control-allow-methods": "*",
+    "x-content-source": "esm-worker",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=KY9ClgIUmEsZoCjTGfVjcC2tyeH8uIQSK8KxVvbIMWVqoOq2rbbVeH8s29%2BbT3ZknuSZXVPN7%2BAB6uXgSbfmaU4xCLeeoNORQ2%2FiSUOUbfDKzK1WJOs6AkotJLfUwdhy2JSLbWc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/driver/cordova/CordovaConnectionOptions.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879935,
+    "nanos_since_epoch": 935399000
+  }
+}

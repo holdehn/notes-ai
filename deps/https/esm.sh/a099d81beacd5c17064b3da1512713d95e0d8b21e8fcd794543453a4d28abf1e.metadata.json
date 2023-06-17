@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "cache-control": "public, max-age=31536000, immutable",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=czDUPQWw7AFo2N84IwNakLULJv5KNzIJ5xiNAFHwmZQ%2BbdyDiRHunk13Fj5ZTCex838wRAzqXQXtP%2F%2FKggEI8tUsT%2F%2FOJ3Ml52Ddy8BE82vJ%2B2gEkWmuwgsaLcwgVeL3DJF8KWY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "content-type": "application/typescript; charset=utf-8",
+    "nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "cf-ray": "7d7f5fd9b968ce88-SJC",
+    "x-content-source": "esm-worker",
+    "content-length": "883",
+    "access-control-allow-origin": "*",
+    "vary": "Origin, Accept-Encoding",
+    "date": "Fri, 16 Jun 2023 01:45:38 GMT",
+    "access-control-allow-methods": "*",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "url": "https://esm.sh/v126/typeorm@0.3.16/subscriber/event/TransactionRollbackEvent.d.ts",
+  "now": {
+    "secs_since_epoch": 1686879936,
+    "nanos_since_epoch": 33349000
+  }
+}
